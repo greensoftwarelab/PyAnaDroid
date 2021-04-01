@@ -4,7 +4,7 @@ from termcolor import colored
 class CLIView(AbstractView):
     def __init__(self):
         self.warn_color = 'yellow'
-        self.info_color = 'white'
+        self.info_color = 'blue'
         self.err_color = 'red'
         super().__init__()
 
