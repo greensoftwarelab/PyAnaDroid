@@ -8,9 +8,10 @@ from src.utils.Utils import execute_shell_command
 
 
 def get_first_connected_device():
-    ret, out, err = execute_shell_command('adb devices -l  | grep \"product\" | cut -f1 -d\ ')
-    device_serial = out.split("\n")[0]
-    if device_serial == "" or ret != 0 or len(err) > 2:
+    result = execute_shell_command('adb devices -l  | grep \"product\" | cut -f1 -d\ ')
+    result.validate(DeviceNotFoundError("No devices/emulators found"))
+    device_serial = result.output.split("\n")[0]
+    if device_serial == "":
         raise DeviceNotFoundError("No devices/emulators found")
     return Device(device_serial)
 
@@ -30,7 +31,7 @@ class Device(AbstractDevice):
     def get_device_props(self):
         return self.props
 
-    def execute_command(self, cmd, args,shell=False):
+    def execute_command(self, cmd, args=[],shell=False):
         return super().execute_command(cmd, args, shell)
 
     def execute_root_command(self, cmd, args):
@@ -41,7 +42,7 @@ class Device(AbstractDevice):
         installed_packages = set()
         for apk in apks_built:
             old_packs = self.installed_packages
-            ret, o, e = super().execute_command("install -r %s" % apk,args=[], shell=False)
+            res = super().execute_command("install -r %s" % apk,args=[], shell=False)
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
@@ -74,10 +75,9 @@ class Device(AbstractDevice):
 
     def list_installed_packages(self):
         vals = []
-        ret, out, err = super().execute_command("pm list packages", args=[], shell=True)
-        if ret != 0 or len(err) > 3:
-            raise Exception("Error obtaining device packages")
-        for line in out.splitlines():
+        res = super().execute_command("pm list packages", args=[], shell=True)
+        res.validate( Exception("Error obtaining device packages"))
+        for line in res.output.splitlines():
             val = re.sub(r'package:', '', line).strip()
             vals.append(val)
         return vals
@@ -89,10 +89,9 @@ class Device(AbstractDevice):
         return int(self.props["ro.build.version.sdk"]) if "ro.build.version.sdk" in self.props else 19
 
     def __init_props(self):
-        ret, out, err = super().execute_command("getprop", args=[], shell=True)
-        if ret != 0:
-            raise DeviceNotFoundError("There is no connected devices")
-        for line in out.splitlines():
+        res = super().execute_command("getprop", args=[], shell=True)
+        res.validate(DeviceNotFoundError("There is no connected devices"))
+        for line in res.output.splitlines():
             vals= re.sub(r'\[|\]', '', line).split(":")
             if len(vals) > 1:
                 self.props[vals[0]] = vals[1]
@@ -111,3 +110,10 @@ class Device(AbstractDevice):
 
     def lock_screen(self):
         super(Device, self).lock_screen()
+
+    def has_package_installed(self,pack_name):
+        return pack_name in self.installed_packages
+
+    def contains_file(self, filepath):
+        res = self.execute_command("test -e ", args=[filepath],shell=True)
+        return res.return_code == 0

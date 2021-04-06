@@ -19,3 +19,7 @@ class App(AbstractApplication):
 
     def performAction(self, act):
         pass
+
+    def set_immersive_mode(self):
+       print("setting immersive mode")
+       self.device.execute_command(f"setting put global policy_control immersive.full={self.package_name}").validate(Exception("error setting immersive mode"))

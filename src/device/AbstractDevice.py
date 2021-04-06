@@ -18,21 +18,28 @@ class AbstractDevice(ABC):
         super().__init__()
 
     @abstractmethod
-    def execute_command(self, cmd, args, shell=False):
-        cmd = cmd + ' '.join(args)
-        ret, out, err = execute_shell_command(
+    def execute_command(self, cmd, args=[], shell=False):
+        cmd = cmd + " " + ' '.join(args)
+        res = execute_shell_command(
             "adb -s {serial} {shell} {command} ".format(
                         serial=self.serial_nr,
                         shell="" if not shell else "shell",
                         command=cmd
             )
         )
-        return ret, out, err
+        return res
 
 
     @abstractmethod
     def execute_root_command(self, cmd, args):
-        pass
+        cmd = cmd + " " + ' '.join(args)
+        ret, out, err = execute_shell_command(
+            "adb -s {serial} shell root -c '{command}' ".format(
+                serial=self.serial_nr,
+                command=cmd
+            )
+        )
+        return ret, out, err
 
     @abstractmethod
     def install_apks(self,apk_paths):
@@ -64,8 +71,8 @@ class AbstractDevice(ABC):
                     pwd=pwd), args=[])
         else:
             # press lock button -> KEYCODE_MENU
-            ret,o,e = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[],shell=True)
-            print(ret)
+            res = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[],shell=True)
+            res.validate()
 
     @abstractmethod
     def is_screen_unlocked(self):
@@ -76,18 +83,19 @@ class AbstractDevice(ABC):
         is_not_dreaming = "true" in o | grep("mHoldingWakeLockSuspendBlocker").tostr().lower()
         #print("is_not_dreaming:" + str(is_not_dreaming))
         return is_on and is_not_dreaming'''
-        ret, o, e = self.execute_command("dumpsys window | grep mDreamingLockscreen", args=[], shell=True)
-        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", o).groups()[0].lower()
+        res = self.execute_command("dumpsys window | grep mDreamingLockscreen", args=[], shell=True)
+        res.validate()
+        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower()
         return not is_locked
 
     @abstractmethod
     def lock_screen(self):
         if not self.is_screen_unlocked():
             return
-        ret, o, e = self.execute_command("input keyevent 26", args=[], shell=True)
+        res = self.execute_command("input keyevent 26", args=[], shell=True)
 
     @abstractmethod
     def is_screen_dreaming(self):
-        ret, o, e = self.execute_command("dumpsys window | grep dreaming", args=[], shell=True)
-        is_dreaming = "true" in re.search(" dreaming=(true|false|null)", o).groups()[0].lower()
+        res = self.execute_command("dumpsys window | grep dreaming", args=[], shell=True)
+        is_dreaming = "true" in re.search(" dreaming=(true|false|null)", res.output).groups()[0].lower()
         return is_dreaming

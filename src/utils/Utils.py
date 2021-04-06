@@ -26,7 +26,7 @@ def execute_shell_command(cmd, args=[]):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
     proc = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
     out, err = proc.communicate()
-    return proc.returncode, out.decode("utf-8"), err.decode('utf-8')
+    return COMMAND_RESULT(proc.returncode, out.decode("utf-8"), err.decode('utf-8'))
 
 
 def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
@@ -34,3 +34,34 @@ def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
     res = find(basedir, pattern=pattern, only_files=type_file=='f',only_dirs=type_file=='d' )
     # filter by depth
     return list(filter(lambda x : basedir_len + mindepth <= len(x.split("/")) <= maxdepth + basedir_len, res))
+
+class COMMAND_RESULT(object):
+    def __init__(self,res,out,err):
+        self.return_code = res
+        self.output = out
+        self.errors = err
+
+    def validate(self, e=None):
+        if int(self.return_code) != 0:
+            if len(self.errors) > 2:
+                if e is None:
+                    return False
+                    print(self.errors)
+                else:
+                    raise e
+            else:
+                print(self.output)
+                return True
+        else:
+            print("ok")
+            return True
+
+    def __str__(self):
+        return str(
+            {'return_code': self.return_code,
+             'output' : self.output,
+             'errors' : self.errors
+             })
+
+
+

@@ -1,4 +1,5 @@
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
+from src.testing_framework.MonkeyWorkUnit import MonkeyWorkUnit
 from src.testing_framework.WorkLoad import WorkLoad
 import time
 
@@ -8,8 +9,7 @@ DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
 DEFAULT_SEEDS_FILE = "monkey_seeds.txt"
 DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
 
-def cfg_to_command(cfg):
-    return
+
 
 class MonkeyFramework(AbstractTestingFramework):
     def __init__(self, default_workload=False, resdir=DEFAULT_RES_DIR):
@@ -26,15 +26,16 @@ class MonkeyFramework(AbstractTestingFramework):
         config = self.__load_config_file()
         ofile = open(wl_filename, "r")
         for seed in ofile:
-           wk = WorkUnit(self.gen_work_unit_cmd(seed.strip()))
+            wk = MonkeyWorkUnit(self.executable_prefix)
+            wk.config(seed=seed.strip(), **config)
+            self.workload.add_unit(wk)
         ofile.close()
 
-    def gen_work_unit_cmd(self, seed):
-        return '{bin} '
 
-    def execute_test(self, w_unit, timeout=None):
-        time.sleep(5)
-        pass
+    def execute_test(self, package, wunit=None, timeout=None):
+        if wunit is None:
+            wunit = self.workload.consume()
+        wunit.execute(package)
 
     def init(self):
         pass
@@ -51,6 +52,6 @@ class MonkeyFramework(AbstractTestingFramework):
         ofile = open(cfg_file, "r")
         for aline in ofile:
             key,pair = aline.split("=")
-            cfg[key] = pair
+            cfg[key] = pair.strip()
         ofile.close()
         return cfg

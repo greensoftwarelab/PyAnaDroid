@@ -32,7 +32,6 @@ class JInstInstrumenter(AbstractInstrumenter):
             app_id=android_project.app_id,
             test_approach=test_approach.value.lower()
         )
-        res, out, err = execute_shell_command(command)
-        if res != 0 or len(err) >= 2:
-            raise Exception("Bad instrumentation")
+        res = execute_shell_command(command)
+        res.validate(Exception("Bad instrumentation"))
         return android_project.proj_dir + "/" + self.mirror_dirname

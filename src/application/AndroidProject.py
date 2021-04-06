@@ -50,18 +50,17 @@ class AndroidProject(object):
         return None
 
     def get_gradle_settings(self):
-        ret, out, err = execute_shell_command("find %s -maxdepth 1 -type f -name \"settings.gradle\"" % self.proj_dir)
-        if ret == 0:
-            return out
-        return None
+        res = execute_shell_command("find %s -maxdepth 1 -type f -name \"settings.gradle\"" % self.proj_dir)
+        res.validate()
+        return res.output
 
     def __init_modules(self):
         setts_file = self.get_gradle_settings()
         modules = cat(setts_file) | grep('include') | cut(sep=":", col=1) | sed(pats="\'", repls="" )
         for mod_name in modules:
-            ret, mod_dir, _ = execute_shell_command("find %s -maxdepth 1 -type d -name \"%s\"" % (self.proj_dir, mod_name))
-            if mod_dir != '' and ret == 0:
-                self.modules[mod_name] = ProjectModule(mod_name, mod_dir.strip())
+            res = execute_shell_command("find %s -maxdepth 1 -type d -name \"%s\"" % (self.proj_dir, mod_name))
+            if res.validate():
+                self.modules[mod_name] = ProjectModule(mod_name, res.output.strip())
                 #print(self.modules[mod_name].module_type)
 
     def get_gradle_plugin(self):

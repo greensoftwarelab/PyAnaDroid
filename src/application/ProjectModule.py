@@ -29,12 +29,12 @@ class ProjectModule(object):
 
 
     def __infer_build_file(self):
-        ret, out, err = execute_shell_command("find \"%s\" -maxdepth 1 -type f -name \"build.gradle\"" % self.mod_dir)
-        return out.strip() if ret == 0 else None
+        res = execute_shell_command("find \"%s\" -maxdepth 1 -type f -name \"build.gradle\"" % self.mod_dir)
+        return res.output.strip() if res.return_code == 0 else None
 
     def __infer_manifest(self):
-        ret, out, err = execute_shell_command("find \"%s\" -maxdepth 4 -type f -name \"AndroidManifest.xml\"" % self.mod_dir)
-        return out.strip() if ret == 0 else None
+        res = execute_shell_command("find \"%s\" -maxdepth 4 -type f -name \"AndroidManifest.xml\"" % self.mod_dir)
+        return res.output.strip() if res.return_code == 0 else None
 
     def __infer_module_type(self):
         is_app = cat(self.build_file) | grep('com.android.application') != ''
