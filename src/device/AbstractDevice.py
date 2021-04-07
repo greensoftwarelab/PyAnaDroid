@@ -99,3 +99,9 @@ class AbstractDevice(ABC):
         res = self.execute_command("dumpsys window | grep dreaming", args=[], shell=True)
         is_dreaming = "true" in re.search(" dreaming=(true|false|null)", res.output).groups()[0].lower()
         return is_dreaming
+
+    @abstractmethod
+    def get_device_android_version(self):
+        res = self.execute_command("getprop ro.build.version.release", shell=True)
+        if res.validate(Exception("Unable do get android device version")):
+            return int(res.output.strip())

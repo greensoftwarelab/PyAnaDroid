@@ -12,6 +12,8 @@ DEFAULT_APK_LOCATION="resources/profilers/Trepn/apks/com.quicinc.trepn-6.2-APK4F
 DEFAULT_PREFS_DIR="resources/profilers/Trepn/TrepnPreferences"
 DEFAULT_LAST_RUN_FILE="last_run_duration.log"
 EXPORT_THRESHOLD = 0.5
+
+
 class TrepnProfiler(AbstractProfiler):
 
     def __init__(self, device):
@@ -19,10 +21,10 @@ class TrepnProfiler(AbstractProfiler):
         self.local_dep_location = RESOURCES_DIR + "/profilers/Trepn/libsAdded/" + dependency_lib.name + "." + dependency_lib.bin_type #TODO
         self.start_time = 0
         super(TrepnProfiler, self).__init__(device, pkg_name="com.quicinc.trepn", device_dir="sdcard/trepn", dependency=dependency_lib)
-        if not device.has_package_installed(self.pkg_name):
-            self.install_profiler()
-        if not device.contains_file(self.device_dir+"/GDFlag"):
-            self.setup_trepn_device_dir()
+        #if not device.has_package_installed(self.pkg_name):
+        #    self.install_profiler()
+        #if not device.contains_file(self.device_dir+"/GDFlag"):
+        #    self.setup_trepn_device_dir()
 
     def install_profiler(self, apk_loc=DEFAULT_APK_LOCATION):
         self.device.execute_command(f"install -g -r {apk_loc}").validate(Exception("Unable to install Trepn Profiler"))
@@ -60,7 +62,7 @@ class TrepnProfiler(AbstractProfiler):
 
     def update_state(self, val=0, desc="stopped"):
         # adb shell am broadcast -a com.quicinc.Trepn.UpdateAppState -e com.quicinc.Trepn.UpdateAppState.Value 1 -e com.quicinc.Trepn.UpdateAppState.Value.Desc "started"
-        self.device.execute_command("am broadcast -a {pkg}.UpdateAppState -e {pkg}.UpdateAppState.Value {val} -e {pkg}.UpdateAppState.Value.Desc \"{desc}\"".format(pkg=self.pkg_name,val=val,desc=desc)).validate(Exception("Error updating trepn state"))
+        res = self.device.execute_command("am broadcast -a {pkg}.UpdateAppState -e {pkg}.UpdateAppState.Value {val} -e {pkg}.UpdateAppState.Value.Desc \"{desc}\"".format(pkg=self.pkg_name,val=val,desc=desc),shell=True).validate(Exception("Error updating trepn state"))
 
 
     def export_results(self, out_filename="trepnfile.csv"):

@@ -117,3 +117,14 @@ class Device(AbstractDevice):
     def contains_file(self, filepath):
         res = self.execute_command("test -e ", args=[filepath],shell=True)
         return res.return_code == 0
+
+    def clear_logcat(self):
+        super().execute_command("logcat -c", args=[])\
+            .validate()
+
+    def dump_logcat_to_file(self, filename="logcat.out"):
+        super().execute_command(f"adb logcat -d > {filename}", args=[]) \
+            .validate(Exception("Unable to dump logcat to file"))
+
+    def get_device_android_version(self):
+        return super().get_device_android_version()

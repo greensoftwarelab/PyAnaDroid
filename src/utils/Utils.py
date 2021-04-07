@@ -17,9 +17,8 @@ def sign_apk(apk_path):
            apk_path=apk_path,
            passwd=PASSWORD
        )
-       res, o, e = execute_shell_command(cmd)
-       if res != 0 or len(e)> 3:
-           print("ERROR SIGNING APK " + apk_path)
+       res = execute_shell_command(cmd)
+       res.validate(Exception("error signing apk "+ apk_path))
        return res
 
 def execute_shell_command(cmd, args=[]):
@@ -45,12 +44,13 @@ class COMMAND_RESULT(object):
         if int(self.return_code) != 0:
             if len(self.errors) > 2:
                 if e is None:
+                    print(self)
                     return False
-                    print(self.errors)
                 else:
+                    print(self)
                     raise e
             else:
-                print(self.output)
+                print(self)
                 return True
         else:
             print("ok")

@@ -10,7 +10,7 @@ class AbstractAnalyzer(ABC):
         pass
 
     @abstractmethod
-    def analyze(self):
+    def analyze(self, input_dir, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out"):
         pass
 
     @abstractmethod

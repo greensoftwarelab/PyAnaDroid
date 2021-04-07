@@ -1,3 +1,4 @@
+from src.Types import TESTING_FRAMEWORK
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from src.testing_framework.MonkeyWorkUnit import MonkeyWorkUnit
 from src.testing_framework.WorkLoad import WorkLoad
@@ -17,6 +18,7 @@ class MonkeyFramework(AbstractTestingFramework):
         self.executable_prefix = "adb shell monkey"
         self.workload = None
         self.res_dir = resdir
+        self.id = TESTING_FRAMEWORK.MONKEY
         if default_workload:
             self.init_default_workload(DEFAULT_SEEDS_FILE)
 

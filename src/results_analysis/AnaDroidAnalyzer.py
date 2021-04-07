@@ -14,18 +14,20 @@ class AnaDroidAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def analyze(self, input_dir, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out"):
-        cmd = "{bin_prefix} {test_orient} \"{input_dir}\" {test_framework} {remote_repo_url} {output_log_file}"
-        cmd.format(
+    def analyze(self,app, instr_proj, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out"):
+        cmd = "{bin_prefix} -{test_orient} \"{input_dir}\" -{test_framework} {remote_repo_url} {output_log_file}".format(
             bin_prefix=self.bin_cmd,
-            test_orient=test_orient,
-            test_framework=test_framework,
+            test_orient=test_orient.value,
+            input_dir=input_dir,
+            test_framework=test_framework.id.value,
             remote_repo_url=self.remote_url,
             output_log_file = output_log_file
         )
         # java -jar $GD_ANALYZER $trace "$projLocalDir/" $monkey $GREENSOURCE_URL 2>&1 | tee "$temp_folder/analyzerResult.out"
+        print(cmd)
         res = execute_shell_command(cmd)
         res.validate(Exception("Analyzer error"))
+        print(res)
 
     def clean(self):
         pass

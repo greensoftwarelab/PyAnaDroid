@@ -1,5 +1,8 @@
 from enum import Enum
 
+from src.instrument.Types import INSTRUMENTATION_TYPE
+
+
 class BUILD_SYSTEM(Enum):
     GRADLE = 'Gradle'
     ANT = 'Ant'
@@ -30,6 +33,9 @@ class TESTING_APPROACH(Enum):
     BLACKBOX = "BlackBox"
     GREYBOX = "GreyBox"
 
+class ANALYZER(Enum):
+    ANADROID_ANALYZER = 'Anadroid Analyzer'
+
 SUPPORTED_TESTING_APPROACHES = {
     TESTING_APPROACH.WHITEBOX
 }
@@ -50,3 +56,10 @@ SUPPORTED_INSTRUMENTERS = {
     INSTRUMENTER.JINST
 }
 
+SUPPORTED_ANALYZERS = {
+    ANALYZER.ANADROID_ANALYZER
+}
+
+SUPPORTED_INSTRUMENTATION_TYPES = {
+    INSTRUMENTATION_TYPE.TEST
+}

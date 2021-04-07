@@ -5,6 +5,7 @@ from os import mkdir
 from textops import cat, grep, cut, sed
 
 from src.application.ProjectModule import ProjectModule
+from src.build.versionUpgrader import DefaultSemanticVersion
 from src.utils.Utils import execute_shell_command, mega_find
 
 class BUILD_TYPE(Enum):
@@ -18,21 +19,31 @@ class BUILD_FLAVOR(Enum):
     CUSTOM = "Custom"
     NONE = "None" #just defaultconfig ?
 
+
+def mk_ma_dir(path):
+    try:
+        mkdir(path)
+    except FileExistsError:
+        pass
+
 class AndroidProject(object):
-    def __init__(self, projname, projdir):
+    def __init__(self, projname, projdir,results_dir="results"):
         self.proj_name = projname
         self.proj_dir = projdir
+        self.results_dir = results_dir
         self.root_build_file = self.get_root_build_file()
         self.main_manif_file = self.get_main_manif_file()
         self.tests_manif_file = None
         self.modules = {}
         self.__init_modules()
         self.pkg_name, self.app_id, = self.__gen_proj_id()
+        self.__init_results_dir()
+        self.proj_version = DefaultSemanticVersion("0.0")
 
     def __gen_proj_id(self):
         pkg_line = str( cat(self.main_manif_file) | grep("package=\"[^\"]") )
         pkg_name = str(re.search("package=(\"[^\"]*)", pkg_line).groups()[0]).strip().replace("\"","")
-        return pkg_name, self.proj_name + "#" + pkg_name
+        return pkg_name, self.proj_name + "--" + pkg_name
 
     def get_build_files(self):
         return mega_find(self.proj_dir, maxdepth=3, mindepth=0, pattern="build.gradle", type_file='f')
@@ -82,3 +93,15 @@ class AndroidProject(object):
         vals = mega_find(self.proj_dir, pattern="*.apk", type_file='f')
         return list(filter( lambda  x : build_type.value.lower() in  x.lower(), vals))
 
+    def __init_results_dir(self):
+        res_app_dir= self.results_dir +"/"+ self.app_id
+        mk_ma_dir(res_app_dir)
+        self.results_dir = res_app_dir
+
+
+    def set_version(self,build_type):
+        apks = self.get_apks(build_type)
+        if len(apks) == 0:
+            return
+        ref_apk = apks[0]
+        #apk_version =
