@@ -41,7 +41,7 @@ class AndroidProject(object):
         self.proj_version = DefaultSemanticVersion("0.0")
 
     def __gen_proj_id(self):
-        pkg_line = str( cat(self.main_manif_file) | grep("package=\"[^\"]") )
+        pkg_line = str(cat(self.main_manif_file) | grep("package=\"[^\"]") )
         pkg_name = str(re.search("package=(\"[^\"]*)", pkg_line).groups()[0]).strip().replace("\"","")
         return pkg_name, self.proj_name + "--" + pkg_name
 

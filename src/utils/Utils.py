@@ -5,6 +5,11 @@ PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
 #KEY_ALIAS = "anakey"
 PASSWORD = "pynadroid"
 
+def get_date_str():
+    res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
+    if res.validate(Exception("Unable to get date")):
+        return res.output.strip()
+
 def get_apksigner_bin():
     return "/Users/ruirua/Library/Android/sdk/build-tools/30.0.3/apksigner"
 
@@ -53,15 +58,16 @@ class COMMAND_RESULT(object):
                 print(self)
                 return True
         else:
-            print("ok")
             return True
 
     def __str__(self):
         return str(
             {'return_code': self.return_code,
-             'output' : self.output,
-             'errors' : self.errors
+             'output': self.output,
+             'errors': self.errors
              })
+
+
 
 
 

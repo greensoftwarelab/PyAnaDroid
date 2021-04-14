@@ -5,6 +5,7 @@ class DependencyType(Enum):
     LOCAL_MODULE = "Local Module"
     LOCAL_BINARY = "Local Binary"
     REMOTE = "Remote"
+    CLASSPATH = "Classpath"
 
 
 class BuildDependency(object):

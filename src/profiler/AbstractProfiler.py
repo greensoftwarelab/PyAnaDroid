@@ -5,12 +5,13 @@ from abc import ABC, abstractmethod
 
 
 class AbstractProfiler(ABC):
-    def __init__(self, device, pkg_name, device_dir, dependency=None):
+    def __init__(self, device, pkg_name, device_dir, dependency=None, plugin= None):
         super().__init__()
         self.device = device
         self.pkg_name = pkg_name
         self.dependency = dependency
         self.device_dir = device_dir
+        self.plugin=plugin
 
     @abstractmethod
     def init(self, **kwargs):

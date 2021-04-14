@@ -1,17 +1,69 @@
+import os
+import shutil
+
 from textops import cut, grep, echo
 
+from src.Types import TESTING_FRAMEWORK
 from src.application.AbstractApplication import AbstractApplication
 from src.build.versionUpgrader import DefaultSemanticVersion
+from src.instrument.Types import INSTRUMENTATION_TYPE
+from src.utils.Utils import get_date_str
+
+
+def get_prefix(testing_framework, inst_type):
+    dirname=""
+    if testing_framework == TESTING_FRAMEWORK.MONKEY:
+        dirname += testing_framework.value
+    else:
+        raise Exception("Not implemented")
+    if inst_type == INSTRUMENTATION_TYPE.METHOD:
+        dirname+="Method"
+    elif inst_type == INSTRUMENTATION_TYPE.TEST:
+        dirname += "Test"
+    elif inst_type == INSTRUMENTATION_TYPE.ANNOTATION:
+        dirname += "Annotation"
+    else:
+        raise Exception("Not implemented")
+    cur_datetime = get_date_str()
+    return dirname + "_"+cur_datetime
+
+
 
 
 class App(AbstractApplication):
-    def __init__(self, device, package_name, local_res, name="app", version=None):
+    def __init__(self, device, proj, package_name, local_res, name="app", version=None):
         self.device = device
-
+        self.proj = proj
         super(App, self).__init__(package_name, version)
         self.version = self.__get_version() if version is None else version
         self.local_res = local_res + "/" + str(self.version)
         self.name = name
+        self.curr_local_dir = None
+        self.__init_res_dir()
+
+
+    def __init_res_dir(self):
+        all_dir = self.local_res+"/all"
+        old_runs_dir = self.local_res+"/oldRuns"
+        if not os.path.exists(self.local_res):
+            os.mkdir(self.local_res)
+        if not os.path.exists(all_dir):
+            os.mkdir(all_dir)
+        if not os.path.exists(old_runs_dir):
+            os.mkdir(old_runs_dir)
+        for f in os.scandir(self.local_res):
+            if f.path != all_dir and f.path != old_runs_dir:
+                shutil.move(f.path, old_runs_dir)
+        #cp all methods
+        if not os.path.exists(all_dir + "/allMethods.json"):
+            shutil.move("allMethods.json", all_dir)
+
+
+
+    def init_local_test_(self, testing_framework, inst_type):
+        dirname = self.local_res + "/"+ get_prefix(testing_framework,inst_type)
+        os.mkdir(dirname)
+        self.curr_local_dir = dirname
 
 
     def start(self):

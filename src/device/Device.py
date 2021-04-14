@@ -68,10 +68,7 @@ class Device(AbstractDevice):
         return super(Device, self).is_screen_unlocked()
 
     def uninstall_pkg(self, pkg_name):
-        ret, o, e = super().execute_command("uninstall ", args=[pkg_name], shell=False)
-        print(ret)
-        print(o)
-        print(e)
+        super().execute_command("uninstall ", args=[pkg_name], shell=False).validate(Exception("Unable to uninstall package " + pkg_name))
 
     def list_installed_packages(self):
         vals = []
