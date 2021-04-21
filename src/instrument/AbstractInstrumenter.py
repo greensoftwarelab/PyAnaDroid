@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+DEFAULT_LOG_FILENAME="instrumentation_log.json"
 
 class AbstractInstrumenter(ABC):
     def __init__(self):
@@ -36,3 +37,7 @@ class AbstractInstrumenter(ABC):
     @abstractmethod
     def get_build_classpaths(self):
        pass
+
+    @abstractmethod
+    def get_log_filename(self):
+        return DEFAULT_LOG_FILENAME

@@ -1,10 +1,7 @@
 from src.Types import TESTING_FRAMEWORK
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
-from src.testing_framework.MonkeyWorkUnit import MonkeyWorkUnit
-from src.testing_framework.WorkLoad import WorkLoad
-import time
-
-from src.testing_framework.WorkUnit import WorkUnit
+from src.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
+from src.testing_framework.work.WorkLoad import WorkLoad
 
 DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
 DEFAULT_SEEDS_FILE = "monkey_seeds.txt"

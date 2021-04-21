@@ -1,31 +1,34 @@
 import os, time
+import sysconfig
 
+from manafa.emanafa import EManafa
 
 from src.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, SUPPORTED_PROFILERS, \
     SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_INSTRUMENTERS, SUPPORTED_INSTRUMENTATION_TYPES, SUPPORTED_ANALYZERS
 from src.application.AndroidProject import AndroidProject, BUILD_TYPE
 from src.application.Application import App
 from src.build.GradleBuilder import GradleBuilder
+from src.device.Device import get_first_connected_device
 
-from src.device.Device import Device, get_first_connected_device
 from src.instrument.JInstInstrumenter import JInstInstrumenter
 from src.instrument.Types import INSTRUMENTATION_TYPE
+from src.profiler.ManafaProfiler import ManafaProfiler
 from src.profiler.TrepnProfiler import TrepnProfiler
 from src.results_analysis.AnaDroidAnalyzer import AnaDroidAnalyzer
 from src.testing_framework.MonkeyFramework import MonkeyFramework
+from src.utils.Utils import get_apksigner_bin
 
-
-MIN_API_LEVEL = 9
-MAX_API_LEVEL = 30
+#MIN_API_LEVEL = 9
+#MAX_API_LEVEL = 30
 
 
 def init_defaultPyAnaDroid(apps_dir):
-    return PyAnaDroid(apps_dir=apps_dir)
+    return PyAnaDroid(apps_dir=apps_dir, profiler=PROFILER.MANAFA)
 
 class PyAnaDroid(object):
-    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN, testing_framework=TESTING_FRAMEWORK.MONKEY, device=get_first_connected_device(), instrumenter=INSTRUMENTER.JINST, analyzer=ANALYZER.ANADROID_ANALYZER,instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION ):
+    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN, testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST, analyzer=ANALYZER.ANADROID_ANALYZER,instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION ):
         self.apps_dir = apps_dir
-        self.device = device
+        self.device = device if device is not None else get_first_connected_device()
         self.results_dir = results_dir
         self.profiler = self.__infer_profiler(profiler)
         self.testing_framework = self.__infer_testing_framework(testing_framework)
@@ -39,6 +42,8 @@ class PyAnaDroid(object):
         if profiler in SUPPORTED_PROFILERS:
             if profiler == PROFILER.TREPN:
                 return TrepnProfiler(self.device)
+            elif profiler == PROFILER.MANAFA:
+                return ManafaProfiler(self.device)
         else:
             raise Exception("Unsupported profiler")
 

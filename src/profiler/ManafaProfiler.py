@@ -5,16 +5,13 @@ from manafa.emanafa import EManafa
 
 from src.application.Dependency import BuildDependency, DependencyType
 from src.profiler.AbstractProfiler import AbstractProfiler
-from src.utils.Utils import execute_shell_command
 
 RESOURCES_DIR = "resources"
 
 
 class ManafaProfiler(AbstractProfiler):
-    def __init__(self, device, power_profile, timezone, resources_dir=RESOURCES_DIR):
-        dependency_lib = BuildDependency("com.quinn.hunter:hunter-debug-library", DependencyType.REMOTE, version=None)
-        plugin = "hunter-debug"
-        super(ManafaProfiler, self).__init__(device, pkg_name=None, device_dir="TODO")
+    def __init__(self, device, power_profile=None, timezone=None, resources_dir=RESOURCES_DIR):
+        super(ManafaProfiler, self).__init__(device, pkg_name=None)
         self.manafa = EManafa(power_profile, timezone, resources_dir)
         self.last_bts_file = None
         self.last_pft_file = None
@@ -41,8 +38,10 @@ class ManafaProfiler(AbstractProfiler):
     def pull_results(self, file_id, target_dir):
         pass
 
-    def get_dependency_location(self):
-        pass
+    def get_dependencies_location(self):
+        return []
 
+    def needs_external_dependencies(self):
+        return False
 
 

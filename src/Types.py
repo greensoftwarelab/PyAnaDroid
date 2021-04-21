@@ -23,6 +23,7 @@ class PROFILER(Enum):
     GREENSCALER = 'GreenScaler'
     PETRA = 'Petra'
     MONSOON = 'Monsoon'
+    MANAFA = "E-manafa"
 
 class INSTRUMENTER(Enum):
     JINST = 'JInst'
@@ -49,7 +50,8 @@ SUPPORTED_BUILDING_SYSTEMS = {
 }
 
 SUPPORTED_PROFILERS = {
-    PROFILER.TREPN
+    PROFILER.TREPN,
+    PROFILER.MANAFA
 }
 
 SUPPORTED_INSTRUMENTERS = {

@@ -11,6 +11,9 @@ def get_date_str():
         return res.output.strip()
 
 def get_apksigner_bin():
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"apksigner\"")
+    if res.validate(Exception("No apksigner found")):
+        return res.output.split()[0]
     return "/Users/ruirua/Library/Android/sdk/build-tools/30.0.3/apksigner"
 
 def sign_apk(apk_path):
@@ -25,6 +28,7 @@ def sign_apk(apk_path):
        res = execute_shell_command(cmd)
        res.validate(Exception("error signing apk "+ apk_path))
        return res
+
 
 def execute_shell_command(cmd, args=[]):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd

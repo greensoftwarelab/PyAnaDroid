@@ -31,7 +31,7 @@ class AnaDroidAnalyzer(AbstractAnalyzer):
         res = execute_shell_command(cmd)
         res.validate(Exception("Analyzer error"))
         print(res)
-        print("analizando apis")
+        print("TODO analyze apis")
         #self.aux_analyzer.analyze(instr_proj.get_apks()[0], app.package_name)
 
     def analyze_apis(self):

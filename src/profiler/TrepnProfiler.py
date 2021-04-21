@@ -77,8 +77,8 @@ class TrepnProfiler(AbstractProfiler):
         device_filepath = self.device_dir + "/" + file_id
         self.device.execute_command("pull", args=[device_filepath,target_dir], shell=False).validate(Exception("error pulling results"))
 
-    def get_dependency_location(self):
-        return self.local_dep_location
+    def get_dependencies_location(self):
+        return [self.local_dep_location]
 
     def load_preferences_file(self, pref_file=None):
         if pref_file is None:
@@ -87,6 +87,9 @@ class TrepnProfiler(AbstractProfiler):
 
     def setup_device_dir(self):
         pass
+
+    def needs_external_dependencies(self):
+        return True
 
     def get_last_run_duration(self):
         last_dur_file = self.device_dir + "/" + DEFAULT_LAST_RUN_FILE

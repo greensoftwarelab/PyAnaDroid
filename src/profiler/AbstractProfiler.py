@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 
 class AbstractProfiler(ABC):
-    def __init__(self, device, pkg_name, device_dir, dependency=None, plugin= None):
+    def __init__(self, device, pkg_name, device_dir=None, dependency=None, plugin= None):
         super().__init__()
         self.device = device
         self.pkg_name = pkg_name
@@ -38,5 +38,9 @@ class AbstractProfiler(ABC):
         pass
 
     @abstractmethod
-    def get_dependency_location(self):
+    def get_dependencies_location(self):
+        pass
+
+    @abstractmethod
+    def needs_external_dependencies(self):
         pass
