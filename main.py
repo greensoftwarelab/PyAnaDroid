@@ -15,7 +15,9 @@ from src.instrument.Types import INSTRUMENTATION_TYPE
 from src.profiler.ManafaProfiler import ManafaProfiler
 from src.profiler.TrepnProfiler import TrepnProfiler
 from src.results_analysis.AnaDroidAnalyzer import AnaDroidAnalyzer
+from src.testing_framework.AppCrawlerFramework import AppCrawlerFramework
 from src.testing_framework.MonkeyFramework import MonkeyFramework
+from src.testing_framework.RERANFramework import RERANFramework
 from src.utils.Utils import get_apksigner_bin
 
 #MIN_API_LEVEL = 9
@@ -26,7 +28,7 @@ def init_defaultPyAnaDroid(apps_dir):
     return PyAnaDroid(apps_dir=apps_dir, profiler=PROFILER.MANAFA)
 
 class PyAnaDroid(object):
-    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN, testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST, analyzer=ANALYZER.ANADROID_ANALYZER,instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION ):
+    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN, testing_framework=TESTING_FRAMEWORK.APP_CRAWLER, device=None, instrumenter=INSTRUMENTER.JINST, analyzer=ANALYZER.ANADROID_ANALYZER,instrumentation_type=INSTRUMENTATION_TYPE.TEST ):
         self.apps_dir = apps_dir
         self.device = device if device is not None else get_first_connected_device()
         self.results_dir = results_dir
@@ -51,6 +53,12 @@ class PyAnaDroid(object):
         if tf in SUPPORTED_TESTING_FRAMEWORKS:
             if tf == TESTING_FRAMEWORK.MONKEY:
                 return MonkeyFramework(default_workload=True)
+
+            elif tf == TESTING_FRAMEWORK.RERAN:
+                return RERANFramework(self.device)
+
+            elif tf == TESTING_FRAMEWORK.APP_CRAWLER:
+                return AppCrawlerFramework(default_workload=True)
             else:
                 return None
         else:
@@ -95,13 +103,45 @@ class PyAnaDroid(object):
             installed_pkgs = self.device.install_apks(instr_proj)
             self.do_work(instr_proj, installed_pkgs)
 
-
     def do_work(self, proj, pkgs):
+        if self.testing_framework.id == TESTING_FRAMEWORK.MONKEY:
+            self.do_monkey_work(proj, pkgs)
+        elif self.testing_framework.id == TESTING_FRAMEWORK.RERAN:
+            self.do_reran_work(proj, pkgs)
+        elif self.testing_framework.id == TESTING_FRAMEWORK.APP_CRAWLER:
+            self.do_app_crawler_work(proj, pkgs)
+
+    def do_app_crawler_work(self, proj, pkgs):
         for i, pkg in enumerate(pkgs):
             print("testing package " + pkg)
             app = App(self.device, proj, pkg, local_res=proj.results_dir)
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
             app.set_immersive_mode()
+            print(app.package_name)
+            for wk_unit in self.testing_framework.workload.work_units:
+                self.device.unlock_screen()
+                time.sleep(1)
+                self.profiler.init()
+                self.profiler.start_profiling()
+                app.start()
+                time.sleep(1)
+                wk_unit.stop_call = self.profiler.stop_profiling
+                self.testing_framework.execute_test(pkg, wk_unit)
+                app.stop()
+                self.profiler.export_results("GreendroidResultTrace0.csv")
+                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+                app.clean_cache()
+                return
+            self.device.uninstall_pkg(pkg)
+            self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+
+    def do_monkey_work(self, proj, pkgs):
+        for i, pkg in enumerate(pkgs):
+            print("testing package " + pkg)
+            app = App(self.device, proj, pkg, local_res=proj.results_dir)
+            app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
+            app.set_immersive_mode()
+            print(app.package_name)
             for wk_unit in self.testing_framework.workload.work_units:
                 self.device.unlock_screen()
                 time.sleep(1)
@@ -115,9 +155,34 @@ class PyAnaDroid(object):
                 self.profiler.export_results("GreendroidResultTrace0.csv")
                 self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
                 app.clean_cache()
-                break
+                return
             self.device.uninstall_pkg(pkg)
             self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+
+    def do_reran_work(self, proj, pkgs):
+        for i, pkg in enumerate(pkgs):
+            app = App(self.device, proj, pkg, local_res=proj.results_dir)
+            app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
+            app.set_immersive_mode()
+            print(app.package_name)
+            self.testing_framework.init_default_workload(app.package_name)
+            for wk_unit in self.testing_framework.workload.work_units:
+                self.device.unlock_screen()
+                time.sleep(1)
+                self.profiler.init()
+                self.profiler.start_profiling()
+                app.start()
+                time.sleep(1)
+                self.testing_framework.execute_test(pkg, wk_unit)
+                app.stop()
+                self.profiler.stop_profiling()
+                self.profiler.export_results("GreendroidResultTrace0.csv")
+                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+                app.clean_cache()
+                return
+            self.device.uninstall_pkg(pkg)
+            #self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+
 
 if __name__ == '__main__':
     folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/"

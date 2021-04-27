@@ -18,7 +18,7 @@ TESTS_PREFIX = "translated_"
 class RERANFramework(AbstractTestingFramework):
     def __init__(self, device, resources_dir=RERAN_RESOURCES_DIR):
         if not device.is_rooted():
-            raise Exception("RERAN is not compatible with Non-rooted device")
+            raise Exception("RERAN is not compatible with Non-rooted devices")
         self.device = device
         super(RERANFramework, self).__init__(id=TESTING_FRAMEWORK.RERAN)
         self.workload = None

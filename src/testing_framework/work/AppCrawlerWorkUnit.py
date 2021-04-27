@@ -1,64 +1,78 @@
+import threading
+import time
+
+from textops import cat, grep
+
+from src.testing_framework.work.MonkeyWorkUnit import convert_arg
 from src.testing_framework.work.WorkUnit import WorkUnit
 from src.utils.Utils import execute_shell_command
 
-EVENT_OPTIONS = {
-    "throttle",
-    "pct-touch",
-    "pct-motion",
-    "pct-trackball",
-    "pct-nav",
-    "pct-majornav",
-    "pct-syskeys",
-    "pct-appswitch",
-    "pct-anyevent"
+CRAWLER_OPTIONS = {
+    'android-sdk',
+    'apk-file',
+    'app-package-name',
+    'key-store',
+    'key-store-password',
+    'timeout-sec'
+}
+CUSTOM_CRAWLER_OPTIONS={
+    'test-count'
 }
 
-DEBUGGING_OPTIONS = {
-    "dbg-no-events",
-    "hprof",
-    "ignore-crashes",
-    "ignore-timeouts",
-    "ignore-security-exceptions",
-    "kill-process-after-error",
-    "monitor-native-crashes",
-    "wait-dbg"
-}
 
-DEFAULT_EVENT_COUNT = 1000
+LOG_FILE="crawler.out"
+DEFAULT_EVENT_COUNT=1000
+TIMEOUT_SECS=20
+CRAWLER_STOP_PHRASE="Crawl finished"
 
-def convert_arg(key, val):
-    if key in DEBUGGING_OPTIONS:
-        return "--" + key
-    elif key in EVENT_OPTIONS:
+def convert_arg(key,val):
+
+    if key in CRAWLER_OPTIONS:
         return "--" + key + " " + val
+    elif key in CUSTOM_CRAWLER_OPTIONS:
+        return ""
     else:
         print(f"invalid option:-{key}-".format(key=key))
         return ""
 
 
-class MonkeyWorkUnit(WorkUnit):
-    def __init__(self, bin_cmd):
-       super(MonkeyWorkUnit, self).__init__(bin_cmd)
+def detect_crawl_finish(retry=False, stop_call=None):
+    possible_finish = str((cat(LOG_FILE) | grep(CRAWLER_STOP_PHRASE)))
+    has_finished = possible_finish is not None and possible_finish != ""
+    if not has_finished and retry:
+        time.sleep(1)
+        detect_crawl_finish(retry=True, stop_call=None)
+    if stop_call is not None:
+        stop_call()
+
+class AppCrawlerWorkUnit(WorkUnit):
+    def __init__(self, bin_cmd, stop_call=None):
+        super(AppCrawlerWorkUnit, self).__init__(bin_cmd)
+        self.stop_call = stop_call
 
     def execute(self, package_name):
-        self.command = self.command + " " + package_name
+        self.__clean_log_file()
+        timeout_cmd = f"gtimeout -s 9 {TIMEOUT_SECS}"
+        self.command = timeout_cmd +" " + self.command % package_name + f" > {LOG_FILE}"
+        print("starting aux thread")
+        finish_thread = threading.Thread(target=detect_crawl_finish, args=(True, self.stop_call ))
+        finish_thread.start()
         print("executing command: " + self.command)
-        execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))
+        res = execute_shell_command(self.command)
+        self.__log_execution_end()
 
-
-    def config(self, seed=None, **kwargs):
+    def config(self, id=None, **kwargs):
         #adb shell monkey -s $monkey_seed -p $package -v --pct-syskeys 0 --ignore-security-exceptions --throttle $delay_bt_events $monkey_nr_events) &> $localDir/monkey$monkey_seed.log)"
         cmd = self.command
-        nr_events = DEFAULT_EVENT_COUNT
-        if seed is not None:
-            cmd += " -s {seed} ".format(seed=seed)
-        if "event-count" in kwargs.keys():
-            nr_events = kwargs["event-count"]
-            kwargs.pop("event-count")
         for k, v in kwargs.items():
             cmd += " " + convert_arg(k, v)
-
-        self.command = cmd + " " + str(nr_events)
+        self.command = cmd + " --app-package-name %s "
 
     def export_results(self):
         pass
+
+    def __clean_log_file(self):
+        execute_shell_command(f"> {LOG_FILE}")
+
+    def __log_execution_end(self):
+        execute_shell_command(f"echo \"{CRAWLER_STOP_PHRASE}. timeout\" >> {LOG_FILE}")

@@ -11,13 +11,7 @@ from src.utils.Utils import get_date_str
 
 
 def get_prefix(testing_framework, inst_type):
-    dirname=""
-    if testing_framework == TESTING_FRAMEWORK.MONKEY:
-        dirname += testing_framework.value
-    elif testing_framework == TESTING_FRAMEWORK.RERAN:
-        dirname += testing_framework.value
-    else:
-        raise Exception("Not implemented")
+    dirname = testing_framework.value
     if inst_type == INSTRUMENTATION_TYPE.METHOD:
         dirname+="Method"
     elif inst_type == INSTRUMENTATION_TYPE.TEST:

@@ -2,8 +2,7 @@ from subprocess import Popen, PIPE
 from textops import find
 
 PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
-#KEY_ALIAS = "anakey"
-PASSWORD = "pynadroid"
+KEYSTORE_PASSWORD = "pynadroid"
 
 def get_date_str():
     res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
@@ -23,7 +22,7 @@ def sign_apk(apk_path):
            signer_bin=signer_bin,
            keystore_path=PYNADROID_KEYSTORE_PATH,
            apk_path=apk_path,
-           passwd=PASSWORD
+           passwd=KEYSTORE_PASSWORD
        )
        res = execute_shell_command(cmd)
        res.validate(Exception("error signing apk "+ apk_path))
