@@ -11,11 +11,10 @@ DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
 
 class MonkeyFramework(AbstractTestingFramework):
     def __init__(self, default_workload=False, resdir=DEFAULT_RES_DIR):
-        super(MonkeyFramework, self).__init__()
+        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY)
         self.executable_prefix = "adb shell monkey"
         self.workload = None
         self.res_dir = resdir
-        self.id = TESTING_FRAMEWORK.MONKEY
         if default_workload:
             self.init_default_workload(DEFAULT_SEEDS_FILE)
 

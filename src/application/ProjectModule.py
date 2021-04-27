@@ -46,11 +46,12 @@ class ProjectModule(object):
         for dep_line in inside_dependencies.splitlines():
             is_imp = str(grep(dep_line, pattern="implementation"))
             if is_imp != "":
-                dependency, name, vers = re.search('(\'|\")(.*?)(\'|\")', is_imp)[2] | cut(sep=":")
+                splits = re.search('(\'|\")(.*)(\'|\"?)', is_imp).groups()[1].split(":")
+                dependency = splits[0]
             else:
                 is_comp = str(grep(dep_line, pattern="compile"))
                 if is_comp != "":
-                    dependency = re.search('name:(.*?)(\'|\")(.*?)(\'|\"),', is_comp).groups()[2]
+                    dependency = re.search('name:(.*?)(\'|\")(.*?)(\'|\"),', is_comp).groups()[1]
         self.dependencies.add(dependency)
 
     def create_inner_folder(self, name="libs"):

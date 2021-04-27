@@ -102,7 +102,7 @@ class GradleBuilder(AbstractBuilder):
         self.proj.set_version(build_type)
 
     def sign_apks(self, build_type=BUILD_TYPE.DEBUG):
-        if self.was_last_build_successful(task="sign") or build_type == BUILD_TYPE.DEBUG :
+        if self.was_last_build_successful(task="sign") or build_type == BUILD_TYPE.DEBUG:
             return
         print("signing generated apks")
         for apk_path in self.proj.get_apks(build_type):
@@ -304,7 +304,7 @@ ndk-location={android_home}/ndk-bundle'''\
             # create folder
             created_dir = proj_module.create_inner_folder(name="libs")
             # copy external lib to folder
-            lib_filepath = self.instrumenter.profiler.get_dependency_location()
+            lib_filepath = self.instrumenter.profiler.local_dep_location
             copy(lib_filepath, created_dir)
 
     def __add_external_libs(self, proj_module):
@@ -394,5 +394,8 @@ ndk-location={android_home}/ndk-bundle'''\
         new_file_ctnt = file_ctent + "\n" + pato_str + "\n}\n}"
         open(self.proj.root_build_file, 'w').write(new_file_ctnt)
 
+    def __has_builded_apks(self):
+        return len(mega_find(self.proj.proj_dir, pattern="*.apk", type_file='f')) > 0
+
     def needs_rebuild(self):
-        return True #TODO
+        return not self.__has_builded_apks() # TODO check build type and maybe last build output, lint, etc

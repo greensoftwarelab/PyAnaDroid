@@ -8,7 +8,9 @@ class RERANWorkUnit(WorkUnit):
 
     def execute(self, device):
         #os.system("adb shell su -c \" /data/local/./replay /data/local/" + filename+ " 0\"" )
-        device.execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))
+        print("cumandinho")
+        print(self.command)
+        device.execute_command(self.command,shell=True).validate(Exception("Error executing command " + self.command))
 
     def config(self, device_test_path=None, **kwargs):
         delay = 0 if 'delay' not in kwargs else kwargs['delay']

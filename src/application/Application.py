@@ -14,6 +14,8 @@ def get_prefix(testing_framework, inst_type):
     dirname=""
     if testing_framework == TESTING_FRAMEWORK.MONKEY:
         dirname += testing_framework.value
+    elif testing_framework == TESTING_FRAMEWORK.RERAN:
+        dirname += testing_framework.value
     else:
         raise Exception("Not implemented")
     if inst_type == INSTRUMENTATION_TYPE.METHOD:
@@ -68,6 +70,7 @@ class App(AbstractApplication):
 
     def start(self):
         self.device.execute_command("monkey -p {pkg} 1".format(pkg=self.package_name), args=[], shell=True)
+        print()
         self.on_fg = True
 
     def kill(self):

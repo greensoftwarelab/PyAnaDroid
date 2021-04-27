@@ -2,7 +2,8 @@ from abc import ABC, abstractmethod
 
 
 class AbstractTestingFramework(ABC):
-    def __init__(self):
+    def __init__(self, id):
+        self.id = id
         super().__init__()
 
     @abstractmethod
@@ -10,7 +11,7 @@ class AbstractTestingFramework(ABC):
         pass
 
     @abstractmethod
-    def init(self):
+    def init(self,):
         pass
 
     @abstractmethod

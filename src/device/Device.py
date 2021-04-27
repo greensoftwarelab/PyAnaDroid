@@ -125,3 +125,6 @@ class Device(AbstractDevice):
 
     def get_device_android_version(self):
         return super().get_device_android_version()
+
+    def is_rooted(self):
+        return super().execute_command("su -c 'echo hi'", shell=True).validate()

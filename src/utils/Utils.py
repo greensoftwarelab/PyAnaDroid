@@ -32,6 +32,7 @@ def sign_apk(apk_path):
 
 def execute_shell_command(cmd, args=[]):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
+    #print(command)
     proc = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
     out, err = proc.communicate()
     return COMMAND_RESULT(proc.returncode, out.decode("utf-8"), err.decode('utf-8'))

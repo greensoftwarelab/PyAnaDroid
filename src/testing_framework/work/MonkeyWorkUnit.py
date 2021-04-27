@@ -41,7 +41,7 @@ class MonkeyWorkUnit(WorkUnit):
        super(MonkeyWorkUnit, self).__init__(bin_cmd)
 
     def execute(self, package_name):
-        self.command = self.command + " " + package_name
+        self.command = self.command % package_name
         print("executing command: " + self.command)
         execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))
 
@@ -58,7 +58,7 @@ class MonkeyWorkUnit(WorkUnit):
         for k, v in kwargs.items():
             cmd += " " + convert_arg(k, v)
 
-        self.command = cmd + " " + str(nr_events)
+        self.command = cmd + " -p %s " + str(nr_events)
 
     def export_results(self):
         pass
