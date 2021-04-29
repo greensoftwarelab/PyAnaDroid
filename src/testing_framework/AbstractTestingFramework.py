@@ -7,11 +7,11 @@ class AbstractTestingFramework(ABC):
         super().__init__()
 
     @abstractmethod
-    def execute_test(self, w_unit, timeout=None):
+    def execute_test(self, w_unit, timeout=None, *args, **kwargs):
         pass
 
     @abstractmethod
-    def init(self,):
+    def init(self):
         pass
 
     @abstractmethod

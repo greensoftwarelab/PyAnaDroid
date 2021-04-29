@@ -30,10 +30,10 @@ class MonkeyFramework(AbstractTestingFramework):
         ofile.close()
 
 
-    def execute_test(self, package, wunit=None, timeout=None):
+    def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
-        wunit.execute(package)
+        wunit.execute(package,args,kwargs)
 
     def init(self):
         pass

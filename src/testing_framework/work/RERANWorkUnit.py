@@ -6,7 +6,7 @@ class RERANWorkUnit(WorkUnit):
        super(RERANWorkUnit, self).__init__(bin_cmd)
 
 
-    def execute(self, device):
+    def execute(self, device, *args, **kwargs):
         #os.system("adb shell su -c \" /data/local/./replay /data/local/" + filename+ " 0\"" )
         device.execute_command(self.command,shell=True).validate(Exception("Error executing command " + self.command))
 

@@ -50,7 +50,7 @@ class AppCrawlerWorkUnit(WorkUnit):
         super(AppCrawlerWorkUnit, self).__init__(bin_cmd)
         self.stop_call = stop_call
 
-    def execute(self, package_name):
+    def execute(self, package_name, **kwargs):
         self.__clean_log_file()
         timeout_cmd = f"gtimeout -s 9 {TIMEOUT_SECS}"
         self.command = timeout_cmd +" " + self.command % package_name + f" > {LOG_FILE}"

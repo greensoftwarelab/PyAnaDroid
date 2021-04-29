@@ -40,7 +40,7 @@ class MonkeyWorkUnit(WorkUnit):
     def __init__(self, bin_cmd):
        super(MonkeyWorkUnit, self).__init__(bin_cmd)
 
-    def execute(self, package_name):
+    def execute(self, package_name, *args, **kwargs):
         self.command = self.command % package_name
         print("executing command: " + self.command)
         execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))

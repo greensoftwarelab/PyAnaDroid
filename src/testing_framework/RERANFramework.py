@@ -28,7 +28,7 @@ class RERANFramework(AbstractTestingFramework):
 
     def __is_installed(self):
         res = self.device.execute_command("su -c 'ls /data/local/'",shell=True)
-        return res.validate(Exception("Error scanning /data/local dir")) and REPLAY_EXECUTABLE_NAME in res.output
+        return res.validate() and REPLAY_EXECUTABLE_NAME in res.output
 
     def install(self):
         execute_shell_command(f"{REPLAY_DEVICE_INSTALL_DIR}/build.sh").validate(Exception("Error while builind replay binary"))
@@ -53,10 +53,12 @@ class RERANFramework(AbstractTestingFramework):
             self.workload.add_unit(wk)
 
 
-    def execute_test(self, package, wunit=None, timeout=None):
+    def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
+
         wunit.execute(self.device)
+
 
     def init(self):
         pass
@@ -70,6 +72,5 @@ class RERANFramework(AbstractTestingFramework):
     def push_test(self, test_path):
         test_basename = os.path.basename(test_path)
         test_remote_path = f"{REPLAY_DEVICE_INSTALL_DIR}/{test_basename}"
-        print(test_remote_path)
         self.device.execute_command(f"push {test_path} {test_remote_path} ").validate(Exception("Error while pushing test"))
         return test_remote_path

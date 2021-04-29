@@ -1,7 +1,7 @@
 from src.Types import TESTING_FRAMEWORK
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from src.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
-from src.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
+
 from src.testing_framework.work.WorkLoad import WorkLoad
 
 DEFAULT_RESOURCES_DIR = "resources/testingFrameworks/app-crawler"
@@ -29,7 +29,7 @@ class AppCrawlerFramework(AbstractTestingFramework):
             self.workload.add_unit(wk)
 
 
-    def execute_test(self, package, wunit=None, timeout=None):
+    def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
         # java -jar "$ANADROID_PATH/src/testingFrameworks/app-crawler/crawl_launcher.jar" --apk-file "$installedAPK" --app-package-name "$package"  --android-sdk "$ANDROID_HOME") > "$test_log_file"
         if wunit is None:
             wunit = self.workload.consume()
