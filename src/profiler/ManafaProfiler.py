@@ -5,9 +5,10 @@ from manafa.emanafa import EManafa
 
 from src.application.Dependency import BuildDependency, DependencyType
 from src.profiler.AbstractProfiler import AbstractProfiler
+from manafa.utils.Utils import execute_shell_command, get_results_dir
 
 RESOURCES_DIR = "resources"
-
+MANAFA_RESULTS_DIR = get_results_dir()
 
 class ManafaProfiler(AbstractProfiler):
     def __init__(self, device, power_profile=None, timezone=None):
@@ -37,7 +38,11 @@ class ManafaProfiler(AbstractProfiler):
         pass
 
     def pull_results(self, file_id, target_dir):
-        pass
+        execute_shell_command("cp -r {manafa_results_dir}/hunter {results_dir}".format(
+            manafa_results_dir=MANAFA_RESULTS_DIR,
+            results_dir=target_dir
+            )
+        )
 
     def get_dependencies_location(self):
         return []

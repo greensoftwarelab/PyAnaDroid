@@ -49,6 +49,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-	implementation 'com.quinn.hunter:hunter-debug-library:0.9.6'
+	implementation 'io.github.raphael28:hunter-debug-library:0.9.8'
 	
 }
