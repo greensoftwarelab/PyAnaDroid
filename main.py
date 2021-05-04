@@ -117,9 +117,9 @@ class PyAnaDroid(object):
                 app.clean_cache()
                 break
             self.device.uninstall_pkg(pkg)
-            self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+            #self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
 if __name__ == '__main__':
-    folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/"
+    folder_of_apps = "/Users/raphaeloliveira/Desktop/pyAnaDroid/demoProjects/"
     anadroid = init_defaultPyAnaDroid(folder_of_apps)
     anadroid.defaultWorkflow()
