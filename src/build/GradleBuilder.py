@@ -313,6 +313,7 @@ ndk-location={android_home}/ndk-bundle'''\
             return
         file_ctent = str(cat(bld_file))
         dependencies = self.instrumenter.get_build_dependencies()
+        print(dependencies[0])
         has_depts = re.search(r'dependencies.*?\{', file_ctent)
         if has_depts is None:
             return
@@ -321,7 +322,7 @@ ndk-location={android_home}/ndk-bundle'''\
         for n_dp in dependencies:
             new_deps += gen_dependency_string(n_dp) + "\n\t"
         new_deps = original_deps + "\n\t" + new_deps + "\n"
-        new_file = re.sub(original_deps, new_deps, file_ctent)
+        new_file = file_ctent.replace(original_deps,new_deps)
         open(bld_file, 'w').write(new_file)
 
     def needs_external_lib_dependency(self):
@@ -364,6 +365,7 @@ ndk-location={android_home}/ndk-bundle'''\
         if has_plugin_apply:
             # replace
             plgs = echo(file_content) | grep("apply.*plugin")
+            plgs = str(plgs)
             for plg in plugins:
                 plg_string += f"apply plugin: '{plg}'\n"
             file_content = re.sub(plgs, (plg_string+plgs), file_content)

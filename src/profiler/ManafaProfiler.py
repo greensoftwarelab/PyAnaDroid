@@ -38,9 +38,9 @@ class ManafaProfiler(AbstractProfiler):
         pass
 
     def pull_results(self, file_id, target_dir):
-        execute_shell_command("cp -r {manafa_results_dir}/hunter {results_dir}".format(
+        execute_shell_command("cp -r {manafa_results_dir} {target_dir}".format(
             manafa_results_dir=MANAFA_RESULTS_DIR,
-            results_dir=target_dir
+            target_dir=target_dir
             )
         )
 

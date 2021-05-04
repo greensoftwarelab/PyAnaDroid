@@ -5,8 +5,8 @@ class DefaultSemanticVersion(object):
 
     def __init__(self, full_version_id):
         super(DefaultSemanticVersion, self).__init__()
-        full_version_id = full_version_id.replace("`", "").replace("_", "")
-        # print(full_version_id)
+        full_version_id = full_version_id.replace("'", "").replace("_", "")
+        #print(full_version_id)
         if "-" in full_version_id:
             full_version_id = full_version_id.split("-")[0]
         if re.match(r'^v', full_version_id) or re.match(r'^V', full_version_id):

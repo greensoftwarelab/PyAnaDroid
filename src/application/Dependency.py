@@ -14,3 +14,6 @@ class BuildDependency(object):
         self.dep_type = dep_type
         self.version = version
         self.bin_type = bin_type
+
+    def __str__(self):
+        return self.name + " " + self.version
