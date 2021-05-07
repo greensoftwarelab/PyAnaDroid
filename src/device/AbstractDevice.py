@@ -31,15 +31,15 @@ class AbstractDevice(ABC):
 
 
     @abstractmethod
-    def execute_root_command(self, cmd, args):
+    def execute_root_command(self, cmd, args=[]):
         cmd = cmd + " " + ' '.join(args)
-        ret, out, err = execute_shell_command(
-            "adb -s {serial} shell root -c '{command}' ".format(
+        ret = execute_shell_command(
+            "adb -s {serial} shell su -c '{command}' ".format(
                 serial=self.serial_nr,
                 command=cmd
             )
         )
-        return ret, out, err
+        return ret
 
     @abstractmethod
     def install_apks(self,apk_paths):

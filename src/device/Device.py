@@ -1,10 +1,17 @@
+import json
 import re
+from enum import Enum
 
 from src.application.AndroidProject import BUILD_TYPE
 from src.device.AbstractDevice import AbstractDevice
 import difflib
 
+from src.device.DeviceState import DeviceState, DEVICE_STATE_ENFORCE
 from src.utils.Utils import execute_shell_command
+
+CONFIG_DIR = "resources/config"
+CONFIG_TEST_FILE = CONFIG_DIR + "/" + "device_state_on_test.json"
+CONFIG_IDLE_FILE = CONFIG_DIR + "/" + "device_state_on_idle.json"
 
 
 def get_first_connected_device():
@@ -24,18 +31,22 @@ class Device(AbstractDevice):
     def __init__(self,  serial_nr ):
         super(Device, self).__init__(serial_nr)
         self.props = {}
+        self.state = None
         self.installed_packages = set()
         self.__init_installed_packages()
         self.__init_props()
+        self.device_state = DeviceState(self)
+        self.device_state_test = self.load_device_state(CONFIG_TEST_FILE)
+        self.device_state_idle = self.load_device_state(CONFIG_IDLE_FILE)
 
     def get_device_props(self):
         return self.props
 
-    def execute_command(self, cmd, args=[],shell=False):
+    def execute_command(self, cmd, args=[], shell=False):
         return super().execute_command(cmd, args, shell)
 
-    def execute_root_command(self, cmd, args):
-        pass
+    def execute_root_command(self, cmd, args=[]):
+        return super(Device, self).execute_root_command(cmd,args)
 
     def install_apks(self, andr_proj, build_type=BUILD_TYPE.RELEASE):
         apks_built = andr_proj.get_apks(build_type)
@@ -128,3 +139,31 @@ class Device(AbstractDevice):
 
     def is_rooted(self):
         return super().execute_command("su -c 'echo hi'", shell=True).validate()
+
+    def load_device_state(self, file):
+        json_def={}
+        with open(file, 'r') as filehandle:
+            json_def = json.load(filehandle)
+        return json_def
+
+    def set_device_state(self, state_cfg=DEVICE_STATE_ENFORCE.TEST, perm_json=None):
+        vals = {}
+        if state_cfg == DEVICE_STATE_ENFORCE.APP and perm_json is not None:
+            for perm in perm_json:
+                vals += self.device_state.get_states_from_permission(perm)
+        elif state_cfg == DEVICE_STATE_ENFORCE.TEST:
+            vals = self.device_state_test
+        elif state_cfg == DEVICE_STATE_ENFORCE.IDLE:
+            vals = self.device_state_idle
+        print(vals)
+        for k, v in vals.items():
+            self.device_state.enforce_state(k, v)
+
+
+
+
+
+
+
+
+
