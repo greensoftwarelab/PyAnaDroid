@@ -21,15 +21,19 @@ from src.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
 from src.testing_framework.RERANFramework import RERANFramework
 from src.utils.Utils import get_apksigner_bin
 
-#MIN_API_LEVEL = 9
-#MAX_API_LEVEL = 30
+
+# MIN_API_LEVEL = 9
+# MAX_API_LEVEL = 30
 
 
 def init_defaultPyAnaDroid(apps_dir):
     return PyAnaDroid(apps_dir=apps_dir, profiler=PROFILER.TREPN)
 
+
 class PyAnaDroid(object):
-    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN, testing_framework=TESTING_FRAMEWORK.MONKEY_RUNNER, device=None, instrumenter=INSTRUMENTER.JINST, analyzer=ANALYZER.ANADROID_ANALYZER,instrumentation_type=INSTRUMENTATION_TYPE.TEST ):
+    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN,
+                 testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
+                 analyzer=ANALYZER.ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION):
         self.apps_dir = apps_dir
         self.device = device if device is not None else get_first_connected_device()
         self.results_dir = results_dir
@@ -39,7 +43,6 @@ class PyAnaDroid(object):
         self.instrumenter = self.__infer_instrumenter(instrumenter)
         self.analyzer = self.__infer_analyzer(analyzer)
         self.resources_dir = "resources"
-
 
     def __infer_profiler(self, profiler):
         if profiler in SUPPORTED_PROFILERS:
@@ -97,7 +100,7 @@ class PyAnaDroid(object):
         for app_name in app_projects:
             print("Processing app " + app_name)
             original_proj = AndroidProject(projname=app_name, projdir=self.apps_dir + "/" + app_name)
-            instrumented_proj_dir = self.instrumenter.instrument(original_proj,instr_type=self.instrumentation_type)
+            instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
             builder = GradleBuilder(instr_proj, self.device, self.resources_dir, self.instrumenter)
             builder.build_proj_and_apk(build_type=BUILD_TYPE.RELEASE)
@@ -145,6 +148,7 @@ class PyAnaDroid(object):
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
             app.set_immersive_mode()
             print(app.package_name)
+            i = 0
             for wk_unit in self.testing_framework.workload.work_units:
                 self.device.unlock_screen()
                 time.sleep(1)
@@ -158,9 +162,11 @@ class PyAnaDroid(object):
                 self.profiler.export_results("GreendroidResultTrace0.csv")
                 self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
                 app.clean_cache()
-                return
+                i += 1
+                if i == 4:
+                    return
             self.device.uninstall_pkg(pkg)
-            self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+            # self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
     def do_reran_work(self, proj, pkgs):
         for i, pkg in enumerate(pkgs):
@@ -184,10 +190,10 @@ class PyAnaDroid(object):
                 app.clean_cache()
                 return
             self.device.uninstall_pkg(pkg)
-            #self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+            # self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
 
 if __name__ == '__main__':
-    folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/"
+    folder_of_apps = "/Users/raphaeloliveira/Desktop/pyAnaDroid/demoProjects/"
     anadroid = init_defaultPyAnaDroid(folder_of_apps)
     anadroid.defaultWorkflow()

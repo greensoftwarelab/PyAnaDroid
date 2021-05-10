@@ -7,7 +7,7 @@ from src.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
 from src.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
 from src.utils.Utils import execute_shell_command
 
-JINST_PATH = "/Users/ruirua/repos/pyAnaDroid/resources/jars/jInst.jar"  # loadFromConfig
+JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
 
 
 
@@ -32,9 +32,9 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.classpath_dependencies=[]
         self.build_plugins=[]
         if instr_type == INSTRUMENTATION_TYPE.ANNOTATION:
-            self.build_dependencies.append(BuildDependency("com.quinn.hunter:hunter-debug-library", version="0.9.6"))
-            self.classpath_dependencies.append(BuildDependency("com.quinn.hunter:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="1.1.0"))
-            self.classpath_dependencies.append(BuildDependency("com.quinn.hunter:hunter-transform", dep_type=DependencyType.CLASSPATH, version="1.1.0"))
+            self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="0.9.8"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="0.9.8"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH, version="0.9.5"))
             self.build_plugins.append("hunter-debug")
 
 
