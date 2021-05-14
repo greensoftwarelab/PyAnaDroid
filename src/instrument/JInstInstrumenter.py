@@ -32,9 +32,9 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.classpath_dependencies=[]
         self.build_plugins=[]
         if instr_type == INSTRUMENTATION_TYPE.ANNOTATION:
-            self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="0.9.8"))
-            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="0.9.8"))
-            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH, version="0.9.5"))
+            self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="1.0.1"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="1.0.1"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH, version="0.9.8"))
             self.build_plugins.append("hunter-debug")
 
 
