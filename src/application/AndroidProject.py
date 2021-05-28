@@ -2,7 +2,7 @@ import re
 from enum import Enum
 from os import mkdir
 
-from textops import cat, grep, cut, sed
+from textops import cat, grep, cut, sed, echo
 
 from src.application.ProjectModule import ProjectModule
 from src.build.versionUpgrader import DefaultSemanticVersion
@@ -65,10 +65,22 @@ class AndroidProject(object):
         res.validate()
         return res.output
 
+
+    def __parse_modules(self, setts_file):
+        modules =[]
+        modul_lines = cat(setts_file) | grep('include') # | cut(sep=":", col=1) | sed(pats="\'|,", repls="")
+        for mod_line in modul_lines:
+            for mod in mod_line.split(","):
+                module = str(echo(mod) | sed("include","") | cut(sep=":", col=1) | sed(pats="\'|,", repls="")).strip()
+                modules.append(module)
+
+        return modules
+
     def __init_modules(self):
         setts_file = self.get_gradle_settings()
-        modules = cat(setts_file) | grep('include') | cut(sep=":", col=1) | sed(pats="\'", repls="" )
-        for mod_name in modules:
+        modules = self.__parse_modules(setts_file)
+        for mod_n in modules:
+            mod_name = mod_n.strip()
             res = execute_shell_command("find %s -maxdepth 1 -type d -name \"%s\"" % (self.proj_dir, mod_name))
             if res.validate():
                 self.modules[mod_name] = ProjectModule(mod_name, res.output.strip())
@@ -91,7 +103,7 @@ class AndroidProject(object):
 
     def get_apks(self, build_type=BUILD_TYPE.DEBUG):
         vals = mega_find(self.proj_dir, pattern="*.apk", type_file='f')
-        return list(filter( lambda  x : build_type.value.lower() in  x.lower(), vals))
+        return list(filter(lambda x: build_type.value.lower() in x.lower(), vals))
 
     def __init_results_dir(self):
         res_app_dir= self.results_dir +"/"+ self.app_id
