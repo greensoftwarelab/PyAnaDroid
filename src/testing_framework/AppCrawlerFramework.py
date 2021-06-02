@@ -1,3 +1,5 @@
+import time
+
 from src.Types import TESTING_FRAMEWORK
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from src.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
@@ -53,3 +55,19 @@ class AppCrawlerFramework(AbstractTestingFramework):
             cfg[key] = pair.strip()
         ofile.close()
         return cfg
+
+    def test_app(self, device, app, profiler):
+        for wk_unit in self.workload.work_units:
+            device.unlock_screen()
+            time.sleep(1)
+            profiler.init()
+            profiler.start_profiling()
+            app.start()
+            time.sleep(1)
+            wk_unit.stop_call = profiler.stop_profiling
+            self.execute_test(app.package_name, wk_unit)
+            app.stop()
+            profiler.export_results("GreendroidResultTrace0.csv")
+            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            app.clean_cache()
+            break

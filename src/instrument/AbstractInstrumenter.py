@@ -5,6 +5,7 @@ DEFAULT_LOG_FILENAME="instrumentation_log.json"
 class AbstractInstrumenter(ABC):
     def __init__(self):
         super().__init__()
+        self.current_instr_type = None
 
     @abstractmethod
     def init(self):

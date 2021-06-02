@@ -38,6 +38,7 @@ class Device(AbstractDevice):
         self.device_state = DeviceState(self)
         self.device_state_test = self.load_device_state(CONFIG_TEST_FILE)
         self.device_state_idle = self.load_device_state(CONFIG_IDLE_FILE)
+        self.installed_apks = []
 
     def get_device_props(self):
         return self.props
@@ -53,7 +54,7 @@ class Device(AbstractDevice):
         installed_packages = set()
         for apk in apks_built:
             old_packs = self.installed_packages
-            res = super().execute_command("install -r %s" % apk,args=[], shell=False)
+            res = super().execute_command("install -r %s" % apk, args=[], shell=False)
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
@@ -63,7 +64,8 @@ class Device(AbstractDevice):
                     continue
                 else:
                     diff_pkgs = [the_pack]
-
+            print("APK installed " + apk)
+            self.installed_apks.append(apk)
             installed_pack = diff_pkgs[0]
             installed_packages.add(installed_pack)
             self.installed_packages.add(installed_pack)
@@ -111,7 +113,7 @@ class Device(AbstractDevice):
     def get_package_matching(self, pkg_aprox_name):
         matching_list = list(filter(lambda x: pkg_aprox_name in x, self.installed_packages))
         if len(matching_list) > 0:
-            return matching_list[0]
+            return difflib.get_close_matches(pkg_aprox_name, matching_list)[0]
         else:
             # pkg_name diff after install
             return difflib.get_close_matches(pkg_aprox_name, self.installed_packages)[0]
@@ -155,15 +157,14 @@ class Device(AbstractDevice):
             vals = self.device_state_test
         elif state_cfg == DEVICE_STATE_ENFORCE.IDLE:
             vals = self.device_state_idle
-        print(vals)
         for k, v in vals.items():
             self.device_state.enforce_state(k, v)
 
 
-
-
-
-
-
-
-
+    def get_new_installed_pkgs(self):
+        old_pkgs = self.installed_packages
+        new_pkgs = self.list_installed_packages()
+        has_no_prefix = lambda candidate, pklist :  len(list(filter(lambda z: z in candidate and z != candidate, pklist))) == 0
+        return list(filter(
+            lambda x: x not in old_pkgs and has_no_prefix(x, new_pkgs),
+            new_pkgs))

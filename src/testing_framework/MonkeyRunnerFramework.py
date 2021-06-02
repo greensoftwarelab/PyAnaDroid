@@ -1,4 +1,5 @@
 import os
+import time
 from sys import path
 
 from src.Types import TESTING_FRAMEWORK
@@ -54,3 +55,19 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
 
     def uninstall(self):
         pass
+
+    def test_app(self, device, app, profiler):
+        for wk_unit in self.workload.work_units:
+            device.unlock_screen()
+            time.sleep(1)
+            profiler.init()
+            profiler.start_profiling()
+            app.start()
+            time.sleep(1)
+            self.execute_test(app.package_name, wk_unit)
+            app.stop()
+            profiler.stop_profiling()
+            profiler.export_results("GreendroidResultTrace0.csv")
+            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            app.clean_cache()
+            return

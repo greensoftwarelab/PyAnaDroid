@@ -2,6 +2,7 @@ import re
 from abc import ABC, abstractmethod
 from enum import Enum
 
+from src.build.versionUpgrader import DefaultSemanticVersion
 from src.utils.Utils import execute_shell_command
 
 
@@ -72,17 +73,13 @@ class AbstractDevice(ABC):
         else:
             # press lock button -> KEYCODE_MENU
             res = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[],shell=True)
+            if not self.is_screen_unlocked():
+                # if still locked -> swipe up
+                res = self.execute_command("input touchscreen swipe 930 880 930 180 #", args=[],shell=True)
             res.validate()
 
     @abstractmethod
     def is_screen_unlocked(self):
-        not_working='''ret, o, e = self.execute_command(" dumpsys power | grep \'mHolding\'", args=[], shell=True)
-        #print(o)
-        is_on = "true" in (o | grep("mHoldingWakeLockSuspendBlocker").tostr().lower())
-        #print("is_on:" + str(is_on))
-        is_not_dreaming = "true" in o | grep("mHoldingWakeLockSuspendBlocker").tostr().lower()
-        #print("is_not_dreaming:" + str(is_not_dreaming))
-        return is_on and is_not_dreaming'''
         res = self.execute_command("dumpsys window | grep mDreamingLockscreen", args=[], shell=True)
         res.validate()
         is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower()
@@ -96,12 +93,13 @@ class AbstractDevice(ABC):
 
     @abstractmethod
     def is_screen_dreaming(self):
-        res = self.execute_command("dumpsys window | grep dreaming", args=[], shell=True)
-        is_dreaming = "true" in re.search(" dreaming=(true|false|null)", res.output).groups()[0].lower()
+        res = self.execute_command("dumpsys window", args=[], shell=True)
+        is_dreaming = "true" in re.search(" dreaming=(true|false|null)", res.output).groups()[0].lower() \
+                      or "true" in re.search(" mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower()
         return is_dreaming
 
     @abstractmethod
     def get_device_android_version(self):
         res = self.execute_command("getprop ro.build.version.release", shell=True)
         if res.validate(Exception("Unable do get android device version")):
-            return int(res.output.strip())
+            return DefaultSemanticVersion(res.output.strip())

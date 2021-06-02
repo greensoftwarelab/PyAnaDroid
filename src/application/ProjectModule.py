@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 from os import mkdir
 
@@ -51,11 +52,11 @@ class ProjectModule(object):
             else:
                 is_comp = str(grep(dep_line, pattern="compile"))
                 if is_comp != "":
-                    dependency = re.search('name:(.*?)(\'|\")(.*?)(\'|\"),', is_comp).groups()[1]
+                    dependency = re.search('[\'\"](.*)[\'\"]', is_comp).groups()[0].split(":")[0]
         self.dependencies.add(dependency)
 
     def create_inner_folder(self, name="libs"):
-        path = self.mod_dir + "/" + name
+        path = os.path.join(self.mod_dir, name)
         try:
             mkdir(path)
         except FileExistsError:

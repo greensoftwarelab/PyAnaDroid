@@ -49,22 +49,21 @@ class App(AbstractApplication):
             os.mkdir(old_runs_dir)
         for f in os.scandir(self.local_res):
             if f.path != all_dir and f.path != old_runs_dir:
-                shutil.move(f.path, old_runs_dir)
+                try:
+                    shutil.move(f.path, old_runs_dir)
+                except Exception:
+                    continue
         #cp all methods
         if not os.path.exists(all_dir + "/allMethods.json"):
-            shutil.move("allMethods.json", all_dir)
-
-
+            shutil.move(os.path.join( self.proj.proj_dir , "allMethods.json"), all_dir)
 
     def init_local_test_(self, testing_framework, inst_type):
         dirname = self.local_res + "/"+ get_prefix(testing_framework,inst_type)
         os.mkdir(dirname)
         self.curr_local_dir = dirname
 
-
     def start(self):
         self.device.execute_command("monkey -p {pkg} 1".format(pkg=self.package_name), args=[], shell=True)
-        print()
         self.on_fg = True
 
     def kill(self):
@@ -82,7 +81,7 @@ class App(AbstractApplication):
         pass
 
     def set_immersive_mode(self):
-        if self.device.get_device_android_version() >= 11:
+        if self.device.get_device_android_version().major >= 11:
             print("immersive mode not available on Android 11+ devices")
         print("setting immersive mode")
         self.device.execute_command(f"settings put global policy_control immersive.full={self.package_name}",shell=True)\

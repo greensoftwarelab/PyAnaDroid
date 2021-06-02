@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/ruirua/repos/RERAN/src/replay.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+stdint.h
+-
+sys/ioctl.h
+-
+fcntl.h
+-
+errno.h
+-
+unistd.h
+-
+time.h
+-
+

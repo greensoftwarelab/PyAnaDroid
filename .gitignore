@@ -12,10 +12,13 @@
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-demoProjects
-
+demoProjects/
+old_apps/
+allMethods.json
+results/
 # Generated files
 .idea/**/contentModel.xml
+
 
 # Sensitive or high-churn files
 .idea/**/dataSources/

@@ -16,4 +16,4 @@ class BuildDependency(object):
         self.bin_type = bin_type
 
     def __str__(self):
-        return self.name + " " + self.version
+        return self.name + (" " if  self.version is not None else "")

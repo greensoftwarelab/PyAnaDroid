@@ -1,13 +1,14 @@
-import os, time
-import sysconfig
+import os
+from os import listdir
 
-from manafa.emanafa import EManafa
 
-from src.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, SUPPORTED_PROFILERS, \
-    SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_INSTRUMENTERS, SUPPORTED_INSTRUMENTATION_TYPES, SUPPORTED_ANALYZERS
+from src.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, SUPPORTED_INSTRUMENTERS, \
+    SUPPORTED_INSTRUMENTATION_TYPES, SUPPORTED_SUITES, SUPPORTED_BUILDING_SYSTEMS
+from src.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, BUILD_SYSTEM
 from src.application.AndroidProject import AndroidProject, BUILD_TYPE
 from src.application.Application import App
 from src.build.GradleBuilder import GradleBuilder
+from src.build.SdkManagerWrapper import SDKManager
 from src.device.Device import get_first_connected_device
 
 from src.instrument.JInstInstrumenter import JInstInstrumenter
@@ -16,33 +17,38 @@ from src.profiler.ManafaProfiler import ManafaProfiler
 from src.profiler.TrepnProfiler import TrepnProfiler
 from src.results_analysis.AnaDroidAnalyzer import AnaDroidAnalyzer
 from src.testing_framework.AppCrawlerFramework import AppCrawlerFramework
+from src.testing_framework.JUnitBasedFramework import JUnitBasedFramework
 from src.testing_framework.MonkeyFramework import MonkeyFramework
 from src.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
 from src.testing_framework.RERANFramework import RERANFramework
-from src.utils.Utils import get_apksigner_bin
-
-
-# MIN_API_LEVEL = 9
-# MAX_API_LEVEL = 30
+from src.utils.Utils import mega_find
 
 
 def init_defaultPyAnaDroid(apps_dir):
-    return PyAnaDroid(apps_dir=apps_dir, profiler=PROFILER.TREPN)
+    return PyAnaDroid(apps_dir=apps_dir,
+                      testing_framework=TESTING_FRAMEWORK.MONKEY,
+                      profiler=PROFILER.MANAFA,
+                      build_type=BUILD_TYPE.DEBUG,
+                      instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION
+    )
 
 
 class PyAnaDroid(object):
-    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN,
+    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
-                 analyzer=ANALYZER.ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION):
+                 analyzer=ANALYZER.ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.TEST, build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG):
         self.apps_dir = apps_dir
         self.device = device if device is not None else get_first_connected_device()
         self.results_dir = results_dir
         self.profiler = self.__infer_profiler(profiler)
         self.testing_framework = self.__infer_testing_framework(testing_framework)
         self.instrumentation_type = self.__infer_instrumentation_type(instrumentation_type)
+        self.__validate_suite(profiler)
         self.instrumenter = self.__infer_instrumenter(instrumenter)
         self.analyzer = self.__infer_analyzer(analyzer)
+        self.builder = self.__infer_build_system(build_system)
         self.resources_dir = "resources"
+        self.build_type = build_type
 
     def __infer_profiler(self, profiler):
         if profiler in SUPPORTED_PROFILERS:
@@ -63,6 +69,8 @@ class PyAnaDroid(object):
                 return AppCrawlerFramework(default_workload=True)
             elif tf == TESTING_FRAMEWORK.MONKEY_RUNNER:
                 return MonkeyRunnerFramework(default_workload=True)
+            elif tf == TESTING_FRAMEWORK.JUNIT:
+                return JUnitBasedFramework()
             else:
                 return None
         else:
@@ -86,114 +94,106 @@ class PyAnaDroid(object):
         else:
             raise Exception("Unsupported Analyzer")
 
+
+    def __infer_build_system(self, build_system):
+        if build_system in SUPPORTED_BUILDING_SYSTEMS:
+            return build_system
+        else:
+            raise Exception("Unsupported Analyzer")
+
+
     def __infer_instrumentation_type(self, test_orientation):
         if test_orientation in SUPPORTED_INSTRUMENTATION_TYPES:
             if test_orientation == INSTRUMENTATION_TYPE.TEST:
                 return test_orientation
             elif test_orientation == INSTRUMENTATION_TYPE.ANNOTATION:
                 return test_orientation
+            elif test_orientation == INSTRUMENTATION_TYPE.METHOD:
+                return test_orientation
         else:
             raise Exception("Unsupported instrumentation")
 
+    def init_builder(self, instr_proj):
+        if self.builder == BUILD_SYSTEM.GRADLE:
+            return GradleBuilder(instr_proj, self.device, self.resources_dir, self.instrumenter)
+        return None
+
     def defaultWorkflow(self):
-        app_projects = list(filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
-        for app_name in app_projects:
+        app_projects = self.load_projects()
+        for app_proj in app_projects:
+            app_name = os.path.basename(app_proj)
             print("Processing app " + app_name)
-            original_proj = AndroidProject(projname=app_name, projdir=self.apps_dir + "/" + app_name)
+            original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
-            builder = GradleBuilder(instr_proj, self.device, self.resources_dir, self.instrumenter)
-            builder.build_proj_and_apk(build_type=BUILD_TYPE.RELEASE)
-            installed_pkgs = self.device.install_apks(instr_proj)
+            builder = self.init_builder(instr_proj)
+            builder.build_proj_and_apk(build_type=self.build_type, build_tests_apk=self.testing_framework.id==TESTING_FRAMEWORK.JUNIT )
+            builder.install_apks(build_type=self.build_type, install_apk_test=self.testing_framework.id==TESTING_FRAMEWORK.JUNIT)
+            installed_pkgs = self.device.get_new_installed_pkgs()
+            #installed_pkgs = self.device.install_apks(instr_proj, build_type=self.build_type)
+            #self.do_work(instr_proj, installed_pkgs)
             self.do_work(instr_proj, installed_pkgs)
+            builder.uninstall_all_apks()
 
     def do_work(self, proj, pkgs):
-        if self.testing_framework.id == TESTING_FRAMEWORK.MONKEY:
-            self.do_monkey_work(proj, pkgs)
-        elif self.testing_framework.id == TESTING_FRAMEWORK.RERAN:
-            self.do_reran_work(proj, pkgs)
-        elif self.testing_framework.id == TESTING_FRAMEWORK.APP_CRAWLER:
-            self.do_app_crawler_work(proj, pkgs)
-        elif self.testing_framework.id == TESTING_FRAMEWORK.MONKEY_RUNNER:
-            self.do_monkey_work(proj, pkgs)
-
-    def do_app_crawler_work(self, proj, pkgs):
         for i, pkg in enumerate(pkgs):
             print("testing package " + pkg)
             app = App(self.device, proj, pkg, local_res=proj.results_dir)
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
             app.set_immersive_mode()
-            print(app.package_name)
-            for wk_unit in self.testing_framework.workload.work_units:
-                self.device.unlock_screen()
-                time.sleep(1)
-                self.profiler.init()
-                self.profiler.start_profiling()
-                app.start()
-                time.sleep(1)
-                wk_unit.stop_call = self.profiler.stop_profiling
-                self.testing_framework.execute_test(pkg, wk_unit)
-                app.stop()
-                self.profiler.export_results("GreendroidResultTrace0.csv")
-                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
-                app.clean_cache()
-                return
+            self.testing_framework.init_default_workload(pkg=pkg)
+            self.testing_framework.test_app(self.device, app, self.profiler)
             self.device.uninstall_pkg(pkg)
-            self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+            #self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
-    def do_monkey_work(self, proj, pkgs):
-        for i, pkg in enumerate(pkgs):
-            print("testing package " + pkg)
-            app = App(self.device, proj, pkg, local_res=proj.results_dir)
-            app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
-            app.set_immersive_mode()
-            print(app.package_name)
-            i = 0
-            for wk_unit in self.testing_framework.workload.work_units:
-                self.device.unlock_screen()
-                time.sleep(1)
-                self.profiler.init()
-                self.profiler.start_profiling()
-                app.start()
-                time.sleep(1)
-                self.testing_framework.execute_test(pkg, wk_unit)
-                app.stop()
-                self.profiler.stop_profiling()
-                self.profiler.export_results("GreendroidResultTrace0.csv")
-                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
-                app.clean_cache()
-                i += 1
-                if i == 4:
-                    return
-            self.device.uninstall_pkg(pkg)
-            # self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+    def __validate_suite(self, profiler):
+        if not self.instrumentation_type in SUPPORTED_SUITES[profiler]:
+            raise Exception(f"{self.instrumentation_type.value} based-instrumentation not supported with {profiler.value}")
 
-    def do_reran_work(self, proj, pkgs):
-        for i, pkg in enumerate(pkgs):
-            app = App(self.device, proj, pkg, local_res=proj.results_dir)
-            app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
-            app.set_immersive_mode()
-            print(app.package_name)
-            self.testing_framework.init_default_workload(app.package_name)
-            for wk_unit in self.testing_framework.workload.work_units:
-                self.device.unlock_screen()
-                time.sleep(1)
-                self.profiler.init()
-                self.profiler.start_profiling()
-                app.start()
-                time.sleep(1)
-                self.testing_framework.execute_test(pkg, wk_unit)
-                app.stop()
-                self.profiler.stop_profiling()
-                self.profiler.export_results("GreendroidResultTrace0.csv")
-                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
-                app.clean_cache()
-                return
-            self.device.uninstall_pkg(pkg)
-            # self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+    def just_build_apps(self):
+        app_projects = self.load_projects()
+        for app_proj in app_projects:
+            app_name = os.path.basename(app_proj)
+            print("Processing app " + app_name + " in " + app_proj)
+            original_proj = AndroidProject(projname=app_name, projdir=app_proj)
+            instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
+            instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
+            builder = self.init_builder(instr_proj)
+            builder.build_proj_and_apk(build_type=self.build_type,
+                                       build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
+
+
+
+    def load_projects(self):
+        return_projs = []
+        if is_android_project(self.apps_dir):
+            potencial_projects = [self.apps_dir]
+        else:
+            potencial_projects = list(filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
+        for maybe_proj in potencial_projects:
+            path_dir = os.path.join(self.apps_dir, maybe_proj)
+            has_gradle_right_next = mega_find(path_dir, pattern="build.gradle", maxdepth=1, type_file='f')
+            if len(has_gradle_right_next) > 0:
+                return_projs.append(path_dir)
+            else:
+                children_dirs = list(filter(lambda x: os.path.isdir(os.path.join(path_dir, x)), os.listdir(path_dir)))
+                for child in children_dirs:
+                    child_path_dir = os.path.join(path_dir, child)
+                    has_gradle_right_next = mega_find(child_path_dir, pattern="build.gradle", maxdepth=1, type_file='f')
+                    if len(has_gradle_right_next) > 0:
+                        return_projs.append(child_path_dir)
+        return return_projs
+
+
+def is_android_project(dirpath):
+    return "settings.gradle" in [f for f in listdir(dirpath)]
 
 
 if __name__ == '__main__':
-    folder_of_apps = "/Users/raphaeloliveira/Desktop/pyAnaDroid/demoProjects/"
+    folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/old_apps/outDir/PDFConverter"
+    #folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/SampleApp"
+    #test_sdkmanager()
+    #folder_of_apps = "demoProjects/"
     anadroid = init_defaultPyAnaDroid(folder_of_apps)
     anadroid.defaultWorkflow()
+    #anadroid.just_build_apps()

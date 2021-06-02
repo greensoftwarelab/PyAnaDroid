@@ -157,12 +157,13 @@ def eval(path, pack):
                 m_id['method_apis'].append(methodAPIStringToJSON(str(callee)))
             classe['class_methods'][str_id] = m_id
         graph[classe['class_name']] = classe
-    with open(pack + ".json", 'w') as outfile:
+    filename = pack + ".json"
+    with open(filename, 'w') as outfile:
         json.dump(graph, outfile, indent=3)
+    return filename
 
 
-
-class ApkAPIAnalyzer(AbstractAnalyzer):
+class ApkAPIAnalyzer(object):
     def __init__(self):
         super(ApkAPIAnalyzer, self).__init__()
 

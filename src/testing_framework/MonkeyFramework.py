@@ -1,3 +1,6 @@
+import os
+import time
+
 from src.Types import TESTING_FRAMEWORK
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from src.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
@@ -18,9 +21,9 @@ class MonkeyFramework(AbstractTestingFramework):
         if default_workload:
             self.init_default_workload(DEFAULT_SEEDS_FILE)
 
-    def init_default_workload(self, seeds_file):
+    def init_default_workload(self, pkg , seeds_file=DEFAULT_SEEDS_FILE):
         self.workload = WorkLoad()
-        wl_filename = self.res_dir + seeds_file
+        wl_filename = os.path.join(self.res_dir, seeds_file)
         config = self.__load_config_file()
         ofile = open(wl_filename, "r")
         for seed in ofile:
@@ -33,7 +36,7 @@ class MonkeyFramework(AbstractTestingFramework):
     def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
-        wunit.execute(package,args,kwargs)
+        wunit.execute(package, args, kwargs)
 
     def init(self):
         pass
@@ -49,7 +52,23 @@ class MonkeyFramework(AbstractTestingFramework):
         cfg = {}
         ofile = open(cfg_file, "r")
         for aline in ofile:
-            key,pair = aline.split("=")
+            key, pair = aline.split("=")
             cfg[key] = pair.strip()
         ofile.close()
         return cfg
+
+    def test_app(self, device, app, profiler):
+        for wk_unit in self.workload.work_units:
+            device.unlock_screen()
+            time.sleep(1)
+            profiler.init()
+            profiler.start_profiling()
+            app.start()
+            time.sleep(1)
+            self.execute_test(app.package_name, wk_unit)
+            app.stop()
+            profiler.stop_profiling()
+            profiler.export_results("GreendroidResultTrace0.csv")
+            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            app.clean_cache()
+            break

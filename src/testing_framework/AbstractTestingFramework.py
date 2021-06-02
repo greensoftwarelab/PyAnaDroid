@@ -21,3 +21,7 @@ class AbstractTestingFramework(ABC):
     @abstractmethod
     def uninstall(self):
         pass
+
+    @abstractmethod
+    def test_app(self, device, app, profiler):
+        pass

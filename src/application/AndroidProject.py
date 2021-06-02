@@ -2,7 +2,7 @@ import re
 from enum import Enum
 from os import mkdir
 
-from textops import cat, grep, cut, sed, echo
+from textops import cat, grep, cut, sed, echo, grepv
 
 from src.application.ProjectModule import ProjectModule
 from src.build.versionUpgrader import DefaultSemanticVersion
@@ -67,13 +67,12 @@ class AndroidProject(object):
 
 
     def __parse_modules(self, setts_file):
-        modules =[]
-        modul_lines = cat(setts_file) | grep('include') # | cut(sep=":", col=1) | sed(pats="\'|,", repls="")
+        modules = []
+        modul_lines = cat(setts_file) | grep('include') | grepv(r"(^\s*//)") # | cut(sep=":", col=1) | sed(pats="\'|,", repls="")
         for mod_line in modul_lines:
             for mod in mod_line.split(","):
-                module = str(echo(mod) | sed("include","") | cut(sep=":", col=1) | sed(pats="\'|,", repls="")).strip()
+                module = str(echo(mod) | sed("include", "") | cut(sep=":", col=1) | sed(pats="\'|,", repls="")).strip()
                 modules.append(module)
-
         return modules
 
     def __init_modules(self):

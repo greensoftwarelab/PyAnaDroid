@@ -37,7 +37,7 @@ struct input_event {
 	struct timeval time;
 	unsigned short type;
 	unsigned short code;
-	unsigned long value;
+	uint32_t value;
 };
 
 
@@ -52,7 +52,7 @@ void goSleep(uint64_t nsec)
 	t0->tv_sec = (long)(nsec / 1000000000);
 	t0->tv_nsec = (long)(nsec % 1000000000);
 	
-	printf("Sleeping for %lu sec, %lu nsec\n", t0->tv_sec, t0->tv_nsec);
+	//printf("Sleeping for %lu sec, %lu nsec\n", t0->tv_sec, t0->tv_nsec);
 
 	while ((nanosleep(t0, t1) == (-1)) && (errno == EINTR))
 	{
@@ -114,7 +114,7 @@ int main(int argc, char *argv[])
 	
 	if(file)
 	{		
-		size_t i, j, k, l, m, x;
+		int32_t i, j, k, l, m, x;
 			
 		char buffer[BUFSIZ], *ptr;				
 		fgets(buffer, sizeof buffer, file);		
@@ -128,13 +128,13 @@ int main(int argc, char *argv[])
 		unsigned short * eventType;
 		unsigned short * codeData;
 		unsigned short * typeData;
-		unsigned long * valueData;
+		uint32_t * valueData;
 		uint64_t * timeArray;
 		
 		eventType = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
 		codeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
 		typeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));		
-		valueData = (unsigned long *) calloc((lineNumbers*1), sizeof(unsigned long));
+		valueData = (uint32_t *) calloc((lineNumbers*1), sizeof(uint32_t));
 		timeArray = (uint64_t *) calloc((lineNumbers*1), sizeof(uint64_t));
 		
 	
@@ -165,7 +165,7 @@ int main(int argc, char *argv[])
 					else if(j == 2)
 						typeData[m] = (unsigned short)strtoul(ptr, &ptr, 10);
 					else if(j == 3)
-						valueData[m] = (unsigned long)strtoul(ptr, &ptr, 10);					
+						valueData[m] = (uint32_t)strtoul(ptr, &ptr, 10);					
 				}
 				
 				m++;
@@ -183,7 +183,8 @@ int main(int argc, char *argv[])
 
 		//========		Start Sending Events		============
 				
-		char device[] = "/dev/input/event "; 
+		char device[] = "/dev/input/event    "; 
+ 		char* start = device + 16;
 		//[16] is for the event input number
 		
 		char* deviceP = device;
@@ -196,14 +197,16 @@ int main(int argc, char *argv[])
 		
 		// For each of the line numbers get the event, validate it, and then write it
 		while(k < lineNumbers)
-		{				
-			int index = eventType[k];
-			if (fds[index] == -1)
-			{
-				deviceP[16] = eventType[k]+48; //add 48 to get to the ascii char
-				fds[index] = open(deviceP, O_RDWR);		
-			}
-			int fd = fds[index];
+		{		
+			if (eventType[k] > 9999)
+ 			{
+ 				fprintf(stderr, "could not handle so many types of events.\n");
+ 				return 1;
+ 			}
+
+ 			sprintf(start, "%d", eventType[k]);
+ 			fd = open(deviceP, O_RDWR);		
+			
 
 			int ret;
 			int version;
@@ -242,7 +245,6 @@ int main(int argc, char *argv[])
 			else
 			{		
 				// Sleep for time interval calculated in Translate
-				printf("%d. ", k);
 				goSleep(timeArray[j]);
 				checkEvent[0].type = codeData[k];
 				checkEvent[0].code = typeData[k];
@@ -255,19 +257,19 @@ int main(int argc, char *argv[])
 			struct input_event event[valid];
 			memset(&event, 0, sizeof(event));
 			
-			for(x = 0; x < valid; x++)
-			{
+			for(x = 0; x < valid; x++){			
 				event[x].type = checkEvent[x].type;
 				event[x].code = checkEvent[x].code;
-				event[x].value = checkEvent[x].value;
+				event[x].value = checkEvent[x].value;		
 			}
 					
 			// ** Write the event that we just got from checkEvent **
 			ret = write(fd, &event, sizeof(event));			
-						
 			if(ret < sizeof(event)) 
 			{
 				fprintf(stderr, "write event failed, %s\n", strerror(errno));
+				fprintf(stderr, "File %s Event: %d %d %u\n",deviceP,event[x].type, event[x].code, event[x].value);
+				
 				//should exit...				
 			}    
 		}		

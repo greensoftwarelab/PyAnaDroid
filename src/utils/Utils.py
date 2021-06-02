@@ -1,4 +1,4 @@
-from subprocess import Popen, PIPE
+from subprocess import Popen, PIPE, TimeoutExpired
 from textops import find
 
 PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
@@ -29,11 +29,20 @@ def sign_apk(apk_path):
        return res
 
 
-def execute_shell_command(cmd, args=[]):
+def execute_shell_command(cmd, args=[], timeout=None):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
+    out = bytes()
+    err = bytes()
     #print(command)
     proc = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
-    out, err = proc.communicate()
+    try:
+        out, err = proc.communicate(timeout=timeout)
+    except TimeoutExpired as e:
+        print("command " + cmd + " timed out")
+        out = e.stdout if e.stdout is not None else out
+        err = e.stderr if e.stderr is not None else err
+        proc.kill()
+        proc.returncode = 1
     return COMMAND_RESULT(proc.returncode, out.decode("utf-8"), err.decode('utf-8'))
 
 
@@ -41,7 +50,7 @@ def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
     basedir_len = len(basedir.split("/"))
     res = find(basedir, pattern=pattern, only_files=type_file=='f',only_dirs=type_file=='d' )
     # filter by depth
-    return list(filter(lambda x : basedir_len + mindepth <= len(x.split("/")) <= maxdepth + basedir_len, res))
+    return list(filter(lambda x: basedir_len + mindepth <= len(x.split("/")) <= maxdepth + basedir_len, res))
 
 class COMMAND_RESULT(object):
     def __init__(self,res,out,err):
@@ -72,6 +81,5 @@ class COMMAND_RESULT(object):
              })
 
 
-
-
-
+def log_to_file(content, filename):
+    open(filename, 'w').write(content)

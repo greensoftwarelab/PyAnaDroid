@@ -53,10 +53,10 @@ class DefaultSemanticVersion(object):
         return False
 
     def __ge__(self, other):
-        return not lt(self, other)
+        return not self.__lt__(other)
 
     def __gt__(self, other):
-        return not eq(self, other) and ge(self, other)
+        return not self.__eq__(other) and self.__ge__(other)
 
     def __hash__(self):
         return hash((self.major, self.minor, self.patch))

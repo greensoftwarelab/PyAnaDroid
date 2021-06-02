@@ -9,8 +9,8 @@ from src.application.AndroidProject import BUILD_TYPE
 from src.application.Dependency import DependencyType
 from src.build.AbstractBuilder import AbstractBuilder
 from src.build.versionUpgrader import DefaultSemanticVersion
-from src.utils.Utils import mega_find, execute_shell_command, sign_apk
-from src.build.GracleBuildErrorSolver import is_known_error, solve_known_error
+from src.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file
+from src.build.GracleBuildErrorSolver import is_known_error, solve_known_error, KNOWN_ERRORS
 
 TRANSITIVE = "implementation"
 TEST_TRANSITIVE = "testImplementation"
@@ -18,9 +18,9 @@ ANDROID_TEST_TRANSITIVE = "androidTestImplementation"
 DEBUG_TRANSITIVE = "debugImplementation"
 
 TEST_RUNNERS = {
-    'android.test.InstrumentationTestRunner': 22,
-    'android.support.test.runner.AndroidJUnitRunner': 28,
-    'androidx.test.runner.AndroidJUnitRunner': 32
+    'android.test.InstrumentationTestRunner': 1,
+    'android.support.test.runner.AndroidJUnitRunner': 22,
+    'androidx.test.runner.AndroidJUnitRunner': 28 # CONFIRM
 }
 
 LOCAL_PROPERTIES_FLAGS = {
@@ -39,10 +39,11 @@ DEX_OPTIONS = {
 
 LINT_OPTIONS = {
     'abortOnError': 'false',
+    'checkReleaseBuilds':'false'
 }
 
 ATRIBS_NAME_REMAPS = {
-    'packageName':'applicationId',
+    'packageName' : 'applicationId',
     'testPackageName':'testApplicationId',
     'packageNameSuffix':'applicationIdSuffix',
     'android.plugin.bootClasspath':'android.bootClasspath',
@@ -59,7 +60,7 @@ ATRIBS_NAME_REMAPS = {
 
 BUILD_RESULTS_FILE="buildStatus.json"
 SUCCESS_VALUE="Success"
-
+BUILD_ATTEMPTS = 5
 
 
 def gen_dependency_string(dependency):
@@ -95,11 +96,28 @@ class GradleBuilder(AbstractBuilder):
         self.gradle_plg_version = proj.get_gradle_plugin()
         self.build_tools_version = None
         set_transitive_names(self.gradle_plg_version)
+        self.last_build_info = self.get_last_build_info()
+        self.building_attempts = BUILD_ATTEMPTS
 
-    def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG):
+    def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG, build_tests_apk=False):
         self.build()
+        if build_tests_apk:
+            self.build_tests_apk()
         self.build_apk(build_type=build_type)
         self.proj.set_version(build_type)
+
+    def install_apks(self, build_type=BUILD_TYPE.DEBUG, install_apk_test=False):
+        task_name = "install" + build_type.value
+        self.__execute_gradlew_task(task_name)
+        if install_apk_test:
+            task_name = f"install{build_type.value}AndroidTest"
+            self.__execute_gradlew_task(task_name)
+
+
+    def uninstall_all_apks(self):
+        task_name = "uninstallAll"
+        self.__execute_gradlew_task(task_name)
+
 
     def sign_apks(self, build_type=BUILD_TYPE.DEBUG):
         if self.was_last_build_successful(task="sign") or build_type == BUILD_TYPE.DEBUG:
@@ -113,15 +131,15 @@ class GradleBuilder(AbstractBuilder):
                 raise Exception("Error signing apk")
 
 
-    def build_apk(self,build_type=BUILD_TYPE.DEBUG):
+    def build_apk(self, build_type=BUILD_TYPE.DEBUG):
         task = "assemble" + build_type.value
         if self.was_last_build_successful(task) and not self.needs_rebuild():
             print("Not building again. Last build was successful")
             return
         val = self.__execute_gradlew_task(task=task)
-        was_success = str(val | grep("BUILD SUCCESSFUL")) != ""
+        was_success = re.search("BUILD SUCCESSFUL", val)
         if was_success:
-            print("BUILD SUCCESSFUL")
+            print(f"{task}-BUILD SUCCESSFUL")
             self.regist_successfull_build(task)
             if build_type == BUILD_TYPE.RELEASE:
                 res = self.proj.get_apks(build_type=BUILD_TYPE.RELEASE)
@@ -130,16 +148,33 @@ class GradleBuilder(AbstractBuilder):
                     sign_apk(apk)
         else:
             print("Error Building APK")
+        filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task, results=("SUCCCESS" if was_success else "ERROR")))
+        log_to_file(content=val, filename=filename)
 
     def build_tests_apk(self):
-        pass
+        task = "assembleAndroidTest"
+        if self.was_last_build_successful(task) and not self.needs_rebuild():
+            print("Not building tests apk again. Last build was successful")
+            return
+        val = self.__execute_gradlew_task(task=task)
+        was_success = re.search("BUILD SUCCESSFUL", val)
+        if was_success:
+            print(f"{task}-BUILD SUCCESSFUL")
+            self.regist_successfull_build(task)
+        else:
+            print(f"{task}-Error Building APK")
+        filename = os.path.join( self.proj.proj_dir ,"{task}_{results}.log".format(task=task, results=("SUCCCESS" if was_success else "ERROR")))
+        log_to_file(content=val, filename=filename)
 
     def build(self):
         if self.was_last_build_successful():
-            print("Not building again. Last build was successfull")
+            print("Not building again. Last build was successful")
             return
-        for mod_name, proj_module in self.proj.modules.items():
-            bld_file = proj_module.build_file
+        lista = list(map(lambda x: x.build_file, self.proj.modules.values()))
+        if len(lista) == 0:
+            # proj devs changed the default proj structure and have only 1 bld file
+            lista.append(self.proj.root_build_file)
+        for bld_file in lista:
             print(bld_file)
             self.__set_build_tools_version(bld_file)
             self.__add_or_update_dexoptions(bld_file)
@@ -148,41 +183,53 @@ class GradleBuilder(AbstractBuilder):
             self.needs_min_sdk_upgrade(bld_file)
             self.needs_target_sdk_upgrade(bld_file)
             self.__update_test_instrumentation_runner(bld_file)
-            self.__add_external_libs_fldr(proj_module)
-            self.__add_external_libs(proj_module)
+            self.__add_external_libs_fldr(bld_file)
+            self.__add_external_libs(bld_file)
+
             # maybe change build tools?
         self.__add_build_classpaths()
         self.__add_external_libs_to_repositories()
         self.__add_or_replace_local_properties_files()
         self.build_with_gradlew()
 
-    def build_with_gradlew(self, tries=5, target_task="build"):
+    def build_with_gradlew(self, target_task="build"):
         has_gradle_wrapper = self.proj.has_gradle_wrapper()
         if not has_gradle_wrapper:
             # create gradle wrapper
             copy(self.resources_dir + "/build/gradle/gradlew", self.proj.proj_dir)
         val = self.__execute_gradlew_task(target_task)
-        was_success = str(val | grep("BUILD SUCCESSFUL")) != ""
+        was_success = re.search("BUILD SUCCESSFUL", val)
         if was_success:
-            print("BUILD SUCCESSFUL")
+            print(f"{target_task}-BUILD SUCCESSFUL")
             self.regist_successfull_build(target_task)
+            self.building_attempts = BUILD_ATTEMPTS
         else:
             error = is_known_error(val)
-            if error is not None and tries>0:
+            if error is not None and self.building_attempts > 0:
+                print(f"{target_task}-BUILD FAILED. Retrying..")
                 solve_known_error(error, self.proj)
-                print("BUILD FAILED. Retrying")
-                self.build_with_gradlew(tries=tries-1, target_task=target_task)
+                self.building_attempts -= 1
+                self.build_with_gradlew(target_task=target_task)
             else:
-                raise Exception("Unable to solve Building error")
+                print("Unable to solve Building error")
 
-    def __execute_gradlew_task(self,task):
-        print(task)
+    def __get_gradlew_opts(self):
+        default_list = [' -x lint ', '-x test']
+        verification_tasks = execute_shell_command("cd {projdir}; chmod +x gradlew; ./gradlew tasks".format(projdir=self.proj.proj_dir)).output
+        if "checkstyle" in verification_tasks:
+            default_list.append("-x checkstyle")
+        return default_list
+
+    def __execute_gradlew_task(self, task):
+        opts = self.__get_gradlew_opts()
         res = execute_shell_command(
-            "cd {projdir}; chmod +x gradlew ;./gradlew {task}".format(projdir=self.proj.proj_dir, task=task))
-        if res.validate(Exception("error running gradle task")):
+            "cd {projdir}; chmod +x gradlew ;./gradlew {task} {opts}".format(projdir=self.proj.proj_dir, task=task, opts=' '.join(opts)),
+            timeout=60*3
+        )
+        if res.validate():
             return res.output
         else:
-            return res.errors
+            return self.__retry_task(task, res)
 
     def needs_min_sdk_upgrade(self,gradle_file):
         has_min_sdk = cat(gradle_file) | grep(r'minSdkVersion.*[0-9]+')
@@ -190,7 +237,7 @@ class GradleBuilder(AbstractBuilder):
         if str(has_min_sdk) != "":
             min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n',"") | head(1)
             device_min_sdk_version = self.device.get_min_sdk_version()
-            if int(str(min_sdk)) > device_min_sdk_version:
+            if int(str(min_sdk)) > int(device_min_sdk_version):
                 new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_min_sdk_version , str(cat(gradle_file) ) )
                 open(gradle_file, 'w').write(new_file)
 
@@ -231,15 +278,17 @@ class GradleBuilder(AbstractBuilder):
         has_android = re.search(r'android.*?\{', file_ctent)
         if has_android is None:
             return
+        x=''' 
+        overriding lint options for now. Hard to insert lint options in existing options without a groovy parser
         has_lint_options = re.search(r'lintOptions.*?\{', file_ctent)
         if has_lint_options is not None:
             original_lint_options = re.search(r'lintOptions.*?\{([^{}]+)}', file_ctent).groups()[0].strip().split("\n")
             new_lint_opts = self.__filter_opts(original_lint_options, LINT_OPTIONS.keys())
             for dx, dval in LINT_OPTIONS.items():
                 new_lint_opts[dx] = (" ", dval)
-        else:
-            for dx, dval in LINT_OPTIONS.items():
-                new_lint_opts[dx] = (" ", dval)
+        else:'''
+        for dx, dval in LINT_OPTIONS.items():
+            new_lint_opts[dx] = (" ", dval)
         #build string for adding to dexoptions
         line=""
         for a,b in new_lint_opts.items():
@@ -256,7 +305,7 @@ class GradleBuilder(AbstractBuilder):
             return
         device_sdk = self.device.get_device_sdk_version()
         # TODO it is advisable to compile with latest sdk
-        adequate_test_runner = list(filter(lambda  x: x[1]<= device_sdk, TEST_RUNNERS.items()))[-1]
+        adequate_test_runner = list(filter(lambda x: x[1] < device_sdk, TEST_RUNNERS.items()))[-1]
         new_file = re.sub(r"testInstrumentationRunner (.+)",
                           r"testInstrumentationRunner '%s'" % adequate_test_runner[0], file_ctent)
         open(gradle_file, 'w').write(new_file)
@@ -295,46 +344,47 @@ ndk-location={android_home}/ndk-bundle'''\
             new_file = file_ctent + "\nallprojects {repositories {flatDir { dirs 'libs'}}}"
             open(self.proj.root_build_file, 'w').write(new_file)
 
-    def __add_external_libs_fldr(self, proj_module):
-        bld_file = proj_module.build_file
-        if bld_file == self.proj.root_build_file:
-            return
-
+    def __add_external_libs_fldr(self, bld_file):
         if self.instrumenter.profiler.needs_external_dependencies():
             # create folder
-            created_dir = proj_module.create_inner_folder(name="libs")
-            # copy external lib to folder
-            lib_filepath = self.instrumenter.profiler.local_dep_location
-            copy(lib_filepath, created_dir)
+            proj_module = os.path.dirname(bld_file)
+            lid_dir = os.path.join(proj_module, "libs")
+            if not os.path.exists(lid_dir):
+                os.mkdir(lid_dir)
+                # copy external lib to folder
+                lib_filepath = self.instrumenter.profiler.local_dep_location
+                copy(lib_filepath, lid_dir)
 
-    def __add_external_libs(self, proj_module):
-        bld_file = proj_module.build_file
+    def __add_external_libs(self, bld_file):
         if not self.needs_external_lib_dependency():
             return
         file_ctent = str(cat(bld_file))
         dependencies = self.instrumenter.get_build_dependencies()
-        print(dependencies[0])
         has_depts = re.search(r'dependencies.*?\{', file_ctent)
         if has_depts is None:
             return
-        original_deps = re.search(r'dependencies.*?\{([^{}]+)}', file_ctent).groups()[0]  # .strip().split("\n")
+        original_deps = list(filter(lambda x: "com.android.tools.build" not in x, re.findall(r'dependencies.*?\{([^{}]+)}', file_ctent)))[0]
         new_deps = ""
         for n_dp in dependencies:
             new_deps += gen_dependency_string(n_dp) + "\n\t"
         new_deps = original_deps + "\n\t" + new_deps + "\n"
-        new_file = file_ctent.replace(original_deps,new_deps)
+        new_file = file_ctent.replace(original_deps, new_deps)
         open(bld_file, 'w').write(new_file)
 
     def needs_external_lib_dependency(self):
         return self.instrumenter.needs_build_dependency()
 
-    def was_last_build_successful(self, task="build"):
+    def get_last_build_info(self):
+        js = {}
         filename = self.proj.proj_dir + "/" + BUILD_RESULTS_FILE
         if os.path.exists(filename):
             with open(filename, 'r') as fl:
                 js = json.load(fl)
-            return js[task].lower() == SUCCESS_VALUE.lower() if task in js else False
-        return False
+        return js
+
+
+    def was_last_build_successful(self, task="build"):
+        return False  #self.last_build_info[task].lower() == SUCCESS_VALUE.lower() if task in self.last_build_info else False
 
     def regist_successfull_build(self, task="build"):
         filename = self.proj.proj_dir + "/" + BUILD_RESULTS_FILE
@@ -344,10 +394,11 @@ ndk-location={android_home}/ndk-bundle'''\
                 js = json.load(fl)
 
         js[task] = SUCCESS_VALUE
+        js["instrumentation"] = self.instrumenter.current_instr_type.value
         with open(filename, 'w') as outfile:
             json.dump(js, outfile)
 
-    def __set_build_tools_version(self,bld_file):
+    def __set_build_tools_version(self, bld_file):
         has_bld_tools = str((cat(bld_file) | grep("buildToolsVersion") | sed("buildToolsVersion|\"",""))).strip()
         if has_bld_tools != "":
             self.build_tools_version = DefaultSemanticVersion(has_bld_tools)
@@ -389,7 +440,6 @@ ndk-location={android_home}/ndk-bundle'''\
         file_ctent = str(cat(self.proj.root_build_file))
         # TODO: more elegant way to do this, instead of just appending to build file
         classpaths = self.instrumenter.get_build_classpaths()
-
         pato_str = "buildscript{\n\tdependencies{\n"
         for pato in classpaths:
             pato_str += gen_dependency_string(pato) + "\n"
@@ -399,5 +449,22 @@ ndk-location={android_home}/ndk-bundle'''\
     def __has_builded_apks(self):
         return len(mega_find(self.proj.proj_dir, pattern="*.apk", type_file='f')) > 0
 
+    def __retry_task(self, task, res):
+        detected_error = is_known_error(res.errors +res.output)
+        if (detected_error is None or detected_error in KNOWN_ERRORS) and self.building_attempts > 0:
+            print(f"Known error detected while executing {task} task: {detected_error} . Solving error")
+            solve_known_error(self.proj, detected_error, **{ 'build-tools': self.build_tools_version, 'out': res.errors+res.output })
+            self.building_attempts -= 1
+            print(f"Retrying {task} task")
+            return self.__execute_gradlew_task(task)
+        else:
+            print("build attempts = 0")
+            self.building_attempts = 0
+            return res.output + res.errors
+
+
+
     def needs_rebuild(self):
-        return not self.__has_builded_apks() # TODO check build type and maybe last build output, lint, etc
+        return not self.__has_builded_apks() \
+            or not("instrumentation" in self.last_build_info and self.last_build_info["instrumentation"] == self.instrumenter.current_instr_type)
+        # TODO check build type and maybe last build output, lint, etc
