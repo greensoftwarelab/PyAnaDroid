@@ -1,4 +1,5 @@
 import os
+from enum import Enum
 from shutil import copy
 
 from textops import grep, cat, sed, head, echo
@@ -6,6 +7,7 @@ import json
 import re
 
 from src.application.AndroidProject import BUILD_TYPE
+from src.application.Application import App
 from src.application.Dependency import DependencyType
 from src.build.AbstractBuilder import AbstractBuilder
 from src.build.versionUpgrader import DefaultSemanticVersion
@@ -62,6 +64,23 @@ BUILD_RESULTS_FILE="buildStatus.json"
 SUCCESS_VALUE="Success"
 BUILD_ATTEMPTS = 5
 
+class BUILD_RESULT(Enum):
+    SUCCESS = "BUILD SUCCESSFUL"
+    ERROR = "ERROR"
+
+class GRADLE_TASKS(Enum):
+    CLEAN = "clean"
+    BUILD = "build"
+    ASSEMBLE = "assemble"
+    ASSEMBLE_DEBUG = "assembleDebug"
+    ASSEMBLE_RELEASE = "assembleRelease"
+    INSTALL_DEBUG = "installDebug"
+    INSTALL_RELEASE = "installRelease"
+    UNINSTALL_ALL = "uninstallAll"
+    UNINSTALL_DEBUG = "uninstallDebug"
+    UNINSTALL_RELEASE = "uninstallRelease"
+    CONNECTED_ANDROID_TEST = "cAT"
+
 
 def gen_dependency_string(dependency):
     if dependency.dep_type == DependencyType.LOCAL_BINARY:
@@ -107,17 +126,47 @@ class GradleBuilder(AbstractBuilder):
         self.proj.set_version(build_type)
 
     def install_apks(self, build_type=BUILD_TYPE.DEBUG, install_apk_test=False):
+        apps_list = []
         task_name = "install" + build_type.value
-        self.__execute_gradlew_task(task_name)
+        val = self.__execute_gradlew_task(task_name)
+        was_success = re.search("BUILD SUCCESSFUL", val)
+        if was_success:
+            print(f"{task_name}-BUILD SUCCESSFUL")
+            app = self.create_app_from_installed_apk(val,build_type)
+            apps_list.append(app)
+        filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
+                "SUCCCESS" if was_success else "ERROR")))
+        log_to_file(content=val, filename=filename)
         if install_apk_test:
             task_name = f"install{build_type.value}AndroidTest"
-            self.__execute_gradlew_task(task_name)
-
+            val = self.__execute_gradlew_task(task_name)
+            was_success = re.search("BUILD SUCCESSFUL", val)
+            if was_success:
+                print(f"{task_name}-BUILD SUCCESSFUL")
+            filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
+            "SUCCCESS" if was_success else "ERROR")))
+            log_to_file(content=val, filename=filename)
+        return apps_list
 
     def uninstall_all_apks(self):
         task_name = "uninstallAll"
         self.__execute_gradlew_task(task_name)
 
+
+    def create_app_from_installed_apk(self,gradle_output, build_type):
+        installed_apk_simple_name = re.search(r"Installing APK \'(.*?)\'", gradle_output).groups()[0]
+        full_apk_path = next(
+            filter(lambda x: str(x).endswith(installed_apk_simple_name), self.proj.get_apks(build_type=build_type)),
+            self.proj.get_apks(build_type=build_type)[0])
+        new_pkgs = self.device.get_new_installed_pkgs()
+        if len(new_pkgs) == 0:
+            # app was already installed
+            print("ja tava instalada")
+            app_pack = self.device.get_package_matching(self.proj.pkg_name)
+            new_pkgs.append(app_pack)
+        apk_pkg = new_pkgs[0]  # ASSUMING JUST ONE
+        app = App(self.device, self.proj, apk_pkg, apk_path=full_apk_path, local_res=self.proj.results_dir)
+        return app
 
     def sign_apks(self, build_type=BUILD_TYPE.DEBUG):
         if self.was_last_build_successful(task="sign") or build_type == BUILD_TYPE.DEBUG:
@@ -221,6 +270,7 @@ class GradleBuilder(AbstractBuilder):
         return default_list
 
     def __execute_gradlew_task(self, task):
+        print("Executing gradle task " + str(task))
         opts = self.__get_gradlew_opts()
         res = execute_shell_command(
             "cd {projdir}; chmod +x gradlew ;./gradlew {task} {opts}".format(projdir=self.proj.proj_dir, task=task, opts=' '.join(opts)),
@@ -233,9 +283,8 @@ class GradleBuilder(AbstractBuilder):
 
     def needs_min_sdk_upgrade(self,gradle_file):
         has_min_sdk = cat(gradle_file) | grep(r'minSdkVersion.*[0-9]+')
-        #has_min_sdk =
         if str(has_min_sdk) != "":
-            min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n',"") | head(1)
+            min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n', "") | head(1)
             device_min_sdk_version = self.device.get_min_sdk_version()
             if int(str(min_sdk)) > int(device_min_sdk_version):
                 new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_min_sdk_version , str(cat(gradle_file) ) )
@@ -451,14 +500,14 @@ ndk-location={android_home}/ndk-bundle'''\
 
     def __retry_task(self, task, res):
         detected_error = is_known_error(res.errors +res.output)
-        if (detected_error is None or detected_error in KNOWN_ERRORS) and self.building_attempts > 0:
+        if detected_error is not None and detected_error in KNOWN_ERRORS and self.building_attempts > 0:
             print(f"Known error detected while executing {task} task: {detected_error} . Solving error")
             solve_known_error(self.proj, detected_error, **{ 'build-tools': self.build_tools_version, 'out': res.errors+res.output })
             self.building_attempts -= 1
             print(f"Retrying {task} task")
             return self.__execute_gradlew_task(task)
         else:
-            print("build attempts = 0")
+            print("Unknown Building error")
             self.building_attempts = 0
             return res.output + res.errors
 

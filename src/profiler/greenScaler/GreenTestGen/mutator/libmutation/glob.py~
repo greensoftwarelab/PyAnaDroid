@@ -1,0 +1,16 @@
+
+
+global test_script
+def get_initial_script(fyl):
+	
+	test_script = ""
+
+    	try:
+        	with open(fyl) as f_in:
+        	    for line in f_in:
+        	        test_script += line
+        	    f_in.close()
+    	except IOError as e:
+        	print(str(e))
+        	sys.exit()
+	return test_script

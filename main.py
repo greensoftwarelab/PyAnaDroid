@@ -8,7 +8,6 @@ from src.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, BUILD
 from src.application.AndroidProject import AndroidProject, BUILD_TYPE
 from src.application.Application import App
 from src.build.GradleBuilder import GradleBuilder
-from src.build.SdkManagerWrapper import SDKManager
 from src.device.Device import get_first_connected_device
 
 from src.instrument.JInstInstrumenter import JInstInstrumenter
@@ -17,6 +16,7 @@ from src.profiler.ManafaProfiler import ManafaProfiler
 from src.profiler.TrepnProfiler import TrepnProfiler
 from src.results_analysis.AnaDroidAnalyzer import AnaDroidAnalyzer
 from src.testing_framework.AppCrawlerFramework import AppCrawlerFramework
+from src.testing_framework.DroidBotFramework import DroidBotFramework
 from src.testing_framework.JUnitBasedFramework import JUnitBasedFramework
 from src.testing_framework.MonkeyFramework import MonkeyFramework
 from src.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
@@ -26,7 +26,7 @@ from src.utils.Utils import mega_find
 
 def init_defaultPyAnaDroid(apps_dir):
     return PyAnaDroid(apps_dir=apps_dir,
-                      testing_framework=TESTING_FRAMEWORK.MONKEY,
+                      testing_framework=TESTING_FRAMEWORK.DROIDBOT,
                       profiler=PROFILER.MANAFA,
                       build_type=BUILD_TYPE.DEBUG,
                       instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION
@@ -53,24 +53,29 @@ class PyAnaDroid(object):
     def __infer_profiler(self, profiler):
         if profiler in SUPPORTED_PROFILERS:
             if profiler == PROFILER.TREPN:
-                return TrepnProfiler(self.device)
+                return TrepnProfiler(profiler.name, self.device)
             elif profiler == PROFILER.MANAFA:
-                return ManafaProfiler(self.device)
+                return ManafaProfiler(profiler.name, self.device)
+            elif profiler == PROFILER.GREENSCALER:
+                #return GreenScalerProfiler(profiler.name, self.device)
+                return None
         else:
             raise Exception("Unsupported profiler")
 
     def __infer_testing_framework(self, tf):
         if tf in SUPPORTED_TESTING_FRAMEWORKS:
             if tf == TESTING_FRAMEWORK.MONKEY:
-                return MonkeyFramework(default_workload=True)
+                return MonkeyFramework(default_workload=True, profiler=self.profiler)
             elif tf == TESTING_FRAMEWORK.RERAN:
-                return RERANFramework(self.device)
+                return RERANFramework(self.device, profiler=self.profiler)
             elif tf == TESTING_FRAMEWORK.APP_CRAWLER:
-                return AppCrawlerFramework(default_workload=True)
+                return AppCrawlerFramework(default_workload=True,profiler=self.profiler)
             elif tf == TESTING_FRAMEWORK.MONKEY_RUNNER:
-                return MonkeyRunnerFramework(default_workload=True)
+                return MonkeyRunnerFramework(default_workload=True,profiler=self.profiler)
             elif tf == TESTING_FRAMEWORK.JUNIT:
-                return JUnitBasedFramework()
+                return JUnitBasedFramework(profiler=self.profiler)
+            elif tf == TESTING_FRAMEWORK.DROIDBOT:
+                return DroidBotFramework(profiler=self.profiler)
             else:
                 return None
         else:
@@ -128,22 +133,19 @@ class PyAnaDroid(object):
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
             builder = self.init_builder(instr_proj)
             builder.build_proj_and_apk(build_type=self.build_type, build_tests_apk=self.testing_framework.id==TESTING_FRAMEWORK.JUNIT )
-            builder.install_apks(build_type=self.build_type, install_apk_test=self.testing_framework.id==TESTING_FRAMEWORK.JUNIT)
-            installed_pkgs = self.device.get_new_installed_pkgs()
-            #installed_pkgs = self.device.install_apks(instr_proj, build_type=self.build_type)
-            #self.do_work(instr_proj, installed_pkgs)
-            self.do_work(instr_proj, installed_pkgs)
+            installed_apps_list = builder.install_apks(build_type=self.build_type, install_apk_test=self.testing_framework.id==TESTING_FRAMEWORK.JUNIT)
+            self.do_work(instr_proj, installed_apps_list)
             builder.uninstall_all_apks()
 
-    def do_work(self, proj, pkgs):
-        for i, pkg in enumerate(pkgs):
-            print("testing package " + pkg)
-            app = App(self.device, proj, pkg, local_res=proj.results_dir)
+    def do_work(self, proj, apps):
+        for i, app in enumerate(apps):
+            print("testing package " + app.package_name)
+            #app = App(self.device, proj, pkg, local_res=proj.results_dir)
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
             app.set_immersive_mode()
-            self.testing_framework.init_default_workload(pkg=pkg)
-            self.testing_framework.test_app(self.device, app, self.profiler)
-            self.device.uninstall_pkg(pkg)
+            self.testing_framework.init_default_workload(pkg=app.package_name)
+            self.testing_framework.test_app(self.device, app)
+            self.device.uninstall_pkg(app.package_name)
             #self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
     def __validate_suite(self, profiler):
@@ -161,16 +163,17 @@ class PyAnaDroid(object):
             builder = self.init_builder(instr_proj)
             builder.build_proj_and_apk(build_type=self.build_type,
                                        build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
-
-
+            app_list = builder.install_apks(build_type=self.build_type,
+                                 install_apk_test=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
+            builder.uninstall_all_apks()
 
     def load_projects(self):
         return_projs = []
         if is_android_project(self.apps_dir):
-            potencial_projects = [self.apps_dir]
+            potential_projects = [self.apps_dir]
         else:
-            potencial_projects = list(filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
-        for maybe_proj in potencial_projects:
+            potential_projects = list(filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
+        for maybe_proj in potential_projects:
             path_dir = os.path.join(self.apps_dir, maybe_proj)
             has_gradle_right_next = mega_find(path_dir, pattern="build.gradle", maxdepth=1, type_file='f')
             if len(has_gradle_right_next) > 0:
@@ -184,16 +187,13 @@ class PyAnaDroid(object):
                         return_projs.append(child_path_dir)
         return return_projs
 
-
 def is_android_project(dirpath):
     return "settings.gradle" in [f for f in listdir(dirpath)]
 
 
 if __name__ == '__main__':
-    folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/old_apps/outDir/PDFConverter"
-    #folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/SampleApp"
-    #test_sdkmanager()
-    #folder_of_apps = "demoProjects/"
+    #folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/old_apps/outDir/PDFConverter"
+    folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/SampleApp"
     anadroid = init_defaultPyAnaDroid(folder_of_apps)
     anadroid.defaultWorkflow()
     #anadroid.just_build_apps()

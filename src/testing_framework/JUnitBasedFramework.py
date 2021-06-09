@@ -1,3 +1,4 @@
+import os
 import time
 
 from src.Types import TESTING_FRAMEWORK
@@ -10,8 +11,8 @@ DEFAULT_RESOURCES_DIR="resources/testingFramework/junit"
 
 
 class JUnitBasedFramework(AbstractTestingFramework):
-    def __init__(self, resdir=DEFAULT_RESOURCES_DIR):
-        super(JUnitBasedFramework, self).__init__(id=TESTING_FRAMEWORK.JUNIT)
+    def __init__(self, profiler, resdir=DEFAULT_RESOURCES_DIR):
+        super(JUnitBasedFramework, self).__init__(id=TESTING_FRAMEWORK.JUNIT, profiler=profiler)
         self.executable_prefix = "adb shell am instrument -w "
         self.workload = None
         self.res_dir = resdir
@@ -23,7 +24,7 @@ class JUnitBasedFramework(AbstractTestingFramework):
     def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
-        wunit.execute("")
+        wunit.execute("", *args, **kwargs)
 
 
     def init(self):
@@ -54,18 +55,23 @@ class JUnitBasedFramework(AbstractTestingFramework):
             self.workload.add_unit(wk)
 
 
-    def test_app(self, device, app, profiler):
-        self.__load_app_workload(device,app.package_name)
-        for wk_unit in self.workload.work_units:
+    def test_app(self, device, app):
+        self.__load_app_workload(device, app.package_name)
+        for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
-            profiler.init()
-            profiler.start_profiling()
-            app.start()
+            self.profiler.init()
+            self.profiler.start_profiling()
+            #app.start()
             time.sleep(1)
-            self.execute_test(app.package_name, wk_unit)
-            app.stop()
-            profiler.export_results("GreendroidResultTrace0.csv")
-            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            print(wk_unit)
+            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
+            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
+            #app.stop()
+            device.clear_logcat()
+            self.profiler.stop_profiling()
+            self.profiler.export_results(f"GreendroidResultTrace{i}.csv")
+            print(app.curr_local_dir)
+            self.profiler.pull_results(f"GreendroidResultTrace{i}.csv", app.curr_local_dir)
             app.clean_cache()
             break

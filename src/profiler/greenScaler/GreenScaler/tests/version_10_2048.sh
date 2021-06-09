@@ -1,0 +1,19 @@
+am start -n com.uberspot.a2048/.MainActivity
+sleep 10
+input swipe 145 536 153 935
+sleep 2
+
+input swipe 566 528 555 935
+sleep 2
+
+input swipe 145 536 566 536
+sleep 2
+
+input swipe 153 935 555 935
+sleep 2
+
+
+sleep 10
+sleep 1
+input tap 339 1240
+sleep 18

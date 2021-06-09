@@ -17,6 +17,7 @@ class TESTING_FRAMEWORK(Enum):
     ESPRESSO = "Espresso"
     ROBOTIUM = "Robotium"
     APP_CRAWLER = "APP_CRAWLER"
+    DROIDBOT = "DroidBot"
     OTHER = "Other"
 
 class PROFILER(Enum):

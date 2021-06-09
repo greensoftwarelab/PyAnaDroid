@@ -1,0 +1,21 @@
+### Prefix to start the app
+
+input keyevent ENTER
+sleep 2
+input keyevent ENTER
+sleep 2
+
+input keyevent 61
+sleep 2
+input keyevent ENTER
+sleep 2
+input keyevent ENTER
+sleep 2
+
+input tap 200 400
+sleep 2 
+
+input swipe 300 500 300 500
+sleep 2 
+
+

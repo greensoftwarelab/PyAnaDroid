@@ -1,0 +1,3 @@
+[submodule "resources/testingFrameworks/botdroid/droidbot"]
+	path = resources/testingFrameworks/botdroid/droidbot
+	url = https://github.com/honeynet/droidbot.git

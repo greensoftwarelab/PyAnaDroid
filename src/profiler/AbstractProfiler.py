@@ -5,8 +5,9 @@ from abc import ABC, abstractmethod
 
 
 class AbstractProfiler(ABC):
-    def __init__(self, device, pkg_name, device_dir=None, dependency=None, plugin= None):
+    def __init__(self, profiler, device, pkg_name, device_dir=None, dependency=None, plugin= None):
         super().__init__()
+        self.profiler = profiler
         self.device = device
         self.pkg_name = pkg_name
         self.dependency = dependency

@@ -1,7 +1,7 @@
 import os
 import time
 
-from src.Types import TESTING_FRAMEWORK
+from src.Types import TESTING_FRAMEWORK, PROFILER
 from src.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from src.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
 from src.testing_framework.work.WorkLoad import WorkLoad
@@ -13,15 +13,15 @@ DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
 
 
 class MonkeyFramework(AbstractTestingFramework):
-    def __init__(self, default_workload=False, resdir=DEFAULT_RES_DIR):
-        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY)
+    def __init__(self, profiler, default_workload=False, resdir=DEFAULT_RES_DIR):
+        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY, profiler=profiler)
         self.executable_prefix = "adb shell monkey"
         self.workload = None
         self.res_dir = resdir
         if default_workload:
             self.init_default_workload(DEFAULT_SEEDS_FILE)
 
-    def init_default_workload(self, pkg , seeds_file=DEFAULT_SEEDS_FILE):
+    def init_default_workload(self, pkg, seeds_file=DEFAULT_SEEDS_FILE):
         self.workload = WorkLoad()
         wl_filename = os.path.join(self.res_dir, seeds_file)
         config = self.__load_config_file()
@@ -32,11 +32,14 @@ class MonkeyFramework(AbstractTestingFramework):
             self.workload.add_unit(wk)
         ofile.close()
 
-
-    def execute_test(self, package, wunit=None, timeout=None,*args, **kwargs):
+    def execute_test(self, package, wunit=None, timeout=None, *args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
-        wunit.execute(package, args, kwargs)
+        if self.profiler.profiler == PROFILER.GREENSCALER:
+            cmd = wunit.build_command(package, *args, **kwargs)
+            self.profiler.exec_greenscaler(package, cmd)
+        else:
+            wunit.execute(package, *args, **kwargs)
 
     def init(self):
         pass
@@ -47,7 +50,7 @@ class MonkeyFramework(AbstractTestingFramework):
     def uninstall(self):
         pass
 
-    def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE ):
+    def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE):
         cfg_file = self.res_dir + cfg_filename
         cfg = {}
         ofile = open(cfg_file, "r")
@@ -57,18 +60,20 @@ class MonkeyFramework(AbstractTestingFramework):
         ofile.close()
         return cfg
 
-    def test_app(self, device, app, profiler):
-        for wk_unit in self.workload.work_units:
+    def test_app(self, device, app):
+        for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
-            profiler.init()
-            profiler.start_profiling()
+            self.profiler.init()
+            self.profiler.start_profiling()
             app.start()
             time.sleep(1)
-            self.execute_test(app.package_name, wk_unit)
+            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
+            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
             app.stop()
-            profiler.stop_profiling()
-            profiler.export_results("GreendroidResultTrace0.csv")
-            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            device.clear_logcat()
+            self.profiler.stop_profiling()
+            self.profiler.export_results(f"GreendroidResultTrace{i}.csv")
+            self.profiler.pull_results(f"GreendroidResultTrace{i}.csv", app.curr_local_dir)
             app.clean_cache()
             break

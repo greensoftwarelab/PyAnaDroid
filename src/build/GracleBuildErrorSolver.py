@@ -30,6 +30,8 @@ class KNOWN_ERRORS(Enum):
     NO_TARGET_PLATFORM = "failed to find target with hash string"
     NO_BUILD_TOOLS = "failed to find Build Tools revision"
     MAYBE_MISSING_GOOGLE_REPO = "Could not resolve all dependencies for configuration"
+    USER_HAS_TO_ACCEPT_INSTALL = "INSTALL_FAILED_USER_RESTRICTED"
+
 
 def is_known_error(output):
     for error in KNOWN_ERRORS:
@@ -102,7 +104,6 @@ def solve_known_error(proj, error, **kwargs):
         tha_manif_file = re.match(r"(.+?AndroidManifest\.xml)", output)
         print(tha_manif_file.groups())
         print(tha_manif_file)'''
-
     elif error == KNOWN_ERRORS.WRAPPER_ERROR:
         # can be solved the same way of WRAPPER_MISMATCH_ERROR
         solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)

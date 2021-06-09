@@ -26,7 +26,6 @@ def get_first_connected_device():
 class DeviceNotFoundError(Exception):
     pass
 
-
 class Device(AbstractDevice):
     def __init__(self,  serial_nr ):
         super(Device, self).__init__(serial_nr)
@@ -133,7 +132,7 @@ class Device(AbstractDevice):
             .validate()
 
     def dump_logcat_to_file(self, filename="logcat.out"):
-        super().execute_command(f"adb logcat -d > {filename}", args=[]) \
+        super().execute_command(f"logcat -d > {filename}", args=[]) \
             .validate(Exception("Unable to dump logcat to file"))
 
     def get_device_android_version(self):
@@ -168,3 +167,7 @@ class Device(AbstractDevice):
         return list(filter(
             lambda x: x not in old_pkgs and has_no_prefix(x, new_pkgs),
             new_pkgs))
+
+    def set_log_size(self, log_size_bytes=16384):
+        super(Device, self).execute_root_command(f"shell setprop persist.logd.size {log_size_bytes}K", shell=True)
+

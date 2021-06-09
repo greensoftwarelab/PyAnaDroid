@@ -15,13 +15,13 @@ TESTS_DIR="resources/testingFrameworks/monkey-runner/tests"
 MONKEY_RUNNER_BIN_NAME="monkeyrunner"
 
 class MonkeyRunnerFramework(AbstractTestingFramework):
-    def __init__(self, default_workload=False, resources_dir=MONKEY_RUNNER_RESOURCES_DIR):
-        super(MonkeyRunnerFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY_RUNNER)
+    def __init__(self,profiler, default_workload=False, resources_dir=MONKEY_RUNNER_RESOURCES_DIR):
+        super(MonkeyRunnerFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY_RUNNER,profiler=profiler)
         self.workload = None
         self.resources_dir = resources_dir
         self.__is_installed()
         if default_workload:
-            self.init_default_workload()
+            self.init_default_workload(None)
 
 
     def __is_installed(self):
@@ -50,24 +50,25 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
     def init(self):
         pass
 
-    def init_default_workload(self, tests_dir=TESTS_DIR):
+    def init_default_workload(self, pkg, tests_dir=TESTS_DIR):
         self.load_tests_of_app(tests_dir)
 
     def uninstall(self):
         pass
 
-    def test_app(self, device, app, profiler):
-        for wk_unit in self.workload.work_units:
+    def test_app(self, device, app):
+        for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
-            profiler.init()
-            profiler.start_profiling()
+            self.profiler.init()
+            self.profiler.start_profiling()
             app.start()
             time.sleep(1)
-            self.execute_test(app.package_name, wk_unit)
+            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
+            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
             app.stop()
-            profiler.stop_profiling()
-            profiler.export_results("GreendroidResultTrace0.csv")
-            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            self.profiler.stop_profiling()
+            self.profiler.export_results(f"GreendroidResultTrace{i}.csv")
+            self.profiler.pull_results(f"GreendroidResultTrace{i}.csv", app.curr_local_dir)
             app.clean_cache()
             return

@@ -60,6 +60,9 @@ class AppCrawlerWorkUnit(WorkUnit):
         print("executing command: " + self.command)
         res = execute_shell_command(self.command)
         self.__log_execution_end()
+        if 'log_filename' in kwargs:
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
+
 
     def config(self, id=None, **kwargs):
         #adb shell monkey -s $monkey_seed -p $package -v --pct-syskeys 0 --ignore-security-exceptions --throttle $delay_bt_events $monkey_nr_events) &> $localDir/monkey$monkey_seed.log)"

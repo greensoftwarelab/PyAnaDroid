@@ -24,12 +24,12 @@ DEFAULT_TESTS_PREFIX = "translated_"
 class RERANFramework(AbstractTestingFramework):
 
 
-    def __init__(self, device, resources_dir=RERAN_RESOURCES_DIR):
+    def __init__(self, device, profiler, resources_dir=RERAN_RESOURCES_DIR):
         if not device.is_rooted():
             raise Exception("RERAN is not compatible with Non-rooted devices")
         self.device = device
         self.resources_dir = resources_dir
-        super(RERANFramework, self).__init__(id=TESTING_FRAMEWORK.RERAN)
+        super(RERANFramework, self).__init__(id=TESTING_FRAMEWORK.RERAN,profiler=profiler)
         self.workload = None
         self.config = self.__load_config()
         if not self.__is_installed():
@@ -92,7 +92,7 @@ class RERANFramework(AbstractTestingFramework):
         if wunit is None:
             wunit = self.workload.consume()
 
-        wunit.execute(self.device)
+        wunit.execute(self.device, *args, **kwargs)
 
 
     def init(self):
@@ -111,18 +111,19 @@ class RERANFramework(AbstractTestingFramework):
         self.device.execute_command(f"push {test_path} {test_remote_path} ").validate(Exception("Error while pushing test"))
         return test_remote_path
 
-    def test_app(self, device, app, profiler):
-        for wk_unit in self.workload.work_units:
+    def test_app(self, device, app):
+        for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
-            profiler.init()
-            profiler.start_profiling()
+            self.profiler.init()
+            self.profiler.start_profiling()
             app.start()
             time.sleep(1)
-            self.execute_test(app.package_name, wk_unit)
+            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
+            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
             app.stop()
-            profiler.stop_profiling()
-            profiler.export_results("GreendroidResultTrace0.csv")
-            profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+            self.profiler.stop_profiling()
+            self.profiler.export_results("GreendroidResultTrace0.csv")
+            self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
             app.clean_cache()
             return

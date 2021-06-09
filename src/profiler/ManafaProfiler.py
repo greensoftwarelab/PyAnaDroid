@@ -9,8 +9,8 @@ from src.utils.Utils import execute_shell_command
 
 
 class ManafaProfiler(AbstractProfiler):
-    def __init__(self, device, power_profile=None, timezone=None):
-        super(ManafaProfiler, self).__init__(device, pkg_name=None)
+    def __init__(self, profiler, device, power_profile=None, timezone=None):
+        super(ManafaProfiler, self).__init__(profiler,device, pkg_name=None)
         self.manafa = EManafa(power_profile, timezone)
         self.last_bts_file = None
         self.last_pft_file = None
@@ -36,7 +36,8 @@ class ManafaProfiler(AbstractProfiler):
         pass
 
     def pull_results(self, file_id, target_dir):
-        res = execute_shell_command(f"cp -r {self.last_bts_file} {self.last_pft_file} {self.hunter_file} {target_dir}")\
+        cmd = f"cp -r {self.last_bts_file} {self.last_pft_file} {self.hunter_file} {target_dir}"
+        execute_shell_command(cmd)\
             .validate(Exception("No result files to pull "))
 
     def get_dependencies_location(self):

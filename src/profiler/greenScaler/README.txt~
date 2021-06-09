@@ -1,0 +1,13 @@
+You have to have SDK installed. 
+You must have an emulator like one of the PNGs. Real device is fine. 
+
+run push.sh from push_to_phone folder. This will installs necessary scripts to run and collect measurements. 
+
+How to run the GreenTestGen:
+
+go to mutator directory and: python mutator_main.py script.sh
+
+Or run run.sh (This is helpful when generating test cases using emulator)
+
+
+

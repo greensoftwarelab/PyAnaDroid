@@ -1,0 +1,62 @@
+am start -n org.wikipedia/.WikipediaActivity
+sleep 10
+
+input tap 143 103
+sleep 2
+
+input text "Bangladesh"
+sleep 2
+
+input tap 299 197
+sleep 5
+
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400 
+sleep 5
+
+input swipe 320 550 320 400 
+sleep 5
+
+input swipe 320 550 320 400 
+sleep 5
+
+input swipe 320 550 320 400 
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+input swipe 320 550 320 400
+sleep 5
+
+
+# "Exit" Process
+{{{timing}}}
+sleep 2
+input keyevent HOME

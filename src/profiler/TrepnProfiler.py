@@ -16,11 +16,11 @@ EXPORT_THRESHOLD = 0.5
 
 class TrepnProfiler(AbstractProfiler):
 
-    def __init__(self, device):
+    def __init__(self,profiler , device):
         dependency_lib = BuildDependency("TrepnLib-release", DependencyType.LOCAL_BINARY, version=None, bin_type="aar")
         self.local_dep_location = RESOURCES_DIR + "/profilers/Trepn/libsAdded/" + dependency_lib.name + "." + dependency_lib.bin_type #TODO
         self.start_time = 0
-        super(TrepnProfiler, self).__init__(device, pkg_name="com.quicinc.trepn", device_dir="sdcard/trepn", dependency=dependency_lib)
+        super(TrepnProfiler, self).__init__(profiler,device, pkg_name="com.quicinc.trepn", device_dir="sdcard/trepn", dependency=dependency_lib)
         #if not device.has_package_installed(self.pkg_name):
         #    self.install_profiler()
         #if not device.contains_file(self.device_dir+"/GDFlag"):

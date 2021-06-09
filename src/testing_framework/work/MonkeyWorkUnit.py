@@ -44,7 +44,8 @@ class MonkeyWorkUnit(WorkUnit):
         self.command = self.command % package_name
         print("executing command: " + self.command)
         execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))
-
+        if 'log_filename' in kwargs:
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
     def config(self, seed=None, **kwargs):
         #adb shell monkey -s $monkey_seed -p $package -v --pct-syskeys 0 --ignore-security-exceptions --throttle $delay_bt_events $monkey_nr_events) &> $localDir/monkey$monkey_seed.log)"

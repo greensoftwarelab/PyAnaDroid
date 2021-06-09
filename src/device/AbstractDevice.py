@@ -32,12 +32,13 @@ class AbstractDevice(ABC):
 
 
     @abstractmethod
-    def execute_root_command(self, cmd, args=[]):
+    def execute_root_command(self, cmd, args=[], shell=True):
         cmd = cmd + " " + ' '.join(args)
         ret = execute_shell_command(
-            "adb -s {serial} shell su -c '{command}' ".format(
+            "adb -s {serial} {shell} su -c '{command}' ".format(
                 serial=self.serial_nr,
-                command=cmd
+                shell="" if not shell else "shell",
+                command=cmd,
             )
         )
         return ret

@@ -1,0 +1,30 @@
+import sys, argparse, time
+import utils
+import os
+import shutil
+from os import listdir
+import subprocess
+import commands
+from random import randint
+import re
+
+
+count=0
+for apk_file in listdir(utils.APKS_PATH):
+	try:	
+
+		st=str(commands.getstatusoutput(utils.AAPT_PATH+"aapt dump badging "+utils.APKS_PATH+apk_file))
+ 		start="package: name=\'"
+		end="\' versionCode="
+		package=((st.split(start))[1].split(end)[0])
+		
+		start="launchable-activity: name=\'"
+		end="\'  label=\'"	
+		main_activity=((st.split(start))[1].split(end)[0])
+		if "android.permission.ACCESS_NETWORK_STATE" in st:
+			print apk_file
+			count=count+1
+			
+	except:
+		pass
+print count

@@ -27,9 +27,10 @@ def get_prefix(testing_framework, inst_type):
 
 
 class App(AbstractApplication):
-    def __init__(self, device, proj, package_name, local_res, name="app", version=None):
+    def __init__(self, device, proj, package_name, apk_path, local_res, name="app", version=None):
         self.device = device
         self.proj = proj
+        self.apk = apk_path
         super(App, self).__init__(package_name, version)
         self.version = self.__get_version() if version is None else version
         self.local_res = local_res + "/" + str(self.version)
@@ -88,8 +89,8 @@ class App(AbstractApplication):
            .validate(Exception("error setting immersive mode"))
 
     def clean_cache(self):
-        self.device.execute_command(f"pm clear {self.package_name}",shell=True)\
-            .validate(Exception("error cleaning cache of package " + self.package_name))
+        self.device.execute_command(f"pm clear {self.package_name}",shell=True)#\
+            #.validate(Exception("error cleaning cache of package " + self.package_name))
 
     def __get_version(self):
         res = self.device.execute_command(f"dumpsys package {self.package_name}",shell=True)
