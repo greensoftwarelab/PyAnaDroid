@@ -12,6 +12,7 @@ from src.device.Device import get_first_connected_device
 
 from src.instrument.JInstInstrumenter import JInstInstrumenter
 from src.instrument.Types import INSTRUMENTATION_TYPE
+from src.profiler.GreenScalerProfiler import GreenScalerProfiler
 from src.profiler.ManafaProfiler import ManafaProfiler
 from src.profiler.TrepnProfiler import TrepnProfiler
 from src.results_analysis.AnaDroidAnalyzer import AnaDroidAnalyzer
@@ -26,8 +27,8 @@ from src.utils.Utils import mega_find
 
 def init_defaultPyAnaDroid(apps_dir):
     return PyAnaDroid(apps_dir=apps_dir,
-                      testing_framework=TESTING_FRAMEWORK.DROIDBOT,
-                      profiler=PROFILER.MANAFA,
+                      testing_framework=TESTING_FRAMEWORK.MONKEY,
+                      profiler=PROFILER.GREENSCALER,
                       build_type=BUILD_TYPE.DEBUG,
                       instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION
     )
@@ -40,9 +41,9 @@ class PyAnaDroid(object):
         self.apps_dir = apps_dir
         self.device = device if device is not None else get_first_connected_device()
         self.results_dir = results_dir
+        self.instrumentation_type = self.__infer_instrumentation_type(instrumentation_type)
         self.profiler = self.__infer_profiler(profiler)
         self.testing_framework = self.__infer_testing_framework(testing_framework)
-        self.instrumentation_type = self.__infer_instrumentation_type(instrumentation_type)
         self.__validate_suite(profiler)
         self.instrumenter = self.__infer_instrumenter(instrumenter)
         self.analyzer = self.__infer_analyzer(analyzer)
@@ -53,12 +54,12 @@ class PyAnaDroid(object):
     def __infer_profiler(self, profiler):
         if profiler in SUPPORTED_PROFILERS:
             if profiler == PROFILER.TREPN:
-                return TrepnProfiler(profiler.name, self.device)
+                return TrepnProfiler(profiler, self.device)
             elif profiler == PROFILER.MANAFA:
-                return ManafaProfiler(profiler.name, self.device)
+                return ManafaProfiler(profiler, self.device, hunter=self.instrumentation_type==INSTRUMENTATION_TYPE.ANNOTATION)
             elif profiler == PROFILER.GREENSCALER:
-                #return GreenScalerProfiler(profiler.name, self.device)
-                return None
+                return GreenScalerProfiler(profiler, self.device)
+                #return None
         else:
             raise Exception("Unsupported profiler")
 
@@ -195,5 +196,6 @@ if __name__ == '__main__':
     #folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/old_apps/outDir/PDFConverter"
     folder_of_apps = "/Users/ruirua/repos/pyAnaDroid/demoProjects/SampleApp"
     anadroid = init_defaultPyAnaDroid(folder_of_apps)
+    anadroid.profiler.exec_greenscaler("com.example.sampleapp", "adb shell ls ")
     anadroid.defaultWorkflow()
     #anadroid.just_build_apps()

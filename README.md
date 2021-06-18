@@ -1,5 +1,4 @@
-# pyAnaDroid
-
+# AnaDroid
 
 # TODO:
-- auto create rsa key for sign release apks
+- analyzer / scc
