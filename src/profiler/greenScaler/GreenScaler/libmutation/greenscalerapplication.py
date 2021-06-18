@@ -14,10 +14,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import cpu
-import test
-import syscall
-import color
+import src.profiler.greenScaler.GreenScaler.libmutation.cpu as cpu
+import src.profiler.greenScaler.GreenScaler.libmutation.test as test
+import src.profiler.greenScaler.GreenScaler.libmutation.syscall as syscall
+import src.profiler.greenScaler.GreenScaler.libmutation.color as  color
 import os
 class GreenScalerApplication:
     

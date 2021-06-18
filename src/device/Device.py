@@ -3,7 +3,7 @@ import re
 from enum import Enum
 
 from src.application.AndroidProject import BUILD_TYPE
-from src.device.AbstractDevice import AbstractDevice
+from src.device.AbstractDevice import AbstractDevice, ADB_CONN
 import difflib
 
 from src.device.DeviceState import DeviceState, DEVICE_STATE_ENFORCE
@@ -14,7 +14,8 @@ CONFIG_TEST_FILE = CONFIG_DIR + "/" + "device_state_on_test.json"
 CONFIG_IDLE_FILE = CONFIG_DIR + "/" + "device_state_on_idle.json"
 
 
-def get_first_connected_device():
+def get_first_connected_device(conn_type=ADB_CONN.USB):
+    #TODO connect via wifi
     result = execute_shell_command('adb devices -l  | grep \"product\" | cut -f1 -d\ ')
     result.validate(DeviceNotFoundError("No devices/emulators found"))
     device_serial = result.output.split("\n")[0]

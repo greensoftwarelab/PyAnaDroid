@@ -14,15 +14,3 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-import src.profiler.greenScaler.GreenScaler.libmutation.model
-import src.profiler.greenScaler.GreenScaler.libmutation.cpu
-import src.profiler.greenScaler.GreenScaler.libmutation.utils
-import src.profiler.greenScaler.GreenScaler.libmutation.test
-import src.profiler.greenScaler.GreenScaler.libmutation.syscall
-import src.profiler.greenScaler.GreenScaler.libmutation.color
-utils = src.profiler.greenScaler.GreenScaler.libmutation.utils
-model = src.profiler.greenScaler.GreenScaler.libmutation.model
-Test = src.profiler.greenScaler.GreenScaler.libmutation.test.Test
-CPU = src.profiler.greenScaler.GreenScaler.libmutation.cpu.CPU
-SYSCALL = src.profiler.greenScaler.GreenScaler.libmutation.syscall.SYSCALL
-RGB = src.profiler.greenScaler.GreenScaler.libmutation.color.RGB

@@ -14,15 +14,3 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-
-import libmutation.test_mutator
-import libmutation.ga_test_mutator
-import libmutation.events
-import libmutation.utils
-
-Test = libmutation.test.Test
-TestMutator = libmutation.test_mutator.TestMutator
-GATestMutator = libmutation.ga_test_mutator.TestMutator
-EVENTS = libmutation.test_mutator.EVENTS
-utils = libmutation.utils
-events = libmutation.events

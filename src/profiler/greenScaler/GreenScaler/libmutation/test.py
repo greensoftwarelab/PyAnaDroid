@@ -18,6 +18,9 @@ import src.profiler.greenScaler.GreenScaler.libmutation.utils
 from src.profiler.greenScaler.GreenScaler.libmutation.utils import *
 import types
 
+from src.profiler.greenScaler.GreenTestGen.mutator.libmutation import utils
+
+
 class Test(object):
 
     def __init__(self, apk, run=None):
@@ -27,7 +30,7 @@ class Test(object):
         if run:
             self._run = types.MethodType(run, self)
 
-    def _run(self,command=None,args=[]):
+    def _run(self, command=None, args=[]):
         t1 = threading.Thread(target=self._push_test_on_phone)
         t2 = threading.Thread(target=self._run_test_on_phone)
         t3 = threading.Thread(target=self._del_test_on_phone)
@@ -54,15 +57,14 @@ class Test(object):
 
     def run(self, command=None):
         st=time.time()
-        print ("start time="+str(st))
+        print("start time="+str(st))
+        print(command)
         self._run(command)
         en=time.time()
         print("end time="+str(en))
         print("duration="+str(en-st))
         self.duration=en-st
         return self.duration
-
-        
 
     def _push_test_on_phone(self):
 

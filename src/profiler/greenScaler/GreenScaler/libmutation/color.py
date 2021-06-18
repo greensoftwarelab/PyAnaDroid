@@ -2,12 +2,11 @@ import time, os, subprocess, threading
 import re
 import src.profiler.greenScaler.GreenScaler.libmutation.utils
 from os import listdir
+from PIL import Image
 
-try:
-	import Image
-except ImportError:
-	from PIL import Image
-	
+from src.profiler.greenScaler.GreenScaler.libmutation import utils
+
+
 class RGB:
 	
 	def __init__(self, package):

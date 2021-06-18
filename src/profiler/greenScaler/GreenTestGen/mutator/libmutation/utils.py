@@ -86,13 +86,11 @@ def clean_up(pkg_name, apk):
     # find pid again
     subprocess.call("adb shell monkey -p " + pkg_name + " -c android.intent.category.LAUNCHER 1", shell=True)
     time.sleep(10)
-    while 1:	
-    	try:	
-    		bits = subprocess.check_output('adb shell ps | grep "' + pkg_name \
-                                + '"', shell=True)
-    		print("\nDone cleaning.")
-		
-    		break
-    	except:
-		pass	
+    while 1:
+        try:
+            bits = subprocess.check_output('adb shell ps | grep "' + pkg_name + '"', shell=True)
+            print("\nDone cleaning.")
+            break
+        except:
+            pass
     return bits.split()[1]	

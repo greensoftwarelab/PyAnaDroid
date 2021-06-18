@@ -64,7 +64,7 @@ class MonkeyFramework(AbstractTestingFramework):
         for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
-            self.profiler.init()
+            self.profiler.init(**{'app': app})
             self.profiler.start_profiling()
             app.start()
             time.sleep(1)

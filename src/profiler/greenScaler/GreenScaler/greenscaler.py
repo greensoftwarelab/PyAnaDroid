@@ -20,19 +20,14 @@ import os
 import time
 import sys
 import shutil
-import commands
 from os import listdir
-from subprocess import check_output
-from random import randint
-import re
 
-EVENT_PATH = "/dev/input/event1"
 
 def cleaning(pkg, apk):
 
-	print ("Uninstall app if already installed")
+	print("Uninstall app if already installed")
 	utils.uninstall_app(pkg)
-	print ("Install app")
+	print("Install app")
 	utils.install_app(apk)
 
 
@@ -49,12 +44,12 @@ def cpu_measurement(app, apk_file, n, package, test_cmd):
 		print("sleeping")
 		time.sleep(5)
 		app.cpu.cpu_before(package)
-		print ("Running application")
+		print("Running application")
 		duration=app.test.run(test_cmd)
 		app.cpu.duration=app.cpu.duration+duration
 		print("total duration=" + str(duration))
 		app.cpu.cpu_after(package)
-		print ("Collect CPU measurements")
+		print("Collect CPU measurements")
 		app.cpu.pull_cpu(package)
 		app.cpu.count_cpu(apk_file[:-4])
 		
@@ -62,18 +57,18 @@ def cpu_measurement(app, apk_file, n, package, test_cmd):
 def syscall_trace(app, apk_file, n, package,  test_cmd):
 	for i in range(n):      
 		while 1:
-			print ("running ", str((i+1))+"th round of strace")
+			print("running ", str((i+1))+"th round of strace")
 			#cleaning(package, apk_file)
 			time.sleep(5)
-			print ("Start syscall tracing")
+			print("Start syscall tracing")
 			app.syscall.syscall_capture()
-			print ("syscall tracing started")
-			print ("Running application")
+			print("syscall tracing started")
+			print("Running application")
 			#conv= ' '.join([str(i) for i in test_cmd])
 			duration=app.test.run(test_cmd)
-			print ("Stop Syscall tracing")
+			print("Stop Syscall tracing")
 			app.syscall.syscall_stop()
-			print ("Pull syscall traces")
+			print("Pull syscall traces")
 			app.syscall.pull_syscall()
 			trap=app.syscall.count_syscall()
 			if trap==1: ##### strace worked
@@ -112,7 +107,7 @@ def default_greenscaler(n_runs=1):
 	for apk_file in sorted(listdir(utils.APKS_PATH)):
 		########### Find package name and main_activity from the apk
 		try:
-			st=str(commands.getstatusoutput(utils.AAPT_PATH+"aapt dump badging "+utils.APKS_PATH+apk_file))
+			st=str(subprocess.check_output(utils.AAPT_PATH+"aapt dump badging "+utils.APKS_PATH+apk_file))
 			start="package: name=\'"
 			end="\' versionCode="
 			package=((st.split(start))[1].split(end)[0])
@@ -147,7 +142,7 @@ def default_greenscaler(n_runs=1):
 	
 
 
-def exec_command(self,command ):
+def exec_command(self,command):
 	#subprocess.call(command)
 	#print("executing command -%s-" % command)
 	pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -166,18 +161,18 @@ def exec_command(self,command ):
     # i.e. logger.warning(std_err)
 
 
-def exec_greenscaler(package,test_cmd ):
+def exec_greenscaler(package,test_cmd):
 	n=1
 	app=greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=exec_command)
 	print("executing test")
-	cpu_measurement(app, package, n, package,test_cmd )
+	cpu_measurement(app, package, n, package, test_cmd)
 	foreground_app=get_foreground_app()
 	print("-"+foreground_app+"-")
 	if foreground_app != package:
 		print("Error detected. App crashed or stopped during execution")
 		exit(-1) 
 	app.stop_and_clean_app()
-	print ("capture system calls")
+	print("capture system calls")
 	syscall_trace(app, package, n, package,test_cmd)
 	foreground_app=get_foreground_app()
 	if foreground_app != package:
@@ -198,23 +193,10 @@ def exec_greenscaler(package,test_cmd ):
 	app.stop_and_clean_app()
 	exit(0)
 
-	
-
-
-
-
 if __name__=='__main__':					
 	if len(sys.argv)>2:
 		package=sys.argv[1]
-		#print("Lo apk %s" % apkfile)
 		exec_greenscaler(package, ' '.join(sys.argv[2:]))      
 	else:
 		print ("bad arg len. Usage: python greenscaler <apk-path> [cmd and args]")
 		exit(-1)
-
-
-
-
-
-
-		

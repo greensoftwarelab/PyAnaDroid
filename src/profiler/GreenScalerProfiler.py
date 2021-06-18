@@ -1,4 +1,5 @@
 import os
+import subprocess
 import time
 from enum import Enum
 
@@ -64,32 +65,47 @@ class GreenScalerProfiler(AbstractProfiler):
     def needs_external_dependencies(self):
         return False
 
-def exec_greenscaler(package, test_cmd):
-    n = 1
-    app = greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=test_cmd)
-    print("executing test")
-    cpu_measurement(app, package, n, package, test_cmd)
-    foreground_app = get_foreground_app()
-    print("-" + foreground_app + "-")
-    if foreground_app != package:
-        print("Error detected. App crashed or stopped during execution")
-        return
-    app.stop_and_clean_app()
-    print("capture system calls")
-    syscall_trace(app, package, n, package, test_cmd)
-    foreground_app = get_foreground_app()
-    if foreground_app != package:
-        print("Error detected. App crashed or stopped during execution")
-        return
-    app.stop_and_clean_app()
-    print("Now run to capture screen shots")
-    n_tries = 5
-    while n_tries > 0:
-        n_tries = n_tries - 1
+    def exec_greenscaler(self, package, test_cmd, runs=1):
+        n = runs
+        app = greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=exec_command)
+        print("executing test")
+        cpu_measurement(app, package, n, package, test_cmd)
+        foreground_app = get_foreground_app()
+        print("-" + foreground_app + "-")
+        if foreground_app != package:
+            print("Error detected. App crashed or stopped during execution")
+            return
         app.stop_and_clean_app()
-        n_image = screen_capture(app, package, n, package, test_cmd)
-        if n_image == 1:
-            break
-    energy = model.estimate_energy(package, app, n)
-    print("Energy = " + str(energy) + " Joules")
-    app.stop_and_clean_app()
+        print("capture system calls")
+        syscall_trace(app, package, n, package, test_cmd)
+        foreground_app = get_foreground_app()
+        if foreground_app != package:
+            print("Error detected. App crashed or stopped during execution")
+            return
+        app.stop_and_clean_app()
+        print("Now run to capture screen shots")
+        n_tries = 5
+        while n_tries > 0:
+            n_tries = n_tries - 1
+            app.stop_and_clean_app()
+            n_image = screen_capture(app, package, n, package, test_cmd)
+            if n_image == 1:
+                break
+        energy = model.estimate_energy(package, app, n)
+        print("Energy = " + str(energy) + " Joules")
+        app.stop_and_clean_app()
+
+def exec_command(self, command):
+    pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    std_out, std_err = pipes.communicate()
+
+    if pipes.returncode != 0:
+        # an error happened!
+        err_msg = "%s. Code: %s" % (std_err.strip(), pipes.returncode)
+        raise Exception(err_msg)
+
+    elif len(std_err):
+        print(std_out)
+    # return code is 0 (no error), but we may want to
+    # do something with the info on std_err
+    # i.e. logger.warning(std_err)
