@@ -32,7 +32,7 @@ def init_defaultPyAnaDroid(apps_dir):
 
 
 class PyAnaDroid(object):
-    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.TREPN,
+    def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.HUNTER_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION):
         self.apps_dir = apps_dir
@@ -140,7 +140,6 @@ class PyAnaDroid(object):
                 self.profiler.export_results("GreendroidResultTrace0.csv")
                 self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
                 app.clean_cache()
-                return
             self.device.uninstall_pkg(pkg)
             self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
 
@@ -158,12 +157,15 @@ class PyAnaDroid(object):
                 self.profiler.init()
                 self.profiler.start_profiling()
                 app.start()
+                # print("Start testing...")
                 time.sleep(1)
                 self.testing_framework.execute_test(pkg, wk_unit)
+                # time.sleep(20)
+                # print("Stop testing...")
                 app.stop()
                 self.profiler.stop_profiling()
-                self.profiler.export_results("GreendroidResultTrace0.csv")
-                self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+                self.profiler.export_results("random")
+                self.profiler.pull_results("random", app.curr_local_dir)
                 app.clean_cache()
                 i += 1
                 if i == 3:
