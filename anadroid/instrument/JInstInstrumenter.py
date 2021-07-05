@@ -18,8 +18,8 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.profiler = profiler
         self.mirror_dirname = type(profiler).__name__ + mirror_dirname
         self.build_dependencies=[]
-        self.classpath_dependencies = {}
-        self.build_plugins={}
+        self.classpath_dependencies = []
+        self.build_plugins=[]
         super().__init__()
 
     def get_log_filename(self):
@@ -33,10 +33,10 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.classpath_dependencies.clear()
         self.build_plugins.clear()
         if self.current_instr_type == INSTRUMENTATION_TYPE.ANNOTATION:
-            self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="0.9.8"))
-            #self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="0.9.8"))
-            #self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH, version="0.9.5"))
-            #self.build_plugins.append("hunter-debug")
+            self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="1.0.1"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-plugin",dep_type=DependencyType.CLASSPATH,  version="1.0.1"))
+            self.classpath_dependencies.append(BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH, version="0.9.8"))
+            self.build_plugins.append("hunter-debug")
 
 
     def instrument(self, android_project, test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,

@@ -87,10 +87,10 @@ class AnaDroid(object):
 
     def __infer_analyzer(self, ana, profiler):
         if ana in SUPPORTED_ANALYZERS:
-            if ana == ANALYZER.ANADROID_ANALYZER:
-                return OldAnaDroidAnalyzer()
-            elif profiler.MANAFA:
+            if profiler.MANAFA:
                 return ManafaAnalyzer(self.profiler)
+            elif ana == ANALYZER.ANADROID_ANALYZER:
+                return OldAnaDroidAnalyzer()
             else:
                 return None
         else:
@@ -141,7 +141,7 @@ class AnaDroid(object):
             self.testing_framework.init_default_workload(pkg=app.package_name)
             self.testing_framework.test_app(self.device, app)
             self.device.uninstall_pkg(app.package_name)
-            self.analyzer.analyze(app, proj, self.instrumentation_type, self.testing_framework)
+            self.analyzer.analyze(app, self.instrumentation_type, self.testing_framework)
 
     def __validate_suite(self, profiler):
         if not self.instrumentation_type in SUPPORTED_SUITES[profiler]:
