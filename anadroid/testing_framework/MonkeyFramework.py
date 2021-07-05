@@ -61,18 +61,18 @@ class MonkeyFramework(AbstractTestingFramework):
         return cfg
 
     def test_app(self, device, app):
+        j = 0
         for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
             self.profiler.init(**{'app': app})
             self.profiler.start_profiling()
             app.start()
-            time.sleep(1)
             log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
             self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
             app.stop()
-            device.clear_logcat()
             self.profiler.stop_profiling()
+            device.clear_logcat()
             self.profiler.export_results(f"GreendroidResultTrace{i}.csv")
             self.profiler.pull_results(f"GreendroidResultTrace{i}.csv", app.curr_local_dir)
             app.clean_cache()
