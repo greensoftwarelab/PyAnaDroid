@@ -7,7 +7,7 @@ from anadroid.application.AndroidProject import AndroidProject
 from anadroid.device.Device import get_first_connected_device
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 from anadroid.utils.Utils import mega_find
-from anadroid.main import init_defaultPyAnaDroid
+from anadroid.main import init_PyAnaDroid
 
 
 class TestBuildDemo(TestCase):
@@ -15,7 +15,7 @@ class TestBuildDemo(TestCase):
 
     def xx_test_build(self):
         folder_of_app = "demoProjects/SampleApp"
-        le_android = init_defaultPyAnaDroid(folder_of_app)
+        le_android = init_PyAnaDroid(folder_of_app)
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)
@@ -30,7 +30,7 @@ class TestBuildDemo(TestCase):
 
     def _test_hunter_instrumentation(self, instr_type=INSTRUMENTATION_TYPE.ANNOTATION ):
         folder_of_app = "demoProjects/SampleApp"
-        le_android = init_defaultPyAnaDroid(folder_of_app)
+        le_android = init_PyAnaDroid(folder_of_app)
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)

@@ -64,9 +64,11 @@ BUILD_RESULTS_FILE="buildStatus.json"
 SUCCESS_VALUE="Success"
 BUILD_ATTEMPTS = 5
 
+
 class BUILD_RESULT(Enum):
     SUCCESS = "BUILD SUCCESSFUL"
     ERROR = "ERROR"
+
 
 class GRADLE_TASKS(Enum):
     CLEAN = "clean"
@@ -465,12 +467,14 @@ ndk-location={android_home}/ndk-bundle'''\
         has_plugin_apply = re.search(r'apply.*plugin.*', file_content)
         plg_string = ""
         if has_plugin_apply:
-            # replace
-            plgs = echo(file_content) | grep("apply.*plugin")
-            plgs = str(plgs)
+            # it can't be the first plugin
+            plgs = re.findall(r'apply.*plugin.*', file_content)
             for plg in plugins:
                 plg_string += f"apply plugin: '{plg}'\n"
-            file_content = re.sub(plgs, (plg_string+plgs), file_content)
+            # file_content = re.sub(plgs, (plg_string + plgs), file_content)
+            last_plg = plgs[len(plgs) - 1]
+            new_plgs = last_plg + "\n" + plg_string
+            file_content = file_content.replace(last_plg, new_plgs)
         else:
             has_plugins = re.search(r'plugins.*\{', file_content)
             if has_plugins:
@@ -483,7 +487,7 @@ ndk-location={android_home}/ndk-bundle'''\
                 for plg in plugins:
                     plg_string += f"apply plugin: '{plg}'\n"
                 file_content = plg_string + file_content
-        open(bld_file, 'w').write( file_content )
+        open(bld_file, 'w').write(file_content)
 
     def __add_build_classpaths(self):
         if not self.instrumenter.needs_build_classpaths():

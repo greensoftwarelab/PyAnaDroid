@@ -54,7 +54,6 @@ anadroid.defaultWorkflow()
 # TODO
 - merge test apk with androguard
 - results resume file
-- fix reran replay issue
 - test greenscaler on rooted devices
 - monsoon
 

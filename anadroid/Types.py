@@ -37,5 +37,6 @@ class TESTING_APPROACH(Enum):
     GREYBOX = "GreyBox"
 
 class ANALYZER(Enum):
-    ANADROID_ANALYZER = 'Anadroid Analyzer'
+    OLD_ANADROID_ANALYZER = 'Anadroid Analyzer'
+    MANAFA_ANALYZER = "Manafa Analyzer"
 

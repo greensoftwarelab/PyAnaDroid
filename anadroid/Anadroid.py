@@ -30,7 +30,7 @@ from anadroid.utils.Utils import mega_find
 class AnaDroid(object):
     def __init__(self, apps_dir, results_dir="results", profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
-                 analyzer=ANALYZER.ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION, build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG):
+                 analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION, build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG):
         self.apps_dir = os.path.realpath(apps_dir)
         self.app_projects_ut = self.load_projects()
         self.device = device if device is not None else get_first_connected_device()
@@ -87,9 +87,9 @@ class AnaDroid(object):
 
     def __infer_analyzer(self, ana, profiler):
         if ana in SUPPORTED_ANALYZERS:
-            if ana == ANALYZER.ANADROID_ANALYZER:
+            if ana == ANALYZER.OLD_ANADROID_ANALYZER:
                 return OldAnaDroidAnalyzer()
-            elif profiler.MANAFA:
+            elif profiler.MANAFA and ana == ANALYZER.MANAFA_ANALYZER:
                 return ManafaAnalyzer(self.profiler)
             else:
                 return None

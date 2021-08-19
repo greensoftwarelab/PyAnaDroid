@@ -5,6 +5,8 @@ from subprocess import call, check_output, Popen, PIPE
 from multiprocessing import Process
 import os.path as path
 
+from past.builtins import raw_input
+
 default_tests_path="./tests/"
 translate_jar_path="./build/RERANTranslate.jar"
 replay_bin_path="./build/replay"
@@ -70,12 +72,12 @@ if __name__ == "__main__":
 	task_name = args.task
 	reran = RERANWrapper(args.testfolder, args.jarpath, args.jarpath, args.replaypath)
 	if task_name == "record":
-		reran.record(args.appid,args.outputfile)
+		reran.record(args.appid, args.outputfile)
 	elif task_name == "replay":
-		reran.replay(args.appid,args.outputfile)
+		reran.replay(args.appid, args.outputfile)
 	elif task_name == "push":
-		reran.pushToDevice( args.outputfile)
+		reran.pushToDevice(args.outputfile)
 	elif task_name == "all":
-		new_file = reran.record(args.appid,args.outputfile)
+		new_file = reran.record(args.appid, args.outputfile)
 		reran.pushToDevice(new_file)
-		reran.replay(args.appid,new_file)
+		reran.replay(args.appid, new_file)

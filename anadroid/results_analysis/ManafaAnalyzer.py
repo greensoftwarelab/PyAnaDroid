@@ -17,5 +17,10 @@ class ManafaAnalyzer(AbstractAnalyzer):
         if isinstance(self.profiler, HunterEManafa):
             d = self.profiler.manafa.hunter.trace
 
+        print(a)
+        print(b)
+        print(c)
+        print(d)
+
     def clean(self):
         pass

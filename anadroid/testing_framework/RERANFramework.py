@@ -11,7 +11,7 @@ from anadroid.utils.Utils import mega_find, execute_shell_command
 
 RERAN_RESOURCES_DIR = "resources/testingFrameworks/RERAN"
 RERAN_CONFIG_FILE = "config.cfg"
-DEFAULT_REPLAY_EXECUTABLE_PATH = "resources/bin/replay"
+DEFAULT_REPLAY_EXECUTABLE_PATH = "resources/testingFrameworks/RERAN/build/replay"
 DEFAULT_REPLAY_EXECUTABLE_NAME = "replay"
 DEFAULT_REPLAY_DEVICE_INSTALL_DIR = "/sdcard/RERAN"
 DEFAULT_RECORDED_TESTS_DIR = "resources/testingFrameworks/RERAN/tests"
