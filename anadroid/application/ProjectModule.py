@@ -36,6 +36,22 @@ class ProjectModule(object):
         is_app = cat(self.build_file) | grep('com.android.application') != ''
         return MODULE_TYPE.APP if is_app else MODULE_TYPE.LIBRARY
 
+    '''
+        def __infer_dependencies(self):
+            # TODO get dependencies type
+            inside_dependencies = re.search(r'dependencies.*?\{([^{}]+)}', str(cat(self.build_file))).groups(0)[0]
+            for dep_line in inside_dependencies.splitlines():
+                is_imp = str(grep(dep_line, pattern="implementation"))
+                if is_imp != "":
+                    splits = re.search('(\'|\")(.*)(\'|\"?)', is_imp).groups()[1].split(":")
+                    dependency = splits[0]
+                else:
+                    is_comp = str(grep(dep_line, pattern="compile"))
+                    if is_comp != "":
+                        dependency = re.search('[\'\"](.*)[\'\"]', is_comp).groups()[0].split(":")[0]
+            self.dependencies.add(dependency)
+    '''
+
     def __infer_dependencies(self):
         # TODO get dependencies type
         dependencies = re.search(r'dependencies.*?\{(.|\n)*}', str(cat(self.build_file)))

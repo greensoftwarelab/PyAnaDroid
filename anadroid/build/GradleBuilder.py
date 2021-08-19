@@ -302,7 +302,7 @@ class GradleBuilder(AbstractBuilder):
     def __add_or_update_dexoptions(self, gradle_file):
         new_dex_opts={}
         file_ctent = str(cat(gradle_file))
-        has_android = re.search(r'android.*?\{', file_ctent)
+        has_android = re.search(r'android[^\w]*?\{', file_ctent)
         if has_android is None:
             return
         has_dex_options =  re.search(r'dexOptions.*?\{', file_ctent)
@@ -320,13 +320,13 @@ class GradleBuilder(AbstractBuilder):
             line += "\t\t%s%s%s\n" % ( a,b[0],b[1])
         line = "android {\n\tdexOptions {\n%s\t}" % line
         fl_without_dexopts = re.sub(r'dexOptions.*?\{([^{}]+)}', "", file_ctent)
-        fl_ok = re.sub(r'android.*?\{', line, fl_without_dexopts )
+        fl_ok = re.sub(r'android[^\w]*?\{', line, fl_without_dexopts)
         open(gradle_file, 'w').write(fl_ok)
 
     def __add_or_update_lintoptions(self, gradle_file):
         new_lint_opts={}
         file_ctent = str(cat(gradle_file))
-        has_android = re.search(r'android.*?\{', file_ctent)
+        has_android = re.search(r'android[^\w]*?\{', file_ctent)
         if has_android is None:
             return
         x=''' 
@@ -346,7 +346,7 @@ class GradleBuilder(AbstractBuilder):
             line += "\t\t%s%s%s\n" % ( a,b[0],b[1])
         line = "android {\n\tlintOptions {\n%s\t}" % line
         fl_without_dexopts = re.sub(r'lintOptions.*?\{([^{}]+)}', "", file_ctent)
-        fl_ok = re.sub(r'android.*?\{', line, fl_without_dexopts )
+        fl_ok = re.sub(r'android[^\w]*?\{', line, fl_without_dexopts)
         open(gradle_file, 'w').write(fl_ok)
 
     def __update_test_instrumentation_runner(self,gradle_file):
@@ -406,6 +406,24 @@ ndk-location={android_home}/ndk-bundle'''\
             lib_filepath = self.instrumenter.profiler.local_dep_location
             copy(lib_filepath, lid_dir)
 
+    '''
+        def __add_external_libs(self, bld_file):
+            if not self.needs_external_lib_dependency():
+                return
+            file_ctent = str(cat(bld_file))
+            dependencies = self.instrumenter.get_build_dependencies()
+            has_depts = re.search(r'dependencies.*?\{', file_ctent)
+            if has_depts is None:
+                return
+            original_deps = list(filter(lambda x: "com.android.tools.build" not in x, re.findall(r'dependencies.*?\{([^{}]+)}', file_ctent)))[0]
+            new_deps = ""
+            for n_dp in dependencies:
+                new_deps += gen_dependency_string(n_dp) + "\n\t"
+            new_deps = original_deps + "\n\t" + new_deps + "\n"
+            new_file = file_ctent.replace(original_deps, new_deps)
+            open(bld_file, 'w').write(new_file)
+    '''
+
     def __add_external_libs(self, bld_file):
         if not self.needs_external_lib_dependency():
             return
@@ -413,14 +431,24 @@ ndk-location={android_home}/ndk-bundle'''\
         dependencies = self.instrumenter.get_build_dependencies()
         has_depts = re.search(r'dependencies.*?\{', file_ctent)
         if has_depts is None:
-            return
-        original_deps = list(filter(lambda x: "com.android.tools.build" not in x, re.findall(r'dependencies.*?\{([^{}]+)}', file_ctent)))[0]
-        new_deps = ""
-        for n_dp in dependencies:
-            new_deps += gen_dependency_string(n_dp) + "\n\t"
-        new_deps = original_deps + "\n\t" + new_deps + "\n"
-        new_file = file_ctent.replace(original_deps, new_deps)
-        open(bld_file, 'w').write(new_file)
+            new_deps = "dependencies {"
+            for n_dp in dependencies:
+                new_deps += "\n\t" + gen_dependency_string(n_dp)
+            new_deps += "\n}"
+            new_file = file_ctent + "\n\n" + new_deps
+            open(bld_file, 'w').write(new_file)
+        else:
+            # original_deps = re.search(r'dependencies.*?\{([^{}]+)}', file_ctent).groups()[0]  # .strip().split("\n")
+            original_deps = re.search(r'dependencies.*?\{(.|\n)*}', file_ctent).group(0)
+            original_deps_split = re.split(r'dependencies.*?\{', original_deps)
+            original_deps = original_deps_split[1]
+            original_deps = original_deps[0: len(original_deps) - 1]
+            new_deps = ""
+            for n_dp in dependencies:
+                new_deps += gen_dependency_string(n_dp) + "\n\t"
+            new_deps = original_deps + "\n\t" + new_deps + "\n"
+            new_file = file_ctent.replace(original_deps, new_deps)
+            open(bld_file, 'w').write(new_file)
 
     def needs_external_lib_dependency(self):
         return self.instrumenter.needs_build_dependency()
@@ -458,6 +486,36 @@ ndk-location={android_home}/ndk-bundle'''\
 
     def get_apk_version(apk):
         pass
+
+    '''
+        def __add_plugins(self, bld_file):
+            if not self.instrumenter.needs_build_plugin():
+                return
+            file_content = str(cat(bld_file))
+            plugins = self.instrumenter.get_build_plugins()
+            has_plugin_apply = re.search(r'apply.*plugin.*', file_content)
+            plg_string = ""
+            if has_plugin_apply:
+                # replace
+                plgs = echo(file_content) | grep("apply.*plugin")
+                plgs = str(plgs)
+                for plg in plugins:
+                    plg_string += f"apply plugin: '{plg}'\n"
+                file_content = re.sub(plgs, (plg_string+plgs), file_content)
+            else:
+                has_plugins = re.search(r'plugins.*\{', file_content)
+                if has_plugins:
+                    original_plugs = re.search(r'plugins.*?\{([^{}]+)}', file_content).groups()[0]
+                    for plg in plugins:
+                        plg_string += f"\tid '{plg}'\n"
+                    file_content = re.sub(original_plugs, original_plugs + plg_string, file_content)
+                else:
+                    # append at beginning
+                    for plg in plugins:
+                        plg_string += f"apply plugin: '{plg}'\n"
+                    file_content = plg_string + file_content
+            open(bld_file, 'w').write( file_content )
+    '''
 
     def __add_plugins(self, bld_file):
         if not self.instrumenter.needs_build_plugin():

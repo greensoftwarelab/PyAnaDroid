@@ -17,7 +17,9 @@ limitations under the License.
 import os, subprocess, time, threading
 
 ### this is the path to the GreenScaler folder
-BASE_PATH= os.environ['ANADROID_PATH'] + "/src/profilers/greenScaler/GreenScaler/"
+
+#BASE_PATH= os.environ['ANADROID_PATH'] + "/src/profilers/greenScaler/GreenScaler/"
+BASE_PATH= "src/profilers/greenScaler/GreenScaler/"
 
 APKS_PATH=BASE_PATH+"apks/"
 TESTS_PATH=BASE_PATH+"tests/" 
