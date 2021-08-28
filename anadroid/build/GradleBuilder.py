@@ -64,9 +64,11 @@ BUILD_RESULTS_FILE="buildStatus.json"
 SUCCESS_VALUE="Success"
 BUILD_ATTEMPTS = 5
 
+
 class BUILD_RESULT(Enum):
     SUCCESS = "BUILD SUCCESSFUL"
     ERROR = "ERROR"
+
 
 class GRADLE_TASKS(Enum):
     CLEAN = "clean"
@@ -523,8 +525,6 @@ ndk-location={android_home}/ndk-bundle'''\
         has_plugin_apply = re.search(r'apply.*plugin.*', file_content)
         plg_string = ""
         if has_plugin_apply:
-            # replace
-            # plgs = echo(file_content) | grep(r'apply.*plugin')
             # it can't be the first plugin
             plgs = re.findall(r'apply.*plugin.*', file_content)
             for plg in plugins:

@@ -101,7 +101,6 @@ int main(int argc, char *argv[])
 		exit(1);
 	}	
 	
-	printf("STARTED\n");
 	fflush(stdout);
 	uint64_t delayTime = (uint64_t)strtoull(argv[2], NULL, 10);		
 	delayTime *= 1000000000;
@@ -111,174 +110,168 @@ int main(int argc, char *argv[])
 	long lineNumbers = 0;
 	
 	FILE *file = fopen(argv[1], "r");
+	if(!file){
+		perror(argv[1]);
+		return 1;	
+	}
 	
-	if(file)
-	{		
-		int32_t i, j, k, l, m, x;
-			
-		char buffer[BUFSIZ], *ptr;				
-		fgets(buffer, sizeof buffer, file);		
-		ptr = buffer;
-		lineNumbers = (long)strtol(ptr, &ptr, 10);
+	int32_t i, j, k, l, m, x;
 		
-		printf("\n\nLine Numbers = %lu\n\n", lineNumbers);
-		
-		// eventType will then match based on whatever is in the sendEvents.txt file
+	char buffer[BUFSIZ], *ptr;				
+	fgets(buffer, sizeof buffer, file);		
+	ptr = buffer;
+	lineNumbers = (long)strtol(ptr, &ptr, 10);
+	
+	//printf("\n\nLine Numbers = %lu\n\n", lineNumbers);
+	
+	// eventType will then match based on whatever is in the sendEvents.txt file
 
-		unsigned short * eventType;
-		unsigned short * codeData;
-		unsigned short * typeData;
-		uint32_t * valueData;
-		uint64_t * timeArray;
-		
-		eventType = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
-		codeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
-		typeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));		
-		valueData = (uint32_t *) calloc((lineNumbers*1), sizeof(uint32_t));
-		timeArray = (uint64_t *) calloc((lineNumbers*1), sizeof(uint64_t));
-		
+	unsigned short * eventType;
+	unsigned short * codeData;
+	unsigned short * typeData;
+	uint32_t * valueData;
+	uint64_t * timeArray;
 	
-		if(eventType == NULL)
-			printf("eventType failed malloc\n");
-		if(codeData == NULL)
-			printf("codeData failed malloc\n");
-		if(typeData == NULL)
-			printf("typeData failed malloc\n");
-		if(valueData == NULL)
-			printf("valueData failed malloc\n");
-		if(timeArray == NULL)
-			printf("timeArray failed malloc\n");
+	eventType = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
+	codeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));
+	typeData = (unsigned short *) calloc((lineNumbers*1), sizeof(unsigned short));		
+	valueData = (uint32_t *) calloc((lineNumbers*1), sizeof(uint32_t));
+	timeArray = (uint64_t *) calloc((lineNumbers*1), sizeof(uint64_t));
 	
-		
-		int everyOther = 0;
+
+	if(eventType == NULL)
+		printf("eventType failed malloc\n");
+	if(codeData == NULL)
+		printf("codeData failed malloc\n");
+	if(typeData == NULL)
+		printf("typeData failed malloc\n");
+	if(valueData == NULL)
+		printf("valueData failed malloc\n");
+	if(timeArray == NULL)
+		printf("timeArray failed malloc\n");
+
 	
-		for(i = 0, l = 0, m = 0; fgets(buffer, sizeof buffer, file); ++i)
+	int everyOther = 0;
+
+	for(i = 0, l = 0, m = 0; fgets(buffer, sizeof buffer, file); ++i)
+	{
+		if(everyOther == 1)
 		{
-			if(everyOther == 1)
+			for(j = 0, ptr = buffer; j < 4; ++j, ++ptr)
 			{
-				for(j = 0, ptr = buffer; j < 4; ++j, ++ptr)
-				{
-					if(j == 0)
-						eventType[m] = (unsigned short)strtoul(ptr, &ptr, 10);						
-					else if(j == 1)
-						codeData[m] = (unsigned short)strtoul(ptr, &ptr, 10);
-					else if(j == 2)
-						typeData[m] = (unsigned short)strtoul(ptr, &ptr, 10);
-					else if(j == 3)
-						valueData[m] = (uint32_t)strtoul(ptr, &ptr, 10);					
-				}
-				
-				m++;
-				everyOther = 0;					
+				if(j == 0)
+					eventType[m] = (unsigned short)strtoul(ptr, &ptr, 10);						
+				else if(j == 1)
+					codeData[m] = (unsigned short)strtoul(ptr, &ptr, 10);
+				else if(j == 2)
+					typeData[m] = (unsigned short)strtoul(ptr, &ptr, 10);
+				else if(j == 3)
+					valueData[m] = (uint32_t)strtoul(ptr, &ptr, 10);					
 			}
-			else
-			{
-				ptr = buffer;
-				timeArray[l] = (uint64_t)strtoull(ptr, &ptr, 10);		
-				everyOther = 1;
-				l++;
-			}
+			
+			m++;
+			everyOther = 0;					
 		}
-		fclose(file);
+		else
+		{
+			ptr = buffer;
+			timeArray[l] = (uint64_t)strtoull(ptr, &ptr, 10);		
+			everyOther = 1;
+			l++;
+		}
+	}
+	fclose(file);
 
-		//========		Start Sending Events		============
+	//========		Start Sending Events		============
+			
+	char device[20];
+	char* dev_path_pattern = "/dev/input/event%d";
+	char* start = device + 16;
+	//[16] is for the event input number
+	
+	//char* deviceP = device;
+	int fds[10];
+	int fd;
+
+	for (j=0;j<10;j++) fds[j] = -1;
+	
+	j=0,k=0;
+	
+	// For each of the line numbers get the event, validate it, and then write it
+	while(k < lineNumbers){		
+		if (eventType[k] > 9999)
+			{
+				fprintf(stderr, "could not handle so many types of events.\n");
+				return 1;
+			}
+			sprintf(device, dev_path_pattern, eventType[k]);
+
+			//fd = open(deviceP, O_RDWR);
+			fd = open(device, O_RDWR);		
+		
+
+		int ret;
+		int version;
+	
+		// Make sure opening the device opens properly			
+		if(fd <= 0) 
+		{
+			fprintf(stderr, "could not open %s, %s\n", device, strerror(errno));
+			return 1;
+		}
+		
+		if (ioctl(fd, EVIOCGVERSION, &version)) 
+		{
+			fprintf(stderr, "could not get driver version for %s, %s\n", device, strerror(errno));
+			return 1;
+		}			
+		struct input_event checkEvent[5];
+		int valid = 0;			
 				
-		char device[] = "/dev/input/event    "; 
- 		char* start = device + 16;
-		//[16] is for the event input number
-		
-		char* deviceP = device;
-		int fds[10];
-		int fd;
-
-		for (j=0;j<10;j++) fds[j] = -1;
-		
-		j=0,k=0;
-		
-		// For each of the line numbers get the event, validate it, and then write it
-		while(k < lineNumbers)
-		{		
-			if (eventType[k] > 9999)
- 			{
- 				fprintf(stderr, "could not handle so many types of events.\n");
- 				return 1;
- 			}
-
- 			sprintf(start, "%d", eventType[k]);
- 			fd = open(deviceP, O_RDWR);		
-			
-
-			int ret;
-			int version;
-		
-			// Make sure opening the device opens properly			
-			if(fd <= 0) 
-			{
-				fprintf(stderr, "could not open %s, %s\n", *(&deviceP), strerror(errno));
-				return 1;
-			}
-			
-			if (ioctl(fd, EVIOCGVERSION, &version)) 
-			{
-				fprintf(stderr, "could not get driver version for %s, %s\n", *(&deviceP), strerror(errno));
-				return 1;
-			}			
-			
-			struct input_event checkEvent[5];
-			int valid = 0;			
-					
-			if(timeArray[j] == 0)
-			{
-				// Prep the event for checking, store the type, code, value in checkEvent
-				l = 0;
-				while((timeArray[j] == 0) && (j < lineNumbers)) //check the next one, but not if at end of array
-				{	
-					checkEvent[l].type = codeData[k];
-					checkEvent[l].code = typeData[k];
-					checkEvent[l].value = valueData[k];
-					j++;
-					k++;
-					l++;
-					valid++;
-				}				
-			}
-			else
-			{		
-				// Sleep for time interval calculated in Translate
-				goSleep(timeArray[j]);
-				checkEvent[0].type = codeData[k];
-				checkEvent[0].code = typeData[k];
-				checkEvent[0].value = valueData[k];
+		if(timeArray[j] == 0)
+		{
+			// Prep the event for checking, store the type, code, value in checkEvent
+			l = 0;
+			while((timeArray[j] == 0) && (j < lineNumbers)) //check the next one, but not if at end of array
+			{	
+				checkEvent[l].type = codeData[k];
+				checkEvent[l].code = typeData[k];
+				checkEvent[l].value = valueData[k];
 				j++;
 				k++;
-				valid = 1;		
-			}
-			
-			struct input_event event[valid];
-			memset(&event, 0, sizeof(event));
-			
-			for(x = 0; x < valid; x++){			
-				event[x].type = checkEvent[x].type;
-				event[x].code = checkEvent[x].code;
-				event[x].value = checkEvent[x].value;		
-			}
-					
-			// ** Write the event that we just got from checkEvent **
-			ret = write(fd, &event, sizeof(event));			
-			if(ret < sizeof(event)) 
-			{
-				fprintf(stderr, "write event failed, %s\n", strerror(errno));
-				fprintf(stderr, "File %s Event: %d %d %u\n",deviceP,event[x].type, event[x].code, event[x].value);
-				
-				//should exit...				
-			}    
-		}		
-	}
-	else // fopen() returned NULL
-	{
-		//perror(filename);
-		perror(argv[1]);
-	}
+				l++;
+				valid++;
+			}				
+		}
+		else
+		{		
+			// Sleep for time interval calculated in Translate
+			goSleep(timeArray[j]);
+			checkEvent[0].type = codeData[k];
+			checkEvent[0].code = typeData[k];
+			checkEvent[0].value = valueData[k];
+			j++;
+			k++;
+			valid = 1;		
+		}
+		
+		struct input_event event[valid];
+		memset(&event, 0, sizeof(event));
+		
+		for(x = 0; x < valid; x++){			
+			event[x].type = checkEvent[x].type;
+			event[x].code = checkEvent[x].code;
+			event[x].value = checkEvent[x].value;		
+		}
+		
+		// ** Write the event that we just got from checkEvent **
+		ret = write(fd, &event, sizeof(event));			
+		if(ret < sizeof(event)) {
+			fprintf(stderr, "write event failed, %s\n", strerror(errno));
+			fprintf(stderr, "File %s Event: %d %d %u\n",device,event[x-1].type, event[x-1].code, event[x-1].value);
+			//should exit...				
+		}
+	}		
 	
 	return 0;
 }

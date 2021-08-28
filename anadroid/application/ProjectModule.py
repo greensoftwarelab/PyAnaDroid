@@ -20,11 +20,6 @@ class ProjectModule(object):
         self.manifest = self.__infer_manifest()
         self.dependencies = set()
         self.__infer_dependencies()
-        #self.main_dir = None
-        #self.inst_test_dir = None
-        #self.test_dir = None
-        #self.beuild_dir = None
-        #self.libs_dir = None
         self.gen_apks = {}
         self.gen_aars = {}
 

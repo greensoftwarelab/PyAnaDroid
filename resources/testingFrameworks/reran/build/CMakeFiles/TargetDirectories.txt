@@ -1,3 +1,0 @@
-/Users/ruirua/repos/RERAN/build/CMakeFiles/rebuild_cache.dir
-/Users/ruirua/repos/RERAN/build/CMakeFiles/edit_cache.dir
-/Users/ruirua/repos/RERAN/build/CMakeFiles/replay.dir

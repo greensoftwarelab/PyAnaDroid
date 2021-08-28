@@ -1,3 +1,6 @@
 [submodule "resources/testingFrameworks/droidbot"]
 	path = resources/testingFrameworks/droidbot
 	url = https://github.com/honeynet/droidbot.git
+[submodule "resources/testingFrameworks/RERAN"]
+	path = resources/testingFrameworks/RERAN
+	url = https://github.com/RRua/RERAN.git
