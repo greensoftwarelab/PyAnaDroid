@@ -14,18 +14,22 @@ class ManafaAnalyzer(AbstractAnalyzer):
 
     # def analyze(self, app, output_log_file="hunter.log"):
     def analyze(self, app, test_orient, test_framework, output_log_file="hunter.log"):
-        total, per_component, metrics = self.profiler.manafa.getConsumptionInBetween()
+
+        #total, per_component, metrics = self.profiler.manafa.getConsumptionInBetween()
         hunter_trace = {}
         if isinstance(self.profiler.manafa, HunterEManafa):
-            hunter_trace = self.profiler.manafa.hunter.trace
+            # hunter_trace = self.profiler.manafa.hunter.trace
             results_dir = app.curr_local_dir
             hunter_logs = []
             for f in os.listdir(results_dir):
                 if "hunter" in f:
                     hunter_logs.append(os.path.join(results_dir, f))
 
+            final_hunter = results_dir + "/" + output_log_file
+
+            # concat all hunter logs on final hunter
             between_tests = 0
-            with open(results_dir + "/" + output_log_file, 'w') as outfile:
+            with open(final_hunter, 'w') as outfile:
                 for fname in hunter_logs:
                     with open(fname) as infile:
                         size = os.path.getsize(fname)
@@ -38,10 +42,16 @@ class ManafaAnalyzer(AbstractAnalyzer):
                                 outfile.write(line)
                         between_tests += 1
 
-        print(a)
-        print(b)
-        print(c)
-        print(d)
+            # concat all consumption logs on final consumption
+            consumption_logs = []
+            for f in os.listdir(results_dir):
+                if "consumption" in f:
+                    consumption_logs.append(os.path.join(results_dir, f))
+
+            final_consumption = results_dir + "/consumption.log"
+            interval_line = "------------------------------------------\n"
+            with open(final_consumption, 'w') as file:
+                file.write(interval_line.join([open(i).read() for i in consumption_logs]))
 
     def clean(self):
         pass
