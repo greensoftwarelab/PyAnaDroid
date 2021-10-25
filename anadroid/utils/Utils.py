@@ -66,7 +66,8 @@ class COMMAND_RESULT(object):
                     return False
                 else:
                     print(self)
-                    raise e
+                    return False
+                    #raise e
             else:
                 print(self)
                 return True
