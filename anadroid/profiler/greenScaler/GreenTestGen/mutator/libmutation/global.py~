@@ -1,0 +1,12 @@
+
+def get_initial_script():
+	test_script = ""
+
+    	try:
+        	with open(args.test) as f_in:
+        	    for line in f_in:
+        	        test_script += line
+        	    f_in.close()
+    	except IOError as e:
+        print(str(e))
+        sys.exit()

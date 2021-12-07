@@ -1,0 +1,19 @@
+import re
+import os
+from os import listdir
+src="/home/shaiful/research/shaiful_random_test_energy/green_sys_coverage/best_tests_device/best_tests_androzoo_batch2/"
+dest="/home/shaiful/research/shaiful_random_test_energy/green_sys_coverage/best_tests_device/tmp/"
+for file in listdir(src):
+	fr=open(src+file,"r")
+	lines=fr.readlines()
+	fr.close()
+	name=file
+	if "best_tests_androzoo_batch2" in file:
+		name=file[len("best_tests_androzoo_batch2"):]
+	fw=open(dest+name,"w")
+	for line in lines:
+		if "sleep" not in line:
+			fw.write(line.strip())
+			fw.write("\n")
+	fw.close()		
+

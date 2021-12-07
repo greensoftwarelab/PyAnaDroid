@@ -1,0 +1,23 @@
+
+
+class Initial:
+
+	test_script=""
+
+	def __init__(self,fyl):
+	
+		try:
+	        	with open(fyl) as f_in:
+	        	    for line in f_in:
+	        	        Initial.test_script += line
+	        	    f_in.close()
+	    	except IOError as e:
+	        	print(str(e))
+	        	sys.exit()
+        @staticmethod	
+
+	def get_initial_script():
+		return Initial.test_script
+
+	    	
+

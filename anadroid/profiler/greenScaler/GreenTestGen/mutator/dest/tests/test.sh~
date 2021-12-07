@@ -1,0 +1,7 @@
+input tap 268 509 
+microsleep 4000000
+input tap 268 509
+input tap 268 509
+input tap 268 509
+input swipe 268 509 268 509 1000
+

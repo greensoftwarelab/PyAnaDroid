@@ -1,0 +1,12 @@
+#!/bin/bash
+
+last=5
+next=5
+if [ $last = $next ]
+	then
+   			#kill $pid
+	echo "equal"
+else
+	echo "not equal"
+   			 
+fi
