@@ -31,8 +31,6 @@ class HunterAnalyzer(AbstractAnalyzer):
                             outfile.write(line)
                     between_tests += 1
 
-        # TODO compare with allMethods.json ??
-
     def analyze_apis(self):
         return
 
