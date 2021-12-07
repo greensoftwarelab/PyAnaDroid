@@ -183,3 +183,8 @@ class AnaDroid(object):
                         return_projs.append(child_path_dir)
         return return_projs
 
+    def record_test(self):
+        if self.testing_framework.is_recordable():
+            self.testing_framework.record_test()
+        else:
+            raise Exception(f"Unable to record test with {self.testing_framework.id} framework")

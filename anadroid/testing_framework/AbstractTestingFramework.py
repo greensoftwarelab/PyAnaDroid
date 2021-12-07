@@ -26,3 +26,9 @@ class AbstractTestingFramework(ABC):
     @abstractmethod
     def test_app(self, device, app):
         pass
+
+    def is_recordable(self):
+        return False
+
+    def record_test(self, app_id=None, test_id=None):
+        pass
