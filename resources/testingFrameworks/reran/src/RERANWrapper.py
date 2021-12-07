@@ -19,8 +19,7 @@ def record_events(filename):
 
 class RERANWrapper(object):
 	"""docstring for RERANWrapper"""
-	def __init__(self, tests_folder, jar_path, translator_jar_path, replay_bin_path):
-		self.jar_path = jar_path
+	def __init__(self, tests_folder, translator_jar_path, replay_bin_path):
 		self.translator_jar_path = translator_jar_path
 		self.replay_bin_path = replay_bin_path
 		self.tests_folder = tests_folder
@@ -70,7 +69,7 @@ if __name__ == "__main__":
 	parser.add_argument("-a", "--appid", default="unknown_app", type=str)
 	args = parser.parse_args()
 	task_name = args.task
-	reran = RERANWrapper(args.testfolder, args.jarpath, args.jarpath, args.replaypath)
+	reran = RERANWrapper(args.testfolder, args.jarpath, args.replaypath)
 	if task_name == "record":
 		reran.record(args.appid, args.outputfile)
 	elif task_name == "replay":
