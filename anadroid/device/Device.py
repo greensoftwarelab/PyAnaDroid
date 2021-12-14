@@ -50,8 +50,10 @@ class Device(AbstractDevice):
     def execute_root_command(self, cmd, args=[]):
         return super(Device, self).execute_root_command(cmd,args)
 
-    def install_apks(self, andr_proj, build_type=BUILD_TYPE.RELEASE):
+    def install_apks(self, andr_proj, build_type=BUILD_TYPE.RELEASE, install_test_apks=False):
         apks_built = andr_proj.get_apks(build_type)
+        if install_test_apks:
+            apks_built += andr_proj.get_test_apks()
         installed_packages = set()
         for apk in apks_built:
             old_packs = self.installed_packages
@@ -71,6 +73,9 @@ class Device(AbstractDevice):
             installed_packages.add(installed_pack)
             self.installed_packages.add(installed_pack)
         return installed_packages
+
+    def install_apk(self, apk_path):
+        pass
 
     def unlock_screen(self, password=None):
        super(Device, self).unlock_screen(password)
@@ -94,7 +99,7 @@ class Device(AbstractDevice):
         return vals
 
     def get_min_sdk_version(self):
-        return int(self.props["ro.build.version.min_supported_target_sdk"]) if "ro.build.version.min_supported_target_sdk" in self.props else  self.props["ro.build.version.sdk"]
+        return int(self.props["ro.build.version.min_supported_target_sdk"]) if "ro.build.version.min_supported_target_sdk" in self.props else int(self.props["ro.build.version.sdk"])
 
     def get_device_sdk_version(self):
         return int(self.props["ro.build.version.sdk"]) if "ro.build.version.sdk" in self.props else 19

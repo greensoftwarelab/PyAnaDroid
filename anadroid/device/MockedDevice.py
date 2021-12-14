@@ -1,5 +1,5 @@
-from src.device.Device import Device
-from src.utils.Utils import COMMAND_RESULT
+from anadroid.device.Device import Device
+from anadroid.utils.Utils import COMMAND_RESULT
 
 
 class MockedDevice(Device):
