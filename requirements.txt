@@ -43,7 +43,7 @@ pep517==0.10.0
 pexpect==4.8.0
 physalia==0.0.1.dev122
 pickleshare==0.7.5
-Pillow==8.2.0
+Pillow==8.3.2
 pip-autoremove==0.9.1
 prompt-toolkit==3.0.16
 ptyprocess==0.7.0
