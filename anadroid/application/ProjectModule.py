@@ -1,7 +1,7 @@
 from enum import Enum
 from os import mkdir
 
-from src.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command
 from textops import cat, grep, cut
 import re
 

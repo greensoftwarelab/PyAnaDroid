@@ -1,6 +1,7 @@
 import os
 from os import listdir
 
+from manafa.utils.Logger import log, LogSeverity
 
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, SUPPORTED_INSTRUMENTERS, \
     SUPPORTED_INSTRUMENTATION_TYPES, SUPPORTED_SUITES, SUPPORTED_BUILDING_SYSTEMS
@@ -127,7 +128,8 @@ class AnaDroid(object):
     def defaultWorkflow(self):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
-            print("Processing app " + app_name)
+            log("Processing app " + app_name,  log_sev=LogSeverity.INFO)
+            #print("Processing app " + app_name)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
@@ -140,7 +142,7 @@ class AnaDroid(object):
 
     def do_work(self, proj, apps):
         for i, app in enumerate(apps):
-            print("testing package " + app.package_name)
+            log("testing package " + app.package_name)
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
             app.set_immersive_mode()
             self.testing_framework.init_default_workload(pkg=app.package_name)
@@ -155,7 +157,7 @@ class AnaDroid(object):
     def just_build_apps(self):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
-            print("Processing app " + app_name + " in " + app_proj)
+            log("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
@@ -168,12 +170,11 @@ class AnaDroid(object):
     def just_analyze(self):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
-            print("Processing app " + app_name + " in " + app_proj)
+            log("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
-            print(original_proj.results_dir)
             app = App(self.device, original_proj, original_proj.pkg_name, apk_path="",
                       local_res=original_proj.results_dir)
-
+            raise NotImplementedError()
             #builder = self.init_builder(instr_proj)
             #builder.build_proj_and_apk(build_type=self.build_type,build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
             #self.analyzer.analyze(app, **{'instr_type': self.instrumentation_type, 'testing_framework': self.testing_framework})

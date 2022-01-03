@@ -2,6 +2,8 @@ import re
 from abc import ABC, abstractmethod
 from enum import Enum
 
+from manafa.utils.Logger import log
+
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.utils.Utils import execute_shell_command
 
@@ -59,7 +61,7 @@ class AbstractDevice(ABC):
     def unlock_screen(self, pwd=None):
         cmd = ""
         if self.is_screen_unlocked():
-            print("screen already unlocked")
+            log("screen is unlocked")
             return
 
         if self.is_screen_dreaming():
@@ -67,14 +69,13 @@ class AbstractDevice(ABC):
             cmd = "input keyevent 26;"
         if pwd is not None:
             # press lock btn -> swipe up -> passwd -> press enter
-            print("password")
+            print("Inserting password")
             self.execute_command(
                 "\'{cmd}input touchscreen swipe 930 880 930 380 ; input text {pwd}; input input keyevent 66 \' ".format(
                     cmd=cmd,
                     pwd=pwd), args=[])
         else:
             # press lock button -> KEYCODE_MENU
-            print("pra cima")
             res = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[],shell=True)
             if not self.is_screen_unlocked():
                 # if still locked -> swipe up

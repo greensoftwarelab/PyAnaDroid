@@ -6,6 +6,7 @@ from os import mkdir, listdir
 
 from textops import cat, grep, cut, sed, echo, grepv
 
+from anadroid.application.Application import App
 from anadroid.application.ProjectModule import ProjectModule
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.utils.Utils import execute_shell_command, mega_find
@@ -44,11 +45,20 @@ class AndroidProject(object):
         self.pkg_name, self.app_id, = self.__gen_proj_id()
         self.__init_results_dir()
         self.proj_version = DefaultSemanticVersion("0.0")
+        self.apks = {'Test': [], 'Debug': [], 'Release': [], 'Custom': []}
 
     def __gen_proj_id(self):
-        pkg_line = str(cat(self.main_manif_file) | grep("package=\"[^\"]") )
-        pkg_name = str(re.search("package=(\"[^\"]*)", pkg_line).groups()[0]).strip().replace("\"","")
+        pkg_line = str(cat(self.main_manif_file) | grep("package=\"[^\"]"))
+        pkg_name = str(re.search("package=(\"[^\"]*)", pkg_line).groups()[0]).strip().replace("\"", "")
         return pkg_name, self.proj_name + "--" + pkg_name
+
+    def add_apk(self, apk_path, build_type):
+        if build_type is None:
+            tp = 'Test'
+        else:
+            tp = build_type.value
+
+        self.apks[tp].append(apk_path)
 
     def get_build_files(self):
         return mega_find(self.proj_dir, maxdepth=3, mindepth=0, pattern="build.gradle", type_file='f')
@@ -106,16 +116,23 @@ class AndroidProject(object):
         return len(mega_find(self.proj_dir, pattern="gradlew", maxdepth=2,type_file='f'))>0
 
     def get_apks(self, build_type=BUILD_TYPE.DEBUG):
+        if len(self.apks[build_type.value]) > 0:
+            return self.apks[build_type.value]
         vals = mega_find(self.proj_dir, pattern="*.apk", type_file='f')
         return list(filter(lambda x: build_type.value.lower() in x.lower(), vals))
 
+    def get_test_apks(self):
+        if len(self.apks['Test']) > 0:
+            return self.apks['Test']
+        vals = mega_find(self.proj_dir, pattern="*.apk", type_file='f')
+        return list(filter(lambda x: 'test' in x.lower(), vals))
+
     def __init_results_dir(self):
-        res_app_dir= self.results_dir +"/"+ self.app_id
+        res_app_dir = os.path.join(self.results_dir, self.app_id)
         mk_ma_dir(res_app_dir)
         self.results_dir = res_app_dir
 
-
-    def set_version(self,build_type):
+    def set_version(self, build_type):
         apks = self.get_apks(build_type)
         if len(apks) == 0:
             return
@@ -123,6 +140,6 @@ class AndroidProject(object):
         #apk_version =
 
     def clean_trasformations(self):
-        transforms = mega_find( self.proj_dir, pattern="*TRANSFORMED*", maxdepth=1, type_file='d')
+        transforms = mega_find(self.proj_dir, pattern="*TRANSFORMED*", maxdepth=1, type_file='d')
         for t in transforms:
             shutil.rmtree(t)

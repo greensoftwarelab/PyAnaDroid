@@ -8,8 +8,8 @@ from anadroid.profiler.AbstractProfiler import AbstractProfiler
 from anadroid.utils.Utils import execute_shell_command
 
 RESOURCES_DIR = "resources/profilers/Manafa"
-HUNTER_INSTRUMENT_FILE = RESOURCES_DIR + "/to_instrument_file.txt"
-HUNTER_NOT_INSTRUMENT_FILE = RESOURCES_DIR + "/not_instrument_file.txt"
+HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
+HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
 
 class ManafaProfiler(AbstractProfiler):
     def __init__(self, profiler, device, power_profile=None, timezone=None, hunter=True):

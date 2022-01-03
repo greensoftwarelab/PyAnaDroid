@@ -1,11 +1,14 @@
 import json, os
 
-from src.application.Dependency import BuildDependency, DependencyType
-from src.instrument.AbstractInstrumenter import AbstractInstrumenter
+from manafa.utils.Logger import log, LogSeverity
+
+from anadroid.application.Dependency import BuildDependency, DependencyType
+from anadroid.instrument.AbstractInstrumenter import AbstractInstrumenter
 import subprocess
-from src.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
-from src.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
-from src.utils.Utils import execute_shell_command
+from anadroid.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
+from anadroid.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
+from anadroid.utils.Utils import execute_shell_command
+from shutil import copyfile
 
 JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
 
@@ -43,8 +46,9 @@ class JInstInstrumenter(AbstractInstrumenter):
     def instrument(self, android_project, test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
                    instr_strategy=INSTRUMENTATION_STRATEGY.METHOD_CALL, instr_type=INSTRUMENTATION_TYPE.TEST):
         self.__update_dependencies_and_plugins(instr_type)
+        target_dir = os.path.join(android_project.proj_dir, self.mirror_dirname)
         if self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):
-            print("a instrumentar...")
+            log("instrumenting project sources", log_sev=LogSeverity.INFO)
             command = "java -jar \"{JInst_jar}\" -{build_system} \"{mir_dir}\" \"X\" \"{proj_dir}\" \"{manif_file}\" \"{test_manif_file}\" -{test_ori} -{test_frame} \"{app_id}\" -{test_approach}".format(
                 JInst_jar=JINST_PATH,
                 build_system=self.build_system.GRADLE.value.lower(),
@@ -58,11 +62,12 @@ class JInstInstrumenter(AbstractInstrumenter):
                 test_approach=test_approach.value.lower()
             )  # # e.g java -jar jInst.jar "-gradle" "_TRANSFORMED_" "X" "./demoProjects/N2AppTest" "./demoProjects/N2AppTest/app/src/main/AndroidManifest.xml" "-" "-TestOriented" "-junit" "N2AppTest--uminho.di.greenlab.n2apptest" "blackbox"
             res = execute_shell_command(command)
+            copyfile("allMethods.json", os.path.join(target_dir, "allMethods.json"))
             res.validate(Exception("Bad instrumentation"))
             self.write_instrumentation_log_file(android_project, test_approach, instr_type, instr_strategy)
         else:
-            print("Same instrumentation of last time. Skipping instrumentation phase")
-        return android_project.proj_dir + "/" + self.mirror_dirname
+            log("Same instrumentation of last time. Skipping instrumentation phase", log_sev=LogSeverity.WARNING)
+        return target_dir
 
     def needs_build_plugin(self):
         return len(self.build_plugins) > 0
@@ -87,7 +92,6 @@ class JInstInstrumenter(AbstractInstrumenter):
 
     def needs_reinstrumentation(self, proj, test_approach, instr_type, instr_strategy):
         instrumentation_log = self.__getInstrumentationLog(proj)
-        print(instrumentation_log)
         old_profiler = instrumentation_log['profiler'] if 'profiler' in instrumentation_log else ""
         old_approach = instrumentation_log['test_approach'] if 'test_approach' in instrumentation_log else ""
         old_instr_type = instrumentation_log['instr_type'] if 'instr_type' in instrumentation_log else ""

@@ -3,6 +3,8 @@ import os
 import re
 from enum import Enum
 
+from manafa.utils.Logger import log
+
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.AbstractDevice import AbstractDevice, ADB_CONN
 import difflib
@@ -61,13 +63,13 @@ class Device(AbstractDevice):
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
-                print("package already installed")
+                log("package already installed")
                 the_pack = self.get_package_matching(andr_proj.pkg_name)
                 if the_pack is None:
                     continue
                 else:
                     diff_pkgs = [the_pack]
-            print("APK installed " + apk)
+            log("APK installed " + apk)
             self.installed_apks.append(apk)
             installed_pack = diff_pkgs[0]
             installed_packages.add(installed_pack)

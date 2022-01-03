@@ -40,7 +40,6 @@ class RGB:
 
 	def capture_images(self):
 		t1 = threading.Thread(target=self.run_screencap)
-		print ("making directory to /sdcard/")
 		self.makedir()
 		print( "screencap started")
 		t1.start()

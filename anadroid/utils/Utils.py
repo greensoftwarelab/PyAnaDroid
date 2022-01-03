@@ -69,7 +69,7 @@ class COMMAND_RESULT(object):
                     return False
                     #raise e
             else:
-                print(self)
+                #print(self)
                 return True
         else:
             return True

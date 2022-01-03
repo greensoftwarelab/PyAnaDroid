@@ -1,4 +1,4 @@
-from src.results_analysis.AbstractAnalyzer import AbstractAnalyzer
+from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 import os
 
 class HunterAnalyzer(AbstractAnalyzer):
@@ -12,7 +12,10 @@ class HunterAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def analyze(self, app, output_log_file="hunter.log"):
+    def show_results(self, app_list):
+        pass
+
+    def analyze(self, app, output_log_file="hunter.log", **kwargs):
         hunter_results_out = app.curr_local_dir + '/results/hunter'
         hunter_logs = [f for f in os.listdir(hunter_results_out) if os.path.isfile(os.path.join(hunter_results_out, f))]
 

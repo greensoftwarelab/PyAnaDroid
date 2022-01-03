@@ -1,6 +1,7 @@
 import os
 import shutil
 
+from manafa.utils.Logger import log
 from textops import cut, grep, echo
 
 from anadroid.Types import TESTING_FRAMEWORK
@@ -13,7 +14,7 @@ from anadroid.utils.Utils import get_date_str
 def get_prefix(testing_framework, inst_type):
     dirname = testing_framework.value
     if inst_type == INSTRUMENTATION_TYPE.METHOD:
-        dirname+="Method"
+        dirname += "Method"
     elif inst_type == INSTRUMENTATION_TYPE.TEST:
         dirname += "Test"
     elif inst_type == INSTRUMENTATION_TYPE.ANNOTATION:
@@ -33,15 +34,16 @@ class App(AbstractApplication):
         self.apk = apk_path
         super(App, self).__init__(package_name, version)
         self.version = self.__get_version() if version is None else version
-        self.local_res = os.path.join( local_res, str(self.version))
+        self.local_res = os.path.join(local_res, str(self.version))
         self.name = name
         self.curr_local_dir = None
         self.__init_res_dir()
 
 
     def __init_res_dir(self):
-        all_dir = self.local_res+"/all"
-        old_runs_dir = self.local_res+"/oldRuns"
+        log(self.local_res)
+        all_dir = os.path.join(self.local_res, "all")
+        old_runs_dir = os.path.join(self.local_res, "oldRuns")
         if not os.path.exists(self.local_res):
             os.mkdir(self.local_res)
         if not os.path.exists(all_dir):
@@ -55,11 +57,12 @@ class App(AbstractApplication):
                 except Exception:
                     continue
         #cp all methods
-        if not os.path.exists(all_dir + "/allMethods.json"):
-            shutil.move(os.path.join( self.proj.proj_dir , "allMethods.json"), all_dir)
+        all_m = os.path.join(self.proj.proj_dir, "allMethods.json")
+        if not os.path.exists(all_m):
+            shutil.move(all_m, all_dir)
 
     def init_local_test_(self, testing_framework, inst_type):
-        dirname = self.local_res + "/"+ get_prefix(testing_framework,inst_type)
+        dirname =  os.path.join( self.local_res, get_prefix(testing_framework, inst_type))
         os.mkdir(dirname)
         self.curr_local_dir = dirname
 
@@ -83,8 +86,8 @@ class App(AbstractApplication):
 
     def set_immersive_mode(self):
         if self.device.get_device_android_version().major >= 11:
-            print("immersive mode not available on Android 11+ devices")
-        print("setting immersive mode")
+            log("immersive mode not available on Android 11+ devices", log_sev)
+        log("setting immersive mode")
         self.device.execute_command(f"settings put global policy_control immersive.full={self.package_name}",shell=True)\
            .validate(Exception("error setting immersive mode"))
 
@@ -93,7 +96,7 @@ class App(AbstractApplication):
             #.validate(Exception("error cleaning cache of package " + self.package_name))
 
     def __get_version(self):
-        res = self.device.execute_command(f"dumpsys package {self.package_name}",shell=True)
+        res = self.device.execute_command(f"dumpsys package {self.package_name}", shell=True)
         if res.validate(Exception("unable to determinate version of package")):
-            version = echo(res.output | grep("versionName") | cut("=",1))
+            version = echo(res.output | grep("versionName") | cut("=", 1))
             return DefaultSemanticVersion(str(version))

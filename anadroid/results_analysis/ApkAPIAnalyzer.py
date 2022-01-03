@@ -180,6 +180,9 @@ class ApkAPIAnalyzer(object):
     def clean(self):
         pass
 
+    def show_results(self, app_list):
+        pass
+
 if __name__ == '__main__':
     apk_path = sys.argv[1]
     apkname = sys.argv[2]

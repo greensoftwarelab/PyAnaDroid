@@ -1,16 +1,19 @@
 import os
 from shutil import copy
 
+from manafa.utils.Logger import log, LogSeverity
+from termcolor import colored
 from textops import grep, cat, sed, head, echo
 import json
 import re
 
-from src.application.AndroidProject import BUILD_TYPE
-from src.application.Dependency import DependencyType
-from src.build.AbstractBuilder import AbstractBuilder
-from src.build.versionUpgrader import DefaultSemanticVersion
-from src.utils.Utils import mega_find, execute_shell_command, sign_apk
-from src.build.GracleBuildErrorSolver import is_known_error, solve_known_error
+from anadroid.application.AndroidProject import BUILD_TYPE
+from anadroid.application.Application import App
+from anadroid.application.Dependency import DependencyType
+from anadroid.build.AbstractBuilder import AbstractBuilder
+from anadroid.build.versionUpgrader import DefaultSemanticVersion
+from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file
+from anadroid.build.GracleBuildErrorSolver import is_known_error, solve_known_error
 
 TRANSITIVE = "implementation"
 TEST_TRANSITIVE = "testImplementation"
@@ -98,46 +101,108 @@ class GradleBuilder(AbstractBuilder):
         self.build_tools_version = None
         set_transitive_names(self.gradle_plg_version)
 
-    def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG):
+    def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG, build_tests_apk=False):
         self.build()
         self.build_apk(build_type=build_type)
         self.proj.set_version(build_type)
+        if build_tests_apk:
+            self.build_tests_apk()
+
+    def install_apks(self, build_type=BUILD_TYPE.DEBUG, install_apk_test=False):
+        apps_list = []
+        task_name = "install" + build_type.value
+        val = self.__execute_gradlew_task(task_name)
+        was_success = re.search("BUILD SUCCESSFUL", val)
+        if was_success:
+            log(f"{task_name}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+            app = self.create_app_from_installed_apk(val, build_type)
+            apps_list.append(app)
+        filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
+                "SUCCCESS" if was_success else "ERROR")))
+        log_to_file(content=val, filename=filename)
+        if install_apk_test:
+            task_name = f"install{build_type.value}AndroidTest"
+            val = self.__execute_gradlew_task(task_name)
+            was_success = re.search("BUILD SUCCESSFUL", val)
+            if was_success:
+                log(f"{task_name}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+            filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
+            "SUCCCESS" if was_success else "ERROR")))
+            log_to_file(content=val, filename=filename)
+        return apps_list
+
+    def uninstall_all_apks(self):
+        task_name = "uninstallAll"
+        self.__execute_gradlew_task(task_name)
+
+
+    def create_app_from_installed_apk(self,gradle_output, build_type):
+        installed_apk_simple_name = re.search(r"Installing APK \'(.*?)\'", gradle_output).groups()[0]
+        full_apk_path = next(
+            filter(lambda x: str(x).endswith(installed_apk_simple_name), self.proj.get_apks(build_type=build_type)),
+            self.proj.get_apks(build_type=build_type)[0])
+        new_pkgs = self.device.get_new_installed_pkgs()
+        if len(new_pkgs) == 0:
+            # app was already installed
+            log("app already installed", log_sev=LogSeverity.INFO)
+            app_pack = self.device.get_package_matching(self.proj.pkg_name)
+            new_pkgs.append(app_pack)
+        apk_pkg = new_pkgs[0]  # ASSUMING JUST ONE
+        app = App(self.device, self.proj, apk_pkg, apk_path=full_apk_path, local_res=self.proj.results_dir)
+        return app
 
     def sign_apks(self, build_type=BUILD_TYPE.DEBUG):
         if self.was_last_build_successful(task="sign") or build_type == BUILD_TYPE.DEBUG:
             return
-        print("signing generated apks")
         for apk_path in self.proj.get_apks(build_type):
             ret, o, e = sign_apk(apk_path)
             if ret == 0 and len(e) < 3:
-                print("APK Successfully signed")
+                log("APK Successfully signed", log_sev=LogSeverity.SUCCESS)
             else:
-                raise Exception("Error signing apk")
+                raise Exception(f"Error signing apk {apk_path} {e}")
 
     def build_apk(self, build_type=BUILD_TYPE.DEBUG):
         task = "assemble" + build_type.value
         if self.was_last_build_successful(task) and not self.needs_rebuild():
-            print("Not building again. Last build was successful")
+            log(f"Not building again {build_type}. Last build was successful", log_sev=LogSeverity.INFO)
             return
+        apks_built = self.proj.get_apks()
+        val = self.__execute_gradlew_task(task=task)
+        was_success = "BUILD SUCCESSFUL" in val
+        if was_success:
+            log(f"BUILD ({build_type}) SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+            self.regist_successfull_build(task)
+            apks_now = self.proj.get_apks()
+            fresh_apks = [x for x in apks_now if x not in apks_built]
+            for apk in fresh_apks:
+                if build_type == BUILD_TYPE.RELEASE:
+                    sign_apk(apk)
+                self.proj.add_apk(apk, build_type)
+        else:
+            log("Error Building APK", log_sev=LogSeverity.ERROR)
+            return -1
+
+    def build_tests_apk(self):
+        task = "assembleAndroidTest"
+        if self.was_last_build_successful(task) and not self.needs_rebuild():
+            log("Not building again. Last build was successful", log_sev=LogSeverity.WARNING)
+            return
+        apks_built = self.proj.get_apks()
         val = self.__execute_gradlew_task(task=task)
         was_success = str(val | grep("BUILD SUCCESSFUL")) != ""
         if was_success:
-            print("BUILD SUCCESSFUL")
+            log(f"{task}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
             self.regist_successfull_build(task)
-            if build_type == BUILD_TYPE.RELEASE:
-                res = self.proj.get_apks(build_type=BUILD_TYPE.RELEASE)
-                for apk in res:
-                    print("signing")
-                    sign_apk(apk)
+            apks_now = self.proj.get_apks()
+            apks_test = [x for x in apks_now if x not in apks_built]
+            for apks_test in apks_test:
+                self.proj.add_apk(apks_test, None)
         else:
-            print("Error Building APK")
-
-    def build_tests_apk(self):
-        pass
+            log("Error Building test APK", log_sev=LogSeverity.ERROR)
 
     def build(self):
         if self.was_last_build_successful():
-            print("Not building again. Last build was successfull")
+            log("Not building again. Last build was successful", log_sev=LogSeverity.INFO)
             return
         for mod_name, proj_module in self.proj.modules.items():
             bld_file = proj_module.build_file
@@ -162,22 +227,21 @@ class GradleBuilder(AbstractBuilder):
             # create gradle wrapper
             copy(self.resources_dir + "/build/gradle/gradlew", self.proj.proj_dir)
         val = self.__execute_gradlew_task(target_task)
-        was_success = str(val | grep("BUILD SUCCESSFUL")) != ""
+        was_success = "BUILD SUCCESSFUL" in val
         if was_success:
-            print("BUILD SUCCESSFUL")
+            log(f"{target_task}: BUILD SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
             self.regist_successfull_build(target_task)
         else:
             error = is_known_error(val)
             if error is not None and tries > 0:
-                solve_known_error(error, self.proj)
-                print("BUILD FAILED. Retrying")
+                solve_known_error(self.proj, error)
+                log(f"{target_task}: BUILD FAILED. error is known ({error}). Fixing error and retrying", log_sev=LogSeverity.WARNING)
                 self.build_with_gradlew(tries=tries - 1, target_task=target_task)
             else:
                 raise Exception("Unable to solve Building error")
 
     def __execute_gradlew_task(self, task):
-        print("TASK:")
-        print(task)
+        log(f"Executing Gradle task: {task}", log_sev=LogSeverity.INFO)
         res = execute_shell_command(
             "cd {projdir}; chmod +x gradlew ;./gradlew {task}".format(projdir=self.proj.proj_dir, task=task))
         if res.validate(Exception("error running gradle task")):
@@ -192,6 +256,8 @@ class GradleBuilder(AbstractBuilder):
             min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n', "") | head(1)
             device_min_sdk_version = self.device.get_min_sdk_version()
             if int(str(min_sdk)) > device_min_sdk_version:
+                log(f"This app target sdk version {min_sdk}. This is greater than the device version and the application"
+                    f" might not work properly on the connected device", log_sev=LogSeverity.ERROR)
                 new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_min_sdk_version,
                                   str(cat(gradle_file)))
                 open(gradle_file, 'w').write(new_file)
@@ -258,8 +324,8 @@ class GradleBuilder(AbstractBuilder):
         has_inst_runner = re.search(r'testInstrumentationRunner', file_ctent)
         if has_inst_runner is None:
             return
-        device_sdk = self.device.get_device_sdk_version()
-        # TODO it is advisable to compile with latest sdk
+        contains_androidx_dependency = re.search(r'androidx\.test\.*', file_ctent)
+        device_sdk = self.device.get_device_sdk_version() if contains_androidx_dependency is None else 100
         adequate_test_runner = list(filter(lambda x: x[1] <= device_sdk, TEST_RUNNERS.items()))[-1]
         new_file = re.sub(r"testInstrumentationRunner (.+)",
                           r"testInstrumentationRunner '%s'" % adequate_test_runner[0], file_ctent)
@@ -316,26 +382,15 @@ ndk-location={android_home}/ndk-bundle''' \
             return
         file_ctent = str(cat(bld_file))
         dependencies = self.instrumenter.get_build_dependencies()
-        has_depts = re.search(r'dependencies.*?\{', file_ctent)
-        if has_depts is None:
-            new_deps = "dependencies {"
-            for n_dp in dependencies:
-                new_deps += "\n\t" + gen_dependency_string(n_dp)
-            new_deps += "\n}"
-            new_file = file_ctent + "\n\n" + new_deps
-            open(bld_file, 'w').write(new_file)
-        else:
-            # original_deps = re.search(r'dependencies.*?\{([^{}]+)}', file_ctent).groups()[0]  # .strip().split("\n")
-            original_deps = re.search(r'dependencies.*?\{(.|\n)*}', file_ctent).group(0)
-            original_deps_split = re.split(r'dependencies.*?\{', original_deps)
-            original_deps = original_deps_split[1]
-            original_deps = original_deps[0: len(original_deps) - 1]
-            new_deps = ""
-            for n_dp in dependencies:
-                new_deps += gen_dependency_string(n_dp) + "\n\t"
-            new_deps = original_deps + "\n\t" + new_deps + "\n"
-            new_file = file_ctent.replace(original_deps, new_deps)
-            open(bld_file, 'w').write(new_file)
+        #has_depts = re.search(r'dependencies.*?\{(.|\n)*}', file_ctent).group(0)
+        new_deps="\ndependencies{\n\t"
+        for n_dp in dependencies:
+            new_deps += gen_dependency_string(n_dp) + "\n\t"
+        new_file_ctent = file_ctent + new_deps + "}\n"
+        open(bld_file, 'w').write(new_file_ctent)
+
+
+
 
     def needs_external_lib_dependency(self):
         return self.instrumenter.needs_build_dependency()

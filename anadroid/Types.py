@@ -1,6 +1,6 @@
 from enum import Enum
 
-from src.instrument.Types import INSTRUMENTATION_TYPE
+from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
 
 class BUILD_SYSTEM(Enum):
@@ -17,6 +17,7 @@ class TESTING_FRAMEWORK(Enum):
     ESPRESSO = "Espresso"
     ROBOTIUM = "Robotium"
     APP_CRAWLER = "APP_CRAWLER"
+    DROIDBOT = "Droidbot"
     OTHER = "Other"
 
 class PROFILER(Enum):
@@ -36,8 +37,8 @@ class TESTING_APPROACH(Enum):
     GREYBOX = "GreyBox"
 
 class ANALYZER(Enum):
-    ANADROID_ANALYZER = 'Anadroid Analyzer'
-    HUNTER_ANALYZER = 'Hunter Analyzer'
+    OLD_ANADROID_ANALYZER = 'Old Anadroid Analyzer'
+    MANAFA_ANALYZER = 'Manafa Analyzer'
 
 SUPPORTED_TESTING_APPROACHES = {
     TESTING_APPROACH.WHITEBOX
@@ -64,8 +65,8 @@ SUPPORTED_INSTRUMENTERS = {
 }
 
 SUPPORTED_ANALYZERS = {
-    ANALYZER.ANADROID_ANALYZER,
-    ANALYZER.HUNTER_ANALYZER
+    ANALYZER.OLD_ANADROID_ANALYZER,
+    ANALYZER.MANAFA_ANALYZER
 }
 
 SUPPORTED_INSTRUMENTATION_TYPES = {

@@ -23,16 +23,24 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def inner_analyze(self, app, instr_proj, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out"):
+    def show_results(self, app_list):
+        pass
+
+    def inner_analyze(self, app, output_log_file="AnaDroidAnalyzer.out",**kwargs):
+        instr_proj = kwargs.pop("instr_proj")
+        test_framework = kwargs.pop("test_framework")
+        test_orient = kwargs.pop("test_orient")
         for analyzer in self.inner_analyzers:
             if isinstance(analyzer, SCCAnalyzer):
                 analyzer.analyze(instr_proj.proj_dir, test_orient, test_framework, output_log_file=app.local_res + "/scc.log")
             elif isinstance(analyzer, ApkAPIAnalyzer):
                 analyzer.analyze(app.apk, app.package_name)
 
-
-    def analyze(self, app, instr_proj, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out"):
-        self.inner_analyze( app, instr_proj, test_orient, test_framework, output_log_file="AnaDroidAnalyzer.out")
+    def analyze(self, app, **kwargs):
+        test_framework = kwargs.pop("test_framework")
+        test_orient = kwargs.pop("test_orient")
+        output_log_file = kwargs.pop("output_log_file")
+        self.inner_analyze(app, **kwargs)
         cmd = "{bin_prefix} -{test_orient} \"{input_dir}\" -{test_framework} {remote_repo_url} > {output_log_file}".format(
             bin_prefix=self.bin_cmd,
             test_orient=test_orient.value,
@@ -42,7 +50,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
             output_log_file=output_log_file
         )
         # java -jar $GD_ANALYZER $trace "$projLocalDir/" $monkey $GREENSOURCE_URL 2>&1 | tee "$temp_folder/analyzerResult.out"
-        print(cmd)
+
         res = execute_shell_command(cmd)
         res.validate(Exception("Analyzer error"))
         print(res)
@@ -50,6 +58,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
 
     def analyze_apis(self):
         pass
+
 
     def clean(self):
         pass

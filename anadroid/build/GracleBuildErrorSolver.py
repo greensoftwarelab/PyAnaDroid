@@ -3,15 +3,17 @@ import re
 import shutil
 from enum import Enum
 
+from manafa.utils.Logger import log, LogSeverity
+from termcolor import colored
 from textops import grep, cat, echo, sed
 from distutils.dir_util import copy_tree
 from anadroid.build.SdkManagerWrapper import SDKManager
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.utils.Utils import mega_find
 
-
-GRADLE_RES_DIR = "resources/build/gradle"
-GRADLE_WRAPPER_DIR = os.path.join( GRADLE_RES_DIR, "wrapper/gradle")
+RES_DIR = "resources"
+GRADLE_RES_DIR = os.path.join(RES_DIR, "build", "gradle")
+GRADLE_WRAPPER_DIR = os.path.join(GRADLE_RES_DIR, "wrapper", "gradle")
 
 
 
@@ -31,12 +33,13 @@ class KNOWN_ERRORS(Enum):
     NO_BUILD_TOOLS = "failed to find Build Tools revision"
     MAYBE_MISSING_GOOGLE_REPO = "Could not resolve all dependencies for configuration"
     USER_HAS_TO_ACCEPT_INSTALL = "INSTALL_FAILED_USER_RESTRICTED"
+    NDK_BAD_CONFIG = "did not contain a valid NDK and couldn't be used"
 
 
 def is_known_error(output):
     for error in KNOWN_ERRORS:
-        is_this_error = str(echo(output) | grep(error.value))
-        if is_this_error != "":
+        is_this_error = error.value in output
+        if is_this_error:
             return error
     return None
 
@@ -47,7 +50,7 @@ def solve_known_error(proj, error, **kwargs):
     if error == KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR:
         #adjust gradle wrapper version
         grad_prop_files = mega_find(proj.proj_dir, "gradle-wrapper.properties", type_file='f')
-        bld_gradle_files =  proj.get_build_files()
+        bld_gradle_files = proj.get_build_files()
         for f in bld_gradle_files:
             possible_plgin_vers = str(cat(f) | grep("com.android.tools.build:gradle*"))
             has_plg_version = possible_plgin_vers != ""
@@ -71,7 +74,6 @@ def solve_known_error(proj, error, **kwargs):
     elif error == KNOWN_ERRORS.NO_TARGET_PLATFORM:
         # extract version -> use sdkmanager to download -> retry
         output = kwargs.get("out") if "out" in kwargs else ""
-        print(output)
         current_compileSdkVersion = re.search("android-([0-9]+)",output).groups()[0]
         sdkman = SDKManager()
         sdkman.download_platform(current_compileSdkVersion)
@@ -108,6 +110,10 @@ def solve_known_error(proj, error, **kwargs):
         # can be solved the same way of WRAPPER_MISMATCH_ERROR
         solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
 
+    elif error == KNOWN_ERRORS.NDK_BAD_CONFIG:
+        log("BAD NDK configuration. please update ndk path in resources/config/local.properties", log_sev=LogSeverity.ERROR)
+        local_Prop_file = os.path.join(RES_DIR, "config", "local.properties")
+        shutil.copy(local_Prop_file, proj.proj_dir)
 
 def get_adequate_gradle_version(plugin_version):
     version = DefaultSemanticVersion(plugin_version)

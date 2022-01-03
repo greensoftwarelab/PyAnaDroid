@@ -3,6 +3,8 @@ import subprocess
 import time
 from enum import Enum
 
+from manafa.utils.Logger import log, LogSeverity
+
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
 from anadroid.profiler.greenScaler.GreenScaler.greenscaler import cpu_measurement, get_foreground_app, syscall_trace, \
     screen_capture
@@ -36,7 +38,6 @@ class GreenScalerProfiler(AbstractProfiler):
 
     def install_profiler(self):
         path_of_installer = os.path.join(self.resources_dir, "push_to_phone", "push.sh")
-        print(path_of_installer)
         execute_shell_command(path_of_installer).validate(Exception("Unable to install GreenScaler"))
 
 
@@ -68,22 +69,22 @@ class GreenScalerProfiler(AbstractProfiler):
     def exec_greenscaler(self, package, test_cmd, runs=1):
         n = runs
         app = greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=exec_command)
-        print("executing test")
+        log("executing greenscaler test")
         cpu_measurement(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
-        print("-" + foreground_app + "-")
+        log("-" + foreground_app + "-")
         if foreground_app != package:
-            print("Error detected. App crashed or stopped during execution")
+            log("Error detected. App crashed or stopped during execution", log_sev=LogSeverity.ERROR)
             return
         app.stop_and_clean_app()
-        print("capture system calls")
+        log("capturing system calls")
         syscall_trace(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
         if foreground_app != package:
-            print("Error detected. App crashed or stopped during execution")
+            log("Error detected. App crashed or stopped during execution",log_sev=LogSeverity.ERROR)
             return
         app.stop_and_clean_app()
-        print("Now run to capture screen shots")
+        #print("Now run to capture screen shots")
         n_tries = 5
         while n_tries > 0:
             n_tries = n_tries - 1
@@ -92,7 +93,7 @@ class GreenScalerProfiler(AbstractProfiler):
             if n_image == 1:
                 break
         energy = model.estimate_energy(package, app, n)
-        print("Energy = " + str(energy) + " Joules")
+        log("Energy = " + str(energy) + " Joules")
         app.stop_and_clean_app()
 
 def exec_command(self, command):

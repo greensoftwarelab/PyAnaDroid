@@ -1,7 +1,7 @@
 import time
 from unittest import TestCase
 
-from src.device.Device import get_first_connected_device
+from anadroid.device.Device import get_first_connected_device
 
 
 class TestDeviceState(TestCase):

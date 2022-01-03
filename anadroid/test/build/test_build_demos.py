@@ -19,7 +19,7 @@ class TestBuildDemo(TestCase):
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)
-            print("Processing app " + app_name + " in " + app_proj)
+            #print("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             original_proj.clean_trasformations()
             instrumented_proj_dir = le_android.instrumenter.instrument(original_proj, instr_type=le_android.instrumentation_type)
@@ -34,7 +34,7 @@ class TestBuildDemo(TestCase):
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)
-            print("Processing app " + app_name + " in " + app_proj)
+            #print("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             original_proj.clean_trasformations()
             instrumented_proj_dir = le_android.instrumenter.instrument(original_proj,

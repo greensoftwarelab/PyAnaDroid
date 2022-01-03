@@ -12,9 +12,11 @@ class ManafaAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    # def analyze(self, app, output_log_file="hunter.log"):
-    def analyze(self, app, test_orient, test_framework, output_log_file="hunter.log"):
+    def show_results(self, app_list):
+        pass
 
+    # def analyze(self, app, output_log_file="hunter.log"):
+    def analyze(self, app, output_log_file="hunter.log", **kwargs):
         #total, per_component, metrics = self.profiler.manafa.getConsumptionInBetween()
         hunter_trace = {}
         if isinstance(self.profiler.manafa, HunterEManafa):

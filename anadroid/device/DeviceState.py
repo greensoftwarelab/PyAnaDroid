@@ -250,5 +250,4 @@ class DeviceState(object):
         #elif key == 'hotspot_state':
         #    self.set_hotspot_state(val)
         else:
-            print(key)
-            raise Exception("not implemented")
+            raise Exception(f"{key} not implemented")
