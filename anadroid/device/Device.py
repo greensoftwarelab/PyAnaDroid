@@ -3,7 +3,7 @@ import os
 import re
 from enum import Enum
 
-from manafa.utils.Logger import log
+from manafa.utils.Logger import log, LogSeverity
 
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.AbstractDevice import AbstractDevice, ADB_CONN
@@ -15,24 +15,58 @@ from anadroid.utils.Utils import execute_shell_command
 CONFIG_DIR = os.path.join("resources", "config")
 CONFIG_TEST_FILE = os.path.join(CONFIG_DIR, "device_state_on_test.json")
 CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, "device_state_on_idle.json")
+TCP_PORT = 5555
 
 
-def get_first_connected_device(conn_type=ADB_CONN.USB):
-    #TODO connect via wifi
-    result = execute_shell_command('adb devices -l  | grep \"product\" | cut -f1 -d\ ')
+# assuming only 1 device connected
+def set_device_conn(conn_type, device_id=None):
+    device_string = f"-s {device_id}" if device_id is not None else ""
+    if conn_type == ADB_CONN.USB or conn_type == ADB_CONN.USB.value:
+        result = execute_shell_command(f'adb {device_string} disconnect; adb {device_string} usb')
+        if result.validate("No devices/emulators found"):
+            log("Device is now connected via USB")
+    elif conn_type == ADB_CONN.WIFI or conn_type == ADB_CONN.WIFI.value:
+        device = get_first_connected_device()
+        if device.conn_type == ADB_CONN.WIFI:
+            log("device already connected via wifi")
+        else:
+            res = execute_shell_command(f"adb {device_string} shell ip -f inet addr show wlan0")
+            if "more than one device" in res.errors:
+                log("more than one device connected. please specify device id or unplug the device", log_sev=LogSeverity.ERROR)
+            elif res.validate("Error accessing device network interface") and res.output == "":
+                log("no wifi connection detected on the device. Please connect the device to a wireless network", log_sev=LogSeverity.ERROR)
+            else:
+                reg = re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', (res.output))
+                if reg is None:
+                    raise Exception("Bad address read")
+                ip_addr = reg.group()
+                res = execute_shell_command(f"adb {device_string} tcpip {TCP_PORT}; adb {device_string} connect {ip_addr}")
+                if res.validate(f"error while connecting to {ip_addr} address") and f"connected to {ip_addr}" in res.output:
+                    log(f"successfully connected to {ip_addr}", log_sev=LogSeverity.SUCCESS)
+
+                log("Please unplug the device from the workstation in order to disable USB connection", log_sev=LogSeverity.WARNING)
+    else:
+        raise Exception("Unknown device connection type (not USB or WIFI)")
+
+
+def get_first_connected_device(conn_type=ADB_CONN.USB.value):
+    result = execute_shell_command('adb devices -l  | grep \"product\"') # #| cut -f1 -d\ ')
+    conn_type = ADB_CONN.USB if "usb" in result.output.lower() else ADB_CONN.WIFI
     result.validate(DeviceNotFoundError("No devices/emulators found"))
-    device_serial = result.output.split("\n")[0]
+    device_serial = result.output.split(" ")[0]
     if device_serial == "":
-        raise DeviceNotFoundError("No devices/emulators found")
-    return Device(device_serial)
+        raise DeviceNotFoundError(f"No devices/emulators connected via {conn_type} found")
+
+    return Device(device_serial, conn_type=conn_type)
 
 
 class DeviceNotFoundError(Exception):
     pass
 
 class Device(AbstractDevice):
-    def __init__(self,  serial_nr):
+    def __init__(self,  serial_nr, conn_type=ADB_CONN.USB):
         super(Device, self).__init__(serial_nr)
+        self.conn_type = conn_type
         self.props = {}
         self.state = None
         self.installed_packages = set()

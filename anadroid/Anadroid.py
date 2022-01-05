@@ -9,6 +9,7 @@ from anadroid.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, 
 from anadroid.application.AndroidProject import AndroidProject, BUILD_TYPE, is_android_project
 from anadroid.application.Application import App
 from anadroid.build.GradleBuilder import GradleBuilder
+from anadroid.device.AbstractDevice import ADB_CONN
 from anadroid.device.Device import get_first_connected_device
 
 from anadroid.instrument.JInstInstrumenter import JInstInstrumenter

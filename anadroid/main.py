@@ -4,6 +4,7 @@ from enum import Enum
 from anadroid.Anadroid import AnaDroid
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
+from anadroid.device.Device import set_device_conn
 from anadroid.device.MockedDevice import MockedDevice
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
@@ -39,13 +40,19 @@ if __name__ == '__main__':
     parser.add_argument("-r", "--record", help="record test", action='store_true')
     parser.add_argument("-ri", "--reinstall", help="reinstall apks", action='store_true')
     parser.add_argument("-ja", "--justanalyze", help="just analyze apps", action='store_true')
+    parser.add_argument("-c", "--connection", help="connection to device", choices=["USB", "WIFI"], default="USB")
+    parser.add_argument("-sc", "--setconnection", help="set connection to device and exit", choices=["USB", "WIFI"])
+    parser.add_argument("-id", "--device_id", help="device serial id", type=int, default=None)
     args = parser.parse_args()
+    if args.setconnection:
+        set_device_conn(args.setconnection, device_id=args.device_id)
+        exit(0)
     anadroid = init_PyAnaDroid(args)
     if args.buildonly:
         anadroid.just_build_apps()
     elif args.justanalyze:
         raise NotImplementedError()
-        anadroid.just_analyze()
+        #anadroid.just_analyze()
     elif args.record:
         anadroid.record_tests()
     else:
