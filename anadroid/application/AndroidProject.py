@@ -32,18 +32,34 @@ def mk_ma_dir(path):
 def is_android_project(dirpath):
     return "settings.gradle" in [f for f in listdir(dirpath)]
 
-class AndroidProject(object):
-    def __init__(self, projname, projdir,results_dir="results"):
+
+class Project(object):
+    def __init__(self, projname, projdir, results_dir="results"):
         self.proj_name = projname
         self.proj_dir = projdir
         self.results_dir = results_dir
+
+    def init_results_dir(self, app_id):
+        res_app_dir = os.path.join(self.results_dir, app_id)
+        print("mkma " + res_app_dir)
+        mk_ma_dir(res_app_dir)
+        self.results_dir = res_app_dir
+
+    def clean_trasformations(self):
+        transforms = mega_find(self.proj_dir, pattern="*TRANSFORMED*", maxdepth=1, type_file='d')
+        for t in transforms:
+            shutil.rmtree(t)
+
+class AndroidProject(Project):
+    def __init__(self, projname, projdir,results_dir="results"):
+        super(AndroidProject, self).__init__(projname=projname, projdir=projdir, results_dir=results_dir)
         self.root_build_file = self.get_root_build_file()
         self.main_manif_file = self.get_main_manif_file()
         self.tests_manif_file = None
         self.modules = {}
         self.__init_modules()
         self.pkg_name, self.app_id, = self.__gen_proj_id()
-        self.__init_results_dir()
+        super().init_results_dir(self.app_id)
         self.proj_version = DefaultSemanticVersion("0.0")
         self.apks = {'Test': [], 'Debug': [], 'Release': [], 'Custom': []}
 
@@ -101,11 +117,11 @@ class AndroidProject(object):
                 #print(self.modules[mod_name].module_type)
 
     def get_gradle_plugin(self):
-        gradle_plugin_version = str(cat(self.root_build_file) | grep("com.android.tools.build") |  sed("classpath|com.android.tools.build:gradle:|\"", "")).strip()
+        gradle_plugin_version = str(cat(self.root_build_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip()
         return gradle_plugin_version
 
     def create_inner_folder(self, name="libs"):
-        path = self.proj_dir + "/" + name
+        path = os.path.join(self.proj_dir,name)
         try:
             mkdir(path)
         except FileExistsError:
@@ -127,19 +143,9 @@ class AndroidProject(object):
         vals = mega_find(self.proj_dir, pattern="*.apk", type_file='f')
         return list(filter(lambda x: 'test' in x.lower(), vals))
 
-    def __init_results_dir(self):
-        res_app_dir = os.path.join(self.results_dir, self.app_id)
-        mk_ma_dir(res_app_dir)
-        self.results_dir = res_app_dir
-
     def set_version(self, build_type):
         apks = self.get_apks(build_type)
         if len(apks) == 0:
             return
         ref_apk = apks[0]
         #apk_version =
-
-    def clean_trasformations(self):
-        transforms = mega_find(self.proj_dir, pattern="*TRANSFORMED*", maxdepth=1, type_file='d')
-        for t in transforms:
-            shutil.rmtree(t)

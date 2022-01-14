@@ -111,7 +111,7 @@ class Device(AbstractDevice):
         return installed_packages
 
     def install_apk(self, apk_path):
-        pass
+        super(Device, self).execute_command("install -g -r ", args=[apk_path], shell=False).validate(Exception("Unable to install package " + apk_path))
 
     def unlock_screen(self, password=None):
        super(Device, self).unlock_screen(password)

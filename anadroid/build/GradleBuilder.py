@@ -244,7 +244,7 @@ class GradleBuilder(AbstractBuilder):
         log(f"Executing Gradle task: {task}", log_sev=LogSeverity.INFO)
         res = execute_shell_command(
             "cd {projdir}; chmod +x gradlew ;./gradlew {task}".format(projdir=self.proj.proj_dir, task=task))
-        if res.validate(Exception("error running gradle task")):
+        if res.validate(("error running gradle task")):
             return res.output
         else:
             return res.errors
@@ -254,11 +254,11 @@ class GradleBuilder(AbstractBuilder):
         # has_min_sdk =
         if str(has_min_sdk) != "":
             min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n', "") | head(1)
-            device_min_sdk_version = self.device.get_min_sdk_version()
-            if int(str(min_sdk)) > device_min_sdk_version:
+            device_sdk_version = self.device.get_device_sdk_version()
+            if int(str(min_sdk)) > device_sdk_version:
                 log(f"This app target sdk version {min_sdk}. This is greater than the device version and the application"
                     f" might not work properly on the connected device", log_sev=LogSeverity.ERROR)
-                new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_min_sdk_version,
+                new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_sdk_version,
                                   str(cat(gradle_file)))
                 open(gradle_file, 'w').write(new_file)
 

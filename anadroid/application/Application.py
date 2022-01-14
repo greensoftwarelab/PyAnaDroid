@@ -24,9 +24,6 @@ def get_prefix(testing_framework, inst_type):
     cur_datetime = get_date_str()
     return dirname + "_"+cur_datetime
 
-
-
-
 class App(AbstractApplication):
     def __init__(self, device, proj, package_name, apk_path, local_res, name="app", version=None):
         self.device = device
@@ -38,7 +35,6 @@ class App(AbstractApplication):
         self.name = name
         self.curr_local_dir = None
         self.__init_res_dir()
-
 
     def __init_res_dir(self):
         log(self.local_res)
@@ -58,7 +54,7 @@ class App(AbstractApplication):
                     continue
         #cp all methods
         all_m = os.path.join(self.proj.proj_dir, "allMethods.json")
-        if not os.path.exists(all_m):
+        if not os.path.exists(all_m) and os.path.exists(all_m):
             shutil.move(all_m, all_dir)
 
     def init_local_test_(self, testing_framework, inst_type):

@@ -1,8 +1,23 @@
 from subprocess import Popen, PIPE, TimeoutExpired
+
+from manafa.utils.Logger import log, LogSeverity
 from textops import find
 
 PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
 KEYSTORE_PASSWORD = "pynadroid"
+
+
+def extract_pkg_name_from_apk(apkpath):
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
+    res.validate(Exception("Unable to find aapt executable"))
+    aapt_executable = res.output.strip()
+    res = execute_shell_command(f"{aapt_executable}  dump badging {apkpath} | grep 'package: name='")
+    res.validate(Exception("error while executing aapt"))
+    pkg_name = res.output.split(" ")[1].replace("name=","").replace("'","")
+    return pkg_name
+
+
+
 
 def get_date_str():
     res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
@@ -25,9 +40,8 @@ def sign_apk(apk_path):
            passwd=KEYSTORE_PASSWORD
        )
        res = execute_shell_command(cmd)
-       res.validate(Exception("error signing apk "+ apk_path))
+       res.validate(Exception("error signing apk " + apk_path))
        return res
-
 
 def execute_shell_command(cmd, args=[], timeout=None):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
@@ -48,7 +62,7 @@ def execute_shell_command(cmd, args=[], timeout=None):
 
 def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
     basedir_len = len(basedir.split("/"))
-    res = find(basedir, pattern=pattern, only_files=type_file=='f',only_dirs=type_file=='d' )
+    res = find(basedir, pattern=pattern, only_files=type_file=='f', only_dirs=type_file=='d' )
     # filter by depth
     return list(filter(lambda x: basedir_len + mindepth <= len(x.split("/")) <= maxdepth + basedir_len, res))
 
@@ -64,10 +78,11 @@ class COMMAND_RESULT(object):
                 if e is None:
                     print(self)
                     return False
+                elif isinstance(e, Exception):
+                    raise e
                 else:
-                    print(self)
+                    log(e, log_sev=LogSeverity.ERROR)
                     return False
-                    #raise e
             else:
                 #print(self)
                 return True
