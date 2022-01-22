@@ -20,6 +20,7 @@ demoProjects
 old_apps/
 allMethods.json
 results/
+resources/framework-res.apk
 # Generated files
 .idea/**/contentModel.xml
 
