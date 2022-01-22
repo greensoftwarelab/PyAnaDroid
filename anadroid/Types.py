@@ -21,7 +21,7 @@ class TESTING_FRAMEWORK(Enum):
     OTHER = "Other"
 
 class PROFILER(Enum):
-    TREPN = 'Trepn Profiler'
+    TREPN = 'Trepn'
     GREENSCALER = 'GreenScaler'
     PETRA = 'Petra'
     MONSOON = 'Monsoon'

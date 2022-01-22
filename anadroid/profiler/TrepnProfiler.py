@@ -3,13 +3,13 @@ import time
 
 from anadroid.application.Dependency import BuildDependency, DependencyType
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
-RESOURCES_DIR = "resources"
+RESOURCES_DIR = get_resources_dir()
 DEFAULT_FILENAME = "trepnfile"
 DEFAULT_PREF_FILE = "/sdcard/trepn/saved_preferences/All.pref"
-DEFAULT_APK_LOCATION="resources/profilers/Trepn/apks/com.quicinc.trepn-6.2-APK4Fun.com.apk"
-DEFAULT_PREFS_DIR="resources/profilers/Trepn/TrepnPreferences"
+DEFAULT_APK_LOCATION= os.path.join(RESOURCES_DIR, "profilers/Trepn/apks/com.quicinc.trepn-6.2-APK4Fun.com.apk")
+DEFAULT_PREFS_DIR= os.path.join(RESOURCES_DIR, "profilers/Trepn/TrepnPreferences")
 DEFAULT_LAST_RUN_FILE="last_run_duration.log"
 EXPORT_THRESHOLD = 0.5
 
@@ -21,13 +21,15 @@ class TrepnProfiler(AbstractProfiler):
         self.local_dep_location = RESOURCES_DIR + "/profilers/Trepn/libsAdded/" + dependency_lib.name + "." + dependency_lib.bin_type #TODO
         self.start_time = 0
         super(TrepnProfiler, self).__init__(profiler,device, pkg_name="com.quicinc.trepn", device_dir="sdcard/trepn", dependency=dependency_lib)
-        #if not device.has_package_installed(self.pkg_name):
-        #    self.install_profiler()
-        #if not device.contains_file(self.device_dir+"/GDFlag"):
-        #    self.setup_trepn_device_dir()
+        if not device.has_package_installed(self.pkg_name):
+            self.install_profiler()
+        if not device.contains_file(self.device_dir+"/GDFlag"):
+            self.setup_trepn_device_dir()
 
     def install_profiler(self, apk_loc=DEFAULT_APK_LOCATION):
+        print("installing trepn")
         self.device.execute_command(f"install -g -r {apk_loc}").validate(Exception("Unable to install Trepn Profiler"))
+
 
     def setup_trepn_device_dir(self):
         trepn_dir = self.device_dir

@@ -8,7 +8,6 @@ with open("README.md", "r", encoding='utf-8') as fh:
 with open('requirements.txt') as f:
     required = f.read().splitlines()
 
-
 setup(
     name='anadroid',
     description='Anadroid: Energy benchmarking/analyzer tool for Android',
@@ -20,9 +19,10 @@ setup(
     license='MIT',
     packages=setuptools.find_packages(),
     use_incremental=True,
-    install_requires=required, #TODO replace this by minimal config
+    install_requires=required,
     setup_requires=['incremental'],
     include_package_data=True,
+    scripts=['bin/pyanadroid'],
     classifiers=[
         'License :: OSI Approved :: MIT License',
         'Intended Audience :: Science/Research',

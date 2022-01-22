@@ -7,11 +7,11 @@ from anadroid.instrument.AbstractInstrumenter import AbstractInstrumenter
 import subprocess
 from anadroid.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 from shutil import copyfile
 
-JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
-
+#JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
+JINST_PATH = os.path.join( get_resources_dir() , "jars", "jInst.jar")
 
 class JInstInstrumenter(AbstractInstrumenter):
     def __init__(self, profiler, mirror_dirname="_TRANSFORMED_", build_system=BUILD_SYSTEM.GRADLE):
@@ -62,8 +62,8 @@ class JInstInstrumenter(AbstractInstrumenter):
                 test_approach=test_approach.value.lower()
             )  # # e.g java -jar jInst.jar "-gradle" "_TRANSFORMED_" "X" "./demoProjects/N2AppTest" "./demoProjects/N2AppTest/app/src/main/AndroidManifest.xml" "-" "-TestOriented" "-junit" "N2AppTest--uminho.di.greenlab.n2apptest" "blackbox"
             res = execute_shell_command(command)
+            res.validate(Exception("unable to instrument project "))
             copyfile("allMethods.json", os.path.join(target_dir, "allMethods.json"))
-            res.validate(Exception("Bad instrumentation"))
             self.write_instrumentation_log_file(android_project, test_approach, instr_type, instr_strategy)
         else:
             log("Same instrumentation of last time. Skipping instrumentation phase", log_sev=LogSeverity.WARNING)

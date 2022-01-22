@@ -84,7 +84,7 @@ def solve_known_error(proj, error, **kwargs):
         SDKManager().download_build_tools_version(current_build_tools_version)
 
     elif error == KNOWN_ERRORS.BUILD_TOOLS_CPU_ERROR:
-        # usually this error can be solveend by upgrading BuildToolsVersion
+        # usually this error can be solved by upgrading BuildToolsVersion
         sdkman = SDKManager()
         current_build_tools_version = kwargs.get('build-tools')
         available_build_tools_list = sdkman.get_list_of_available_build_tools()

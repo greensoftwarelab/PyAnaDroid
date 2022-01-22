@@ -147,7 +147,7 @@ class GradleBuilder(AbstractBuilder):
             log("app already installed", log_sev=LogSeverity.INFO)
             app_pack = self.device.get_package_matching(self.proj.pkg_name)
             new_pkgs.append(app_pack)
-        apk_pkg = new_pkgs[0]  # ASSUMING JUST ONE
+        apk_pkg = new_pkgs[-1]  # ASSUMING JUST ONE
         app = App(self.device, self.proj, apk_pkg, apk_path=full_apk_path, local_res=self.proj.results_dir)
         return app
 

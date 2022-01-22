@@ -10,9 +10,9 @@ from anadroid.device.AbstractDevice import AbstractDevice, ADB_CONN
 import difflib
 
 from anadroid.device.DeviceState import DeviceState, DEVICE_STATE_ENFORCE
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
-CONFIG_DIR = os.path.join("resources", "config")
+CONFIG_DIR = os.path.join(get_resources_dir(),'config')
 CONFIG_TEST_FILE = os.path.join(CONFIG_DIR, "device_state_on_test.json")
 CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, "device_state_on_idle.json")
 TCP_PORT = 5555

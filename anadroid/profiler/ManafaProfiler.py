@@ -5,9 +5,10 @@ from manafa.emanafa import EManafa
 from manafa.hunter_emanafa import HunterEManafa
 
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
-RESOURCES_DIR = "resources/profilers/Manafa"
+#RESOURCES_DIR = "resources/profilers/Manafa"
+RESOURCES_DIR =  os.path.join(get_resources_dir(),"profilers", "Manafa")
 HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
 

@@ -5,8 +5,10 @@ from anadroid.Types import TESTING_FRAMEWORK, PROFILER
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
+from anadroid.utils.Utils import get_resources_dir
 
-DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
+#DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
+DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "monkey")
 DEFAULT_SEEDS_FILE = "monkey_seeds.txt"
 DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
 
@@ -51,7 +53,7 @@ class MonkeyFramework(AbstractTestingFramework):
         pass
 
     def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE):
-        cfg_file = self.res_dir + cfg_filename
+        cfg_file = os.path.join(self.res_dir , cfg_filename)
         cfg = {}
         ofile = open(cfg_file, "r")
         for aline in ofile:

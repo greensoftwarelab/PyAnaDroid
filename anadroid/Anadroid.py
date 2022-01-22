@@ -28,12 +28,12 @@ from anadroid.testing_framework.JUnitBasedFramework import JUnitBasedFramework
 from anadroid.testing_framework.MonkeyFramework import MonkeyFramework
 from anadroid.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
 from anadroid.testing_framework.RERANFramework import RERANFramework
-from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk
+from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_results_dir
 
 
 class AnaDroid(object):
 
-    def __init__(self, arg1, results_dir="results", profiler=PROFILER.MANAFA,
+    def __init__(self, arg1, results_dir=get_results_dir(), profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION, build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG):
         self.device = device if device is not None else get_first_connected_device()
@@ -137,7 +137,7 @@ class AnaDroid(object):
                 analyzers.append(OldAnaDroidAnalyzer())
             elif profiler == profiler.MANAFA and ana == ANALYZER.MANAFA_ANALYZER:
                 analyzers.append(ManafaAnalyzer(self.profiler))
-            elif ana == ANALYZER.ANADROID_ANALYZER:
+            elif ana == ANALYZER.OLD_ANADROID_ANALYZER:
                 analyzers.append(OldAnaDroidAnalyzer())
             else:
                 return None

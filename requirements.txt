@@ -114,7 +114,6 @@ Scrapy==2.5.0
 service-identity==18.1.0
 six==1.15.0
 statsmodels==0.12.2
-TA-Lib==0.4.21
 tabulate==0.8.9
 termcolor==1.1.0
 text-unidecode==1.3

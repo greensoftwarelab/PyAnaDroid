@@ -9,7 +9,9 @@ from textops import cat, grep, cut, sed, echo, grepv
 from anadroid.application.Application import App
 from anadroid.application.ProjectModule import ProjectModule
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import execute_shell_command, mega_find
+from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir
+
+RESULTS_DIR = get_results_dir()
 
 class BUILD_TYPE(Enum):
     RELEASE = "Release"
@@ -34,14 +36,13 @@ def is_android_project(dirpath):
 
 
 class Project(object):
-    def __init__(self, projname, projdir, results_dir="results"):
+    def __init__(self, projname, projdir, results_dir=RESULTS_DIR):
         self.proj_name = projname
         self.proj_dir = projdir
         self.results_dir = results_dir
 
     def init_results_dir(self, app_id):
         res_app_dir = os.path.join(self.results_dir, app_id)
-        print("mkma " + res_app_dir)
         mk_ma_dir(res_app_dir)
         self.results_dir = res_app_dir
 
@@ -51,7 +52,7 @@ class Project(object):
             shutil.rmtree(t)
 
 class AndroidProject(Project):
-    def __init__(self, projname, projdir,results_dir="results"):
+    def __init__(self, projname, projdir,results_dir=RESULTS_DIR):
         super(AndroidProject, self).__init__(projname=projname, projdir=projdir, results_dir=results_dir)
         self.root_build_file = self.get_root_build_file()
         self.main_manif_file = self.get_main_manif_file()

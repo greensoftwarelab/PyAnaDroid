@@ -2,10 +2,32 @@ from subprocess import Popen, PIPE, TimeoutExpired
 
 from manafa.utils.Logger import log, LogSeverity
 from textops import find
+import os
 
 PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
 KEYSTORE_PASSWORD = "pynadroid"
 
+
+def get_reference_dir(packname):
+    base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    # base_dir = sysconfig.get_path("purelib")
+    return os.path.join(base_dir, packname)
+
+
+def get_resources_dir(packname="anadroid", default_res_dir="resources"):
+    ref_dir = get_reference_dir(packname)
+    return os.path.join(ref_dir, default_res_dir)
+
+
+def get_pack_dir(packname="anadroid"):
+    return get_reference_dir(packname)
+
+
+def get_results_dir(default_results_dir="anadroid_results"):
+    ref_dir = default_results_dir
+    if not os.path.exists(ref_dir):
+        os.mkdir(ref_dir)
+    return ref_dir
 
 def extract_pkg_name_from_apk(apkpath):
     res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
@@ -79,6 +101,7 @@ class COMMAND_RESULT(object):
                     print(self)
                     return False
                 elif isinstance(e, Exception):
+                    print(self)
                     raise e
                 else:
                     log(e, log_sev=LogSeverity.ERROR)

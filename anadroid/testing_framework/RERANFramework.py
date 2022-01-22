@@ -1,14 +1,12 @@
 import os
 import time
-from sys import path
 
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.RERANWorkUnit import RERANWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
-from anadroid.testing_framework.work.WorkUnit import WorkUnit
 from anadroid.utils.Utils import mega_find, execute_shell_command
-from resources.testingFrameworks.reran.src.RERANWrapper import RERANWrapper
+from anadroid.resources.testingFrameworks.reran.src import RERANWrapper
 
 RERAN_RESOURCES_DIR = "resources/testingFrameworks/RERAN"
 TRANSLATOR_JAR_PATH="resources/testingFrameworks/RERAN/build/RERANTranslate.jar"
