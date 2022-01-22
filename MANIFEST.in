@@ -1,1 +1,2 @@
 graft resources
+include requirements.txt
