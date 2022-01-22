@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+
+import anadroid.main
+import sys
+
+anadroid.main.main()
+
+
