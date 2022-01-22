@@ -1,0 +1,13 @@
+{
+  "screen": 0,
+  "screen_always_on": 0,
+  "bluetooth" : 0,
+  "wifi" : 0,
+  "flashlight" : 0,
+  "gps" : 0,
+  "screen_brightness": 0,
+  "screen_auto_rotate": 0,
+  "nfc_state": 0,
+  "mobile_data_state": 0,
+  "hotspot_state": 0
+}

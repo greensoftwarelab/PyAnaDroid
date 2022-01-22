@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="com.quicinc.preferences.overlays.enabled" value="true" />
+    <int name="com.quicinc.preferences.overlays.location_y" value="96" />
+    <int name="com.quicinc.preferences.overlays.location_x" value="0" />
+    <int name="com.quicinc.preferences.overlays.quadrant" value="0" />
+</map>

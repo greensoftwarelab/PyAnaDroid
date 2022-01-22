@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <boolean name="com.quicinc.preferences.show_average_per_application_cpu_usage" value="true" />
+    <boolean name="com.quicinc.preferences.help.graph_split_view" value="true" />
+    <int name="com.quicinc.preferences.general.averaging_interval" value="1" />
+    <boolean name="com.quicinc.preferences.help.preset_cpu_load_overlay" value="true" />
+    <boolean name="com.quicinc.preferences.help.preset_cpu_frequency_overlay" value="true" />
+    <int name="com.quicinc.preferences.general.overlay_transparency" value="150" />
+    <string name="com.quicinc.preferences.general.storage">Main Memory</string>
+    <int name="com.quicinc.preferences.general.overlay_stats_interval" value="60" />
+    <boolean name="com.quicinc.preferences.general.show_deltas" value="true" />
+    <string name="com.quicinc.preferences.battery_power_source_selection">Estimate Power Consumption</string>
+    <boolean name="com.quicinc.preferences.help.all_dialogs_disabled" value="false" />
+    <boolean name="com.quicinc.preferences.eula_accepted_v2" value="true" />
+    <boolean name="com.quicinc.preferences.saved_first_run" value="true" />
+    <boolean name="com.quicinc.preferences.help.preset_cpu_usage_monitor" value="true" />
+    <boolean name="com.quicinc.preferences.disabled_data_points_performance_prompt" value="false" />
+    <boolean name="com.quicinc.preferences.help.preset_mobile_data_detective" value="true" />
+    <boolean name="com.quicinc.preferences.general.average_frequency" value="false" />
+    <boolean name="com.quicinc.preferences.general.show_raw_current" value="false" />
+    <boolean name="com.quicinc.preferences.disabled_lockout_prompt" value="false" />
+    <boolean name="com.quicinc.preferences.advanced_mode" value="true" />
+    <boolean name="com.quicinc.preferences.help.graph_merged_view" value="true" />
+    <boolean name="com.quicinc.preferences.general.show_app_stats" value="false" />
+    <boolean name="com.quicinc.preferences.help.preset_network_activity" value="true" />
+    <boolean name="com.quicinc.preferences.general.acquire_profiling_wakelock" value="true" />
+    <boolean name="com.quicinc.preferences.help.advanced_mode_to_preset_mode" value="true" />
+    <int name="com.quicinc.preferences.general.profiling_interval" value="100" />
+    <int name="com.quicinc.preferences.general.baselining_interval" value="1" />
+    <string name="com.quicinc.preferences.general.temperature_units">Celsius</string>
+    <boolean name="com.quicinc.preferences.help.preset_performance_graph" value="true" />
+</map>

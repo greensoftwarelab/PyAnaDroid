@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- Disable the given check in this project -->
+    <issue id="ExcessiveCalls" />
+    <issue id="HashMapUsage" />
+    <issue id="InternalGetter" />
+    <issue id="MemoizationChance" />
+    <issue id="MemberIgnoringMethod" />
+
+
+
+    <!-- Change the severity of hardcoded strings to "error" -->
+    <!--issue id="HardcodedText" severity="error" /-->
+</lint>

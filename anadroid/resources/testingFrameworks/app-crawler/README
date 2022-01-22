@@ -1,0 +1,9 @@
+Version: Beta1.1
+
+Release Notes:
+
+- Migrated crawler APK repacking tool chain from aapt to aapt2.
+- Better support for crawling on Android Q devices/emulators.
+- Added crawler option '--device-serial-code' to pick a specific device to launch app crawler on.
+- When using crawler option '--ui-automator-mode', app crawler APK is not repacked, speeding up the launch.
+- Miscellaneous bug fixes and crawl improvements.

@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<map>
+    <int name="com.quicinc.preferences.overlays.value_color" value="-1" />
+    <int name="com.quicinc.preferences.overlays.second_data_point" value="-1" />
+    <boolean name="com.quicinc.preferences.overlays.enabled" value="true" />
+    <int name="com.quicinc.preferences.overlays.first_data_point" value="-1" />
+    <int name="com.quicinc.preferences.overlays.quadrant" value="3" />
+    <boolean name="com.quicinc.preferences.overlays.show_value" value="true" />
+    <int name="com.quicinc.preferences.overlays.first_data_point_color" value="-13981957" />
+    <string name="com.quicinc.preferences.overlays.type">None</string>
+    <int name="com.quicinc.preferences.overlays.second_data_point_color" value="-142299" />
+    <string name="com.quicinc.preferences.overlays.title">
+    </string>
+    <int name="com.quicinc.preferences.overlays.location_y" value="340" />
+    <int name="com.quicinc.preferences.overlays.location_x" value="448" />
+</map>
