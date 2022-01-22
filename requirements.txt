@@ -1,6 +1,5 @@
 addicted3==3.0.0
 aiohttp==3.7.4.post0
-anadroid==0.5.6
 androguard==3.4.0a1
 appdirs==1.4.4
 appier==1.24.0
@@ -30,7 +29,6 @@ dbr==8.1.2
 decorator==4.4.2
 distlib==0.3.1
 docutils==0.17.1
--e git+https://github.com/honeynet/droidbot.git@2c7a66bda17c4cc33b4b4d9c98f27f822a81a6bd#egg=droidbot
 elementpath==2.2.0
 filelock==3.0.12
 future==0.18.2
