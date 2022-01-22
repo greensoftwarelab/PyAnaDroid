@@ -21,7 +21,7 @@ def init_PyAnaDroid(args):
 )
 
 
-if __name__ == '__main__':
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--testingframework", default=TESTING_FRAMEWORK.MONKEY.value, type=str,
                         help="testing framework to exercise app(s)", choices=[e.value for e in TESTING_FRAMEWORK])
@@ -55,8 +55,11 @@ if __name__ == '__main__':
         anadroid.just_build_apps()
     elif args.justanalyze:
         raise NotImplementedError()
-        #anadroid.just_analyze()
+        # anadroid.just_analyze()
     elif args.record:
         anadroid.record_tests()
     else:
         anadroid.defaultWorkflow()
+
+if __name__ == '__main__':
+    main()
