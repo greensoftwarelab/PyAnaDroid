@@ -1,2 +1,2 @@
-graft resources
+graft anadroid/resources
 include requirements.txt
