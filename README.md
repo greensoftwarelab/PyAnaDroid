@@ -38,9 +38,17 @@ By default, Anadroid is configured to perform white-box testing of applications,
 
 # Installation:
 
+## Using python-pip
 ```
 $ pip install anadroid
 ```
+
+## From sauce
+
+```
+$ git clone --recurse-submodules https://github.com/RRua/pyanadroid.git
+```
+
 
 # Examples
 
