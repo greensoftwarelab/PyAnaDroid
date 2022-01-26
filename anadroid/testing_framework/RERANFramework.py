@@ -5,17 +5,18 @@ from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.RERANWorkUnit import RERANWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
-from anadroid.utils.Utils import mega_find, execute_shell_command
+from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir
 from anadroid.resources.testingFrameworks.reran.src import RERANWrapper
 
-RERAN_RESOURCES_DIR = "resources/testingFrameworks/RERAN"
-TRANSLATOR_JAR_PATH="resources/testingFrameworks/RERAN/build/RERANTranslate.jar"
+RERAN_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "RERAN")
+#RERAN_RESOURCES_DIR = "resources/testingFrameworks/RERAN"
+TRANSLATOR_JAR_PATH= os.path.join(RERAN_RESOURCES_DIR, "build", "RERANTranslate.jar")
 RERAN_CONFIG_FILE = "config.cfg"
-DEFAULT_REPLAY_EXECUTABLE_PATH = "resources/testingFrameworks/RERAN/build/replay"
-DEFAULT_REPLAY_EXECUTABLE_NAME = "replay"
-DEFAULT_REPLAY_DEVICE_INSTALL_DIR = "/sdcard/RERAN"
-DEFAULT_RECORDED_TESTS_DIR = "resources/testingFrameworks/RERAN/tests"
-DEFAULT_TESTS_PREFIX = "translated_"
+REPLAY_EXECUTABLE_PATH = os.path.join(RERAN_RESOURCES_DIR,"build","replay")
+REPLAY_EXECUTABLE_NAME = "replay"
+REPLAY_DEVICE_INSTALL_DIR = "/sdcard/RERAN"
+RECORDED_TESTS_DIR = os.path.join(RERAN_RESOURCES_DIR,"tests")
+TESTS_PREFIX = "translated_"
 
 
 
@@ -35,13 +36,16 @@ class RERANFramework(AbstractTestingFramework):
             self.install()
 
     def __load_config(self):
-        cfg_file = os.path.join(self.resources_dir, "config.cfg")
+        cfg_file = os.path.join(self.resources_dir,RERAN_CONFIG_FILE)
         cfg = {}
-        ofile = open(cfg_file, "r")
-        for aline in ofile:
-            key, pair = aline.split("=")
-            cfg[key] = pair.strip()
-        ofile.close()
+        if os.path.exists(cfg_file):
+            ofile = open(cfg_file, "r")
+            for aline in ofile:
+                x = aline.split("=")
+                if len(x)>1:
+                    key, pair = aline.split("=")
+                    cfg[key] = pair.strip()
+            ofile.close()
         return cfg
 
     def __get_config(self,key):

@@ -4,19 +4,20 @@ import time
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
-
+from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
 
-DEFAULT_RESOURCES_DIR = "resources/testingFrameworks/droidbot"
+
+DROIDBOT_RESOURCES_DIE =  os.path.join(get_resources_dir(), "testingFrameworks","droidbot")
 TEST_OUTPUT_FILENAME = "DROIBOT_RESULT"
 DEFAULT_CONFIG_FILE = "droidbot.cfg"
-DEFAULT_TEST_SET_SIZE = 10
+DEFAULT_TEST_SET_SIZE = 1
 
 class DroidBotFramework(AbstractTestingFramework):
-    def __init__(self, profiler, default_workload=False, resdir=DEFAULT_RESOURCES_DIR, test_set_size=DEFAULT_TEST_SET_SIZE):
+    def __init__(self, profiler, default_workload=False, resdir=DROIDBOT_RESOURCES_DIE, test_set_size=DEFAULT_TEST_SET_SIZE):
         super(DroidBotFramework, self).__init__(id=TESTING_FRAMEWORK.DROIDBOT, profiler=profiler)
-        self.executable_prefix = f"arch -x86_64 python3 {DEFAULT_RESOURCES_DIR}/start.py"
+        self.executable_prefix = f"arch -x86_64 python3 {resdir}/start.py"
         self.test_set_size = test_set_size
         self.workload = None
         self.res_dir = resdir
@@ -51,12 +52,13 @@ class DroidBotFramework(AbstractTestingFramework):
     def __load_config_file(self, cfg_filename=None):
         cfg_file = os.path.join(self.res_dir,DEFAULT_CONFIG_FILE) if cfg_filename is None else cfg_filename
         cfg = {}
-        ofile = open(cfg_file, "r")
-        for aline in ofile:
-            key = aline.split("=")[0].strip() if len(aline.split("=")) == 2 else aline.strip()
-            pair = aline.split("=")[1].strip() if len(aline.split("=")) == 2 else ""
-            cfg["-"+key] = pair
-        ofile.close()
+        if os.path.exists(cfg_file):
+            ofile = open(cfg_file, "r")
+            for aline in ofile:
+                key = aline.split("=")[0].strip() if len(aline.split("=")) == 2 else aline.strip()
+                pair = aline.split("=")[1].strip() if len(aline.split("=")) == 2 else ""
+                cfg["-"+key] = pair
+            ofile.close()
         return cfg
 
     def test_app(self, device, app):
