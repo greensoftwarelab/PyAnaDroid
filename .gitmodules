@@ -1,6 +1,6 @@
-[submodule "anadroid/resources/testingFrameworks/reran"]
-	path = anadroid/resources/testingFrameworks/reran
-	url = https://github.com/RRua/RERAN.git
 [submodule "anadroid/resources/testingFrameworks/droidbot"]
 	path = anadroid/resources/testingFrameworks/droidbot
 	url = https://github.com/honeynet/droidbot.git
+[submodule "anadroid/resources/testingFrameworks/reran"]
+	path = anadroid/resources/testingFrameworks/reran
+	url = https://github.com/rrua/reran.git

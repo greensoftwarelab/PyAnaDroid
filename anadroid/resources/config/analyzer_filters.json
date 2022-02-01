@@ -1,0 +1,9 @@
+{
+  "LogAnalyzer": {
+      "fatal_errors__eq": 0,
+      "ANR__eq" : 0
+  },
+   "ManafaAnalyzer": {
+      "total_energy__gt": 0
+  }
+}

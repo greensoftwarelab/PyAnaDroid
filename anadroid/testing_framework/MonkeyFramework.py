@@ -6,6 +6,8 @@ from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingF
 from anadroid.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.utils.Utils import get_resources_dir
+from manafa.utils.Logger import log, LogSeverity
+
 
 #DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
 DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "monkey")
@@ -13,10 +15,9 @@ DEFAULT_SEEDS_FILE = "monkey_seeds.txt"
 DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
 
 
-
 class MonkeyFramework(AbstractTestingFramework):
-    def __init__(self, profiler, default_workload=False, resdir=DEFAULT_RES_DIR):
-        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY, profiler=profiler)
+    def __init__(self, profiler, analyzer, default_workload=False, resdir=DEFAULT_RES_DIR):
+        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY, profiler=profiler, analyzer=analyzer)
         self.executable_prefix = "adb shell monkey"
         self.workload = None
         self.res_dir = resdir
@@ -53,7 +54,7 @@ class MonkeyFramework(AbstractTestingFramework):
         pass
 
     def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE):
-        cfg_file = os.path.join(self.res_dir , cfg_filename)
+        cfg_file = os.path.join(self.res_dir, cfg_filename)
         cfg = {}
         ofile = open(cfg_file, "r")
         for aline in ofile:
@@ -63,19 +64,30 @@ class MonkeyFramework(AbstractTestingFramework):
         return cfg
 
     def test_app(self, device, app):
-        j = 0
         for i, wk_unit in enumerate(self.workload.work_units):
-            device.unlock_screen()
-            time.sleep(1)
-            self.profiler.init(**{'app': app})
-            self.profiler.start_profiling()
-            app.start()
-            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
-            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
-            app.stop()
-            self.profiler.stop_profiling()
-            device.clear_logcat()
-            self.profiler.export_results(f"GreendroidResultTrace{i}.csv")
-            self.profiler.pull_results(f"GreendroidResultTrace{i}.csv", app.curr_local_dir)
-            app.clean_cache()
-            break
+            self.exec_one_test(i, device, app, wk_unit)
+
+    def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+        if n_retries < 0:
+            log(f"Validation failed. Ignoring test {test_id}", log_sev=LogSeverity.ERROR)
+            return
+        device.unlock_screen()
+        time.sleep(1)
+        self.profiler.init(**{'app': app})
+        self.profiler.start_profiling()
+        app.start()
+        log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
+        self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
+        app.stop()
+        self.profiler.stop_profiling()
+        device.clear_logcat()
+        self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
+        self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
+        app.clean_cache()
+        if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
+            log("Validation failed. Retrying", log_sev=LogSeverity.WARNING)
+            self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
+        else:
+            log(f"Test {test_id} PASSED ", log_sev=LogSeverity.SUCCESS)
+
+

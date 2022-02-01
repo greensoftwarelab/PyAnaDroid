@@ -8,7 +8,7 @@ from anadroid.profiler.AbstractProfiler import AbstractProfiler
 from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
 #RESOURCES_DIR = "resources/profilers/Manafa"
-RESOURCES_DIR =  os.path.join(get_resources_dir(),"profilers", "Manafa")
+RESOURCES_DIR =  os.path.join(get_resources_dir(), "profilers", "Manafa")
 HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
 
@@ -22,8 +22,9 @@ class ManafaProfiler(AbstractProfiler):
                 instrument_file=HUNTER_INSTRUMENT_FILE,
                 not_instrument_file=HUNTER_NOT_INSTRUMENT_FILE)
 
-
     def install_profiler(self):
+        res = self.device.execute_command("perfetto -h", shell=True)
+        print(res)
         pass
 
     def init(self, **kwargs):

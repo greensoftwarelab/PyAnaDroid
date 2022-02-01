@@ -9,7 +9,6 @@ from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources
 from anadroid.resources.testingFrameworks.reran.src import RERANWrapper
 
 RERAN_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "RERAN")
-#RERAN_RESOURCES_DIR = "resources/testingFrameworks/RERAN"
 TRANSLATOR_JAR_PATH= os.path.join(RERAN_RESOURCES_DIR, "build", "RERANTranslate.jar")
 RERAN_CONFIG_FILE = "config.cfg"
 REPLAY_EXECUTABLE_PATH = os.path.join(RERAN_RESOURCES_DIR,"build","replay")

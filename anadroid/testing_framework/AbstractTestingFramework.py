@@ -2,9 +2,10 @@ from abc import ABC, abstractmethod
 
 
 class AbstractTestingFramework(ABC):
-    def __init__(self, id, profiler):
+    def __init__(self, id, profiler, analyzer):
         self.id = id
-        self.profiler=profiler
+        self.profiler = profiler
+        self.analyzer = analyzer
         super().__init__()
 
     @abstractmethod

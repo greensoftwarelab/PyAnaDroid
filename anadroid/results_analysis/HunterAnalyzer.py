@@ -16,9 +16,8 @@ class HunterAnalyzer(AbstractAnalyzer):
         pass
 
     def analyze(self, app, output_log_file="hunter.log", **kwargs):
-        hunter_results_out = app.curr_local_dir + '/results/hunter'
+        hunter_results_out = os.path.join(app.curr_local_dir, 'results', 'hunter')
         hunter_logs = [f for f in os.listdir(hunter_results_out) if os.path.isfile(os.path.join(hunter_results_out, f))]
-
         between_tests = 0
         with open(hunter_results_out + "/" + output_log_file, 'w') as outfile:
             for fname in hunter_logs:

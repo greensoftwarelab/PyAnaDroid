@@ -41,9 +41,9 @@ class MonkeyWorkUnit(WorkUnit):
        super(MonkeyWorkUnit, self).__init__(bin_cmd)
 
     def execute(self, package_name, *args, **kwargs):
-        self.command = self.command % package_name
-        print("executing command: " + self.command)
-        execute_shell_command(self.command).validate(Exception("Error executing command " + self.command))
+        el_commandant = self.command % package_name
+        print("executing command: " + el_commandant)
+        execute_shell_command(el_commandant).validate(Exception("Error executing command " + self.command))
         if 'log_filename' in kwargs:
             execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
