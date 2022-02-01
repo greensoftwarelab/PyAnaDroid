@@ -6,9 +6,10 @@ from manafa.utils.Logger import log
 
 class ManafaAnalyzer(AbstractAnalyzer):
     def __init__(self, profiler):
+        self.supported_filters = {"total_energy"}
         super(ManafaAnalyzer, self).__init__()
         self.profiler = profiler
-        self.supported_filters = {"total_energy"}
+
 
     def setup(self, **kwargs):
         pass

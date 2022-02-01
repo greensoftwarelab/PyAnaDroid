@@ -10,8 +10,8 @@ DEFAULT_CFG_ANALYZERS_FILE = os.path.join(get_resources_dir(), "config", "analyz
 class AbstractAnalyzer(ABC):
     def __init__(self, analyzers_cfg_file=DEFAULT_CFG_ANALYZERS_FILE):
         super().__init__()
-        self.validation_filters = Filters(self.__class__.__name__, analyzers_cfg_file)
-        self.supported_filters = set()
+        self.supported_filters = set() if  not hasattr(self, 'supported_filters') else self.supported_filters
+        self.validation_filters = Filters(self.supported_filters, analyzers_cfg_file)
 
     @abstractmethod
     def setup(self, **kwargs):

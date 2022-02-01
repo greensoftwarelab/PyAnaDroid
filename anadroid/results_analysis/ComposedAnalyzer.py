@@ -4,7 +4,7 @@ import os
 class ComposedAnalyzer(AbstractAnalyzer):
     def __init__(self, inner_analyzers=()):
         super(ComposedAnalyzer, self).__init__()
-        self.inner_analyzers =[]
+        self.inner_analyzers = []
         for inn in inner_analyzers:
             if isinstance(inn, AbstractAnalyzer):
                 self.inner_analyzers.append(inn)

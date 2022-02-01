@@ -6,24 +6,21 @@ from anadroid.results_analysis.filters.Filter import Filter, is_valid_filter
 
 
 class Filters(object):
-    def __init__(self, analyzer_class, filter_file):
-        self.analyzer_id = analyzer_class
+    def __init__(self, supported_filters, filter_file):
         self.filter_file = filter_file
         self.filters = {}
-        self.__load_filters()
+        self.__load_filters(supported_filters)
 
-    def __load_filters(self):
+    def __load_filters(self, supported_filters):
         cfg={}
         with open(self.filter_file, 'r') as jj:
             cfg = json.load(jj)
-        if self.analyzer_id not in cfg:
-            return
-        anal_filters = cfg[self.analyzer_id]
-        for f, v in anal_filters.items():
+        for f, v in cfg.items():
             if is_valid_filter(f):
                 filterino = Filter(f, v)
-                self.filters[filterino.name] = [] if filterino not in self.filters else self.filters[filterino]
-                self.filters[filterino.name].append(filterino)
+                if filterino.name in supported_filters:
+                    self.filters[filterino.name] = [] if filterino not in self.filters else self.filters[filterino]
+                    self.filters[filterino.name].append(filterino)
 
     def apply_filter(self, filter_name, val):
         if filter_name in self.filters:
@@ -33,4 +30,4 @@ class Filters(object):
         return True
 
     def __str__(self):
-        return self.analyzer_id + ":" + str(self.filters)
+        return str(self.filters)

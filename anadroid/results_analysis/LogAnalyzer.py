@@ -7,11 +7,12 @@ from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 from anadroid.utils.Utils import execute_shell_command
 from manafa.utils.Logger import log
 
+
 class LogAnalyzer(AbstractAnalyzer):
     def __init__(self):
+        self.supported_filters = {"fatal_errors", "ANR"}
         super(LogAnalyzer, self).__init__()
         self.logcatparser = LogCatParser(log_format="threadtime")
-        self.supported_filters = {"fatal_errors", "ANR"}
 
     def setup(self, **kwargs):
         super().setup()
