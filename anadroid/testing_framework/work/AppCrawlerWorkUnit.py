@@ -25,7 +25,7 @@ DEFAULT_EVENT_COUNT=1000
 TIMEOUT_SECS=20
 CRAWLER_STOP_PHRASE="Crawl finished"
 
-def convert_arg(key,val):
+def convert_arg(key, val):
 
     if key in CRAWLER_OPTIONS:
         return "--" + key + " " + val
@@ -52,10 +52,11 @@ class AppCrawlerWorkUnit(WorkUnit):
 
     def execute(self, package_name, **kwargs):
         self.__clean_log_file()
-        timeout_cmd = f"gtimeout -s 9 {TIMEOUT_SECS}"
-        self.command = timeout_cmd +" " + self.command % package_name + f" > {LOG_FILE}"
+        #timeout_cmd = f"gtimeout -s 9 {TIMEOUT_SECS}"
+        #self.command = timeout_cmd +" " + self.command % package_name + f" > {LOG_FILE}"
+        self.command = self.command % package_name + f" > {LOG_FILE}"
         print("starting aux thread")
-        finish_thread = threading.Thread(target=detect_crawl_finish, args=(True, self.stop_call ))
+        finish_thread = threading.Thread(target=detect_crawl_finish, args=(True, self.stop_call))
         finish_thread.start()
         print("executing command: " + self.command)
         res = execute_shell_command(self.command)

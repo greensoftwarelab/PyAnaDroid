@@ -11,7 +11,6 @@ from anadroid.Types import PROFILER, INSTRUMENTER, TESTING_FRAMEWORK, ANALYZER, 
 from anadroid.application.AndroidProject import AndroidProject, BUILD_TYPE, is_android_project, Project
 from anadroid.application.Application import App
 from anadroid.build.GradleBuilder import GradleBuilder
-from anadroid.device.AbstractDevice import ADB_CONN
 from anadroid.device.Device import get_first_connected_device
 
 from anadroid.instrument.JInstInstrumenter import JInstInstrumenter
@@ -110,15 +109,15 @@ class AnaDroid(object):
             if tf == TESTING_FRAMEWORK.MONKEY:
                 return MonkeyFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.RERAN:
-                return RERANFramework(self.device, profiler=self.profiler)
+                return RERANFramework(self.device, profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.APP_CRAWLER:
-                return AppCrawlerFramework(default_workload=True, profiler=self.profiler)
+                return AppCrawlerFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.MONKEY_RUNNER:
-                return MonkeyRunnerFramework(default_workload=True, profiler=self.profiler)
+                return MonkeyRunnerFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.JUNIT:
-                return JUnitBasedFramework(profiler=self.profiler)
+                return JUnitBasedFramework(profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.DROIDBOT:
-                return DroidBotFramework(profiler=self.profiler)
+                return DroidBotFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
             else:
                 return None
         else:

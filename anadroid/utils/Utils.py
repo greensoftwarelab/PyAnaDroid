@@ -4,19 +4,26 @@ from manafa.utils.Logger import log, LogSeverity
 from textops import find
 import os
 
-PYNADROID_KEYSTORE_PATH = "resources/keys/pynadroid-releases.keystore"
-KEYSTORE_PASSWORD = "pynadroid"
-
-
 def get_reference_dir(packname):
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     # base_dir = sysconfig.get_path("purelib")
     return os.path.join(base_dir, packname)
 
-
 def get_resources_dir(packname="anadroid", default_res_dir="resources"):
     ref_dir = get_reference_dir(packname)
     return os.path.join(ref_dir, default_res_dir)
+
+
+def get_keystore_path():
+    return os.path.join(get_resources_dir(),"keys","pynadroid-releases.keystore")
+
+
+def get_keystore_pwd():
+    return "pynadroid"
+
+
+def get_general_config_dir(packname="anadroid", default_res_dir="resources"):
+    return os.path.join(get_resources_dir(packname, default_res_dir), "config")
 
 
 def get_pack_dir(packname="anadroid"):
@@ -29,6 +36,7 @@ def get_results_dir(default_results_dir="anadroid_results"):
         os.mkdir(ref_dir)
     return ref_dir
 
+
 def extract_pkg_name_from_apk(apkpath):
     res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
     res.validate(Exception("Unable to find aapt executable"))
@@ -39,12 +47,11 @@ def extract_pkg_name_from_apk(apkpath):
     return pkg_name
 
 
-
-
 def get_date_str():
     res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
     if res.validate(Exception("Unable to get date")):
         return res.output.strip()
+
 
 def get_apksigner_bin():
     res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"apksigner\"")
@@ -57,9 +64,9 @@ def sign_apk(apk_path):
        signer_bin = get_apksigner_bin()
        cmd = """{signer_bin} sign --ks {keystore_path} {apk_path} <<< {passwd}""".format(
            signer_bin=signer_bin,
-           keystore_path=PYNADROID_KEYSTORE_PATH,
+           keystore_path=get_keystore_path(),
            apk_path=apk_path,
-           passwd=KEYSTORE_PASSWORD
+           passwd=get_keystore_pwd()
        )
        res = execute_shell_command(cmd)
        res.validate(Exception("error signing apk " + apk_path))

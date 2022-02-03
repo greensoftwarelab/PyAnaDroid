@@ -1,12 +1,18 @@
 from abc import ABC, abstractmethod
 
+from anadroid.Config import get_general_config
+
 
 class AbstractTestingFramework(ABC):
     def __init__(self, id, profiler, analyzer):
+        super().__init__()
         self.id = id
         self.profiler = profiler
         self.analyzer = analyzer
-        super().__init__()
+        self.config = get_general_config("tests")
+
+    def get_config(self, key, default=None):
+        return self.config[key] if key in self.config else default
 
     @abstractmethod
     def execute_test(self, w_unit, timeout=None, *args, **kwargs):

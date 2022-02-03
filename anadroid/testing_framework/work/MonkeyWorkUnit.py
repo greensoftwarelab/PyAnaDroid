@@ -43,7 +43,7 @@ class MonkeyWorkUnit(WorkUnit):
     def execute(self, package_name, *args, **kwargs):
         el_commandant = self.command % package_name
         print("executing command: " + el_commandant)
-        execute_shell_command(el_commandant).validate(Exception("Error executing command " + self.command))
+        execute_shell_command(el_commandant).validate(Exception("Error executing command " + el_commandant))
         if 'log_filename' in kwargs:
             execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
@@ -54,7 +54,7 @@ class MonkeyWorkUnit(WorkUnit):
         if seed is not None:
             cmd += " -s {seed} ".format(seed=seed)
         if "event-count" in kwargs.keys():
-            nr_events = kwargs["event-count"]
+            nr_events = kwargs["event-count"] if 'event_count' in kwargs else nr_events
             kwargs.pop("event-count")
         for k, v in kwargs.items():
             cmd += " " + convert_arg(k, v)

@@ -1,24 +1,44 @@
 import os
 import time
 
+from anadroid.Config import get_general_config
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
+from anadroid.testing_framework.work.DroidBotWorkUnit import DroidBotWorkUnit
 from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
 
 
-DROIDBOT_RESOURCES_DIE =  os.path.join(get_resources_dir(), "testingFrameworks","droidbot")
+DROIDBOT_RESOURCES_DIR =  os.path.join(get_resources_dir(), "testingFrameworks","droidbot")
 TEST_OUTPUT_FILENAME = "DROIBOT_RESULT"
-DEFAULT_CONFIG_FILE = "droidbot.cfg"
-DEFAULT_TEST_SET_SIZE = 1
+DEFAULT_CONFIG_FILE = "droidbot_cmd.cfg"
+
+def get_machine_arch():
+    res = execute_shell_command("uname -m")
+    if res.validate("unable to detect system arch"):
+        return res.output.strip()
+    return ""
+
+
+def get_exec_prefix():
+    machine_arc = get_machine_arch()
+    if "arm64" in machine_arc:
+        return "arch -x86_64"
+    # todo uncomment
+    return ""
+    #return "arch -x86_64"
+
+
+
 
 class DroidBotFramework(AbstractTestingFramework):
-    def __init__(self, profiler, default_workload=False, resdir=DROIDBOT_RESOURCES_DIE, test_set_size=DEFAULT_TEST_SET_SIZE):
-        super(DroidBotFramework, self).__init__(id=TESTING_FRAMEWORK.DROIDBOT, profiler=profiler)
-        self.executable_prefix = f"arch -x86_64 python3 {resdir}/start.py"
-        self.test_set_size = test_set_size
+    def __init__(self, profiler, analyzer, default_workload=False, resdir=DROIDBOT_RESOURCES_DIR):
+        super(DroidBotFramework, self).__init__(id=TESTING_FRAMEWORK.DROIDBOT, profiler=profiler, analyzer=analyzer)
+        exec_prefix = get_general_config("general")['commands_prefix'] if \
+            'commands_prefix' in get_general_config("general") else " "
+        self.executable_prefix = f'{exec_prefix} python3 {os.path.join(resdir,"start.py")}'
         self.workload = None
         self.res_dir = resdir
         if default_workload:
@@ -27,8 +47,9 @@ class DroidBotFramework(AbstractTestingFramework):
     def init_default_workload(self, pkg=None):
         self.workload = WorkLoad()
         config = self.__load_config_file()
-        for i in range(0, self.test_set_size):
-            wk = WorkUnit(self.executable_prefix)
+        max_tests_per_app = self.get_config("tests_per_app", 20)
+        for i in range(0, max_tests_per_app):
+            wk = DroidBotWorkUnit(self.executable_prefix)
             wk.config(id=None, **config)
             self.workload.add_unit(wk)
 
@@ -36,9 +57,12 @@ class DroidBotFramework(AbstractTestingFramework):
     def execute_test(self, apk_path, wunit=None, timeout=None, *args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
+        if timeout or self.get_config("test_timeout", None):
+            timeout_val = timeout if timeout is not None else self.get_config("test_timeout", None)
+            wunit.add_timeout(timeout_val)
         out_string = (" -o " + kwargs.get("output_dir")) if "output_dir" in kwargs else ""
-        sufix = f"-a {apk_path}{out_string}"
-        wunit.execute(sufix, *args, **kwargs)
+        suffix = f"-a {apk_path}{out_string}"
+        wunit.execute(suffix, *args, **kwargs)
 
     def init(self):
         pass
@@ -57,7 +81,7 @@ class DroidBotFramework(AbstractTestingFramework):
             for aline in ofile:
                 key = aline.split("=")[0].strip() if len(aline.split("=")) == 2 else aline.strip()
                 pair = aline.split("=")[1].strip() if len(aline.split("=")) == 2 else ""
-                cfg["-"+key] = pair
+                cfg[key] = pair
             ofile.close()
         return cfg
 

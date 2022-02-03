@@ -96,7 +96,8 @@ class GreenScalerProfiler(AbstractProfiler):
         log("Energy = " + str(energy) + " Joules")
         app.stop_and_clean_app()
 
-def exec_command(self, command):
+
+def exec_command(command):
     pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     std_out, std_err = pipes.communicate()
 

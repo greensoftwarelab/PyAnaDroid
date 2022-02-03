@@ -29,15 +29,23 @@ class MonkeyFramework(AbstractTestingFramework):
         wl_filename = os.path.join(self.res_dir, seeds_file)
         config = self.__load_config_file()
         ofile = open(wl_filename, "r")
+        i=0
+        max_tests_per_app = self.get_config("tests_per_app", 100000000)
         for seed in ofile:
+            if i >= max_tests_per_app:
+                break
             wk = MonkeyWorkUnit(self.executable_prefix)
             wk.config(seed=seed.strip(), **config)
             self.workload.add_unit(wk)
+            i = i+1
         ofile.close()
 
     def execute_test(self, package, wunit=None, timeout=None, *args, **kwargs):
         if wunit is None:
             wunit = self.workload.consume()
+        if timeout or self.get_config("test_timeout", None):
+            timeout_val = timeout if timeout is not None else self.get_config("test_timeout", None)
+            wunit.add_timeout(timeout_val)
         if self.profiler.profiler == PROFILER.GREENSCALER:
             cmd = wunit.build_command(package, *args, **kwargs)
             self.profiler.exec_greenscaler(package, cmd)
@@ -64,8 +72,9 @@ class MonkeyFramework(AbstractTestingFramework):
         return cfg
 
     def test_app(self, device, app):
+        retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
-            self.exec_one_test(i, device, app, wk_unit)
+            self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
         if n_retries < 0:
@@ -89,5 +98,4 @@ class MonkeyFramework(AbstractTestingFramework):
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
             log(f"Test {test_id} PASSED ", log_sev=LogSeverity.SUCCESS)
-
 

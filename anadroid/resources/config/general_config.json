@@ -1,0 +1,10 @@
+{
+ "tests": {
+   "tests_per_app" : 3,
+   "test_timeout" : 100,
+   "test_fail_retries" : 2
+ },
+  "general": {
+    "commands_prefix": "arch -x86_64"
+  }
+}

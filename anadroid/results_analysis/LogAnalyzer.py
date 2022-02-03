@@ -35,10 +35,12 @@ class LogAnalyzer(AbstractAnalyzer):
 
     def clean(self):
         super().clean()
-        self.logcatparser = LogCatParser(log_format="threadtime")
+        #self.logcatparser = LogCatParser(log_format="threadtime")
 
     def show_results(self, app_list):
-        print(self.logcatparser.get_parser_resume())
+        for analyzed_app in app_list:
+            print(analyzed_app)
+            print("TODO show result for each test")
 
     def validate_test(self, app, test_id, **kwargs):
         log_file = kwargs.get('log_filename') if 'log_filename' in kwargs else 'batata' # todo

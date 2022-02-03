@@ -1,5 +1,23 @@
+import json
+import os
+
 from anadroid.Types import TESTING_APPROACH, TESTING_FRAMEWORK, BUILD_SYSTEM, PROFILER, INSTRUMENTER, ANALYZER
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
+from anadroid.utils.Utils import get_general_config_dir
+
+
+GENERAL_CONFIG_FILE_NAME = "general_config.json"
+RESOURCES_CONFIG_DIR = get_general_config_dir()
+CONFIG_FILE = os.path.join(RESOURCES_CONFIG_DIR, GENERAL_CONFIG_FILE_NAME)
+
+
+def get_general_config(cfg_type, cfg_file=CONFIG_FILE):
+    with open(cfg_file, 'r') as jj:
+        cfg = json.load(jj)
+    if cfg_type not in cfg:
+        raise Exception(f"invalid config type {cfg_type}")
+    return cfg[cfg_type] #[key] if key in cfg[cfg_type] else None
+
 
 SUPPORTED_TESTING_APPROACHES = {
     TESTING_APPROACH.WHITEBOX
