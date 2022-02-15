@@ -37,9 +37,8 @@ def stop_app(pkg):
     	subprocess.call("adb shell am force-stop " + pkg , shell=True)
 
 
-
 def install_app(pkg):
-    if apk is None:
+    if pkg is None:
         return
     subprocess.call("adb install apks/" + pkg +".apk" , shell=True)
 

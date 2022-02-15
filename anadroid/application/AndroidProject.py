@@ -9,7 +9,7 @@ from textops import cat, grep, cut, sed, echo, grepv
 from anadroid.application.Application import App
 from anadroid.application.ProjectModule import ProjectModule
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir
+from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir, extract_version_from_apk
 
 RESULTS_DIR = get_results_dir()
 
@@ -147,6 +147,7 @@ class AndroidProject(Project):
     def set_version(self, build_type):
         apks = self.get_apks(build_type)
         if len(apks) == 0:
-            return
-        ref_apk = apks[0]
-        #apk_version =
+            self.proj_version = DefaultSemanticVersion("0.0")
+        ref_apk = apks[0] # assuming first since main apk is build before building tests apk
+        v = extract_version_from_apk(ref_apk)
+        self.proj_version = DefaultSemanticVersion(v)

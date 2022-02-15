@@ -24,9 +24,10 @@ DEBUGGING_OPTIONS = {
     "wait-dbg"
 }
 
-DEFAULT_EVENT_COUNT=1000
+DEFAULT_EVENT_COUNT = 1000
 
-def convert_arg(key,val):
+
+def convert_arg(key, val):
     if key in DEBUGGING_OPTIONS:
         return "--" + key
     elif key in EVENT_OPTIONS:
@@ -44,8 +45,6 @@ class MonkeyWorkUnit(WorkUnit):
         el_commandant = self.command % package_name
         print("executing command: " + el_commandant)
         execute_shell_command(el_commandant).validate(Exception("Error executing command " + el_commandant))
-        if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
     def config(self, seed=None, **kwargs):
         #adb shell monkey -s $monkey_seed -p $package -v --pct-syskeys 0 --ignore-security-exceptions --throttle $delay_bt_events $monkey_nr_events) &> $localDir/monkey$monkey_seed.log)"
@@ -61,5 +60,5 @@ class MonkeyWorkUnit(WorkUnit):
 
         self.command = cmd + " -p %s " + str(nr_events)
 
-    def export_results(self):
+    def export_results(self, target_dir=None):
         pass

@@ -17,6 +17,8 @@ limitations under the License.
 import os, subprocess, time, threading
 
 ### this is the path to the GreenTestGen folder
+
+#BASE_PATH = os.path.dirname(os.path.abspath(__file__))
 BASE_PATH="/home/shaiful/research/shaiful_random_test_energy/final_data_upload_for_ICSE/Tools/GreenTestGen/"
 
 SCRIPTS_PATH=BASE_PATH+"mutator/scripts"

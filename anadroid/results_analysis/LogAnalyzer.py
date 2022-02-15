@@ -9,9 +9,9 @@ from manafa.utils.Logger import log
 
 
 class LogAnalyzer(AbstractAnalyzer):
-    def __init__(self):
+    def __init__(self, profiler):
         self.supported_filters = {"fatal_errors", "ANR"}
-        super(LogAnalyzer, self).__init__()
+        super(LogAnalyzer, self).__init__(profiler)
         self.logcatparser = LogCatParser(log_format="threadtime")
 
     def setup(self, **kwargs):
@@ -64,5 +64,7 @@ class LogAnalyzer(AbstractAnalyzer):
             return self.logcatparser.get_parser_resume()['stats']['fatal']
         elif filter_name == "ANR":
             return self.logcatparser.get_parser_resume()['known_errors']['ANR']
-        else:
+        val = super().get_val_for_filter(filter_name)
+        if val is None:
             log(f"unsupported filter {filter_name} by {self.__class__}")
+        return val

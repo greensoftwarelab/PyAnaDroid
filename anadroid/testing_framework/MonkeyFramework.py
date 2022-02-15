@@ -5,9 +5,7 @@ from anadroid.Types import TESTING_FRAMEWORK, PROFILER
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
-from anadroid.utils.Utils import get_resources_dir
-from manafa.utils.Logger import log, LogSeverity
-
+from anadroid.utils.Utils import get_resources_dir, loge, logw, logs, execute_shell_command
 
 #DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
 DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "monkey")
@@ -24,7 +22,7 @@ class MonkeyFramework(AbstractTestingFramework):
         if default_workload:
             self.init_default_workload(DEFAULT_SEEDS_FILE)
 
-    def init_default_workload(self, pkg, seeds_file=DEFAULT_SEEDS_FILE):
+    def init_default_workload(self, pkg, seeds_file=DEFAULT_SEEDS_FILE, tests_dir=None):
         self.workload = WorkLoad()
         wl_filename = os.path.join(self.res_dir, seeds_file)
         config = self.__load_config_file()
@@ -51,6 +49,8 @@ class MonkeyFramework(AbstractTestingFramework):
             self.profiler.exec_greenscaler(package, cmd)
         else:
             wunit.execute(package, *args, **kwargs)
+        if 'log_filename' in kwargs:
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
     def init(self):
         pass
@@ -78,7 +78,7 @@ class MonkeyFramework(AbstractTestingFramework):
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
         if n_retries < 0:
-            log(f"Validation failed. Ignoring test {test_id}", log_sev=LogSeverity.ERROR)
+            loge(f"Validation failed. Ignoring test {test_id}")
             return
         device.unlock_screen()
         time.sleep(1)
@@ -94,8 +94,8 @@ class MonkeyFramework(AbstractTestingFramework):
         self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
         app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
-            log("Validation failed. Retrying", log_sev=LogSeverity.WARNING)
+            logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
-            log(f"Test {test_id} PASSED ", log_sev=LogSeverity.SUCCESS)
+            logs(f"Test {test_id} PASSED ")
 

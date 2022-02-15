@@ -1,6 +1,7 @@
 import os
 from abc import ABC, abstractmethod
 
+from anadroid.device.DeviceState import get_known_state_keys, DeviceState
 from anadroid.results_analysis.filters.Filters import Filters
 from anadroid.utils.Utils import get_resources_dir
 from manafa.utils.Logger import log
@@ -8,9 +9,11 @@ from manafa.utils.Logger import log
 DEFAULT_CFG_ANALYZERS_FILE = os.path.join(get_resources_dir(), "config", "analyzer_filters.json")
 
 class AbstractAnalyzer(ABC):
-    def __init__(self, analyzers_cfg_file=DEFAULT_CFG_ANALYZERS_FILE):
+    def __init__(self, profiler, analyzers_cfg_file=DEFAULT_CFG_ANALYZERS_FILE):
         super().__init__()
-        self.supported_filters = set() if  not hasattr(self, 'supported_filters') else self.supported_filters
+        self.profiler = profiler
+        self.supported_filters = set() if not hasattr(self, 'supported_filters') else self.supported_filters
+        self.supported_filters.update(get_known_state_keys())
         self.validation_filters = Filters(self.supported_filters, analyzers_cfg_file)
 
     @abstractmethod
@@ -27,7 +30,7 @@ class AbstractAnalyzer(ABC):
 
     @abstractmethod
     def validate_test(self, app, arg1, **kwargs):
-        pass
+        return True
 
     @abstractmethod
     def show_results(self, app_list):
@@ -41,8 +44,16 @@ class AbstractAnalyzer(ABC):
 
     @abstractmethod
     def validate_filters(self):
-        return False
+        return True
 
     @abstractmethod
     def clean(self):
         pass
+
+    @abstractmethod
+    def get_val_for_filter(self, filter_name):
+        if filter_name in get_known_state_keys():
+            ds = DeviceState(self.profiler.device)
+            return ds.get_state(filter_name)
+        else:
+            return None

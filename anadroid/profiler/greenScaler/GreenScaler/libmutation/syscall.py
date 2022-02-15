@@ -18,6 +18,9 @@ limitations under the License.
 import time, os, subprocess, threading
 import re
 import anadroid.profiler.greenScaler.GreenScaler.libmutation.utils
+from anadroid.profiler.greenScaler.GreenScaler.libmutation import utils
+
+
 class SYSCALL:
     
 	def __init__(self, package):

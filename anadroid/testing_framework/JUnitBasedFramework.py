@@ -8,7 +8,7 @@ from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
 from manafa.utils.Logger import log, LogSeverity
 
-from anadroid.utils.Utils import get_resources_dir
+from anadroid.utils.Utils import get_resources_dir, logs, execute_shell_command
 
 DEFAULT_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFramework", "junit")
 
@@ -20,7 +20,7 @@ class JUnitBasedFramework(AbstractTestingFramework):
         self.workload = None
         self.res_dir = resdir
 
-    def init_default_workload(self, pkg):
+    def init_default_workload(self, pkg, seeds_file=None, tests_dir=None):
         pass
 
     def execute_test(self, package, wunit=None, timeout=None, *args, **kwargs):
@@ -30,6 +30,9 @@ class JUnitBasedFramework(AbstractTestingFramework):
             timeout_val = timeout if timeout is not None else self.get_config("test_timeout", None)
             wunit.add_timeout(timeout_val)
         wunit.execute("", *args, **kwargs)
+        if 'log_filename' in kwargs:
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(
+                Exception("Unable to extract device log"))
 
     def init(self):
         pass
@@ -86,11 +89,11 @@ class JUnitBasedFramework(AbstractTestingFramework):
         # app.stop()
         self.profiler.stop_profiling()
         self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
-        print(app.curr_local_dir)
         self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
         app.clean_cache()
+        device.clear_logcat()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             log("Validation failed. Retrying", log_sev=LogSeverity.WARNING)
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
-            log(f"Test {test_id} PASSED ", log_sev=LogSeverity.SUCCESS)
+            logs(f"Test {test_id} PASSED ")

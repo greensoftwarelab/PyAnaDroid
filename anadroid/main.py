@@ -11,13 +11,15 @@ from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
 def init_PyAnaDroid(args):
     return AnaDroid(arg1=args.diretory if (len(args.package_names) + len(args.application_packages) == 0) else args,
-                      testing_framework=TESTING_FRAMEWORK(args.testingframework),
-                      device=MockedDevice() if args.buildonly or args.justanalyze else None,
-                      profiler=PROFILER(args.profiler),
-                      build_type=BUILD_TYPE(args.buildtype),
-                      instrumenter=INSTRUMENTER(args.instrumenter),
-                      instrumentation_type=INSTRUMENTATION_TYPE(args.instrumentationtype),
-                      analyzer=ANALYZER(args.analyzer)
+                    testing_framework=TESTING_FRAMEWORK(args.testingframework),
+                    device=MockedDevice() if args.buildonly or args.justanalyze else None,
+                    profiler=PROFILER(args.profiler),
+                    build_type=BUILD_TYPE(args.buildtype),
+                    instrumenter=INSTRUMENTER(args.instrumenter),
+                    instrumentation_type=INSTRUMENTATION_TYPE(args.instrumentationtype),
+                    analyzer=ANALYZER(args.analyzer),
+                    tests_dir=args.tests_dir,
+                    rebuild_apps=args.rebuild
 )
 
 
@@ -41,14 +43,15 @@ def main():
     parser.add_argument("-rb", "--rebuild", help="rebuild apps", action='store_true')
     parser.add_argument("-ri", "--reinstall", help="reinstall apks", action='store_true')
     parser.add_argument("-ja", "--justanalyze", help="just analyze apps", action='store_true')
-    parser.add_argument("-c", "--connection", help="connection to device", choices=["USB", "WIFI"], default="USB")
+    #parser.add_argument("-c", "--connection", help="connection to device", choices=["USB", "WIFI"], default="USB")
     parser.add_argument("-sc", "--setconnection", help="set connection to device and exit", choices=["USB", "WIFI"])
-    parser.add_argument("-id", "--device_id", help="device serial id", type=int, default=None)
+    parser.add_argument("-ds", "--device_serial", help="device serial id", type=int, default=None)
+    parser.add_argument("-td", "--tests_dir", help="tests directory", type=str, default=None)
     parser.add_argument("-n", "--package_names", help="package(s) of already installed apps", nargs='+', default=[])
     parser.add_argument("-apk", "--application_packages", help="path of apk(s) to process", nargs='+', default=[])
     args = parser.parse_args()
     if args.setconnection:
-        set_device_conn(args.setconnection, device_id=args.device_id)
+        set_device_conn(args.setconnection, device_id=args.device_serial)
         exit(0)
     anadroid = init_PyAnaDroid(args)
     if args.buildonly:
@@ -57,9 +60,9 @@ def main():
         raise NotImplementedError()
         # anadroid.just_analyze()
     elif args.record:
-        anadroid.record_tests()
+        anadroid.record_test(args.tests_dir)
     else:
-        anadroid.defaultWorkflow()
+        anadroid.default_workflow()
 
 
 if __name__ == '__main__':

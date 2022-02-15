@@ -103,7 +103,7 @@ class Test(object):
     def add_event(self, event):
         self.script += event
 
-    def run(self):
+    def run(self,command=None):
         """
             Runs a test (script file) on a emulator.
         """

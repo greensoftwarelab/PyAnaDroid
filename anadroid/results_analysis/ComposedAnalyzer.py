@@ -1,9 +1,10 @@
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 import os
 
+
 class ComposedAnalyzer(AbstractAnalyzer):
-    def __init__(self, inner_analyzers=()):
-        super(ComposedAnalyzer, self).__init__()
+    def __init__(self, profiler, inner_analyzers=()):
+        super(ComposedAnalyzer, self).__init__(profiler)
         self.inner_analyzers = []
         for inn in inner_analyzers:
             if isinstance(inn, AbstractAnalyzer):
@@ -29,7 +30,7 @@ class ComposedAnalyzer(AbstractAnalyzer):
         for inn in self.inner_analyzers:
             inn.analyze_test(test_id, **kwargs)
 
-    def validate_test(self, app, arg1, **kwargs):
+    def validate_test(self, app, arg1,  **kwargs):
         for inn in self.inner_analyzers:
             if not inn.validate_test(app, arg1, **kwargs):
                 return False
@@ -40,3 +41,6 @@ class ComposedAnalyzer(AbstractAnalyzer):
             if not inn.validate_filters():
                 return False
         return True
+
+    def get_val_for_filter(self, filter_name):
+        return super().get_val_for_filter(filter_name)

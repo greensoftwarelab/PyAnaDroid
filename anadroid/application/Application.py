@@ -53,12 +53,13 @@ class App(AbstractApplication):
                 except Exception:
                     continue
         #cp all methods
-        all_m = os.path.join(self.proj.proj_dir, "allMethods.json")
-        if not os.path.exists(all_m) and os.path.exists(all_m):
-            shutil.move(all_m, all_dir)
+        all_m = os.path.join(self.local_res, "all", "allMethods.json")
+        if not os.path.exists(all_m):
+            all_m_proj = os.path.join(self.proj.proj_dir, "allMethods.json")
+            shutil.copyfile(all_m_proj, all_m)
 
     def init_local_test_(self, testing_framework, inst_type):
-        dirname =  os.path.join( self.local_res, get_prefix(testing_framework, inst_type))
+        dirname = os.path.join(self.local_res, get_prefix(testing_framework, inst_type))
         os.mkdir(dirname)
         self.curr_local_dir = dirname
 
@@ -92,6 +93,8 @@ class App(AbstractApplication):
             #.validate(Exception("error cleaning cache of package " + self.package_name))
 
     def __get_version(self):
+        if self.proj.proj_version != DefaultSemanticVersion("0.0"):
+            return self.proj.proj_version
         res = self.device.execute_command(f"dumpsys package {self.package_name}", shell=True)
         if res.validate(Exception("unable to determinate version of package")):
             version = echo(res.output | grep("versionName") | cut("=", 1))

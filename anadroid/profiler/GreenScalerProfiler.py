@@ -10,9 +10,10 @@ from anadroid.profiler.greenScaler.GreenScaler.greenscaler import cpu_measuremen
     screen_capture
 from anadroid.profiler.greenScaler.GreenScaler.libmutation import greenscalerapplication, model
 from anadroid.profiler.greenScaler.GreenScaler.libmutation.greenscalerapplication import GreenScalerApplication
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
-DEFAULT_RES_DIR="resources/profilers/GreenScaler"
+DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "profilers", "GreenScaler")
+INSTALL_SCRIPT_NAME = "push.sh"
 
 class GREENSCALER_TASK(Enum):
     CPU_PROFILING = "CPU Profiling"
@@ -24,9 +25,9 @@ class GreenScalerProfiler(AbstractProfiler):
     def __init__(self, profiler, device, resources_dir=DEFAULT_RES_DIR):
         #if not device.is_rooted():
         #    raise Exception("GreenScaler cannot be used in noon-rooted devices")
-        super(GreenScalerProfiler, self).__init__(profiler,device, pkg_name=None)
+        super(GreenScalerProfiler, self).__init__(profiler, device, pkg_name=None)
         self.resources_dir = resources_dir
-        if self.__is_installed():
+        if not self.__is_installed():
             self.install_profiler()
         self.inner_app = None
 
@@ -36,9 +37,10 @@ class GreenScalerProfiler(AbstractProfiler):
             return "cpu_after.sh" in res.output
         return False
 
-    def install_profiler(self):
-        path_of_installer = os.path.join(self.resources_dir, "push_to_phone", "push.sh")
-        execute_shell_command(path_of_installer).validate(Exception("Unable to install GreenScaler"))
+    def install_profiler(self, install_script_name=INSTALL_SCRIPT_NAME):
+        path_of_installer = os.path.join(self.resources_dir, "push_to_phone")
+        cmd = f"cd {path_of_installer}; sh {install_script_name}"
+        execute_shell_command(cmd).validate(Exception("Unable to install GreenScaler"))
 
 
     def init(self, **kwargs):
@@ -72,7 +74,7 @@ class GreenScalerProfiler(AbstractProfiler):
         log("executing greenscaler test")
         cpu_measurement(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
-        log("-" + foreground_app + "-")
+        log(f"-{foreground_app}-")
         if foreground_app != package:
             log("Error detected. App crashed or stopped during execution", log_sev=LogSeverity.ERROR)
             return
@@ -97,7 +99,7 @@ class GreenScalerProfiler(AbstractProfiler):
         app.stop_and_clean_app()
 
 
-def exec_command(command):
+def exec_command(self, command):
     pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     std_out, std_err = pipes.communicate()
 

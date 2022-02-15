@@ -16,7 +16,7 @@ class TESTING_FRAMEWORK(Enum):
     RERAN = "RERAN"
     ESPRESSO = "Espresso"
     ROBOTIUM = "Robotium"
-    APP_CRAWLER = "APP_CRAWLER"
+    APP_CRAWLER = "Crawler"
     DROIDBOT = "Droidbot"
     OTHER = "Other"
 

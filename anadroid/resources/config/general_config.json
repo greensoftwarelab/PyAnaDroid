@@ -1,6 +1,6 @@
 {
  "tests": {
-   "tests_per_app" : 3,
+   "tests_per_app" : 1,
    "test_timeout" : 100,
    "test_fail_retries" : 2
  },

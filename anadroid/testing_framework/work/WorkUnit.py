@@ -12,8 +12,6 @@ class WorkUnit(object):
         print("executing command " + self.command)
         res = execute_shell_command(self.command)
         res.validate(Exception("Error executing command " + self.command))
-        if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
     def build_command(self,  pkg_name, *args, **kwargs):
         self.command = self.command % pkg_name if "%" in self.command else self.command + " " + pkg_name
@@ -34,7 +32,7 @@ class WorkUnit(object):
             cmd += f' {k} {v}'
         self.command = cmd
 
-    def export_results(self):
+    def export_results(self, target_dir=None):
         pass
 
     def append_prefix(self, prefix):

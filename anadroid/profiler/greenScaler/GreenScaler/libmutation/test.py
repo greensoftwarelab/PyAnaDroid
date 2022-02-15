@@ -28,6 +28,7 @@ class Test(object):
         #self.app_pkg = app_pkg
         self.duration=0 # modified by shaiful to capture test duration
         if run:
+            print(run)
             self._run = types.MethodType(run, self)
 
     def _run(self, command=None, args=[]):
@@ -59,6 +60,7 @@ class Test(object):
         st=time.time()
         print("start time="+str(st))
         print(command)
+        print("el cmd")
         self._run(command)
         en=time.time()
         print("end time="+str(en))

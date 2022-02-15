@@ -4,7 +4,7 @@ import os
 class HunterAnalyzer(AbstractAnalyzer):
 
     def __init__(self):
-        super(HunterAnalyzer, self).__init__()
+        super(HunterAnalyzer, self).__init__(profiler)
         #self.bin_cmd = "java -jar " + (DEFAULT_JAR_PATH if jarpath is None else jarpath)
         #self.remote_url = remote_url
         #self.aux_analyzer = ApkAPIAnalyzer()

@@ -7,9 +7,7 @@ from manafa.utils.Logger import log
 class ManafaAnalyzer(AbstractAnalyzer):
     def __init__(self, profiler):
         self.supported_filters = {"total_energy"}
-        super(ManafaAnalyzer, self).__init__()
-        self.profiler = profiler
-
+        super(ManafaAnalyzer, self).__init__(profiler)
 
     def setup(self, **kwargs):
         pass
@@ -73,5 +71,7 @@ class ManafaAnalyzer(AbstractAnalyzer):
         if filter_name == "total_energy":
             tot, _, _ = self.profiler.manafa.getConsumptionInBetween()
             return tot
-        else:
+        val = super().get_val_for_filter(filter_name)
+        if val is None:
             log(f"unsupported filter {filter_name} by {self.__class__}")
+        return val

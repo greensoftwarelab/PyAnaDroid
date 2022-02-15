@@ -1,5 +1,7 @@
 {
       "fatal_errors__eq": 0,
       "ANR__eq" : 0,
-      "total_energy__gt": 0
+      "total_energy__gt": 0,
+      "flashlight__eq": 0,
+      "screen_brightness__le" : 100
 }

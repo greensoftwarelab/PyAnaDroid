@@ -21,8 +21,6 @@ class DroidBotWorkUnit(WorkUnit):
         if extras:
             cmd = f'{cmd} {extras}'
         execute_shell_command(cmd).validate(Exception("Error executing command " + cmd))
-        if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 
     def config(self, id=None, **kwargs):
         cmd = self.command
@@ -30,5 +28,5 @@ class DroidBotWorkUnit(WorkUnit):
             cmd += convert_arg(k, v)
         self.command = cmd
 
-    def export_results(self):
+    def export_results(self, target_dir=None):
         pass

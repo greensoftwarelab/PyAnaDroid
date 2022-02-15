@@ -17,22 +17,26 @@ KNOWN_STATE_KEYS = {
     "screen_orientation",
     "bluetooth",
     "wifi",
-    #"hotspot_state",
+    # "hotspot_state",
     'gps',
     "nfc_state",
     "mobile_data_state",
     'speakers_state'
 }
 
-PERMISSIONS_TO_STATE  = {
-	"ACCESS_FINE_LOCATION" : "gps_state",
-	"BLUETOOTH" : "bluetooth_state",
-	"BLUETOOTH_ADMIN" : "bluetooth_state",
-	"BLUETOOTH_PRIVILEGED" : "bluetooth_state",
-	"INTERNET" : "wifi",
-	"NFC" : "nfc_state",
-	"NFC_TRANSACTION_EVENT" : "nfc_state"
+PERMISSIONS_TO_STATE = {
+    "ACCESS_FINE_LOCATION": "gps_state",
+    "BLUETOOTH": "bluetooth_state",
+    "BLUETOOTH_ADMIN": "bluetooth_state",
+    "BLUETOOTH_PRIVILEGED": "bluetooth_state",
+    "INTERNET": "wifi",
+    "NFC": "nfc_state",
+    "NFC_TRANSACTION_EVENT": "nfc_state"
 }
+
+
+def get_known_state_keys():
+    return KNOWN_STATE_KEYS
 
 
 class DeviceState(object):
@@ -45,7 +49,7 @@ class DeviceState(object):
         self.screen_orientation = self.get_screen_orientation()
         self.bluetooth = self.get_bluetooth_state()
         self.wifi = self.get_wifi_state()
-        #self.hotspot_state = self.get_hotspot_state()
+        # self.hotspot_state = self.get_hotspot_state()
         self.gps = self.get_gps_state()
         self.nfc_state = self.get_nfc_state()
         self.mobile_data_state = self.get_mobile_data_state()
@@ -102,7 +106,7 @@ class DeviceState(object):
     def get_nfc_state(self):
         res = self.device.execute_command("dumpsys nfc | grep \"mState=on\"", shell=True)
         if res.validate(Exception("Unable to obtain nfc state")):
-            return  1 if "on" in res.output else 0
+            return 1 if "on" in res.output else 0
 
     def get_mobile_data_state(self):
         res = self.device.execute_command("settings get global  device_provisioning_mobile_data", shell=True)
@@ -201,6 +205,7 @@ class DeviceState(object):
 
     def set_hotspot_state(self, value=0):
         raise NotImplemented()
+
     def set_mobile_data_state(self, value=0):
         if value == 1:
             res = self.device.execute_root_command(f"svc data enable")
@@ -221,6 +226,35 @@ class DeviceState(object):
         if perm_id in PERMISSIONS_TO_STATE:
             self.enforce_state(PERMISSIONS_TO_STATE[perm_id], 1)
 
+    def get_state(self, key):
+        if not key in KNOWN_STATE_KEYS:
+            return None
+        elif key == 'screen_locked':
+            return self.get_screen_lock_state()
+        elif key == 'screen_brightness':
+            return self.get_screen_brightness()
+        elif key == 'screen_always_on':
+            return self.get_screen_always_on()
+        elif key == 'screen_auto_rotate':
+            return self.get_screen_auto_rotate()
+        elif key == 'screen_orientation':
+            return self.get_screen_orientation()
+        elif key == 'bluetooth':
+            return self.get_bluetooth_state()
+        elif key == 'wifi':
+            return self.get_wifi_state()
+        elif key == 'gps':
+            return self.get_gps_state()
+        elif key == 'nfc_state':
+            return self.get_nfc_state()
+        elif key == 'mobile_data_state':
+            return self.get_mobile_data_state()
+        elif key == 'speakers_state':
+            return self.get_speakers_state()
+        # elif key == 'hotspot_state':
+        #    self.set_hotspot_state(val)
+        else:
+            raise Exception(f"{key} not implemented")
 
     def enforce_state(self, key, val):
         if not key in KNOWN_STATE_KEYS:
@@ -247,7 +281,7 @@ class DeviceState(object):
             self.set_mobile_data_state(val)
         elif key == 'speakers_state':
             self.change_speaker_state(val)
-        #elif key == 'hotspot_state':
+        # elif key == 'hotspot_state':
         #    self.set_hotspot_state(val)
         else:
             raise Exception(f"{key} not implemented")

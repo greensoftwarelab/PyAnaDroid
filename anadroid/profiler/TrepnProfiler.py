@@ -1,5 +1,6 @@
 import os
 import time
+from shutil import copyfile
 
 from anadroid.application.Dependency import BuildDependency, DependencyType
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
@@ -8,17 +9,16 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 RESOURCES_DIR = get_resources_dir()
 DEFAULT_FILENAME = "trepnfile"
 DEFAULT_PREF_FILE = "/sdcard/trepn/saved_preferences/All.pref"
-DEFAULT_APK_LOCATION= os.path.join(RESOURCES_DIR, "profilers/Trepn/apks/com.quicinc.trepn-6.2-APK4Fun.com.apk")
-DEFAULT_PREFS_DIR= os.path.join(RESOURCES_DIR, "profilers/Trepn/TrepnPreferences")
+DEFAULT_APK_LOCATION= os.path.join(RESOURCES_DIR, "profilers", "Trepn", "apks","com.quicinc.trepn-6.2-APK4Fun.com.apk")
+DEFAULT_PREFS_DIR= os.path.join(RESOURCES_DIR, "profilers","Trepn","TrepnPreferences")
 DEFAULT_LAST_RUN_FILE="last_run_duration.log"
 EXPORT_THRESHOLD = 0.5
 
 
 class TrepnProfiler(AbstractProfiler):
-
-    def __init__(self,profiler , device):
+    def __init__(self, profiler, device):
         dependency_lib = BuildDependency("TrepnLib-release", DependencyType.LOCAL_BINARY, version=None, bin_type="aar")
-        self.local_dep_location = RESOURCES_DIR + "/profilers/Trepn/libsAdded/" + dependency_lib.name + "." + dependency_lib.bin_type #TODO
+        self.local_dep_location = os.path.join(RESOURCES_DIR,"profilers", "Trepn","libsAdded",  dependency_lib.name + "." + dependency_lib.bin_type) #TODO
         self.start_time = 0
         super(TrepnProfiler, self).__init__(profiler,device, pkg_name="com.quicinc.trepn", device_dir="sdcard/trepn", dependency=dependency_lib)
         if not device.has_package_installed(self.pkg_name):
@@ -30,11 +30,10 @@ class TrepnProfiler(AbstractProfiler):
         print("installing trepn")
         self.device.execute_command(f"install -g -r {apk_loc}").validate(Exception("Unable to install Trepn Profiler"))
 
-
     def setup_trepn_device_dir(self):
         trepn_dir = self.device_dir
         self.device.execute_command(
-            f"mkdir -p {trepn_dir} {trepn_dir}/Traces {trepn_dir}/Measures {trepn_dir}/TracedTests",shell=True)
+            f"mkdir -p {trepn_dir} {trepn_dir}/Traces {trepn_dir}/Measures {trepn_dir}/TracedTests", shell=True)
         prefs_dir = DEFAULT_PREFS_DIR
         # push files: TODO this is not working. ignore for now (push is blocking )
         #self.device.execute_command(f"push {prefs_dir} {trepn_dir}/").validate(Exception("error pushing trepn prefs"))
@@ -73,11 +72,13 @@ class TrepnProfiler(AbstractProfiler):
         res.validate(Exception("error while exporting results"))
         time_to_sleep = run_duration * EXPORT_THRESHOLD
         time.sleep(int(time_to_sleep))
+
         return out_filename
 
     def pull_results(self, file_id, target_dir):
         device_filepath = self.device_dir + "/" + file_id
-        self.device.execute_command("pull", args=[device_filepath,target_dir], shell=False).validate(Exception("error pulling results"))
+        self.device.execute_command("pull", args=[device_filepath, target_dir], shell=False).validate(Exception("error pulling results"))
+        all_dir = os.path.join(target_dir, "..", "all")
 
     def get_dependencies_location(self):
         return [self.local_dep_location]
@@ -95,7 +96,7 @@ class TrepnProfiler(AbstractProfiler):
 
     def get_last_run_duration(self):
         last_dur_file = self.device_dir + "/" + DEFAULT_LAST_RUN_FILE
-        file_ctent = self.device.execute_command(f"cat {last_dur_file}",shell=True).output.strip()
+        file_ctent = self.device.execute_command(f"cat {last_dur_file}", shell=True).output.strip()
         try:
             val = int(file_ctent)
 

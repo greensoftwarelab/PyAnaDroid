@@ -4,9 +4,9 @@ import time
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
-
+from manafa.utils.Logger import log, LogSeverity
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
-from anadroid.utils.Utils import get_resources_dir
+from anadroid.utils.Utils import get_resources_dir, logs, execute_shell_command
 
 DEFAULT_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "app-crawler")
 DEFAULT_BIN_NAME = "crawl_launcher.jar"
@@ -23,7 +23,7 @@ class AppCrawlerFramework(AbstractTestingFramework):
         if default_workload:
             self.init_default_workload()
 
-    def init_default_workload(self, pkg=None):
+    def init_default_workload(self, pkg, seeds_file=None, tests_dir=None):
         self.workload = WorkLoad()
         config = self.__load_config_file()
         ntests = int(config['test_count']) if 'test_count' in config else DEFAULT_TEST_SET_SIZE
@@ -43,6 +43,9 @@ class AppCrawlerFramework(AbstractTestingFramework):
             timeout_val = timeout if timeout is not None else self.get_config("test_timeout", None)
             wunit.add_timeout(timeout_val)
         wunit.execute(package, *args, **kwargs)
+        if 'log_filename' in kwargs:
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(
+                Exception("Unable to extract device log"))
 
     def init(self):
         pass
@@ -63,19 +66,50 @@ class AppCrawlerFramework(AbstractTestingFramework):
         ofile.close()
         return cfg
 
-    def test_app(self, device, app):
+    '''def test_app(self, device, app):
         for i, wk_unit in enumerate(self.workload.work_units):
             device.unlock_screen()
             time.sleep(1)
             self.profiler.init()
             self.profiler.start_profiling()
             app.start()
-            time.sleep(10)
+            time.sleep(8)
             wk_unit.stop_call = self.profiler.stop_profiling
             log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
             self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
             app.stop()
+            wk_unit.export_results(app.curr_local_dir)
             self.profiler.export_results("GreendroidResultTrace0.csv")
             self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
             app.clean_cache()
-            break
+            break'''
+
+    def test_app(self, device, app):
+        retries_per_test = self.get_config("test_fail_retries", 1)
+        for i, wk_unit in enumerate(self.workload.work_units):
+            self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
+
+    def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+        if n_retries < 0:
+            log(f"Validation failed. Ignoring test {test_id}", log_sev=LogSeverity.ERROR)
+            return
+
+        device.unlock_screen()
+        time.sleep(1)
+        self.profiler.init()
+        self.profiler.start_profiling()
+        app.start()
+        time.sleep(8)
+        wk_unit.stop_call = self.profiler.stop_profiling
+        log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
+        self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
+        app.stop()
+        wk_unit.export_results(app.curr_local_dir)
+        self.profiler.export_results("GreendroidResultTrace0.csv")
+        self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+        app.clean_cache()
+        if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
+            log("Validation failed. Retrying", log_sev=LogSeverity.WARNING)
+            self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
+        else:
+            logs(f"Test {test_id} PASSED ")(f"Test {test_id} PASSED ", log_sev=LogSeverity.SUCCESS)

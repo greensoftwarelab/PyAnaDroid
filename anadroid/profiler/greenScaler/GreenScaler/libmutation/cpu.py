@@ -52,9 +52,9 @@ class CPU:
 
 	def count_cpu(self,apk):	
 
-		fr1=open("sysInfo_before.txt","r")
-		fr2=open("sysInfo_after.txt","r")
-		f_tmp=open("CPU_check.txt","a")
+		fr1=open("sysInfo_before.txt", "r")
+		fr2=open("sysInfo_after.txt", "r")
+		f_tmp=open("CPU_check.txt", "a")
 		#### summary of first line ############	
 		line1=fr1.readline().strip() ############# These numbers identify the amount of time the CPU has spent performing different kinds of work (before).
 		data1=re.findall('[^ ]+',line1)

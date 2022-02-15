@@ -1,3 +1,5 @@
+import os
+import shutil
 import threading
 import time
 
@@ -24,9 +26,10 @@ LOG_FILE="crawler.out"
 DEFAULT_EVENT_COUNT=1000
 TIMEOUT_SECS=20
 CRAWLER_STOP_PHRASE="Crawl finished"
+EXPECTED_OUTPUT_DIR = "crawl_output"
+
 
 def convert_arg(key, val):
-
     if key in CRAWLER_OPTIONS:
         return "--" + key + " " + val
     elif key in CUSTOM_CRAWLER_OPTIONS:
@@ -51,19 +54,16 @@ class AppCrawlerWorkUnit(WorkUnit):
         self.stop_call = stop_call
 
     def execute(self, package_name, **kwargs):
-        self.__clean_log_file()
+        #self.__clean_log_file()
         #timeout_cmd = f"gtimeout -s 9 {TIMEOUT_SECS}"
         #self.command = timeout_cmd +" " + self.command % package_name + f" > {LOG_FILE}"
-        self.command = self.command % package_name + f" > {LOG_FILE}"
+        command = self.command % package_name + f" > {LOG_FILE}"
         print("starting aux thread")
         finish_thread = threading.Thread(target=detect_crawl_finish, args=(True, self.stop_call))
         finish_thread.start()
-        print("executing command: " + self.command)
-        res = execute_shell_command(self.command)
+        print("executing command: " + command)
+        res = execute_shell_command(command)
         self.__log_execution_end()
-        if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
-
 
     def config(self, id=None, **kwargs):
         #adb shell monkey -s $monkey_seed -p $package -v --pct-syskeys 0 --ignore-security-exceptions --throttle $delay_bt_events $monkey_nr_events) &> $localDir/monkey$monkey_seed.log)"
@@ -72,8 +72,16 @@ class AppCrawlerWorkUnit(WorkUnit):
             cmd += " " + convert_arg(k, v)
         self.command = cmd + " --app-package-name %s "
 
-    def export_results(self):
-        pass
+    def export_results(self, target_dir=None):
+        if target_dir is None:
+            return
+        filepath_log = LOG_FILE
+        if os.path.exists(filepath_log):
+            target_file = os.path.join(target_dir, filepath_log)
+            shutil.move(filepath_log, target_file)
+        output_dir = EXPECTED_OUTPUT_DIR
+        if os.path.exists(output_dir):
+            shutil.move(output_dir, target_dir)
 
     def __clean_log_file(self):
         execute_shell_command(f"> {LOG_FILE}")

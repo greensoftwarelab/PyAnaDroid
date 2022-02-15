@@ -24,9 +24,7 @@ class MonkeyRunnerWorkUnit(WorkUnit):
         for v in args:
             self.command += " " + v
         print("executing command: " + self.command)
-        res = execute_shell_command(self.command).validate(Exception("Error running command"))
-        if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
+        execute_shell_command(self.command).validate(Exception("Error running command"))
 
 
     def config(self, filepath=None, **kwargs):

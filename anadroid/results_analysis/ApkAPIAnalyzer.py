@@ -17,6 +17,7 @@ knownRetTypes = {
     "D": "double"
 }
 
+
 def inferType(st):
     st = str(st)
     if (len(st) > 0):
@@ -29,10 +30,12 @@ def inferType(st):
             return knownRetTypes[st]
     return ""
 
+
 def parseMethod(full):
     full = re.sub(r'^\[', '', str(full))
     return re.sub(r'^L', '', full).replace("/", ".").replace(r';|_',"")
     #return re.sub(r'^L', '', full).replace("/", ".").replace(";", "").replace("_", "")
+
 
 def rreplace(mystr, reverse_removal, reverse_replacement):
     return mystr[::-1].replace(reverse_removal, reverse_replacement, 1)[::-1]
@@ -113,6 +116,7 @@ def inferPackage(classname):
     last_tok_list = classname.split('.')[:-1]
     return '.'.join(last_tok_list)
 
+
 def eval(path, pack):
     fa, d, dx = AnalyzeAPK(path)
     graph = {}
@@ -167,21 +171,37 @@ def eval(path, pack):
     return filename
 
 
-class ApkAPIAnalyzer(object):
-    def __init__(self):
-        super(ApkAPIAnalyzer, self).__init__()
+class ApkAPIAnalyzer(AbstractAnalyzer):
+    def __init__(self, profiler):
+        super(ApkAPIAnalyzer, self).__init__(profiler)
 
     def setup(self, **kwargs):
         pass
 
-    def analyze(self,apk_path,apk_name):
-        return eval(apk_path,apk_name)
+    def analyze(self,apk_path, apk_name):
+        return eval(apk_path, apk_name)
 
     def clean(self):
         pass
 
     def show_results(self, app_list):
         pass
+
+    def get_val_for_filter(self, filter_name):
+        return super().get_val_for_filter(filter_name)
+
+    def analyze_tests(self, app, results_dir=None, **kwargs):
+        return super().analyze_tests(app, results_dir=results_dir, **kwargs)
+
+    def analyze_test(self, app, test_id, **kwargs):
+        return super().analyze_test(app, test_id=test_id, **kwargs)
+
+    def validate_test(self, app, arg1, **kwargs):
+        return super().validate_test(app, arg1, **kwargs)
+
+    def validate_filters(self):
+        return super().validate_filters()
+
 
 if __name__ == '__main__':
     apk_path = sys.argv[1]

@@ -7,8 +7,8 @@ from abc import ABC, abstractmethod
 class AbstractProfiler(ABC):
     def __init__(self, profiler, device, pkg_name, device_dir=None, dependency=None, plugin= None):
         super().__init__()
-        self.profiler = profiler
         self.device = device
+        self.profiler = profiler
         self.pkg_name = pkg_name
         self.dependency = dependency
         self.device_dir = device_dir

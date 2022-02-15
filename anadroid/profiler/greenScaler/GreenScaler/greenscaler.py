@@ -35,7 +35,7 @@ def get_foreground_app():
 	output = subprocess.check_output("adb shell dumpsys activity recents | grep 'Recent #0' | cut -d= -f2 | sed 's| .*||' | cut -d '/' -f1", shell=True)
 	#p = subprocess.Popen("pwd", stdout=subprocess.PIPE)
 	#result = p.communicate()[0]
-	return output.strip()
+	return output.decode("utf-8").strip()
 # 
 def cpu_measurement(app, apk_file, n, package, test_cmd):
 	for i in range(n):          
@@ -45,6 +45,7 @@ def cpu_measurement(app, apk_file, n, package, test_cmd):
 		time.sleep(5)
 		app.cpu.cpu_before(package)
 		print("Running application")
+		print(test_cmd)
 		duration=app.test.run(test_cmd)
 		app.cpu.duration=app.cpu.duration+duration
 		print("total duration=" + str(duration))
@@ -142,7 +143,7 @@ def default_greenscaler(n_runs=1):
 	
 
 
-def exec_command(self,command):
+def exec_command(self, command):
 	#subprocess.call(command)
 	#print("executing command -%s-" % command)
 	pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
@@ -189,7 +190,7 @@ def exec_greenscaler(package,test_cmd):
 			break
 
 	energy=model.estimate_energy(package, app, n)
-	print ("Energy ="+str(energy)+" Joules")
+	print("Energy ="+str(energy)+" Joules")
 	app.stop_and_clean_app()
 	exit(0)
 

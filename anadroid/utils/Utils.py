@@ -1,6 +1,7 @@
 from subprocess import Popen, PIPE, TimeoutExpired
 
-from manafa.utils.Logger import log, LogSeverity
+from manafa.utils.Logger import LogSeverity
+from manafa.utils.Logger import log as logm
 from textops import find
 import os
 
@@ -43,9 +44,17 @@ def extract_pkg_name_from_apk(apkpath):
     aapt_executable = res.output.strip()
     res = execute_shell_command(f"{aapt_executable}  dump badging {apkpath} | grep 'package: name='")
     res.validate(Exception("error while executing aapt"))
-    pkg_name = res.output.split(" ")[1].replace("name=","").replace("'","")
+    pkg_name = res.output.split(" ")[1].replace("name=", "").replace("'", "")
     return pkg_name
 
+
+def extract_version_from_apk(apkpath):
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
+    res.validate(Exception("Unable to find aapt executable"))
+    aapt_executable = res.output.strip()
+    res = execute_shell_command(f"{aapt_executable}  dump badging {apkpath} | grep 'versionName='")
+    res.validate(Exception("error while executing aapt"))
+    return res.output.split(" ")[3].replace("versionName=", "").replace("'", "")
 
 def get_date_str():
     res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
@@ -57,7 +66,7 @@ def get_apksigner_bin():
     res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"apksigner\"")
     if res.validate(Exception("No apksigner found")):
         return res.output.split()[0]
-    return "/Users/ruirua/Library/Android/sdk/build-tools/30.0.3/apksigner"
+    return "$ANDROID_HOME/build-tools/30.0.3/apksigner"
 
 def sign_apk(apk_path):
        # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\"".format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
@@ -111,7 +120,7 @@ class COMMAND_RESULT(object):
                     print(self)
                     raise e
                 else:
-                    log(e, log_sev=LogSeverity.ERROR)
+                    loge(e)
                     return False
             else:
                 #print(self)
@@ -129,3 +138,23 @@ class COMMAND_RESULT(object):
 
 def log_to_file(content, filename):
     open(filename, 'w').write(content)
+
+
+def logi(message):
+    logm(message, log_sev=LogSeverity.INFO)
+
+
+def logw(message):
+    logm(message, log_sev=LogSeverity.WARNING)
+
+
+def loge(message):
+    logm(message, log_sev=LogSeverity.ERROR)
+
+
+def logf(message):
+    logm(message, log_sev=LogSeverity.FATAL)
+
+
+def logs(message):
+    logm(message, log_sev=LogSeverity.SUCCESS)

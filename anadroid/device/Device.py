@@ -206,7 +206,7 @@ class Device(AbstractDevice):
     def get_new_installed_pkgs(self):
         old_pkgs = self.installed_packages
         new_pkgs = self.list_installed_packages()
-        has_no_prefix = lambda candidate, pklist :  len(list(filter(lambda z: z in candidate and z != candidate, pklist))) == 0
+        has_no_prefix = lambda candidate, pklist:  len(list(filter(lambda z: z in candidate and z != candidate, pklist))) == 0
         return list(filter(
             lambda x: x not in old_pkgs and has_no_prefix(x, new_pkgs),
             new_pkgs))
