@@ -5,6 +5,6 @@
    "test_fail_retries" : 2
  },
   "general": {
-    "commands_prefix": "arch -x86_64"
+    "commands_prefix": ""
   }
 }
