@@ -21,6 +21,7 @@ old_apps/
 allMethods.json
 results/
 anadroid/resources/framework-res.apk
+anadroid/resources/config/*
 # Generated files
 .idea/**/contentModel.xml
 
@@ -257,7 +258,5 @@ dmypy.json
 .idea/*
 .DS_Store
 
-# apps results
-results/*
 
 # End of https://www.toptal.com/developers/gitignore/api/pycharm,python
