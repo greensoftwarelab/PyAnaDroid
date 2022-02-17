@@ -52,7 +52,7 @@ class Project(object):
             shutil.rmtree(t)
 
 class AndroidProject(Project):
-    def __init__(self, projname, projdir,results_dir=RESULTS_DIR):
+    def __init__(self, projname, projdir,results_dir=RESULTS_DIR, clean_instrumentations=False):
         super(AndroidProject, self).__init__(projname=projname, projdir=projdir, results_dir=results_dir)
         self.root_build_file = self.get_root_build_file()
         self.main_manif_file = self.get_main_manif_file()
@@ -63,6 +63,8 @@ class AndroidProject(Project):
         super().init_results_dir(self.app_id)
         self.proj_version = DefaultSemanticVersion("0.0")
         self.apks = {'Test': [], 'Debug': [], 'Release': [], 'Custom': []}
+        if clean_instrumentations:
+            self.clean_trasformations()
 
     def __gen_proj_id(self):
         pkg_line = str(cat(self.main_manif_file) | grep("package=\"[^\"]"))
@@ -118,7 +120,7 @@ class AndroidProject(Project):
                 #print(self.modules[mod_name].module_type)
 
     def get_gradle_plugin(self):
-        gradle_plugin_version = str(cat(self.root_build_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip()
+        gradle_plugin_version = str(cat(self.root_build_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip().replace("'","")
         return gradle_plugin_version
 
     def create_inner_folder(self, name="libs"):

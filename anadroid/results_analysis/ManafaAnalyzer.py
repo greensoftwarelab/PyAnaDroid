@@ -59,8 +59,9 @@ class ManafaAnalyzer(AbstractAnalyzer):
         for filter_name, fv in self.validation_filters.filters.items():
             if filter_name in self.supported_filters:
                 for filt in fv:
-                    if not filt.apply_filter(self.get_val_for_filter(filter_name)):
-                        log(f"filter {filter_name} failed")
+                    val_for_filter = self.get_val_for_filter(filter_name)
+                    if not filt.apply_filter(val_for_filter):
+                        log(f"filter {filter_name} failed. value: {val_for_filter}")
                         return False
             else:
                 log(f"unsupported filter {filter_name}")

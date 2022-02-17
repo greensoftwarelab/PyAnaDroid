@@ -2,6 +2,7 @@ from subprocess import Popen, PIPE, TimeoutExpired
 
 from manafa.utils.Logger import LogSeverity
 from manafa.utils.Logger import log as logm
+
 from textops import find
 import os
 
@@ -137,7 +138,7 @@ class COMMAND_RESULT(object):
 
 
 def log_to_file(content, filename):
-    open(filename, 'w').write(content)
+    open(filename, 'a+').write(content)
 
 
 def logi(message):

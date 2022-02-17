@@ -74,7 +74,6 @@ class GreenScalerProfiler(AbstractProfiler):
         log("executing greenscaler test")
         cpu_measurement(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
-        log(f"-{foreground_app}-")
         if foreground_app != package:
             log("Error detected. App crashed or stopped during execution", log_sev=LogSeverity.ERROR)
             return
@@ -95,19 +94,17 @@ class GreenScalerProfiler(AbstractProfiler):
             if n_image == 1:
                 break
         energy = model.estimate_energy(package, app, n)
-        log("Energy = " + str(energy) + " Joules")
+        log(f"Energy = {energy} Joules")
         app.stop_and_clean_app()
 
 
 def exec_command(self, command):
     pipes = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     std_out, std_err = pipes.communicate()
-
     if pipes.returncode != 0:
         # an error happened!
         err_msg = "%s. Code: %s" % (std_err.strip(), pipes.returncode)
         raise Exception(err_msg)
-
     elif len(std_err):
         print(std_out)
     # return code is 0 (no error), but we may want to

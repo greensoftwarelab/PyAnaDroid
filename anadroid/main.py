@@ -9,7 +9,7 @@ from anadroid.device.MockedDevice import MockedDevice
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
 
-def init_PyAnaDroid(args):
+def init_PyAnaDroid_from_args(args):
     return AnaDroid(arg1=args.diretory if (len(args.package_names) + len(args.application_packages) == 0) else args,
                     testing_framework=TESTING_FRAMEWORK(args.testingframework),
                     device=MockedDevice() if args.buildonly or args.justanalyze else None,
@@ -19,7 +19,8 @@ def init_PyAnaDroid(args):
                     instrumentation_type=INSTRUMENTATION_TYPE(args.instrumentationtype),
                     analyzer=ANALYZER(args.analyzer),
                     tests_dir=args.tests_dir,
-                    rebuild_apps=args.rebuild
+                    rebuild_apps=args.rebuild,
+                    reinstrument=args.reinstrument
 )
 
 
@@ -38,10 +39,10 @@ def main():
     parser.add_argument("-a", "--analyzer", default=ANALYZER.MANAFA_ANALYZER.value, type=str, help="results analyzer",
                         choices=[e.value for e in INSTRUMENTATION_TYPE])
     parser.add_argument("-d", "--diretory", default="demoProjects", type=str, help="app(s)' folder")
-    parser.add_argument("-bi", "--buildonly", help="just build apps", action='store_true')
+    parser.add_argument("-bo", "--buildonly", help="just build apps", action='store_true')
     parser.add_argument("-r", "--record", help="record test", action='store_true')
     parser.add_argument("-rb", "--rebuild", help="rebuild apps", action='store_true')
-    parser.add_argument("-ri", "--reinstall", help="reinstall apks", action='store_true')
+    parser.add_argument("-ri", "--reinstrument", help="reinstrument app", action='store_true')
     parser.add_argument("-ja", "--justanalyze", help="just analyze apps", action='store_true')
     #parser.add_argument("-c", "--connection", help="connection to device", choices=["USB", "WIFI"], default="USB")
     parser.add_argument("-sc", "--setconnection", help="set connection to device and exit", choices=["USB", "WIFI"])
@@ -53,7 +54,7 @@ def main():
     if args.setconnection:
         set_device_conn(args.setconnection, device_id=args.device_serial)
         exit(0)
-    anadroid = init_PyAnaDroid(args)
+    anadroid = init_PyAnaDroid_from_args(args)
     if args.buildonly:
         anadroid.just_build_apps()
     elif args.justanalyze:

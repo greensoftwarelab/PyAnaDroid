@@ -9,9 +9,9 @@ from textops import grep, cat, echo, sed
 from distutils.dir_util import copy_tree
 from anadroid.build.SdkManagerWrapper import SDKManager
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import mega_find
+from anadroid.utils.Utils import mega_find, get_resources_dir, loge
 
-RES_DIR = "resources"
+RES_DIR = get_resources_dir()
 GRADLE_RES_DIR = os.path.join(RES_DIR, "build", "gradle")
 GRADLE_WRAPPER_DIR = os.path.join(GRADLE_RES_DIR, "wrapper", "gradle")
 
@@ -45,7 +45,6 @@ def is_known_error(output):
 
 
 
-
 def solve_known_error(proj, error, **kwargs):
     if error == KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR:
         #adjust gradle wrapper version
@@ -58,6 +57,7 @@ def solve_known_error(proj, error, **kwargs):
                 continue
             plg_version = possible_plgin_vers.split(":")[-1]
             adeq_v = get_adequate_gradle_version(plg_version)
+            print("versao adequada " + str(adeq_v))
             for fprop in grad_prop_files:
                 fl_ctnt = file_content = str(cat(fprop))
                 plg_version = str(echo(fl_ctnt) | grep("distributionUrl=.*")).split("/")[-1].replace("gradle-", "").replace(".zip", "")
@@ -97,7 +97,9 @@ def solve_known_error(proj, error, **kwargs):
         # add repository in main gradle file
         main_grdl = proj.root_build_file
         add_google_repo(main_grdl)
-
+        has_glu_glu = "google()" in str(cat(proj.root_build_file))
+        if not has_glu_glu:
+            add_google_repo_build_script(main_grdl)
     elif error == KNOWN_ERRORS.MIN_SDK_ERROR:
         pass
         x='''output = kwargs.get("out") if "out" in kwargs else ""
@@ -114,6 +116,14 @@ def solve_known_error(proj, error, **kwargs):
         log("BAD NDK configuration. please update ndk path in resources/config/local.properties", log_sev=LogSeverity.ERROR)
         local_Prop_file = os.path.join(RES_DIR, "config", "local.properties")
         shutil.copy(local_Prop_file, proj.proj_dir)
+    elif error == KNOWN_ERRORS.GOOGLE_REPO_ERROR:
+        # upgrade build tools (min  at least 3.6)
+        min = DefaultSemanticVersion("3.6.3")
+        current_build_version = get_gradle_plugin_version(proj.root_build_file)
+        replace_gradle_plugin_version( proj.root_build_file, current_build_version, min)
+        solve_known_error(proj, KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
+    else:
+        loge(f"Unable to solve {error}")
 
 def get_adequate_gradle_version(plugin_version):
     version = DefaultSemanticVersion(plugin_version)
@@ -196,9 +206,27 @@ def replace_build_tools_version(bld_file, old_bld_version, new_bld_version):
     old_str = str(old_bld_version)
     new_str = str(new_bld_version)
     new_file = re.sub(old_str, new_str, str(cat(bld_file)))
-    open(bld_file, 'w').write(new_file)
+    with open(bld_file, 'w') as u:
+        u.write(new_file)
+
+def replace_gradle_plugin_version(bld_file, old_v, new_v):
+    new_file = str(cat(bld_file)).replace(f'com.android.tools.build:gradle:{str(old_v)}', f'com.android.tools.build:gradle:{str(new_v)}')
+    with open(bld_file, 'w') as u:
+        u.write(new_file)
 
 def add_google_repo(main_grdl):
     file_ctent = str(cat(main_grdl))
     new_file = file_ctent + "\nallprojects {repositories { maven { url 'https://maven.google.com/'\nname 'Google'}}}"
-    open(main_grdl, 'w').write(new_file)
+    with open(main_grdl, 'w') as u:
+        u.write(new_file)
+
+def add_google_repo_build_script(main_grdl):
+    file_ctent = str(cat(main_grdl))
+    new_file = file_ctent + "\nbuildscript {repositories { google() }}"
+    with open(main_grdl, 'w') as u:
+        u.write(new_file)
+
+
+def get_gradle_plugin_version(gradle_file):
+    gradle_plugin_version = str(cat(gradle_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip().replace("'","")
+    return gradle_plugin_version

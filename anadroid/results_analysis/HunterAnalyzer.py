@@ -19,9 +19,9 @@ class HunterAnalyzer(AbstractAnalyzer):
         hunter_results_out = os.path.join(app.curr_local_dir, 'results', 'hunter')
         hunter_logs = [f for f in os.listdir(hunter_results_out) if os.path.isfile(os.path.join(hunter_results_out, f))]
         between_tests = 0
-        with open(hunter_results_out + "/" + output_log_file, 'w') as outfile:
+        with open(os.path.join(hunter_results_out, output_log_file), 'w') as outfile:
             for fname in hunter_logs:
-                path_file = hunter_results_out + '/' + fname
+                path_file = os.path.join(hunter_results_out , fname)
                 with open(path_file) as infile:
                     size = os.path.getsize(path_file)
                     for line in infile:

@@ -1,14 +1,13 @@
 import os
 import shutil
 
-from manafa.utils.Logger import log
 from textops import cut, grep, echo
 
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.application.AbstractApplication import AbstractApplication
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
-from anadroid.utils.Utils import get_date_str
+from anadroid.utils.Utils import get_date_str, logw, logi
 
 
 def get_prefix(testing_framework, inst_type):
@@ -37,7 +36,6 @@ class App(AbstractApplication):
         self.__init_res_dir()
 
     def __init_res_dir(self):
-        log(self.local_res)
         all_dir = os.path.join(self.local_res, "all")
         old_runs_dir = os.path.join(self.local_res, "oldRuns")
         if not os.path.exists(self.local_res):
@@ -83,9 +81,10 @@ class App(AbstractApplication):
 
     def set_immersive_mode(self):
         if self.device.get_device_android_version().major >= 11:
-            log("immersive mode not available on Android 11+ devices", log_sev)
-        log("setting immersive mode")
-        self.device.execute_command(f"settings put global policy_control immersive.full={self.package_name}",shell=True)\
+            logw("immersive mode not available on Android 11+ devices")
+            return
+        logi("setting immersive mode")
+        self.device.execute_command(f"settings put global policy_control immersive.full={self.package_name}", shell=True)\
            .validate(Exception("error setting immersive mode"))
 
     def clean_cache(self):

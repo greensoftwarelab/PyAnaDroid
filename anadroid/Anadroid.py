@@ -35,11 +35,12 @@ class AnaDroid(object):
     def __init__(self, arg1, results_dir=get_results_dir(), profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
-                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False):
+                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False, reinstrument=False):
         self.device = device if device is not None else get_first_connected_device()
         self.app_projects_ut = []
         self.tests_dir = tests_dir
         self.rebuild_apps = rebuild_apps
+        self.reinstrument = reinstrument
         self.apps = [] # apps created from package names passed by argument
         self.apks = [] # apk paths passed by argument
         if isinstance(arg1, argparse.Namespace):
@@ -166,8 +167,8 @@ class AnaDroid(object):
     def default_workflow(self):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
-            logi("Processing app " + app_name)
-            original_proj = AndroidProject(projname=app_name, projdir=app_proj)
+            logi("Processing app " + app_name + " in " + app_proj)
+            original_proj = AndroidProject(projname=app_name, projdir=app_proj, clean_instrumentations=self.reinstrument)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
             builder = self.init_builder(instr_proj)
@@ -214,7 +215,7 @@ class AnaDroid(object):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
             logi("Processing app " + app_name + " in " + app_proj)
-            original_proj = AndroidProject(projname=app_name, projdir=app_proj)
+            original_proj = AndroidProject(projname=app_name, projdir=app_proj, clean_instrumentations=self.reinstrument)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
 
@@ -234,6 +235,13 @@ class AnaDroid(object):
             # builder.build_proj_and_apk(build_type=self.build_type,build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
             # self.analyzer.analyze(app, **{'instr_type': self.instrumentation_type, 'testing_framework': self.testing_framework})
 
+    def __get_project_from_dir(self, dir_path):
+        has_gradle_right_next = mega_find(dir_path, pattern="build.gradle", maxdepth=2, type_file='f')
+        if len(has_gradle_right_next) > 0:
+            top_gradle_file = min(has_gradle_right_next, key=len)
+            return os.path.dirname(top_gradle_file)
+        return None
+
     def load_projects(self):
         return_projs = []
         if is_android_project(self.apps_dir):
@@ -243,16 +251,16 @@ class AnaDroid(object):
                 filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
         for maybe_proj in potential_projects:
             path_dir = os.path.join(self.apps_dir, maybe_proj)
-            has_gradle_right_next = mega_find(path_dir, pattern="build.gradle", maxdepth=1, type_file='f')
-            if len(has_gradle_right_next) > 0:
-                return_projs.append(path_dir)
+            proj_fldr = self.__get_project_from_dir(path_dir)
+            if proj_fldr is not None:
+                return_projs.append(proj_fldr)
             else:
                 children_dirs = list(filter(lambda x: os.path.isdir(os.path.join(path_dir, x)), os.listdir(path_dir)))
                 for child in children_dirs:
                     child_path_dir = os.path.join(path_dir, child)
-                    has_gradle_right_next = mega_find(child_path_dir, pattern="build.gradle", maxdepth=1, type_file='f')
-                    if len(has_gradle_right_next) > 0:
-                        return_projs.append(child_path_dir)
+                    proj_fldr = self.__get_project_from_dir(child_path_dir)
+                    if proj_fldr is not None:
+                        return_projs.append(proj_fldr)
         return return_projs
 
     def record_test(self, tests_dir=None):

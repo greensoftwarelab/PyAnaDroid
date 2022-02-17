@@ -38,9 +38,9 @@ class LogAnalyzer(AbstractAnalyzer):
         #self.logcatparser = LogCatParser(log_format="threadtime")
 
     def show_results(self, app_list):
-        for analyzed_app in app_list:
-            print(analyzed_app)
-            print("TODO show result for each test")
+        #for analyzed_app in app_list:
+        #print(analyzed_app)
+        print("loganalyzer TODO show result for each test")
 
     def validate_test(self, app, test_id, **kwargs):
         log_file = kwargs.get('log_filename') if 'log_filename' in kwargs else 'batata' # todo
@@ -51,8 +51,9 @@ class LogAnalyzer(AbstractAnalyzer):
         for filter_name, fv in self.validation_filters.filters.items():
             if filter_name in self.supported_filters:
                 for filt in fv:
-                    if not filt.apply_filter(self.get_val_for_filter(filter_name)):
-                        log(f"filter {filter_name} failed")
+                    val_for_filter = self.get_val_for_filter(filter_name)
+                    if not filt.apply_filter(val_for_filter):
+                        log(f"filter {filter_name} failed. value: {val_for_filter}")
                         return False
             else:
                 log(f"unsupported filter {filter_name}")

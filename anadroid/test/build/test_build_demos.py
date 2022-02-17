@@ -3,19 +3,20 @@ from unittest import TestCase
 
 from textops import cat, grep
 
+from anadroid.Anadroid import AnaDroid
 from anadroid.application.AndroidProject import AndroidProject
 from anadroid.device.Device import get_first_connected_device
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 from anadroid.utils.Utils import mega_find
-from anadroid.main import init_PyAnaDroid
 
 
 class TestBuildDemo(TestCase):
     device = get_first_connected_device()
 
-    def xx_test_build(self):
-        folder_of_app = "demoProjects/SampleApp"
-        le_android = init_PyAnaDroid(folder_of_app)
+
+    def test_build(self):
+        folder_of_app = "demoProjects"
+        le_android = AnaDroid(folder_of_app)
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)
@@ -28,13 +29,12 @@ class TestBuildDemo(TestCase):
             builder.build()
             self.assertTrue(builder.was_last_build_successful())
 
-    def _test_hunter_instrumentation(self, instr_type=INSTRUMENTATION_TYPE.ANNOTATION ):
+    def test_hunter_instrumentation(self, instr_type=INSTRUMENTATION_TYPE.ANNOTATION):
         folder_of_app = "demoProjects/SampleApp"
-        le_android = init_PyAnaDroid(folder_of_app)
+        le_android = AnaDroid(folder_of_app)
         app_projects = le_android.load_projects()
         for app_proj in app_projects:
             app_name = os.path.basename(app_proj)
-            #print("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             original_proj.clean_trasformations()
             instrumented_proj_dir = le_android.instrumenter.instrument(original_proj,

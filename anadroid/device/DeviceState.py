@@ -57,7 +57,7 @@ class DeviceState(object):
         self.flashlight = 0
 
     def get_screen_lock_state(self):
-        return not self.device.is_screen_unlocked()
+        return 0 if self.device.is_screen_unlocked() else 1
 
     def get_screen_brightness(self):
         res = self.device.execute_command("settings get system screen_brightness", shell=True)
