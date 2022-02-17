@@ -6,6 +6,7 @@ class INSTRUMENTATION_TYPE(Enum):
     TEST = 'TestOriented'
     ACTIVITY = 'ActivityOriented',
     ANNOTATION = 'AnnotationOriented'
+    NONE = "None"
 
 class INSTRUMENTATION_STRATEGY(Enum):
     ANNOTATION = "Annotation"  # insert annotation in classes/methods

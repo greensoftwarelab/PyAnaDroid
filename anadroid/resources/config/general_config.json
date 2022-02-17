@@ -5,6 +5,10 @@
    "test_fail_retries" : 2
  },
   "general": {
-    "commands_prefix": ""
+    "commands_prefix": "arch -x86_64"
+  },
+  "build": {
+    "build_fail_retries" : 3,
+    "build_timeout" : 600
   }
 }

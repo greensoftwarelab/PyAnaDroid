@@ -26,6 +26,7 @@ class PROFILER(Enum):
     PETRA = 'Petra'
     MONSOON = 'Monsoon'
     MANAFA = "E-manafa"
+    NONE = "None"
 
 class INSTRUMENTER(Enum):
     JINST = 'JInst'

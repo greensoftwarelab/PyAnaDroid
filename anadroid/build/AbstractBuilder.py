@@ -1,6 +1,8 @@
 import os
 from abc import ABC, abstractmethod
 
+from anadroid.Config import get_general_config
+
 
 class AbstractBuilder(ABC):
     def __init__(self, proj, device, resources_dir, instrumenter):
@@ -11,6 +13,7 @@ class AbstractBuilder(ABC):
         self.instrumenter = instrumenter
         self.device = device
         self.__getDeviceInfo()
+        self.config = get_general_config("build")
 
     def __get_android_home(self):
         android_home = os.environ['ANDROID_HOME']
@@ -32,8 +35,6 @@ class AbstractBuilder(ABC):
     @abstractmethod
     def build(self):
         pass
-        # infer gradle plugin version
-        # getDeviceMinSDKVersion
-        # #
-        #build_files = []
-        #for build_file in build_files:
+
+    def get_config(self, key, default=None):
+        return self.config[key] if key in self.config else default

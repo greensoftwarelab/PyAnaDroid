@@ -3,8 +3,7 @@ import os
 
 from anadroid.Types import TESTING_APPROACH, TESTING_FRAMEWORK, BUILD_SYSTEM, PROFILER, INSTRUMENTER, ANALYZER
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
-from anadroid.utils.Utils import get_general_config_dir
-
+from anadroid.utils.Utils import get_general_config_dir, loge
 
 GENERAL_CONFIG_FILE_NAME = "general_config.json"
 RESOURCES_CONFIG_DIR = get_general_config_dir()
@@ -15,7 +14,8 @@ def get_general_config(cfg_type, cfg_file=CONFIG_FILE):
     with open(cfg_file, 'r') as jj:
         cfg = json.load(jj)
     if cfg_type not in cfg:
-        raise Exception(f"invalid config type {cfg_type}")
+        loge("invalid config type {cfg_type}")
+        return {}
     return cfg[cfg_type] #[key] if key in cfg[cfg_type] else None
 
 def set_general_config(cfg_type, cfg_key, cfg_value,  cfg_file=CONFIG_FILE):
@@ -48,7 +48,8 @@ SUPPORTED_BUILDING_SYSTEMS = {
 SUPPORTED_PROFILERS = {
     PROFILER.TREPN,
     PROFILER.MANAFA,
-    PROFILER.GREENSCALER
+    PROFILER.GREENSCALER,
+    PROFILER.NONE
 }
 
 SUPPORTED_INSTRUMENTERS = {
@@ -68,5 +69,6 @@ SUPPORTED_INSTRUMENTATION_TYPES = {
 SUPPORTED_SUITES = {
     PROFILER.TREPN: [INSTRUMENTATION_TYPE.TEST, INSTRUMENTATION_TYPE.METHOD],
     PROFILER.MANAFA: [INSTRUMENTATION_TYPE.ANNOTATION],
-    PROFILER.GREENSCALER: [INSTRUMENTATION_TYPE.ANNOTATION]
+    PROFILER.GREENSCALER: [INSTRUMENTATION_TYPE.ANNOTATION],
+    PROFILER.NONE: [INSTRUMENTATION_TYPE.NONE, INSTRUMENTATION_TYPE.ANNOTATION, INSTRUMENTATION_TYPE.METHOD, INSTRUMENTATION_TYPE.TEST]
 }

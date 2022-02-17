@@ -16,6 +16,7 @@ from anadroid.instrument.JInstInstrumenter import JInstInstrumenter
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 from anadroid.profiler.GreenScalerProfiler import GreenScalerProfiler
 from anadroid.profiler.ManafaProfiler import ManafaProfiler
+from anadroid.profiler.NoneProfiler import NoneProfiler
 from anadroid.profiler.TrepnProfiler import TrepnProfiler
 from anadroid.results_analysis.ComposedAnalyzer import ComposedAnalyzer
 from anadroid.results_analysis.LogAnalyzer import LogAnalyzer
@@ -99,6 +100,8 @@ class AnaDroid(object):
                                       hunter=self.instrumentation_type == INSTRUMENTATION_TYPE.ANNOTATION)
             elif profiler == PROFILER.GREENSCALER:
                 return GreenScalerProfiler(profiler, self.device)
+            elif profiler == PROFILER.NONE:
+                return NoneProfiler(profiler, self.device)
                 # return None
         else:
             raise Exception("Unsupported profiler")

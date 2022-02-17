@@ -63,7 +63,7 @@ ATRIBS_NAME_REMAPS = {
 BUILD_RESULTS_FILE = "buildStatus.json"
 SUCCESS_VALUE = "Success"
 BUILD_SUCCESS_VALUE = "BUILD SUCCESSFUL"
-
+DEFAULT_BUILD_TIMES_TO_TRY = 5
 
 def gen_dependency_string(dependency):
     if dependency.dep_type == DependencyType.LOCAL_BINARY:
@@ -224,9 +224,9 @@ class GradleBuilder(AbstractBuilder):
         self.__add_build_classpaths()
         self.__add_external_libs_to_repositories()
         self.__add_or_replace_local_properties_files()
-        return self.build_with_gradlew()
+        return self.build_with_gradlew(self.get_config("build_fail_retries", DEFAULT_BUILD_TIMES_TO_TRY))
 
-    def build_with_gradlew(self, tries=3, target_task="build"):
+    def build_with_gradlew(self, tries=DEFAULT_BUILD_TIMES_TO_TRY, target_task="build"):
         has_gradle_wrapper = self.proj.has_gradle_wrapper()
         if not has_gradle_wrapper:
             # create gradle wrapper
@@ -251,8 +251,10 @@ class GradleBuilder(AbstractBuilder):
 
     def __execute_gradlew_task(self, task):
         log(f"Executing Gradle task: {task}", log_sev=LogSeverity.INFO)
+        build_timeout_val = self.get_config("build_timeout", 0)
+        build_timeout = f'timeout {build_timeout_val}' if build_timeout_val > 0 else ""
         res = execute_shell_command(
-            "cd {projdir}; chmod +x gradlew ;./gradlew {task}".format(projdir=self.proj.proj_dir, task=task))
+            "cd {projdir}; chmod +x gradlew ; {build_timeout} ./gradlew {task}".format(projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout))
         if res.validate(("error running gradle task")):
             return res.output
         else:
