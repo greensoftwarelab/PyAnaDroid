@@ -29,7 +29,8 @@ from anadroid.testing_framework.JUnitBasedFramework import JUnitBasedFramework
 from anadroid.testing_framework.MonkeyFramework import MonkeyFramework
 from anadroid.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
 from anadroid.testing_framework.RERANFramework import RERANFramework
-from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_results_dir, logw, logi, loge
+from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_results_dir, logw, logi, loge, \
+    get_resources_dir
 
 
 class AnaDroid(object):
@@ -57,7 +58,7 @@ class AnaDroid(object):
         self.__validate_suite(profiler)
         self.instrumenter = self.__infer_instrumenter(instrumenter)
         self.builder = self.__infer_build_system(build_system)
-        self.resources_dir = "resources"
+        self.resources_dir = get_resources_dir()
         self.build_type = build_type
 
     def __setup_from_argparse(self, args: argparse.Namespace):

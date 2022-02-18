@@ -10,7 +10,6 @@ class MODULE_TYPE(Enum):
     LIBRARY = "Library"
     APP = "App"
 
-
 class ProjectModule(object):
     def __init__(self, name, mod_dir):
         self.mod_name = name

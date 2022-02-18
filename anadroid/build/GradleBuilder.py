@@ -90,8 +90,11 @@ def set_transitive_names(gradle_plugin_version):
         ANDROID_TEST_TRANSITIVE = "AndroidTestCompile"
         global DEBUG_TRANSITIVE
         DEBUG_TRANSITIVE = "debugCompile"
-    # TODO api vs implementation vs compilonly ... https://developer.android.com/studio/build/dependencies#dependency_configurations
+        # TODO api vs implementation vs compilonly ... https://developer.android.com/studio/build/dependencies#dependency_configurations
 
+
+def is_library_gradle(bld_file):
+    return 'com.android.library' in str(cat(bld_file))
 
 class GradleBuilder(AbstractBuilder):
     def __init__(self, proj, device, resources_dir, instrumenter):
@@ -127,7 +130,7 @@ class GradleBuilder(AbstractBuilder):
             if was_success:
                 log(f"{task_name}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
             filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
-            "SUCCCESS" if was_success else "ERROR")))
+                "SUCCESS" if was_success else "ERROR")))
             log_to_file(content=val, filename=filename)
         return apps_list
 
@@ -162,7 +165,7 @@ class GradleBuilder(AbstractBuilder):
                 raise Exception(f"Error signing apk {apk_path} {e}")
 
     def build_apk(self, build_type=BUILD_TYPE.DEBUG):
-        task = "assemble" + build_type.value
+        task = f"assemble{build_type.value}"
         if self.was_last_build_successful(task) and not self.needs_rebuild():
             log(f"Not building again {build_type}. Last build was successful", log_sev=LogSeverity.INFO)
             return True
@@ -170,7 +173,7 @@ class GradleBuilder(AbstractBuilder):
         val = self.__execute_gradlew_task(task=task)
         was_success = BUILD_SUCCESS_VALUE in val
         if was_success:
-            log(f"BUILD ({build_type}) SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+            log(f"BUILD ({build_type.value}) SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
             self.regist_successfull_build(task)
             apks_now = self.proj.get_apks()
             fresh_apks = [x for x in apks_now if x not in apks_built]
@@ -182,7 +185,6 @@ class GradleBuilder(AbstractBuilder):
             log("Error Building APK", log_sev=LogSeverity.ERROR)
             return False
         return True
-
 
     def build_tests_apk(self):
         task = "assembleAndroidTest"
@@ -208,7 +210,7 @@ class GradleBuilder(AbstractBuilder):
         if self.was_last_build_successful() and not rebuild:
             log("Not building again. Last build was successful", log_sev=LogSeverity.INFO)
             return True
-        self.__execute_gradlew_task("clean") # mainly to ensure that built apks from original proj do not persist
+        self.__execute_gradlew_task("clean")# mainly to ensure that built apks from original proj do not persist
         for mod_name, proj_module in self.proj.modules.items():
             bld_file = proj_module.build_file
             self.__set_build_tools_version(bld_file)
@@ -240,7 +242,7 @@ class GradleBuilder(AbstractBuilder):
         else:
             error = is_known_error(val)
             if error is not None and tries > 0:
-                solve_known_error(self.proj, error, **{'build-tools': self.build_tools_version})
+                solve_known_error(self.proj, error, error_msg=val, **{'build-tools': self.build_tools_version})
                 log(f"{target_task}: BUILD FAILED. error is known ({error}). Fixing error and retrying", log_sev=LogSeverity.WARNING)
                 log_to_file(f"{error}", os.path.join(self.proj.proj_dir, "registered_errors.log"))
                 return self.build_with_gradlew(tries=tries - 1, target_task=target_task)
@@ -458,6 +460,8 @@ ndk-location={android_home}/ndk-bundle''' \
             # it can't be the first plugin
             plgs = re.findall(r'apply.*plugin.*', file_content)
             for plg in plugins:
+                if 'hunter' in plg and is_library_gradle(bld_file):
+                    continue
                 plg_string += f"apply plugin: '{plg}'\n"
             # file_content = re.sub(plgs, (plg_string + plgs), file_content)
             last_plg = plgs[len(plgs) - 1]

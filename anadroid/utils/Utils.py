@@ -138,7 +138,8 @@ class COMMAND_RESULT(object):
 
 
 def log_to_file(content, filename):
-    open(filename, 'a+').write(content)
+    with open(filename, 'a+') as u:
+        u.write(content + "\n")
 
 
 def logi(message):

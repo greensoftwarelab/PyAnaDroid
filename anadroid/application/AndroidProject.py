@@ -115,7 +115,7 @@ class AndroidProject(Project):
         for mod_n in modules:
             mod_name = mod_n.strip()
             res = execute_shell_command("find %s -maxdepth 1 -type d -name \"%s\"" % (self.proj_dir, mod_name))
-            if res.validate():
+            if res.validate() and res.output.strip() != "":
                 self.modules[mod_name] = ProjectModule(mod_name, res.output.strip())
                 #print(self.modules[mod_name].module_type)
 

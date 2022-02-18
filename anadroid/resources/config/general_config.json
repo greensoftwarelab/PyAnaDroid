@@ -9,6 +9,6 @@
   },
   "build": {
     "build_fail_retries" : 3,
-    "build_timeout" : 600
+    "build_timeout" : 0
   }
 }

@@ -45,7 +45,7 @@ def is_known_error(output):
 
 
 
-def solve_known_error(proj, error, **kwargs):
+def solve_known_error(proj, error, error_msg, **kwargs):
     if error == KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR:
         #adjust gradle wrapper version
         grad_prop_files = mega_find(proj.proj_dir, "gradle-wrapper.properties", type_file='f')
@@ -57,12 +57,8 @@ def solve_known_error(proj, error, **kwargs):
                 continue
             plg_version = possible_plgin_vers.split(":")[-1]
             adeq_v = get_adequate_gradle_version(plg_version)
-            print("versao adequada " + str(adeq_v))
             for fprop in grad_prop_files:
-                fl_ctnt = file_content = str(cat(fprop))
-                plg_version = str(echo(fl_ctnt) | grep("distributionUrl=.*")).split("/")[-1].replace("gradle-", "").replace(".zip", "")
-                file_content = re.sub(plg_version, adeq_v, file_content)
-                open(fprop, 'w').write(file_content)
+                update_gradle_wrapper_version(fprop, adeq_v)
 
     elif error == KNOWN_ERRORS.NO_WRAPPER:
         # no wrapper config
@@ -110,7 +106,11 @@ def solve_known_error(proj, error, **kwargs):
         print(tha_manif_file)'''
     elif error == KNOWN_ERRORS.WRAPPER_ERROR:
         # can be solved the same way of WRAPPER_MISMATCH_ERROR
-        solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
+        recom_v = re.search("Minimum supported Gradle version is (.*). Current version", error_msg)
+        recom_v = f'{recom_v.groups()[0].strip()}-all' if recom_v else get_adequate_gradle_version(get_gradle_plugin_version(proj.root_build_file))
+        grad_prop_files = mega_find(proj.proj_dir, "gradle-wrapper.properties", type_file='f')
+        update_gradle_wrapper_version(grad_prop_files[0], recom_v )
+        #solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
 
     elif error == KNOWN_ERRORS.NDK_BAD_CONFIG:
         log("BAD NDK configuration. please update ndk path in resources/config/local.properties", log_sev=LogSeverity.ERROR)
@@ -121,7 +121,7 @@ def solve_known_error(proj, error, **kwargs):
         min = DefaultSemanticVersion("3.6.3")
         current_build_version = get_gradle_plugin_version(proj.root_build_file)
         replace_gradle_plugin_version( proj.root_build_file, current_build_version, min)
-        solve_known_error(proj, KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
+        solve_known_error(proj, KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, error_msg, **kwargs)
     else:
         loge(f"Unable to solve {error}")
 
@@ -226,6 +226,12 @@ def add_google_repo_build_script(main_grdl):
     with open(main_grdl, 'w') as u:
         u.write(new_file)
 
+def update_gradle_wrapper_version(gradle_wrap_prop_filepath, new_v):
+    fl_ctnt = file_content = str(cat(gradle_wrap_prop_filepath))
+    current_v = str(echo(fl_ctnt) | grep("distributionUrl=.*")).split("/")[-1].replace("gradle-", "").replace(".zip",                                                                                 "")
+    file_content = re.sub(current_v,  new_v, file_content)
+    with open(gradle_wrap_prop_filepath, 'w') as u:
+        u.write(file_content)
 
 def get_gradle_plugin_version(gradle_file):
     gradle_plugin_version = str(cat(gradle_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip().replace("'","")
