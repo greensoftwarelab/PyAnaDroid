@@ -22,12 +22,14 @@ Anadroid is a tool capable of automating the process of analyzing and benchmarki
 - DroidBot;
 - App Crawler;
 - RERAN;
+- Monkey++ (soon);
 
 ## Supported energy profilers:
 - Trepn Profiler;
 - Manafa;
-- Monsoon (soon);
 - GreenScaler;
+- Monsoon (soon);
+- Petra (soon);
 
 
 # Workflow
@@ -46,13 +48,27 @@ $ pip install anadroid
 ## From sauce
 
 ```
-$ git clone --recurse-submodules https://github.com/RRua/pyanadroid.git
+$ git clone --recurse-submodules https://github.com/greensoftwarelab/pyanadroid.git
 ```
 
 
 # Examples
 
-### Execute a simple Monkey test over an application
+
+### Plug-and-play execution
+
+```
+$ pyanadroid [-h] [-t {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Other}] [-p {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}]
+             [-b {Release,Debug,Custom}] [-i {JInst,Hunter}] [-it {MethodOriented,TestOriented,'ActivityOriented',),AnnotationOriented,None}]
+             [-a {MethodOriented,TestOriented,('ActivityOriented',,AnnotationOriented,None}] [-d DIRETORY] [-bo] [-r] [-rb] [-ri] [-ja] [-sc {USB,WIFI}]
+             [-ds DEVICE_SERIAL] [-td TESTS_DIR] [-n PACKAGE_NAMES [PACKAGE_NAMES ...]] [-apk APPLICATION_PACKAGES [APPLICATION_PACKAGES ...]]
+```
+
+
+### From Sauce
+
+
+#### Execute a simple Monkey test over an application
 
 By default, Anadroid uses Manafa profiler to estimate energy consumption. The Monkey test (or any other test with other supported testing framework) and its parameters can be configured by modifying the .cfg present in the resources/testingFrameworks/<framework> directory. The results are stored in the results/<app_id>/<app_version> directory
 
