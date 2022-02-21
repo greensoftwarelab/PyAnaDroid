@@ -1,4 +1,5 @@
 import json, os
+import shutil
 
 from manafa.utils.Logger import log, LogSeverity
 
@@ -7,7 +8,7 @@ from anadroid.instrument.AbstractInstrumenter import AbstractInstrumenter
 import subprocess
 from anadroid.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
-from anadroid.utils.Utils import execute_shell_command, get_resources_dir
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir, mega_find
 from shutil import copyfile
 
 #JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
@@ -15,13 +16,12 @@ JINST_PATH = os.path.join( get_resources_dir() , "jars", "jInst.jar")
 
 class JInstInstrumenter(AbstractInstrumenter):
     def __init__(self, profiler, mirror_dirname="_TRANSFORMED_", build_system=BUILD_SYSTEM.GRADLE):
+        super().__init__(profiler, mirror_dirname)
         self.build_system = build_system
-        self.profiler = profiler
-        self.mirror_dirname = type(profiler).__name__ + mirror_dirname
         self.build_dependencies = []
         self.classpath_dependencies = {}
         self.build_plugins = {}
-        super().__init__()
+
 
     def get_log_filename(self):
         return super().get_log_filename()
@@ -43,8 +43,8 @@ class JInstInstrumenter(AbstractInstrumenter):
                                 version="0.9.8"))
             self.build_plugins.append("hunter-debug")
 
-    def instrument(self, android_project, test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
-                   instr_strategy=INSTRUMENTATION_STRATEGY.METHOD_CALL, instr_type=INSTRUMENTATION_TYPE.TEST):
+    def instrument(self, android_project, mirror_dirname="_TRANSFORMED_", test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
+                   instr_strategy=INSTRUMENTATION_STRATEGY.METHOD_CALL, instr_type=INSTRUMENTATION_TYPE.TEST, **kwargs):
         self.__update_dependencies_and_plugins(instr_type)
         target_dir = os.path.join(android_project.proj_dir, self.mirror_dirname)
         if self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):
@@ -62,7 +62,8 @@ class JInstInstrumenter(AbstractInstrumenter):
                 test_approach=test_approach.value.lower()
             )  # # e.g java -jar jInst.jar "-gradle" "_TRANSFORMED_" "X" "./demoProjects/N2AppTest" "./demoProjects/N2AppTest/app/src/main/AndroidManifest.xml" "-" "-TestOriented" "-junit" "N2AppTest--uminho.di.greenlab.n2apptest" "blackbox"
             res = execute_shell_command(command)
-            print(res)
+            # remove other instrumentations inside if needed
+            any(shutil.rmtree(tr_dir) for tr_dir in mega_find(target_dir, pattern=f'*{mirror_dirname}*', type_file='d', maxdepth=1))
             res.validate(Exception("unable to instrument project "))
             copyfile("allMethods.json", os.path.join(android_project.proj_dir, "allMethods.json"))
             self.write_instrumentation_log_file(android_project, test_approach, instr_type, instr_strategy)
@@ -81,7 +82,7 @@ class JInstInstrumenter(AbstractInstrumenter):
 
     def get_build_dependencies(self):
         val = list(self.build_dependencies)
-        if self.profiler.dependency != None:
+        if self.profiler.dependency is not None:
             val.append(self.profiler.dependency)
         return val
 
@@ -91,31 +92,9 @@ class JInstInstrumenter(AbstractInstrumenter):
     def get_build_classpaths(self):
         return self.classpath_dependencies
 
-    def needs_reinstrumentation(self, proj, test_approach, instr_type, instr_strategy):
-        instrumentation_log = self.__getInstrumentationLog(proj)
-        old_profiler = instrumentation_log['profiler'] if 'profiler' in instrumentation_log else ""
-        old_approach = instrumentation_log['test_approach'] if 'test_approach' in instrumentation_log else ""
-        old_instr_type = instrumentation_log['instr_type'] if 'instr_type' in instrumentation_log else ""
-        old_instr_strat = instrumentation_log['instr_strategy'] if 'instr_strategy' in instrumentation_log else ""
-        return self.profiler.__class__.__name__ != old_profiler \
-               or old_approach != test_approach.value \
-               or old_instr_type != instr_type.value \
-               or old_instr_strat != instr_strategy.value
-
-    def write_instrumentation_log_file(self, proj, test_approach, instr_type, instr_strategy):
-        data = {
-            'profiler': self.profiler.__class__.__name__,
-            'test_approach': test_approach.value,
-            'instr_type': instr_type.value,
-            'instr_strategy': instr_strategy.value
-        }
-        filepath = proj.proj_dir + "/" + self.mirror_dirname + "/" + self.get_log_filename()
-        with open(filepath, 'w') as outfile:
-            json.dump(data, outfile)
-
     def __getInstrumentationLog(self, proj):
         file = self.get_log_filename()
-        filepath = proj.proj_dir + "/" + self.mirror_dirname + "/" + file
+        filepath = os.path.join(proj.proj_dir, self.mirror_dirname, file)
         js = {}
         if os.path.exists(filepath):
             with open(filepath, "r") as ff:

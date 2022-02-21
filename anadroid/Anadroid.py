@@ -13,6 +13,7 @@ from anadroid.build.GradleBuilder import GradleBuilder
 from anadroid.device.Device import get_first_connected_device
 
 from anadroid.instrument.JInstInstrumenter import JInstInstrumenter
+from anadroid.instrument.NoneInstrumenter import NoneInstrumenter
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 from anadroid.profiler.GreenScalerProfiler import GreenScalerProfiler
 from anadroid.profiler.ManafaProfiler import ManafaProfiler
@@ -130,6 +131,8 @@ class AnaDroid(object):
         if inst in SUPPORTED_INSTRUMENTERS:
             if inst == INSTRUMENTER.JINST:
                 return JInstInstrumenter(self.profiler)
+            elif inst == INSTRUMENTER.NONE:
+                return NoneInstrumenter(self.profiler)
             else:
                 return None
         else:

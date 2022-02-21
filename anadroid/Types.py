@@ -31,6 +31,7 @@ class PROFILER(Enum):
 class INSTRUMENTER(Enum):
     JINST = 'JInst'
     HUNTER = 'Hunter'
+    NONE = "None"
 
 class TESTING_APPROACH(Enum):
     WHITEBOX = "WhiteBox"
