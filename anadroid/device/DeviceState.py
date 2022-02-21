@@ -105,7 +105,7 @@ class DeviceState(object):
 
     def get_nfc_state(self):
         res = self.device.execute_command("dumpsys nfc | grep \"mState=on\"", shell=True)
-        if res.validate(Exception("Unable to obtain nfc state")):
+        if res.validate("Unable to obtain nfc state"):
             return 1 if "on" in res.output else 0
 
     def get_mobile_data_state(self):
@@ -194,7 +194,7 @@ class DeviceState(object):
             res = self.device.execute_root_command(f"svc nfc enable")
         else:
             res = self.device.execute_root_command(f"svc nfc disable")
-        res.validate(Exception("Unable to change nfc state"))
+        res.validate(("Unable to change nfc state"))
         self.nfc_state = value
 
     def change_speaker_state(self, value=0):
@@ -212,7 +212,7 @@ class DeviceState(object):
         else:
             res = self.device.execute_root_command(f"svc data disable")
         res.validate(Exception("Unable to change nfc state"))
-        self.nfc_state = value
+        self.mobile_data_state = value
 
     def set_wifi_state(self, value=0):
         if value == 1:
@@ -220,7 +220,7 @@ class DeviceState(object):
         else:
             res = self.device.execute_root_command(f"svc wifi disable")
         res.validate(Exception("Unable to change wifi state"))
-        self.nfc_state = value
+        self.wifi = value
 
     def get_states_from_permission(self, perm_id):
         if perm_id in PERMISSIONS_TO_STATE:
