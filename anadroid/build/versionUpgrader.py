@@ -1,12 +1,18 @@
 import re
 
+
+SEM_VER_REGEX = r'(0|(?:[1-9]\d*))(?:\.(0|(?:[1-9]\d*))(?:\.(0|(?:[1-9]\d*)))?(?:\-([\w][\w\.\-_]*))?)?'
+
+
+def can_be_semantic_version(candidate):
+    return re.match(SEM_VER_REGEX, candidate) is not None
+
+
 class DefaultSemanticVersion(object):
     """docstring for DefaultSemanticVersion"""
 
     def __init__(self, full_version_id):
-        super(DefaultSemanticVersion, self).__init__()
-        full_version_id = full_version_id.replace("'", "").replace("_", "")
-        #print(full_version_id)
+        full_version_id = re.sub(r'\"|\'',"", full_version_id)
         if "-" in full_version_id:
             full_version_id = full_version_id.split("-")[0]
         if re.match(r'^v', full_version_id) or re.match(r'^V', full_version_id):

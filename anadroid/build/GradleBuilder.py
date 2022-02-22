@@ -11,8 +11,8 @@ from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.application.Application import App
 from anadroid.application.Dependency import DependencyType
 from anadroid.build.AbstractBuilder import AbstractBuilder
-from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge
+from anadroid.build.versionUpgrader import DefaultSemanticVersion, can_be_semantic_version
+from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge, logw
 from anadroid.build.GracleBuildErrorSolver import is_known_error, solve_known_error
 
 TRANSITIVE = "implementation"
@@ -44,7 +44,7 @@ LINT_OPTIONS = {
     'abortOnError': 'false',
 }
 
-ATRIBS_NAME_REMAPS = {
+ATTRIBS_NAME_REMAPS = {
     'packageName': 'applicationId',
     'testPackageName': 'testApplicationId',
     'packageNameSuffix': 'applicationIdSuffix',
@@ -64,6 +64,7 @@ BUILD_RESULTS_FILE = "buildStatus.json"
 SUCCESS_VALUE = "Success"
 BUILD_SUCCESS_VALUE = "BUILD SUCCESSFUL"
 DEFAULT_BUILD_TIMES_TO_TRY = 5
+DEFAULT_BUILD_TOOLS_VERSION = '23.0.3' # TODO
 
 def gen_dependency_string(dependency):
     if dependency.dep_type == DependencyType.LOCAL_BINARY:
@@ -249,7 +250,7 @@ class GradleBuilder(AbstractBuilder):
             else:
                 print(val)
                 loge("Unable to solve Building error")
-                log_to_file(f"{val}", os.path.join(self.proj.proj_dir, "unknown_errors.log"))
+                log_to_file(f"{val}\n-------", os.path.join(self.proj.proj_dir, "unknown_errors.log"))
                 return False
 
     def __execute_gradlew_task(self, task):
@@ -257,7 +258,8 @@ class GradleBuilder(AbstractBuilder):
         build_timeout_val = self.get_config("build_timeout", 0)
         build_timeout = f'timeout {build_timeout_val}' if build_timeout_val > 0 else ""
         res = execute_shell_command(
-            "cd {projdir}; chmod +x gradlew ; {build_timeout} ./gradlew {task}".format(projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout))
+            "cd {projdir}; chmod +x gradlew ; {build_timeout} ./gradlew {task}".format(
+                projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout))
         if res.validate(("error running gradle task")):
             return res.output
         else:
@@ -265,7 +267,6 @@ class GradleBuilder(AbstractBuilder):
 
     def needs_min_sdk_upgrade(self, gradle_file):
         has_min_sdk = cat(gradle_file) | grep(r'minSdkVersion.*[0-9]+')
-        # has_min_sdk =
         if str(has_min_sdk) != "":
             min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n', "") | head(1)
             device_sdk_version = self.device.get_device_sdk_version()
@@ -437,10 +438,25 @@ ndk-location={android_home}/ndk-bundle''' \
         with open(filename, 'w') as outfile:
             json.dump(js, outfile)
 
-    def __set_build_tools_version(self, bld_file):
+    def __set_build_tools_version(self, bld_file, btools_version=DEFAULT_BUILD_TOOLS_VERSION):
         has_bld_tools = str((cat(bld_file) | grep("buildToolsVersion") | sed("buildToolsVersion|\"", ""))).strip()
         if has_bld_tools != "":
-            self.build_tools_version = DefaultSemanticVersion(has_bld_tools)
+            if can_be_semantic_version(has_bld_tools):
+                self.build_tools_version = DefaultSemanticVersion(has_bld_tools)
+                return
+            elif "ext." in has_bld_tools:
+                var_name = has_bld_tools.split("ext.")[-1]
+                target_pattern1, target_pattern2 = r'ext.*?\{', r'%s.*?=.*' % var_name
+                x = list(filter(lambda t: re.search(target_pattern1, str(cat(t))) and re.search(target_pattern2, str(cat(t))), mega_find(self.proj.proj_dir, "*.gradle", type_file='f')))
+                if len(x) > 0:
+                    # assume 0
+                    pattern = re.sub(r'\"|\'',"", re.search(target_pattern2, str(cat(x[0]))).group().split("=")[1].strip())
+                    if can_be_semantic_version(pattern):
+                        self.build_tools_version = DefaultSemanticVersion(pattern)
+                        return
+        logw(f"unable to determinate build tools version. Using default: {btools_version}")
+        self.build_tools_version = DefaultSemanticVersion(btools_version)
+
 
     def get_apk_version(apk):
         pass
