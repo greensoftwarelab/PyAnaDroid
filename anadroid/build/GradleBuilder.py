@@ -249,6 +249,7 @@ class GradleBuilder(AbstractBuilder):
             else:
                 print(val)
                 loge("Unable to solve Building error")
+                log_to_file(f"{val}", os.path.join(self.proj.proj_dir, "unknown_errors.log"))
                 return False
 
     def __execute_gradlew_task(self, task):
