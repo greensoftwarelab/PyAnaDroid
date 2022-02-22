@@ -162,8 +162,10 @@ class GradleBuilder(AbstractBuilder):
             ret, o, e = sign_apk(apk_path)
             if ret == 0 and len(e) < 3:
                 log("APK Successfully signed", log_sev=LogSeverity.SUCCESS)
+                return 0
             else:
-                raise Exception(f"Error signing apk {apk_path} {e}")
+                loge(f"Error signing apk {apk_path} {e}")
+                return False
 
     def build_apk(self, build_type=BUILD_TYPE.DEBUG):
         task = f"assemble{build_type.value}"
