@@ -64,7 +64,7 @@ BUILD_RESULTS_FILE = "buildStatus.json"
 SUCCESS_VALUE = "Success"
 BUILD_SUCCESS_VALUE = "BUILD SUCCESSFUL"
 DEFAULT_BUILD_TIMES_TO_TRY = 5
-DEFAULT_BUILD_TOOLS_VERSION = '23.0.3' # TODO
+DEFAULT_BUILD_TOOLS_VERSION = '25.0.3'# TODO
 
 def gen_dependency_string(dependency):
     if dependency.dep_type == DependencyType.LOCAL_BINARY:
@@ -450,12 +450,13 @@ ndk-location={android_home}/ndk-bundle''' \
                 x = list(filter(lambda t: re.search(target_pattern1, str(cat(t))) and re.search(target_pattern2, str(cat(t))), mega_find(self.proj.proj_dir, "*.gradle", type_file='f')))
                 if len(x) > 0:
                     # assume 0
-                    pattern = re.sub(r'\"|\'',"", re.search(target_pattern2, str(cat(x[0]))).group().split("=")[1].strip())
+                    pattern = re.sub(r'\"|\'', "", re.search(target_pattern2, str(cat(x[0]))).group().split("=")[1].strip())
                     if can_be_semantic_version(pattern):
                         self.build_tools_version = DefaultSemanticVersion(pattern)
                         return
-        logw(f"unable to determinate build tools version. Using default: {btools_version}")
-        self.build_tools_version = DefaultSemanticVersion(btools_version)
+            else:
+                logw(f"unable to determinate build tools version. Using default: {btools_version}")
+                self.build_tools_version = DefaultSemanticVersion(btools_version)
 
 
     def get_apk_version(apk):
