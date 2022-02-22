@@ -5,3 +5,4 @@ six==1.15.0
 manafa==0.3.100
 physalia==0.0.1.dev122
 termcolor==1.1.0
+pylogcatparser==0.2.4
