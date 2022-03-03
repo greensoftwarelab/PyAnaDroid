@@ -13,6 +13,11 @@ HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
 
 class ManafaProfiler(AbstractProfiler):
+    """Implements AbstractProfiler interface to allow profiling with Manafa profiler.
+    Provides a set of methods that allow to manage a profiling session lifecycle.
+    Attributes:
+        manafa(EManafa): EManafa profiler.
+    """
     def __init__(self, profiler, device, power_profile=None, timezone=None, hunter=True):
         super(ManafaProfiler, self).__init__(profiler, device, pkg_name=None)
         self.manafa = EManafa(power_profile, timezone) if not hunter else \
@@ -37,12 +42,15 @@ class ManafaProfiler(AbstractProfiler):
         self.manafa.stop()
 
     def update_state(self, val=0, desc="stopped"):
+        """does nothing."""
         pass
 
     def export_results(self, out_filename=None):
+        """does nothing."""
         pass
 
     def pull_results(self, file_id, target_dir):
+        """pull results from device and put them in target_dir"""
         hunter_log = ""
         consumptions_log = ""
         if isinstance(self.manafa, HunterEManafa):
@@ -50,7 +58,7 @@ class ManafaProfiler(AbstractProfiler):
             consumptions_log = self.manafa.app_consumptions_log
         cmd = f"cp -r {self.manafa.bts_out_file} {self.manafa.pft_out_file} {hunter_log} {consumptions_log} {target_dir}"
         execute_shell_command(cmd)\
-            .validate(Exception("No result files to pull "))
+            .validate(Exception("No result files to pull"))
 
     def get_dependencies_location(self):
         return []

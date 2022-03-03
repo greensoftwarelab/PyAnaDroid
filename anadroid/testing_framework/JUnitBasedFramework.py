@@ -6,14 +6,21 @@ from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingF
 
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
-from manafa.utils.Logger import log, LogSeverity
 
-from anadroid.utils.Utils import get_resources_dir, logs, execute_shell_command
+
+from anadroid.utils.Utils import get_resources_dir, logs, execute_shell_command, loge, logw
 
 DEFAULT_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFramework", "junit")
 
 
 class JUnitBasedFramework(AbstractTestingFramework):
+    """Implements AbstractTestingFramework interface to allow executing tests using JUnit based testing frameworks.
+    The tests executed are barely configurable. This class lists instrumentations on device and runs one by one.
+    Attributes:
+        executable_prefix(str): prefix for test command. It is basically a call to the executable.
+        workload(WorkLoad): workload object containing the work units to be executed.
+        res_dir(str): directory containing app crawler resources.
+    """
     def __init__(self, profiler, analyzer, resdir=DEFAULT_RESOURCES_DIR):
         super(JUnitBasedFramework, self).__init__(id=TESTING_FRAMEWORK.JUNIT, profiler=profiler, analyzer=analyzer)
         self.executable_prefix = "adb shell am instrument -w "
@@ -51,31 +58,48 @@ class JUnitBasedFramework(AbstractTestingFramework):
                 l.append(s)
         return l
 
-
     def __load_app_workload(self, device, pkg):
+        """loads instrumentations of app package and configures workload accordingly.
+        Args:
+            device(Device): device.
+            pkg: app package.
+        """
         self.workload = WorkLoad()
         instrumentations = self.__load_available_instrumentations(device, pkg)
         max_tests_per_app = self.get_config("tests_per_app", 100000000)
         i = 0
         for x in instrumentations:
             if i >= max_tests_per_app:
-                log(f"number of tests limited by tests_per_app. Considering {max_tests_per_app} tests per app")
+                logw(f"number of tests limited by tests_per_app. Considering {max_tests_per_app} tests per app")
             wk = WorkUnit(self.executable_prefix)
             wk.config(x)
             print(wk.command)
             self.workload.add_unit(wk)
             i = i+1
 
-
     def test_app(self, device, app):
+        """test a given app on a given device.
+        Executes each work unit of workload on app running on device.
+        Args:
+            device(Device): device.
+            app(App): app.
+        """
         self.__load_app_workload(device, app.package_name)
         retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+        """executes one test identified by test_id of an given app on a given device.
+        Args:
+            test_id: test uuid.
+            device(Device): device.
+            app(App): app.
+            wk_unit(WorkUnit): work unit to be executed.
+            n_retries(int): number of times to try run the test in case it fails.
+        """
         if n_retries < 0:
-            log(f"Validation failed. Ignoring test {test_id}", log_sev=LogSeverity.ERROR)
+            loge(f"Validation failed. Ignoring test {test_id}")
             return
         device.unlock_screen()
         time.sleep(1)
@@ -93,7 +117,7 @@ class JUnitBasedFramework(AbstractTestingFramework):
         app.clean_cache()
         device.clear_logcat()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
-            log("Validation failed. Retrying", log_sev=LogSeverity.WARNING)
+            logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
             logs(f"Test {test_id} PASSED ")

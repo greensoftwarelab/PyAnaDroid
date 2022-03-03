@@ -12,16 +12,23 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir, mega_
 from shutil import copyfile
 
 #JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
-JINST_PATH = os.path.join( get_resources_dir() , "jars", "jInst.jar")
+JINST_PATH = os.path.join( get_resources_dir(), "jars", "jInst.jar")
+
 
 class JInstInstrumenter(AbstractInstrumenter):
+    """Implements defined interface of AbstractInstrumenter to perform source code instrumentation with JInst.
+    Attributes:
+        build_system(BUILD_SYSTEM): build system to be used.
+        build_dependencies(list): list of build dependencies to insert in project' build files.
+        classpath_dependencies(dict): set of classpath dependencies to insert in project' build files.
+        build_plugins(dict): set of build plugins to insert in project' build files
+    """
     def __init__(self, profiler, mirror_dirname="_TRANSFORMED_", build_system=BUILD_SYSTEM.GRADLE):
         super().__init__(profiler, mirror_dirname)
         self.build_system = build_system
         self.build_dependencies = []
         self.classpath_dependencies = {}
         self.build_plugins = {}
-
 
     def get_log_filename(self):
         return super().get_log_filename()
@@ -30,6 +37,10 @@ class JInstInstrumenter(AbstractInstrumenter):
         pass
 
     def __update_dependencies_and_plugins(self, instr_type=INSTRUMENTATION_TYPE.TEST):
+        """lods necessary dependencies according to the type of instrumentation to be performed.
+        Args:
+            instr_type(INSTRUMENTATION_TYPE): instrumentation type.
+        """
         self.build_dependencies = []
         self.classpath_dependencies = []
         self.build_plugins = []

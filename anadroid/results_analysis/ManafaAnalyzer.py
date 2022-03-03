@@ -5,6 +5,9 @@ from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 from manafa.utils.Logger import log
 
 class ManafaAnalyzer(AbstractAnalyzer):
+    """Implements AbstractAnalyzer interface to allow analyze profiled results with EManafa profiler.
+    Calculate statistics about the produced results to analyze, validate and characterize executions.
+    """
     def __init__(self, profiler):
         self.supported_filters = {"total_energy"}
         super(ManafaAnalyzer, self).__init__(profiler)

@@ -11,6 +11,14 @@ from anadroid.utils.Utils import get_date_str, logw, logi
 
 
 def get_prefix(testing_framework, inst_type):
+    """gets adequate prefix for folder, given the testing framework and instrumentation type
+    Args:
+        testing_framework:
+        inst_type:
+
+    Returns:
+        prefix(str): prefix.
+    """
     dirname = testing_framework.value
     if inst_type == INSTRUMENTATION_TYPE.METHOD:
         dirname += "Method"
@@ -23,19 +31,30 @@ def get_prefix(testing_framework, inst_type):
     cur_datetime = get_date_str()
     return dirname + "_"+cur_datetime
 
+
 class App(AbstractApplication):
-    def __init__(self, device, proj, package_name, apk_path, local_res, name="app", version=None):
+    """Main class that abstracts an Android App.
+    Attributes:
+        device(Device): device where the app is.
+        proj(AndroidProject): respective project.
+        package_name(str): package name.
+        local_res_dir(str): local results dir.
+        app_name: name of the app.
+        version: app version.
+    """
+    def __init__(self, device, proj, package_name, apk_path, local_res_dir, app_name="app", version=None):
         self.device = device
         self.proj = proj
         self.apk = apk_path
         super(App, self).__init__(package_name, version)
         self.version = self.__get_version() if version is None else version
-        self.local_res = os.path.join(local_res, str(self.version))
-        self.name = name
+        self.local_res = os.path.join(local_res_dir, str(self.version))
+        self.name = app_name
         self.curr_local_dir = None
         self.__init_res_dir()
 
     def __init_res_dir(self):
+        """initialize results dir and subdirectories."""
         all_dir = os.path.join(self.local_res, "all")
         old_runs_dir = os.path.join(self.local_res, "oldRuns")
         if not os.path.exists(self.local_res):
@@ -57,11 +76,19 @@ class App(AbstractApplication):
             shutil.copyfile(all_m_proj, all_m)
 
     def init_local_test_(self, testing_framework, inst_type):
+        """initialize directory for a current test being run with testing_framework, with app instrumented with inst_type
+        Args:
+            testing_framework: testing framework.
+            inst_type: instrumentation type.
+        """
         dirname = os.path.join(self.local_res, get_prefix(testing_framework, inst_type))
         os.mkdir(dirname)
         self.curr_local_dir = dirname
 
     def start(self):
+        """starts application on device.
+        Starts app by calling monkey -p <pgk_name> 1.
+        """
         self.device.execute_command("monkey -p {pkg} 1".format(pkg=self.package_name), args=[], shell=True)
         self.on_fg = True
 
@@ -70,28 +97,41 @@ class App(AbstractApplication):
         pass
 
     def stop(self):
-        self.on_fg=False
+        """stops running app.
+        Stops app via activity manager (force-stop command).
+        """
+        self.on_fg = False
         self.device.execute_command(f"am force-stop {self.package_name}",
                                     shell=True) \
             .validate(Exception("error stopping app"))
-
 
     def performAction(self, act):
         pass
 
     def set_immersive_mode(self):
+        """sets immersive mode for this app if Android version < 11.
+        This feature is only available for devices running Android 10 or lower.
+        """
         if self.device.get_device_android_version().major >= 11:
             logw("immersive mode not available on Android 11+ devices")
             return
         logi("setting immersive mode")
         self.device.execute_command(f"settings put global policy_control immersive.full={self.package_name}", shell=True)\
-           .validate(Exception("error setting immersive mode"))
+            .validate(Exception("error setting immersive mode"))
 
     def clean_cache(self):
-        self.device.execute_command(f"pm clear {self.package_name}",shell=True)#\
+        """clean app cache.
+        Cleans app cache on device using package manager.
+        """
+        self.device.execute_command(f"pm clear {self.package_name}", shell=True)#\
             #.validate(Exception("error cleaning cache of package " + self.package_name))
 
     def __get_version(self):
+        """returns app version.
+        Obtains app version using dumpsys.
+        Returns:
+            object(DefaultSemanticVersion): app version.
+        """
         if self.proj.proj_version != DefaultSemanticVersion("0.0"):
             return self.proj.proj_version
         res = self.device.execute_command(f"dumpsys package {self.package_name}", shell=True)

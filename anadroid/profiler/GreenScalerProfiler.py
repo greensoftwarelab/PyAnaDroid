@@ -15,13 +15,21 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "profilers", "GreenScaler")
 INSTALL_SCRIPT_NAME = "push.sh"
 
+
 class GREENSCALER_TASK(Enum):
+    """Enumerates tasks of greenscaler profiler"""
     CPU_PROFILING = "CPU Profiling"
     SYSTRACE = "Syscal Tracing"
     SCREEN_CAPTURE = "Screen Capture"
 
 
 class GreenScalerProfiler(AbstractProfiler):
+    """Implements AbstractProfiler to allow profiling with GreenScalear profiler.
+    Provides a set of methods that allow to manage a profiling session lifecycle.
+    Attributes:
+        resources_dir(str): directory with profiler resources.
+        inner_app(GreenScalerApplication): the current app being tested.
+    """
     def __init__(self, profiler, device, resources_dir=DEFAULT_RES_DIR):
         #if not device.is_rooted():
         #    raise Exception("GreenScaler cannot be used in noon-rooted devices")
@@ -32,12 +40,14 @@ class GreenScalerProfiler(AbstractProfiler):
         self.inner_app = None
 
     def __is_installed(self):
+        """checks if GreenScaler is installed."""
         res = self.device.execute_command("ls sdcard ", shell=True)
         if res.validate(Exception("Error obtained while device sdcard content")):
             return "cpu_after.sh" in res.output
         return False
 
     def install_profiler(self, install_script_name=INSTALL_SCRIPT_NAME):
+        """install profiler on device."""
         path_of_installer = os.path.join(self.resources_dir, "push_to_phone")
         cmd = f"cd {path_of_installer}; sh {install_script_name}"
         execute_shell_command(cmd).validate(Exception("Unable to install GreenScaler"))
@@ -48,7 +58,7 @@ class GreenScalerProfiler(AbstractProfiler):
         self.inner_app = GreenScalerApplication(pynadroid_app.name, pynadroid_app.package_name)
 
     def start_profiling(self, task=GREENSCALER_TASK.CPU_PROFILING):
-       pass
+        pass
 
     def stop_profiling(self, tag="", export=False):
         pass
@@ -60,7 +70,7 @@ class GreenScalerProfiler(AbstractProfiler):
         pass
 
     def pull_results(self, file_id, target_dir):
-       pass
+        pass
 
     def get_dependencies_location(self):
         return []
@@ -69,6 +79,12 @@ class GreenScalerProfiler(AbstractProfiler):
         return False
 
     def exec_greenscaler(self, package, test_cmd, runs=1):
+        """Given the package name and the command to start the test, profile testing procedure with greenscaler.
+        Args:
+            package: app package.
+            test_cmd: test command to be called to exercise app.
+            runs: number of executions.
+        """
         n = runs
         app = greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=exec_command)
         log("executing greenscaler test")

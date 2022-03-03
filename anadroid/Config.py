@@ -28,6 +28,7 @@ def set_general_config(cfg_type, cfg_key, cfg_value,  cfg_file=CONFIG_FILE):
     with open(cfg_file, 'w') as jlo:
         json.dump(cfg, jlo)
 
+
 SUPPORTED_TESTING_APPROACHES = {
     TESTING_APPROACH.WHITEBOX
 }
@@ -64,7 +65,8 @@ SUPPORTED_ANALYZERS = {
 
 SUPPORTED_INSTRUMENTATION_TYPES = {
     INSTRUMENTATION_TYPE.TEST,
-    INSTRUMENTATION_TYPE.ANNOTATION
+    INSTRUMENTATION_TYPE.ANNOTATION,
+    INSTRUMENTATION_TYPE.METHOD
 }
 
 SUPPORTED_SUITES = {

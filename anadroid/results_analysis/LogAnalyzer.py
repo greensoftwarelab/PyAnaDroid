@@ -9,6 +9,10 @@ from manafa.utils.Logger import log
 
 
 class LogAnalyzer(AbstractAnalyzer):
+    """Implements AbstractAnalyzer interface to allow analyze Android logs produced during profiling sessions using
+    logcatparser.
+    Calculate statistics about the produced logs to analyze and characterize test executions.
+    """
     def __init__(self, profiler):
         self.supported_filters = {"fatal_errors", "ANR"}
         super(LogAnalyzer, self).__init__(profiler)

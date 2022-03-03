@@ -3,6 +3,7 @@ import os
 
 
 class ComposedAnalyzer(AbstractAnalyzer):
+    """Provides a way to abstract the usage of a set of AbstractAnalyzers through a single api call."""
     def __init__(self, profiler, inner_analyzers=()):
         super(ComposedAnalyzer, self).__init__(profiler)
         self.inner_analyzers = []

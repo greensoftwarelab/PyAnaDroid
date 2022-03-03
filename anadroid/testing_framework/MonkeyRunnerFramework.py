@@ -15,7 +15,13 @@ MONKEY_RUNNER_RESOURCES_DIR = os.path.join(RES_DIR, "testingFrameworks", "monkey
 TESTS_DIR = os.path.join(RES_DIR, "testingFrameworks", "monkey-runner", "tests")
 MONKEY_RUNNER_BIN_NAME = "monkeyrunner"
 
+
 class MonkeyRunnerFramework(AbstractTestingFramework):
+    """Implements AbstractTestingFramework interface to allow executing tests using monkeyrunner framework.
+    Attributes:
+        workload(WorkLoad): workload object containing the work units to be executed.
+        resources_dir(str): directory containing app crawler resources.
+    """
     def __init__(self, profiler, analyzer, default_workload=False, resources_dir=MONKEY_RUNNER_RESOURCES_DIR):
         super(MonkeyRunnerFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY_RUNNER, profiler=profiler, analyzer=analyzer)
         self.workload = None
@@ -23,7 +29,6 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
         self.__is_installed()
         if default_workload:
             self.init_default_workload(None)
-
 
     def __is_installed(self):
         res = execute_shell_command(f"which {MONKEY_RUNNER_BIN_NAME}")
@@ -64,11 +69,25 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
         pass
 
     def test_app(self, device, app):
+        """test a given app on a given device.
+        Executes each work unit of workload on app running on device.
+        Args:
+            device(Device): device.
+            app(App): app.
+        """
         retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+        """executes one test identified by test_id of an given app on a given device.
+        Args:
+            test_id: test uuid.
+            device(Device): device.
+            app(App): app.
+            wk_unit(WorkUnit): work unit to be executed.
+            n_retries(int): number of times to try run the test in case it fails.
+        """
         if n_retries < 0:
             loge(f"Validation failed. Ignoring test {test_id}")
             return

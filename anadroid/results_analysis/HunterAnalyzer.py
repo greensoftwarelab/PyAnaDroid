@@ -1,9 +1,12 @@
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 import os
 
-class HunterAnalyzer(AbstractAnalyzer):
 
-    def __init__(self):
+class HunterAnalyzer(AbstractAnalyzer):
+    """Implements AbstractAnalyzer interface to allow analyze app traces produced during profiling sessions
+    with HunterEmanafa.
+    """
+    def __init__(self, profiler):
         super(HunterAnalyzer, self).__init__(profiler)
         #self.bin_cmd = "java -jar " + (DEFAULT_JAR_PATH if jarpath is None else jarpath)
         #self.remote_url = remote_url

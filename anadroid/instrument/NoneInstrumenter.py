@@ -10,6 +10,9 @@ from anadroid.utils.Utils import mega_find, logw
 DEFAULT_LOG_FILENAME="instrumentation_log.json"
 
 class NoneInstrumenter(AbstractInstrumenter):
+    """Implements defined interface of AbstractInstrumenter to simulate instrumentation while not performing any
+    project sources' changes.
+   """
     def __init__(self, profiler, mirror_dirname="_TRANSFORMED_"):
         super().__init__(profiler, mirror_dirname)
 
@@ -18,6 +21,9 @@ class NoneInstrumenter(AbstractInstrumenter):
 
     def instrument(self, android_project, mirror_dirname="_TRANSFORMED_",test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
                    instr_strategy=INSTRUMENTATION_STRATEGY.METHOD_CALL, instr_type=INSTRUMENTATION_TYPE.TEST, **kwargs):
+        """
+        just clone the project files to a new directory.
+        """
         new_dir_name = f'NONE{mirror_dirname}'
         new_proj_dir = os.path.join(android_project.proj_dir, new_dir_name)
         if self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):

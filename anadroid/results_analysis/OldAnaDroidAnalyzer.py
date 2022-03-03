@@ -13,6 +13,9 @@ DEFAULT_JAR_PATH = os.path.join(get_resources_dir(), "jars", "AnaDroidAnalyzer.j
 
 
 class OldAnaDroidAnalyzer(AbstractAnalyzer):
+    """Implements AbstractAnalyzer interface to allow analyze profiled results with Trepn  profiler.
+    Calculate statistics about the produced results to analyze, validate and characterize executions.
+    """
     def __init__(self, profiler, jarpath=None, remote_url=None):
         super(OldAnaDroidAnalyzer, self).__init__(profiler)
         self.bin_cmd = "java -jar " + (DEFAULT_JAR_PATH if jarpath is None else jarpath)

@@ -5,6 +5,7 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
 
 class NoneProfiler(AbstractProfiler):
+    """Mock Profiler interaction."""
     def __init__(self, profiler, device, power_profile=None, timezone=None, hunter=True):
         super(NoneProfiler, self).__init__(profiler, device, pkg_name=None)
 

@@ -1,3 +1,4 @@
+import os
 from enum import Enum
 from os import mkdir
 
@@ -7,10 +8,17 @@ import re
 
 
 class MODULE_TYPE(Enum):
+    """Project Module types."""
     LIBRARY = "Library"
     APP = "App"
 
+
 class ProjectModule(object):
+    """Represents an Android Project Module (https://developer.android.com/studio/projects#ApplicationModules).
+        Attributes:
+            name(str): module name.
+            mod_dir(str): module directory.
+        """
     def __init__(self, name, mod_dir):
         self.mod_name = name
         self.mod_dir = mod_dir
@@ -28,18 +36,32 @@ class ProjectModule(object):
         self.gen_aars = {}
 
     def __infer_build_file(self):
+        """returns build.gradle filepath of module.
+        Returns:
+            mod(str): filepath.
+        """
         res = execute_shell_command("find \"%s\" -maxdepth 1 -type f -name \"build.gradle\"" % self.mod_dir)
         return res.output.strip() if res.return_code == 0 else None
 
     def __infer_manifest(self):
+        """Returns module's manifest file.
+        Looks for AndroidManifest.xml files in mod_dir.
+        Returns:
+             filepath(str): filepath.
+        """
         res = execute_shell_command("find \"%s\" -maxdepth 4 -type f -name \"AndroidManifest.xml\"" % self.mod_dir)
         return res.output.strip() if res.return_code == 0 else None
 
     def __infer_module_type(self):
+        """Tries to infer the module type (`MODULE_TYPE`).
+        Returns:
+            mod_type(:obj:`MODULE_TYPE`): module type.
+        """
         is_app = cat(self.build_file) | grep('com.android.application') != ''
         return MODULE_TYPE.APP if is_app else MODULE_TYPE.LIBRARY
 
     def __infer_dependencies(self):
+        """Infers and add module dependencies to dependencies attribute."""
         # TODO get dependencies type
         dependencies = re.search(r'dependencies.*?\{(.|\n)*}', str(cat(self.build_file)))
         inside_dependencies = []
@@ -61,7 +83,13 @@ class ProjectModule(object):
         self.dependencies.add(dependency)
 
     def create_inner_folder(self, name="libs"):
-        path = self.mod_dir + "/" + name
+        """creates directory  inside module.
+        Args:
+            name: directory name.
+        Returns:
+            path(str): directory's path.
+        """
+        path = os.path.join(self.mod_dir, name)
         try:
             mkdir(path)
         except FileExistsError:

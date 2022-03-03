@@ -5,12 +5,11 @@ SEM_VER_REGEX = r'(0|(?:[1-9]\d*))(?:\.(0|(?:[1-9]\d*))(?:\.(0|(?:[1-9]\d*)))?(?
 
 
 def can_be_semantic_version(candidate):
-    return re.match(SEM_VER_REGEX, candidate) is not None
+    return re.search(SEM_VER_REGEX, candidate) is not None
 
 
 class DefaultSemanticVersion(object):
-    """docstring for DefaultSemanticVersion"""
-
+    """Class to represent and compare sw versions labeled according to semver format."""
     def __init__(self, full_version_id):
         full_version_id = re.sub(r'\"|\'',"", full_version_id)
         if "-" in full_version_id:

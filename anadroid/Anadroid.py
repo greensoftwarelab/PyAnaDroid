@@ -1,6 +1,5 @@
 import argparse
 import os
-from os import listdir
 
 
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, \
@@ -35,6 +34,27 @@ from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_resul
 
 
 class AnaDroid(object):
+    """Provides a configurable pipeline to benchmark and analyze Android Projects and Applications.
+    This class provides a set of verifications and workflow that allows to automatically perform tasks involved in
+    mobile software analysis. Any class can extend this class to customize its workflow and perform customized benchmarks.
+    Attributes:
+        device(Device): device to be used.
+        app_projects_ut(list): Android Projects to process.
+        tests_dir(str): directory containing app tests (only used with RERAN).
+        rebuild_apps(bool): optionally rebuild apps from Android Projects already built.
+        reinstrument(bool): optionally reinstrument Android Projects previously instrumented.
+        apps(list): list of apps to exercise.
+        apks(list): list of apks to exercise.
+        results_dir(str): directory where results will be stored.
+        instrumentation_type(INSTRUMENTATION_TYPE): instrumentation type.
+        profiler(AbstractProfiler): profiler to be used.
+        analyzer(AbstractAnalyzer): analyzer to parse and generate results from framework executions.
+        testing_framework(AbstractTestingFramework): testing framework to be used.
+        instrumenter(AbstractInstrumenter): instrumentation tool to be used.
+        builder(AbstractBuilder): building system to build apps.
+        resources_dir(str): directory with framework resources.
+        build_type(BUILD_TYPE): type of build to produce in the Android Projects.
+    """
     def __init__(self, arg1, results_dir=get_results_dir(), profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
@@ -63,6 +83,10 @@ class AnaDroid(object):
         self.build_type = build_type
 
     def __setup_from_argparse(self, args: argparse.Namespace):
+        """get configs from argparse object if provided in app constructor.
+        Args:
+            args: argparse object containing user preferences.
+        """
         if len(args.application_packages) > 0:
             if args.buildonly:
                 raise Exception("incompatible option -bi. APKs are already built")
@@ -76,11 +100,15 @@ class AnaDroid(object):
         logw("ignoring instrumentation phase")
 
     def __create_apps_from_package_names(self, package_names):
+        """creates App objects from a list of package names.
+        Args:
+            package_names(list): list of package names.
+        """
         self.apps = []
         for pkg in package_names:
             da_proj = Project(pkg, pkg)
             da_proj.init_results_dir(pkg)
-            self.apps.append(App(self.device, da_proj, pkg, apk_path="", local_res=da_proj.results_dir))
+            self.apps.append(App(self.device, da_proj, pkg, apk_path="", local_res_dir=da_proj.results_dir))
 
     def __create_apps_from_apk_names(self, apk_list):
         return apk_list
@@ -94,6 +122,12 @@ class AnaDroid(object):
             self.apks.append( App(self.device, da_proj, pkg,apk_path=apk, local_res=da_proj.results_dir) )'''
 
     def __infer_profiler(self, profiler):
+        """infers profiler from profiler enum.
+        Args:
+            profiler(PROFILER): profiler enum selected by user.
+        Returns:
+            concrete_profiler(AbstractProfiler): inferred profiler.
+        """
         if profiler in SUPPORTED_PROFILERS:
             if profiler == PROFILER.TREPN:
                 return TrepnProfiler(profiler, self.device)
@@ -109,6 +143,12 @@ class AnaDroid(object):
             raise Exception("Unsupported profiler")
 
     def __infer_testing_framework(self, tf):
+        """infers testing framework from TESTING_FRAMEWORK enum.
+        Args:
+            tf(TESTING_FRAMEWORK): TESTING_FRAMEWORK enum selected by user.
+        Returns:
+            concrete_testing_framework(AbstractTestingFramework): inferred framework.
+        """
         if tf in SUPPORTED_TESTING_FRAMEWORKS:
             if tf == TESTING_FRAMEWORK.MONKEY:
                 return MonkeyFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
@@ -128,6 +168,12 @@ class AnaDroid(object):
             raise Exception("Unsupported Testing framework")
 
     def __infer_instrumenter(self, inst):
+        """infers instrumentation tool from INSTRUMENTER enum.
+        Args:
+            inst(INSTRUMENTER): INSTRUMENTER enum selected by user.
+        Returns:
+            concrete_instrumenter(AbstractTestingFramework): inferred instrumenter.
+        """
         if inst in SUPPORTED_INSTRUMENTERS:
             if inst == INSTRUMENTER.JINST:
                 return JInstInstrumenter(self.profiler)
@@ -139,6 +185,13 @@ class AnaDroid(object):
             raise Exception("Unsupported instrumenter")
 
     def __infer_analyzer(self, ana, profiler):
+        """infers analyzer tool from ANALYZER and PROFILER enums.
+        Args:
+            ana(ANALYZER): ANALYZER enum selected by user.
+            profiler(PROFILER): PROFILER enum selected by user.
+        Returns:
+            AbstractAnalyzer: inferred analyzer.
+        """
         analyzers = [LogAnalyzer(self.profiler), SCCAnalyzer(self.profiler)]
         if not ana in SUPPORTED_ANALYZERS:
             raise Exception(f"Unsupported Analyzer {ana}")
@@ -146,7 +199,6 @@ class AnaDroid(object):
             analyzers.append(OldAnaDroidAnalyzer(self.profiler))
         elif profiler == profiler.MANAFA and ana == ANALYZER.MANAFA_ANALYZER:
             analyzers.append(ManafaAnalyzer(self.profiler))
-
         return ComposedAnalyzer(self.profiler, analyzers)
 
     def __infer_build_system(self, build_system):
@@ -156,13 +208,12 @@ class AnaDroid(object):
             raise Exception("Unsupported Analyzer")
 
     def __infer_instrumentation_type(self, test_orientation):
+        """validates instrumentation type.
+        Returns:
+            INSTRUMENTATION_TYPE: instrumentation type.
+        """
         if test_orientation in SUPPORTED_INSTRUMENTATION_TYPES:
-            if test_orientation == INSTRUMENTATION_TYPE.TEST:
-                return test_orientation
-            elif test_orientation == INSTRUMENTATION_TYPE.ANNOTATION:
-                return test_orientation
-            elif test_orientation == INSTRUMENTATION_TYPE.METHOD:
-                return test_orientation
+            return test_orientation
         else:
             raise Exception("Unsupported instrumentation")
 
@@ -172,6 +223,10 @@ class AnaDroid(object):
         return None
 
     def default_workflow(self):
+        """performs the basic workflow involved in processing apps straight from the source code.
+        For each app, project or apk provided to pynadroid, performs the required steps to transform such inputs
+        in software ready to be used and tested on the connected device, using the selected testing framework.
+        """
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
             logi("Processing app " + app_name + " in " + app_proj)
@@ -196,12 +251,13 @@ class AnaDroid(object):
             logi(f"pkg name {pkg}")
             da_proj = Project(pkg, pkg)
             da_proj.init_results_dir(pkg)
-            self.do_work([App(self.device, da_proj, pkg, apk_path=apk, local_res=da_proj.results_dir)])
+            self.do_work([App(self.device, da_proj, pkg, apk_path=apk, local_res_dir=da_proj.results_dir)])
             self.device.uninstall_pkg(pkg)
 
         self.do_work(self.apps)
 
     def do_work(self, apps):
+        """Executes the testing framework for each app in apps."""
         for i, app in enumerate(apps):
             logi("testing package " + app.package_name)
             app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
@@ -214,11 +270,16 @@ class AnaDroid(object):
                                                 })
 
     def __validate_suite(self, profiler):
+        """checks if the selected profiler can be combined with the selected instrumentation tyoe.
+        Args:
+            profiler(PROFILER): profiler.
+        """
         if not self.instrumentation_type in SUPPORTED_SUITES[profiler]:
             raise Exception(
                 f"{self.instrumentation_type.value} based-instrumentation not supported with {profiler.value}")
 
     def just_build_apps(self):
+        """builds apps from app_projects_ut."""
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
             logi("Processing app " + app_name + " in " + app_proj)
@@ -231,18 +292,20 @@ class AnaDroid(object):
                                        build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
 
     def just_analyze(self):
+        """analyze apps obtained from app_projects_ut."""
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
             logi("Processing app " + app_name + " in " + app_proj)
             original_proj = AndroidProject(projname=app_name, projdir=app_proj)
             app = App(self.device, original_proj, original_proj.pkg_name, apk_path="",
-                      local_res=original_proj.results_dir)
+                      local_res_dir=original_proj.results_dir)
             raise NotImplementedError()
             # builder = self.init_builder(instr_proj)
             # builder.build_proj_and_apk(build_type=self.build_type,build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
             # self.analyzer.analyze(app, **{'instr_type': self.instrumentation_type, 'testing_framework': self.testing_framework})
 
-    def __get_project_from_dir(self, dir_path):
+    def __get_project_root_dir(self, dir_path):
+        """infers Android project root directory."""
         has_gradle_right_next = mega_find(dir_path, pattern="build.gradle", maxdepth=2, type_file='f')
         if len(has_gradle_right_next) > 0:
             top_gradle_file = min(has_gradle_right_next, key=len)
@@ -250,6 +313,7 @@ class AnaDroid(object):
         return None
 
     def load_projects(self):
+        """loads Android Projects from a directory containing one or more projects."""
         return_projs = []
         if is_android_project(self.apps_dir):
             potential_projects = [self.apps_dir]
@@ -258,25 +322,33 @@ class AnaDroid(object):
                 filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
         for maybe_proj in potential_projects:
             path_dir = os.path.join(self.apps_dir, maybe_proj)
-            proj_fldr = self.__get_project_from_dir(path_dir)
+            proj_fldr = self.__get_project_root_dir(path_dir)
             if proj_fldr is not None:
                 return_projs.append(proj_fldr)
             else:
                 children_dirs = list(filter(lambda x: os.path.isdir(os.path.join(path_dir, x)), os.listdir(path_dir)))
                 for child in children_dirs:
                     child_path_dir = os.path.join(path_dir, child)
-                    proj_fldr = self.__get_project_from_dir(child_path_dir)
+                    proj_fldr = self.__get_project_root_dir(child_path_dir)
                     if proj_fldr is not None:
                         return_projs.append(proj_fldr)
         return return_projs
 
     def record_test(self, tests_dir=None):
+        """records tests that can be replayed later.
+        Args:
+            tests_dir: directory to store tests.
+        """
         if self.testing_framework.is_recordable():
             self.testing_framework.record_test(output_dir=tests_dir)
         else:
             raise Exception(f"Unable to record test with {self.testing_framework.id.value} framework")
 
     def needs_tests_apk(self):
+        """checks if the selected testing framework requires a tests apk.
+        Returns:
+            bool: True if os a JUnit-based testing framework, False otherwise.
+        """
         return self.testing_framework.id in [TESTING_FRAMEWORK.JUNIT,
                                              TESTING_FRAMEWORK.ESPRESSO, TESTING_FRAMEWORK.ROBOTIUM]
 

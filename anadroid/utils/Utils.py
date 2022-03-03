@@ -70,17 +70,17 @@ def get_apksigner_bin():
     return "$ANDROID_HOME/build-tools/30.0.3/apksigner"
 
 def sign_apk(apk_path):
-       # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\"".format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
-       signer_bin = get_apksigner_bin()
-       cmd = """{signer_bin} sign --ks {keystore_path} {apk_path} <<< {passwd}""".format(
-           signer_bin=signer_bin,
-           keystore_path=get_keystore_path(),
-           apk_path=apk_path,
-           passwd=get_keystore_pwd()
-       )
-       res = execute_shell_command(cmd)
-       res.validate(Exception("error signing apk " + apk_path))
-       return res
+    # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\"".format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
+    signer_bin = get_apksigner_bin()
+    cmd = """{signer_bin} sign --ks {keystore_path} {apk_path} <<< {passwd}""".format(
+       signer_bin=signer_bin,
+       keystore_path=get_keystore_path(),
+       apk_path=apk_path,
+       passwd=get_keystore_pwd()
+    )
+    res = execute_shell_command(cmd)
+    res.validate("error signing apk " + apk_path)
+    return res
 
 def execute_shell_command(cmd, args=[], timeout=None):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd

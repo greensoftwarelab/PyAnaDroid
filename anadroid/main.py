@@ -20,8 +20,7 @@ def init_PyAnaDroid_from_args(args):
                     analyzer=ANALYZER(args.analyzer),
                     tests_dir=args.tests_dir,
                     rebuild_apps=args.rebuild,
-                    reinstrument=args.reinstrument
-)
+                    reinstrument=args.reinstrument)
 
 
 def main():

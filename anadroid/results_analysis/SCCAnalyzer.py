@@ -5,6 +5,8 @@ from anadroid.utils.Utils import execute_shell_command, log_to_file
 
 
 class SCCAnalyzer(AbstractAnalyzer):
+    """Implements AbstractAnalyzer interface to allow to calculate app code results using scc tool.
+    """
     def __init__(self, profiler):
         super(SCCAnalyzer, self).__init__(profiler)
         self.bin_cmd = "scc"

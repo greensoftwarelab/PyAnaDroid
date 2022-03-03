@@ -5,7 +5,7 @@ from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.RERANWorkUnit import RERANWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
-from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir, loge, logw, logi
+from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir, loge, logw, logi, logs
 from anadroid.resources.testingFrameworks.reran.src.RERANWrapper import RERANWrapper
 
 RERAN_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "RERAN")
@@ -19,7 +19,11 @@ TESTS_PREFIX = "translated_"
 
 
 class RERANFramework(AbstractTestingFramework):
-
+    """Implements AbstractTestingFramework interface to allow recording and executing tests using RERAN framework.
+    Attributes:
+        workload(WorkLoad): workload object containing the work units to be executed.
+        resources_dir(str): directory containing app crawler resources.
+    """
     def __init__(self, device, profiler, analyzer, resources_dir=RERAN_RESOURCES_DIR):
         if not device.is_rooted():
             raise Exception("RERAN is not compatible with Non-rooted devices")
@@ -112,6 +116,7 @@ class RERANFramework(AbstractTestingFramework):
         pass
 
     def push_test(self, test_path):
+        """push test to device."""
         test_basename = os.path.basename(test_path)
         dev_install_dir = self.__get_config("REPLAY_DEVICE_INSTALL_DIR")
         test_remote_path = f"{dev_install_dir}/{test_basename}"
@@ -119,26 +124,53 @@ class RERANFramework(AbstractTestingFramework):
         return test_remote_path
 
     def test_app(self, device, app):
+        """test a given app on a given device.
+        Executes each work unit of workload on app running on device.
+        Args:
+            device(Device): device.
+            app(App): app.
+        """
+        retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
-            device.unlock_screen()
-            time.sleep(1)
-            self.profiler.init()
-            self.profiler.start_profiling()
-            app.start()
-            time.sleep(1)
-            log_file = os.path.join(app.curr_local_dir, f"test_{i}.logcat")
-            self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
-            app.stop()
-            self.profiler.stop_profiling()
-            self.profiler.export_results("GreendroidResultTrace0.csv")
-            self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
-            app.clean_cache()
+            self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
+
+    def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+        """executes one test identified by test_id of an given app on a given device.
+        Args:
+            test_id: test uuid.
+            device(Device): device.
+            app(App): app.
+            wk_unit(WorkUnit): work unit to be executed.
+            n_retries(int): number of times to try run the test in case it fails.
+        """
+        if n_retries < 0:
+            loge(f"Validation failed. Ignoring test {test_id}")
             return
+        device.unlock_screen()
+        time.sleep(1)
+        self.profiler.init(**{'app': app})
+        self.profiler.start_profiling()
+        app.start()
+        log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
+        self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
+        app.stop()
+        self.profiler.stop_profiling()
+        device.clear_logcat()
+        self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
+        self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
+        app.clean_cache()
+        if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
+            logw("Validation failed. Retrying")
+            self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
+        else:
+            logs(f"Test {test_id} PASSED ")
 
     def is_recordable(self):
+        """checks if framework can record tests."""
         return True
 
     def record_test(self, app_id=None, test_id=None, output_dir=None):
+        """record test of a given app, identified by test_id."""
         if test_id is None:
             test_id = f'{time.time()}'
         if app_id is None:
