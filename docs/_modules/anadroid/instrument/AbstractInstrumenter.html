@@ -1,0 +1,335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.instrument.AbstractInstrumenter &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.instrument.AbstractInstrumenter</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.instrument.AbstractInstrumenter</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.Types</span> <span class="kn">import</span> <span class="n">TESTING_APPROACH</span><span class="p">,</span> <span class="n">TESTING_FRAMEWORK</span>
+<span class="kn">from</span> <span class="nn">anadroid.instrument.Types</span> <span class="kn">import</span> <span class="n">INSTRUMENTATION_STRATEGY</span><span class="p">,</span> <span class="n">INSTRUMENTATION_TYPE</span>
+
+<span class="n">DEFAULT_LOG_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;instrumentation_log.json&quot;</span>
+
+
+<div class="viewcode-block" id="AbstractInstrumenter"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter">[docs]</a><span class="k">class</span> <span class="nc">AbstractInstrumenter</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides basic interface to perform instrumentation of project sources of Android projects.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        profiler(Profiler): targeted profiler.</span>
+<span class="sd">        mirror_dirname(str): name of the directory where the changes will be performed.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">,</span> <span class="n">mirror_dirname</span><span class="o">=</span><span class="s2">&quot;_TRANSFORMED_&quot;</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span> <span class="o">=</span> <span class="n">profiler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">current_instr_type</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mirror_dirname</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">+</span> <span class="n">mirror_dirname</span>
+
+<div class="viewcode-block" id="AbstractInstrumenter.init"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.init">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;inits class.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.instrument"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.instrument">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">instrument</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">android_project</span><span class="p">,</span> <span class="n">mirror_dirname</span><span class="o">=</span><span class="s2">&quot;_TRANSFORMED_&quot;</span><span class="p">,</span> <span class="n">test_approach</span><span class="o">=</span><span class="n">TESTING_APPROACH</span><span class="o">.</span><span class="n">WHITEBOX</span><span class="p">,</span> <span class="n">test_frame</span><span class="o">=</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">,</span>
+                   <span class="n">instr_strategy</span><span class="o">=</span><span class="n">INSTRUMENTATION_STRATEGY</span><span class="o">.</span><span class="n">METHOD_CALL</span><span class="p">,</span> <span class="n">instr_type</span><span class="o">=</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Method responsible for instrument project sources.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            android_project(AndroidProject): the project to instrument.</span>
+<span class="sd">            mirror_dirname(str): name of the directory where the changes will be performed.</span>
+<span class="sd">            test_approach(TESTING_APPROACH): testing approach.</span>
+<span class="sd">            test_frame(TESTING_FRAMEWORK): the testing framework to be used.</span>
+<span class="sd">            instr_strategy(INSTRUMENTATION_STRATEGY): instrumentation strategy to perform.</span>
+<span class="sd">            instr_type(INSTRUMENTATION_TYPE): type of instrumentation.</span>
+<span class="sd">            **kwargs:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.needs_build_plugin"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_plugin">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">needs_build_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if a build plugin is needed.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.get_build_plugins"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_plugins">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_build_plugins</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieves the needed build plugins for the performed instrumentation.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.needs_build_dependency"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_dependency">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">needs_build_dependency</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if additional build dependencies are needed.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.get_build_dependencies"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_dependencies">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_build_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieves the needed build dependencies for the performed instrumentation.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.needs_build_classpaths"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_classpaths">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">needs_build_classpaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if additional gradle dependencies are needed for the performed instrumentation.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.get_build_classpaths"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_classpaths">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_build_classpaths</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieves the needed gradle dependencies for the performed instrumentation.&quot;&quot;&quot;</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.get_log_filename"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_log_filename">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_log_filename</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns the name of the log file where the instrumentation output will be written.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            str: name of the file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">DEFAULT_LOG_FILENAME</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.needs_reinstrumentation"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_reinstrumentation">[docs]</a>    <span class="k">def</span> <span class="nf">needs_reinstrumentation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">test_approach</span><span class="p">,</span> <span class="n">instr_type</span><span class="p">,</span> <span class="n">instr_strategy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if the project needs to be instrumented again (i.e. if the last instrumentation performed</span>
+<span class="sd">        is equal to the instrumentation to be performed).</span>
+<span class="sd">        Args:</span>
+<span class="sd">            proj(AndroidProject): project.</span>
+<span class="sd">            test_approach(TESTING_APPROACH): testing approach.</span>
+<span class="sd">            instr_strategy(INSTRUMENTATION_STRATEGY): instrumentation strategy to perform.</span>
+<span class="sd">            instr_type(INSTRUMENTATION_TYPE): type of instrumentation.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if needs to be instrumented again, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">instrumentation_log</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_instrumentation_log</span><span class="p">(</span><span class="n">proj</span><span class="p">)</span>
+        <span class="n">old_profiler</span> <span class="o">=</span> <span class="n">instrumentation_log</span><span class="p">[</span><span class="s1">&#39;profiler&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;profiler&#39;</span> <span class="ow">in</span> <span class="n">instrumentation_log</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">old_approach</span> <span class="o">=</span> <span class="n">instrumentation_log</span><span class="p">[</span><span class="s1">&#39;test_approach&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;test_approach&#39;</span> <span class="ow">in</span> <span class="n">instrumentation_log</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">old_instr_type</span> <span class="o">=</span> <span class="n">instrumentation_log</span><span class="p">[</span><span class="s1">&#39;instr_type&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;instr_type&#39;</span> <span class="ow">in</span> <span class="n">instrumentation_log</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="n">old_instr_strat</span> <span class="o">=</span> <span class="n">instrumentation_log</span><span class="p">[</span><span class="s1">&#39;instr_strategy&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;instr_strategy&#39;</span> <span class="ow">in</span> <span class="n">instrumentation_log</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span> <span class="o">!=</span> <span class="n">old_profiler</span> \
+               <span class="ow">or</span> <span class="n">old_approach</span> <span class="o">!=</span> <span class="n">test_approach</span><span class="o">.</span><span class="n">value</span> \
+               <span class="ow">or</span> <span class="n">old_instr_type</span> <span class="o">!=</span> <span class="n">instr_type</span><span class="o">.</span><span class="n">value</span> \
+               <span class="ow">or</span> <span class="n">old_instr_strat</span> <span class="o">!=</span> <span class="n">instr_strategy</span><span class="o">.</span><span class="n">value</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.write_instrumentation_log_file"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.write_instrumentation_log_file">[docs]</a>    <span class="k">def</span> <span class="nf">write_instrumentation_log_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">test_approach</span><span class="p">,</span> <span class="n">instr_type</span><span class="p">,</span> <span class="n">instr_strategy</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;write instrumentation attributes to  a file.</span>
+<span class="sd">        This file is inspected when there is need to evaluate if there is need to instrument again.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            proj:</span>
+<span class="sd">            test_approach:</span>
+<span class="sd">            instr_type:</span>
+<span class="sd">            instr_strategy:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;profiler&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="vm">__class__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+            <span class="s1">&#39;test_approach&#39;</span><span class="p">:</span> <span class="n">test_approach</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s1">&#39;instr_type&#39;</span><span class="p">:</span> <span class="n">instr_type</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="s1">&#39;instr_strategy&#39;</span><span class="p">:</span> <span class="n">instr_strategy</span><span class="o">.</span><span class="n">value</span>
+        <span class="p">}</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mirror_dirname</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_log_filename</span><span class="p">())</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractInstrumenter.get_instrumentation_log"><a class="viewcode-back" href="../../../anadroid.instrument.html#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_instrumentation_log">[docs]</a>    <span class="k">def</span> <span class="nf">get_instrumentation_log</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">proj</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;loads information from the file containing the specs of the last instrumentation performed.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            proj(AndroidProject): project.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: last instrumentation specs.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_log_filename</span><span class="p">()</span>
+        <span class="n">filepath</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">mirror_dirname</span><span class="p">,</span> <span class="n">file</span><span class="p">)</span>
+        <span class="n">js</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">filepath</span><span class="p">):</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">ff</span><span class="p">:</span>
+                <span class="n">js</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">ff</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">js</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

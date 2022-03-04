@@ -1,0 +1,1043 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.device package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">anadroid.device package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-anadroid.device.AbstractDevice">anadroid.device.AbstractDevice module</a></li>
+<li><a class="reference internal" href="#module-anadroid.device.Device">anadroid.device.Device module</a></li>
+<li><a class="reference internal" href="#module-anadroid.device.DeviceState">anadroid.device.DeviceState module</a></li>
+<li><a class="reference internal" href="#module-anadroid.device.MockedDevice">anadroid.device.MockedDevice module</a></li>
+<li><a class="reference internal" href="#module-anadroid.device">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>anadroid.device package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.device.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-device-package">
+<h1>anadroid.device package<a class="headerlink" href="#anadroid-device-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.device.AbstractDevice">
+<span id="anadroid-device-abstractdevice-module"></span><h2>anadroid.device.AbstractDevice module<a class="headerlink" href="#module-anadroid.device.AbstractDevice" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.ADB_CONN">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.AbstractDevice.</span></span><span class="sig-name descname"><span class="pre">ADB_CONN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#ADB_CONN"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.ADB_CONN" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Class to enumerate different connectivity alternatives using ADB.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.ADB_CONN.USB">
+<span class="sig-name descname"><span class="pre">USB</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'USB'</span></em><a class="headerlink" href="#anadroid.device.AbstractDevice.ADB_CONN.USB" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.ADB_CONN.WIFI">
+<span class="sig-name descname"><span class="pre">WIFI</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'WIFI'</span></em><a class="headerlink" href="#anadroid.device.AbstractDevice.ADB_CONN.WIFI" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.AbstractDevice.</span></span><span class="sig-name descname"><span class="pre">AbstractDevice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">serial_nr</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Provides basic interface and functionality to interact with devices.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.serial_nr">
+<span class="sig-name descname"><span class="pre">serial_nr</span></span><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.serial_nr" title="Permalink to this definition">¶</a></dt>
+<dd><p>device serial number / uuid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.conn_type">
+<span class="sig-name descname"><span class="pre">conn_type</span></span><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.conn_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>type of connection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#anadroid.device.AbstractDevice.ADB_CONN" title="anadroid.device.AbstractDevice.ADB_CONN">ADB_CONN</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.execute_command">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">execute_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.execute_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.execute_root_command">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">execute_root_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.execute_root_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.execute_root_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device in superuser mode.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.get_device_android_version">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_device_android_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.get_device_android_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.get_device_android_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns device android version.
+Retrieves value of ro.build.version.release property.
+:returns: android version.
+:rtype: DefaultSemanticVersion</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.install_apks">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">install_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_paths</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.install_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.install_apks" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.is_screen_dreaming">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">is_screen_dreaming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.is_screen_dreaming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.is_screen_dreaming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is dreaming.
+:returns: True if dreaming, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.is_screen_unlocked">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">is_screen_unlocked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.is_screen_unlocked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.is_screen_unlocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is unlocked.
+:returns: True if unlocked, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.list_installed_packages">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">list_installed_packages</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prop_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.list_installed_packages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.list_installed_packages" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.lock_screen">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">lock_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.lock_screen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.lock_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is locked.
+:returns: True if locked, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.uninstall_pkg">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">uninstall_pkg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.uninstall_pkg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.uninstall_pkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.AbstractDevice.AbstractDevice.unlock_screen">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">unlock_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/AbstractDevice.html#AbstractDevice.unlock_screen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.AbstractDevice.AbstractDevice.unlock_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>unlock device screen.
+Tries several approaches to unlock screen. It starts by trying to press lock button, followed by trying
+to type a password if a password is required. If none of these worked, tries to press menu button and finally,
+it tries to perform a swipe up.
+:param pwd: password to provide if devices requires password to be unlocked.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.device.Device">
+<span id="anadroid-device-device-module"></span><h2>anadroid.device.Device module<a class="headerlink" href="#module-anadroid.device.Device" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.Device.</span></span><span class="sig-name descname"><span class="pre">Device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">serial_nr</span></em>, <em class="sig-param"><span class="pre">conn_type=&lt;ADB_CONN.USB:</span> <span class="pre">'USB'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.device.AbstractDevice.AbstractDevice" title="anadroid.device.AbstractDevice.AbstractDevice"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.device.AbstractDevice.AbstractDevice</span></code></a></p>
+<p>Class that extends AbstractDevice to handle interaction with devices connected via ADB.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.clear_logcat">
+<span class="sig-name descname"><span class="pre">clear_logcat</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.clear_logcat"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.clear_logcat" title="Permalink to this definition">¶</a></dt>
+<dd><p>clear device logs.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.contains_file">
+<span class="sig-name descname"><span class="pre">contains_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.contains_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.contains_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if device has a file in a given filepath.
+:param filepath: path of file to check.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if file exists, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.dump_logcat_to_file">
+<span class="sig-name descname"><span class="pre">dump_logcat_to_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'logcat.out'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.dump_logcat_to_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.dump_logcat_to_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>dumps device logs to file with path filename.
+:param filename: path or name of file.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.execute_command">
+<span class="sig-name descname"><span class="pre">execute_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.execute_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.execute_root_command">
+<span class="sig-name descname"><span class="pre">execute_root_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.execute_root_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.execute_root_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device in superuser mode.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_device_android_version">
+<span class="sig-name descname"><span class="pre">get_device_android_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_device_android_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_device_android_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns device android version.
+Retrieves value of ro.build.version.release property.
+:returns: android version.
+:rtype: DefaultSemanticVersion</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_device_props">
+<span class="sig-name descname"><span class="pre">get_device_props</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_device_props"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_device_props" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns props dict containing device properties that were obtained using getprop command.
+:returns: dict with properties.
+:rtype: props(dict)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_device_sdk_version">
+<span class="sig-name descname"><span class="pre">get_device_sdk_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_device_sdk_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_device_sdk_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns device sdk version.
+Gets ro.build.version.sdk.
+:returns: major min sdk version.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_min_sdk_version">
+<span class="sig-name descname"><span class="pre">get_min_sdk_version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_min_sdk_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_min_sdk_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns min sdk version of device.
+Gets ro.build.version.min_supported_target_sdk property.
+:returns: major min sdk version.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_new_installed_pkgs">
+<span class="sig-name descname"><span class="pre">get_new_installed_pkgs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_new_installed_pkgs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_new_installed_pkgs" title="Permalink to this definition">¶</a></dt>
+<dd><p>if a new pkg was installed, retrieves a list of the new installed packages.
+:returns: list of new packages.
+:rtype: new_pkgs(<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.get_package_matching">
+<span class="sig-name descname"><span class="pre">get_package_matching</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_aprox_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.get_package_matching"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.get_package_matching" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets installed package more alike with a given pkg name.
+:param pkg_aprox_name: name of the package.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>the most alike installed pkg name.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.has_package_installed">
+<span class="sig-name descname"><span class="pre">has_package_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pack_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.has_package_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.has_package_installed" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if a given package is installed on device.
+:param pack_name: package name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if installed, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.install_apk">
+<span class="sig-name descname"><span class="pre">install_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.install_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.install_apk" title="Permalink to this definition">¶</a></dt>
+<dd><p>installs apk located in apk_path
+:param apk_path: apk path.
+:type apk_path: str</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>result of installation command.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="anadroid.utils.html#anadroid.utils.Utils.COMMAND_RESULT" title="anadroid.utils.Utils.COMMAND_RESULT">COMMAND_RESULT</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.install_apks">
+<span class="sig-name descname"><span class="pre">install_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">andr_proj</span></em>, <em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.RELEASE:</span> <span class="pre">'Release'&gt;</span></em>, <em class="sig-param"><span class="pre">install_test_apks=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.install_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.install_apks" title="Permalink to this definition">¶</a></dt>
+<dd><p>install apks of type build_type of android project andr_proj.
+:param andr_proj:
+:type andr_proj: AndroidProject
+:param build_type: build type.
+:type build_type: BUILD_TYPE
+:param install_test_apks: if test apk installation has to be performed.
+:type install_test_apks: bool</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>set of installed packages.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>installed_packages(set)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.is_rooted">
+<span class="sig-name descname"><span class="pre">is_rooted</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.is_rooted"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.is_rooted" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if it is a rooted device.
+:returns: True if is rooted, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.is_screen_dreaming">
+<span class="sig-name descname"><span class="pre">is_screen_dreaming</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.is_screen_dreaming"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.is_screen_dreaming" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is dreaming.
+:returns: True if dreaming, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.is_screen_unlocked">
+<span class="sig-name descname"><span class="pre">is_screen_unlocked</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.is_screen_unlocked"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.is_screen_unlocked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is unlocked.
+:returns: True if unlocked, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.list_installed_packages">
+<span class="sig-name descname"><span class="pre">list_installed_packages</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.list_installed_packages"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.list_installed_packages" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns list of device’s installed packages.
+:returns: list of packages.
+:rtype: vals(<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.load_device_state">
+<span class="sig-name descname"><span class="pre">load_device_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.load_device_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.load_device_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>load device state from a file located in filepath
+:param filepath: location of file with the state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>dict with state.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>json_def(dict)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.lock_screen">
+<span class="sig-name descname"><span class="pre">lock_screen</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.lock_screen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.lock_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>Checks if screen is locked.
+:returns: True if locked, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.set_device_state">
+<span class="sig-name descname"><span class="pre">set_device_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">state_cfg=&lt;DEVICE_STATE_ENFORCE.TEST:</span> <span class="pre">'Test</span> <span class="pre">conditions'&gt;</span></em>, <em class="sig-param"><span class="pre">perm_json=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.set_device_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.set_device_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>enforces a given device state.
+:param state_cfg: type of state to enforce
+:type state_cfg: DEVICE_STATE_ENFORCE
+:param perm_json: set of states to enforce according to the permission to give in such state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.set_log_size">
+<span class="sig-name descname"><span class="pre">set_log_size</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_size_bytes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">16384</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.set_log_size"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.set_log_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets log size through persist.logd.size property.
+:param log_size_bytes: size in bytes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.uninstall_pkg">
+<span class="sig-name descname"><span class="pre">uninstall_pkg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.uninstall_pkg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.uninstall_pkg" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.Device.Device.unlock_screen">
+<span class="sig-name descname"><span class="pre">unlock_screen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">password</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#Device.unlock_screen"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.Device.unlock_screen" title="Permalink to this definition">¶</a></dt>
+<dd><p>unlock device screen.
+Tries several approaches to unlock screen. It starts by trying to press lock button, followed by trying
+to type a password if a password is required. If none of these worked, tries to press menu button and finally,
+it tries to perform a swipe up.
+:param pwd: password to provide if devices requires password to be unlocked.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="anadroid.device.Device.DeviceNotFoundError">
+<em class="property"><span class="pre">exception</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.Device.</span></span><span class="sig-name descname"><span class="pre">DeviceNotFoundError</span></span><a class="reference internal" href="_modules/anadroid/device/Device.html#DeviceNotFoundError"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.DeviceNotFoundError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.device.Device.get_first_connected_device">
+<span class="sig-prename descclassname"><span class="pre">anadroid.device.Device.</span></span><span class="sig-name descname"><span class="pre">get_first_connected_device</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'USB'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#get_first_connected_device"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.get_first_connected_device" title="Permalink to this definition">¶</a></dt>
+<dd><p>Retrieves the first connected device that it founds using adb.
+Retrieves the first device of the list retrieved by adb devices -l command.
+:param conn_type:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>first device found.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="#anadroid.device.Device.Device" title="anadroid.device.Device.Device">Device</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.device.Device.set_device_conn">
+<span class="sig-prename descclassname"><span class="pre">anadroid.device.Device.</span></span><span class="sig-name descname"><span class="pre">set_device_conn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conn_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/Device.html#set_device_conn"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.Device.set_device_conn" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets connection of type conn_type with a connected device or a device with id == device_id.
+:param conn_type: connection type.
+:type conn_type: ADB_CONN
+:param device_id: device id.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.device.DeviceState">
+<span id="anadroid-device-devicestate-module"></span><h2>anadroid.device.DeviceState module<a class="headerlink" href="#module-anadroid.device.DeviceState" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DEVICE_STATE_ENFORCE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.DeviceState.</span></span><span class="sig-name descname"><span class="pre">DEVICE_STATE_ENFORCE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DEVICE_STATE_ENFORCE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DEVICE_STATE_ENFORCE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates different states of device during benchmarking activity</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.APP">
+<span class="sig-name descname"><span class="pre">APP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'App</span> <span class="pre">conditions'</span></em><a class="headerlink" href="#anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.APP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.IDLE">
+<span class="sig-name descname"><span class="pre">IDLE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Idle'</span></em><a class="headerlink" href="#anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.IDLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.TEST">
+<span class="sig-name descname"><span class="pre">TEST</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Test</span> <span class="pre">conditions'</span></em><a class="headerlink" href="#anadroid.device.DeviceState.DEVICE_STATE_ENFORCE.TEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.DeviceState.</span></span><span class="sig-name descname"><span class="pre">DeviceState</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>class that stores and represents the state of device components.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.device">
+<span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.device" title="Permalink to this definition">¶</a></dt>
+<dd><p>device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#anadroid.device.Device.Device" title="anadroid.device.Device.Device">Device</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.screen_locked">
+<span class="sig-name descname"><span class="pre">screen_locked</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.screen_locked" title="Permalink to this definition">¶</a></dt>
+<dd><p>1 if screen locked, 0 otherwise.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.screen_brightness">
+<span class="sig-name descname"><span class="pre">screen_brightness</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.screen_brightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>screen brightness value (0-255).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.screen_always_on">
+<span class="sig-name descname"><span class="pre">screen_always_on</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.screen_always_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the screen should be always on.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.screen_auto_rotate">
+<span class="sig-name descname"><span class="pre">screen_auto_rotate</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.screen_auto_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>if the screen should rotate automatically.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.screen_orientation">
+<span class="sig-name descname"><span class="pre">screen_orientation</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.screen_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>screen orientation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.bluetooth">
+<span class="sig-name descname"><span class="pre">bluetooth</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.bluetooth" title="Permalink to this definition">¶</a></dt>
+<dd><p>state of bluetooth.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.wifi">
+<span class="sig-name descname"><span class="pre">wifi</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.wifi" title="Permalink to this definition">¶</a></dt>
+<dd><p>wifi state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.gps">
+<span class="sig-name descname"><span class="pre">gps</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.gps" title="Permalink to this definition">¶</a></dt>
+<dd><p>gps state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.nfc_state">
+<span class="sig-name descname"><span class="pre">nfc_state</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.nfc_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>nfc_state state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.mobile_data_state">
+<span class="sig-name descname"><span class="pre">mobile_data_state</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.mobile_data_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>mobile_data_state state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.speakers_state">
+<span class="sig-name descname"><span class="pre">speakers_state</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.speakers_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>speakers_state state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.flashlight">
+<span class="sig-name descname"><span class="pre">flashlight</span></span><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.flashlight" title="Permalink to this definition">¶</a></dt>
+<dd><p>flashlight state.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.change_speaker_state">
+<span class="sig-name descname"><span class="pre">change_speaker_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.change_speaker_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.change_speaker_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set speaker state. if state = 1 enables speakers. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.enforce_state">
+<span class="sig-name descname"><span class="pre">enforce_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.enforce_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.enforce_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>enforces a component state.
+:param key: component uid/key.
+:param val: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_bluetooth_state">
+<span class="sig-name descname"><span class="pre">get_bluetooth_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_bluetooth_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_bluetooth_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve bluetooh state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_gps_state">
+<span class="sig-name descname"><span class="pre">get_gps_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_gps_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_gps_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve gps state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_hotspot_state">
+<span class="sig-name descname"><span class="pre">get_hotspot_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_hotspot_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_hotspot_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve hotspot state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_mobile_data_state">
+<span class="sig-name descname"><span class="pre">get_mobile_data_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_mobile_data_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_mobile_data_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve mobile data state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_nfc_state">
+<span class="sig-name descname"><span class="pre">get_nfc_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_nfc_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_nfc_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve nfc state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_screen_always_on">
+<span class="sig-name descname"><span class="pre">get_screen_always_on</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_screen_always_on"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_screen_always_on" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve screen always on state.
+gets value of stay_on_while_plugged_in setting.
+:returns: value.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_screen_auto_rotate">
+<span class="sig-name descname"><span class="pre">get_screen_auto_rotate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_screen_auto_rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_screen_auto_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve screen auto rotation state.
+gets value of system setting accelerometer_rotation.
+:returns: value.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_screen_brightness">
+<span class="sig-name descname"><span class="pre">get_screen_brightness</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_screen_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_screen_brightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve screen brightness value.
+:returns: 0 - 255.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_screen_lock_state">
+<span class="sig-name descname"><span class="pre">get_screen_lock_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_screen_lock_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_screen_lock_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve screen lock state.
+:returns: 0 if unlocked, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_screen_orientation">
+<span class="sig-name descname"><span class="pre">get_screen_orientation</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_screen_orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_screen_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve screen orientation state.
+gets value of system setting user_rotation.
+:returns: value.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_speakers_state">
+<span class="sig-name descname"><span class="pre">get_speakers_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_speakers_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_speakers_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve speakers state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_state">
+<span class="sig-name descname"><span class="pre">get_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>given a component uid/key, returns the current state of such component.
+:param key: component uid/key.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>value.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_states_from_permission">
+<span class="sig-name descname"><span class="pre">get_states_from_permission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">perm_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_states_from_permission"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_states_from_permission" title="Permalink to this definition">¶</a></dt>
+<dd><p>infers needed state changes from permission.
+:param perm_id: permission key.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.get_wifi_state">
+<span class="sig-name descname"><span class="pre">get_wifi_state</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.get_wifi_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.get_wifi_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieve wifi state.
+:returns: 0 if off, 1 otherwise.
+:rtype: int</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_bluetooth_state">
+<span class="sig-name descname"><span class="pre">set_bluetooth_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_bluetooth_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_bluetooth_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set bluetooth state. if state = 1 enables bluetooth. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_gps_state">
+<span class="sig-name descname"><span class="pre">set_gps_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_gps_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_gps_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set gps state. if state = 1 enables gps. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_hotspot_state">
+<span class="sig-name descname"><span class="pre">set_hotspot_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_hotspot_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_hotspot_state" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_mobile_data_state">
+<span class="sig-name descname"><span class="pre">set_mobile_data_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_mobile_data_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_mobile_data_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set mobile date state. if state = 1 enables mobile data. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_nfc_state">
+<span class="sig-name descname"><span class="pre">set_nfc_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_nfc_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_nfc_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set nfc state. if state = 1 enables nft. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_screen_always_on_while_plugged">
+<span class="sig-name descname"><span class="pre">set_screen_always_on_while_plugged</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_screen_always_on_while_plugged"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_screen_always_on_while_plugged" title="Permalink to this definition">¶</a></dt>
+<dd><p>set screen always on state. if state = 1 set stay on value.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_screen_auto_rotate">
+<span class="sig-name descname"><span class="pre">set_screen_auto_rotate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_screen_auto_rotate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_screen_auto_rotate" title="Permalink to this definition">¶</a></dt>
+<dd><p>set screen auto rotate state. if state = 1 set auto rotate value as 1 (enable).
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_screen_brightness">
+<span class="sig-name descname"><span class="pre">set_screen_brightness</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_screen_brightness"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_screen_brightness" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets brightness value.
+:param value: value between 0-255.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_screen_lock_state">
+<span class="sig-name descname"><span class="pre">set_screen_lock_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">state</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_screen_lock_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_screen_lock_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set screen lock state. if state = 0, unlocks screen. Otherwise, it locks the screen.
+:param state: lock state.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_screen_orientation">
+<span class="sig-name descname"><span class="pre">set_screen_orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_screen_orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_screen_orientation" title="Permalink to this definition">¶</a></dt>
+<dd><p>set screen orientation state. if state = 1, sets landscape mode. Otherwise, sets
+orientation as portrait mode.
+:param value: state value.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.DeviceState.set_wifi_state">
+<span class="sig-name descname"><span class="pre">set_wifi_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#DeviceState.set_wifi_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.DeviceState.set_wifi_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>set wifi state. if state = 1 enables wifi. Otherwise, disables it.
+:param value: state value.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.device.DeviceState.get_known_state_keys">
+<span class="sig-prename descclassname"><span class="pre">anadroid.device.DeviceState.</span></span><span class="sig-name descname"><span class="pre">get_known_state_keys</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/DeviceState.html#get_known_state_keys"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.DeviceState.get_known_state_keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.device.MockedDevice">
+<span id="anadroid-device-mockeddevice-module"></span><h2>anadroid.device.MockedDevice module<a class="headerlink" href="#module-anadroid.device.MockedDevice" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.device.MockedDevice.MockedDevice">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.device.MockedDevice.</span></span><span class="sig-name descname"><span class="pre">MockedDevice</span></span><a class="reference internal" href="_modules/anadroid/device/MockedDevice.html#MockedDevice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.MockedDevice.MockedDevice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.device.Device.Device" title="anadroid.device.Device.Device"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.device.Device.Device</span></code></a></p>
+<p>Mocks a connected device.
+The main use case is to mock some devices with custom properties or when the framework is building apps without
+a connected device.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.MockedDevice.MockedDevice.execute_command">
+<span class="sig-name descname"><span class="pre">execute_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/MockedDevice.html#MockedDevice.execute_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.MockedDevice.MockedDevice.execute_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.device.MockedDevice.MockedDevice.execute_root_command">
+<span class="sig-name descname"><span class="pre">execute_root_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/device/MockedDevice.html#MockedDevice.execute_root_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.device.MockedDevice.MockedDevice.execute_root_command" title="Permalink to this definition">¶</a></dt>
+<dd><p>execute remote shell command with args on device in superuser mode.
+:returns: result of command.
+:rtype: res(COMMAND_RESULT)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.device">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.device" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

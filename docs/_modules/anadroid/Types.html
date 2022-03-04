@@ -1,0 +1,287 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.Types &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.Types</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.Types</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.instrument.Types</span> <span class="kn">import</span> <span class="n">INSTRUMENTATION_TYPE</span>
+
+
+<div class="viewcode-block" id="BUILD_SYSTEM"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.BUILD_SYSTEM">[docs]</a><span class="k">class</span> <span class="nc">BUILD_SYSTEM</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates the build systems that can be used to build Android apps.&quot;&quot;&quot;</span>
+    <span class="n">GRADLE</span> <span class="o">=</span> <span class="s1">&#39;Gradle&#39;</span>
+    <span class="n">ANT</span> <span class="o">=</span> <span class="s1">&#39;Ant&#39;</span>
+    <span class="n">MAVEN</span> <span class="o">=</span> <span class="s2">&quot;Maven&quot;</span>
+    <span class="n">UNKNOWN</span> <span class="o">=</span> <span class="s2">&quot;Unknown&quot;</span></div>
+
+<div class="viewcode-block" id="TESTING_FRAMEWORK"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.TESTING_FRAMEWORK">[docs]</a><span class="k">class</span> <span class="nc">TESTING_FRAMEWORK</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates supported testing frameworks&quot;&quot;&quot;</span>
+    <span class="n">MONKEY</span> <span class="o">=</span> <span class="s2">&quot;Monkey&quot;</span>
+    <span class="n">MONKEY_RUNNER</span> <span class="o">=</span> <span class="s2">&quot;Monkeyrunner&quot;</span>
+    <span class="n">JUNIT</span> <span class="o">=</span> <span class="s2">&quot;JUnit&quot;</span>
+    <span class="n">RERAN</span> <span class="o">=</span> <span class="s2">&quot;RERAN&quot;</span>
+    <span class="n">ESPRESSO</span> <span class="o">=</span> <span class="s2">&quot;Espresso&quot;</span>
+    <span class="n">ROBOTIUM</span> <span class="o">=</span> <span class="s2">&quot;Robotium&quot;</span>
+    <span class="n">APP_CRAWLER</span> <span class="o">=</span> <span class="s2">&quot;Crawler&quot;</span>
+    <span class="n">DROIDBOT</span> <span class="o">=</span> <span class="s2">&quot;Droidbot&quot;</span>
+    <span class="n">OTHER</span> <span class="o">=</span> <span class="s2">&quot;Other&quot;</span></div>
+
+
+<div class="viewcode-block" id="PROFILER"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.PROFILER">[docs]</a><span class="k">class</span> <span class="nc">PROFILER</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates sota energy profilers.&quot;&quot;&quot;</span>
+    <span class="n">TREPN</span> <span class="o">=</span> <span class="s1">&#39;Trepn&#39;</span>
+    <span class="n">GREENSCALER</span> <span class="o">=</span> <span class="s1">&#39;GreenScaler&#39;</span>
+    <span class="n">PETRA</span> <span class="o">=</span> <span class="s1">&#39;Petra&#39;</span>
+    <span class="n">MONSOON</span> <span class="o">=</span> <span class="s1">&#39;Monsoon&#39;</span>
+    <span class="n">MANAFA</span> <span class="o">=</span> <span class="s2">&quot;E-manafa&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span></div>
+
+
+<div class="viewcode-block" id="INSTRUMENTER"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.INSTRUMENTER">[docs]</a><span class="k">class</span> <span class="nc">INSTRUMENTER</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates sota instrumentation tools.&quot;&quot;&quot;</span>
+    <span class="n">JINST</span> <span class="o">=</span> <span class="s1">&#39;JInst&#39;</span>
+    <span class="n">HUNTER</span> <span class="o">=</span> <span class="s1">&#39;Hunter&#39;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span></div>
+
+
+<div class="viewcode-block" id="TESTING_APPROACH"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.TESTING_APPROACH">[docs]</a><span class="k">class</span> <span class="nc">TESTING_APPROACH</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates the 3 testing approaches.&quot;&quot;&quot;</span>
+    <span class="n">WHITEBOX</span> <span class="o">=</span> <span class="s2">&quot;WhiteBox&quot;</span>
+    <span class="n">BLACKBOX</span> <span class="o">=</span> <span class="s2">&quot;BlackBox&quot;</span>
+    <span class="n">GREYBOX</span> <span class="o">=</span> <span class="s2">&quot;GreyBox&quot;</span></div>
+
+
+<div class="viewcode-block" id="ANALYZER"><a class="viewcode-back" href="../../anadroid.html#anadroid.Types.ANALYZER">[docs]</a><span class="k">class</span> <span class="nc">ANALYZER</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates the supported analyzers&quot;&quot;&quot;</span>
+    <span class="n">OLD_ANADROID_ANALYZER</span> <span class="o">=</span> <span class="s1">&#39;Old Anadroid Analyzer&#39;</span>
+    <span class="n">MANAFA_ANALYZER</span> <span class="o">=</span> <span class="s1">&#39;Manafa Analyzer&#39;</span></div>
+
+
+<span class="n">SUPPORTED_TESTING_APPROACHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TESTING_APPROACH</span><span class="o">.</span><span class="n">WHITEBOX</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_TESTING_FRAMEWORKS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">RERAN</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">APP_CRAWLER</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY_RUNNER</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_BUILDING_SYSTEMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">BUILD_SYSTEM</span><span class="o">.</span><span class="n">GRADLE</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_PROFILERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">TREPN</span><span class="p">,</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">MANAFA</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_INSTRUMENTERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">JINST</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_ANALYZERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">ANALYZER</span><span class="o">.</span><span class="n">OLD_ANADROID_ANALYZER</span><span class="p">,</span>
+    <span class="n">ANALYZER</span><span class="o">.</span><span class="n">MANAFA_ANALYZER</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_INSTRUMENTATION_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span>
+    <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

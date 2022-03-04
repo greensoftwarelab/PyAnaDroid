@@ -19,7 +19,7 @@ demoProjects/*/build
 demoProjects
 old_apps/
 allMethods.json
-results/
+anadroid_results/
 anadroid/resources/framework-res.apk
 anadroid/resources/config/*
 # Generated files

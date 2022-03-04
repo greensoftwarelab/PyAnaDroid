@@ -1,0 +1,276 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.Config &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.Config</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.Config</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.Types</span> <span class="kn">import</span> <span class="n">TESTING_APPROACH</span><span class="p">,</span> <span class="n">TESTING_FRAMEWORK</span><span class="p">,</span> <span class="n">BUILD_SYSTEM</span><span class="p">,</span> <span class="n">PROFILER</span><span class="p">,</span> <span class="n">INSTRUMENTER</span><span class="p">,</span> <span class="n">ANALYZER</span>
+<span class="kn">from</span> <span class="nn">anadroid.instrument.Types</span> <span class="kn">import</span> <span class="n">INSTRUMENTATION_TYPE</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">get_general_config_dir</span><span class="p">,</span> <span class="n">loge</span>
+
+<span class="n">GENERAL_CONFIG_FILE_NAME</span> <span class="o">=</span> <span class="s2">&quot;general_config.json&quot;</span>
+<span class="n">RESOURCES_CONFIG_DIR</span> <span class="o">=</span> <span class="n">get_general_config_dir</span><span class="p">()</span>
+<span class="n">CONFIG_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RESOURCES_CONFIG_DIR</span><span class="p">,</span> <span class="n">GENERAL_CONFIG_FILE_NAME</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_general_config"><a class="viewcode-back" href="../../anadroid.html#anadroid.Config.get_general_config">[docs]</a><span class="k">def</span> <span class="nf">get_general_config</span><span class="p">(</span><span class="n">cfg_type</span><span class="p">,</span> <span class="n">cfg_file</span><span class="o">=</span><span class="n">CONFIG_FILE</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jj</span><span class="p">:</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cfg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s2">&quot;invalid config type </span><span class="si">{cfg_type}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">{}</span>
+    <span class="k">return</span> <span class="n">cfg</span><span class="p">[</span><span class="n">cfg_type</span><span class="p">]</span> <span class="c1">#[key] if key in cfg[cfg_type] else None</span></div>
+
+<div class="viewcode-block" id="set_general_config"><a class="viewcode-back" href="../../anadroid.html#anadroid.Config.set_general_config">[docs]</a><span class="k">def</span> <span class="nf">set_general_config</span><span class="p">(</span><span class="n">cfg_type</span><span class="p">,</span> <span class="n">cfg_key</span><span class="p">,</span> <span class="n">cfg_value</span><span class="p">,</span>  <span class="n">cfg_file</span><span class="o">=</span><span class="n">CONFIG_FILE</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jj</span><span class="p">:</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">jj</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">cfg_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">cfg_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">cfg</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;invalid config type </span><span class="si">{</span><span class="n">cfg_type</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">cfg</span><span class="p">[</span><span class="n">cfg_type</span><span class="p">][</span><span class="n">cfg_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">cfg_value</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jlo</span><span class="p">:</span>
+        <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">jlo</span><span class="p">)</span></div>
+
+
+<span class="n">SUPPORTED_TESTING_APPROACHES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TESTING_APPROACH</span><span class="o">.</span><span class="n">WHITEBOX</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_TESTING_FRAMEWORKS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">RERAN</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">APP_CRAWLER</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY_RUNNER</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">JUNIT</span><span class="p">,</span>
+    <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">DROIDBOT</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_BUILDING_SYSTEMS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">BUILD_SYSTEM</span><span class="o">.</span><span class="n">GRADLE</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_PROFILERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">TREPN</span><span class="p">,</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">MANAFA</span><span class="p">,</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">GREENSCALER</span><span class="p">,</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">NONE</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_INSTRUMENTERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">JINST</span><span class="p">,</span>
+    <span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">NONE</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_ANALYZERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">ANALYZER</span><span class="o">.</span><span class="n">OLD_ANADROID_ANALYZER</span><span class="p">,</span>
+    <span class="n">ANALYZER</span><span class="o">.</span><span class="n">MANAFA_ANALYZER</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_INSTRUMENTATION_TYPES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span>
+    <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">,</span>
+    <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">METHOD</span>
+<span class="p">}</span>
+
+<span class="n">SUPPORTED_SUITES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">TREPN</span><span class="p">:</span> <span class="p">[</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">METHOD</span><span class="p">],</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">MANAFA</span><span class="p">:</span> <span class="p">[</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">],</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">GREENSCALER</span><span class="p">:</span> <span class="p">[</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">],</span>
+    <span class="n">PROFILER</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span> <span class="p">[</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">NONE</span><span class="p">,</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">,</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">METHOD</span><span class="p">,</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">TEST</span><span class="p">]</span>
+<span class="p">}</span>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

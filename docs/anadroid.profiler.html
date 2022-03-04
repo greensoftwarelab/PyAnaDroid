@@ -1,0 +1,639 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.profiler package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.profiler.greenScaler package" href="anadroid.profiler.greenScaler.html" />
+    <link rel="prev" title="anadroid.instrument package" href="anadroid.instrument.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="anadroid.html">anadroid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="anadroid.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#anadroid-anadroid-module">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#anadroid-main-module">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">anadroid</a> &raquo;</li>
+        
+          <li><a href="anadroid.html">anadroid package</a> &raquo;</li>
+        
+      <li>anadroid.profiler package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.profiler.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-profiler-package">
+<h1>anadroid.profiler package<a class="headerlink" href="#anadroid-profiler-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.profiler.greenScaler.html">anadroid.profiler.greenScaler package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.greenScaler.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenScaler.html">anadroid.profiler.greenScaler.GreenScaler package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenScaler.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenScaler.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenScaler.html#anadroid-profiler-greenscaler-greenscaler-greenscaler-module">anadroid.profiler.greenScaler.GreenScaler.greenscaler module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenScaler.html#module-anadroid.profiler.greenScaler.GreenScaler">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenTestGen.html">anadroid.profiler.greenScaler.GreenTestGen package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenTestGen.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.GreenTestGen.html#module-anadroid.profiler.greenScaler.GreenTestGen">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.greenScaler.html#module-anadroid.profiler.greenScaler">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.profiler.AbstractProfiler">
+<span id="anadroid-profiler-abstractprofiler-module"></span><h2>anadroid.profiler.AbstractProfiler module<a class="headerlink" href="#module-anadroid.profiler.AbstractProfiler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.profiler.AbstractProfiler.</span></span><span class="sig-name descname"><span class="pre">AbstractProfiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dependency</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plugin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Defines a basic interface to be implemented by supported profilers.
+Provides a set of methods that allow to manage a profiling session lifecycle.
+.. attribute:: profiler</p>
+<blockquote>
+<div><p>profiler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>Profiler</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.device">
+<span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.device" title="Permalink to this definition">¶</a></dt>
+<dd><p>target device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="anadroid.device.html#anadroid.device.Device.Device" title="anadroid.device.Device.Device">Device</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.pkg_name">
+<span class="sig-name descname"><span class="pre">pkg_name</span></span><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.pkg_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>profiler package name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.device_dir">
+<span class="sig-name descname"><span class="pre">device_dir</span></span><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.device_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>path of device directory where remote results can be stored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.dependency">
+<span class="sig-name descname"><span class="pre">dependency</span></span><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.dependency" title="Permalink to this definition">¶</a></dt>
+<dd><p>dependencies to insert in apps to be profiled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.plugin">
+<span class="sig-name descname"><span class="pre">plugin</span></span><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>build plugins to insert in apps to be profiled.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.export_results">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.export_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>export profiling session results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.get_dependencies_location">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_dependencies_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.get_dependencies_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.get_dependencies_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>return location of dependencies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.init">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to setup profiler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.needs_external_dependencies">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">needs_external_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.needs_external_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.needs_external_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if external dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.start_profiling">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">start_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.start_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.start_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to start profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.stop_profiling">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.stop_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.stop_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to stop profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.AbstractProfiler.AbstractProfiler.update_state">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/AbstractProfiler.html#AbstractProfiler.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>log states/events during profiling session.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="anadroid-profiler-greenscalerprofiler-module">
+<h2>anadroid.profiler.GreenScalerProfiler module<a class="headerlink" href="#anadroid-profiler-greenscalerprofiler-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.profiler.ManafaProfiler">
+<span id="anadroid-profiler-manafaprofiler-module"></span><h2>anadroid.profiler.ManafaProfiler module<a class="headerlink" href="#module-anadroid.profiler.ManafaProfiler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.profiler.ManafaProfiler.</span></span><span class="sig-name descname"><span class="pre">ManafaProfiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timezone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hunter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler" title="anadroid.profiler.AbstractProfiler.AbstractProfiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.profiler.AbstractProfiler.AbstractProfiler</span></code></a></p>
+<p>Implements AbstractProfiler interface to allow profiling with Manafa profiler.
+Provides a set of methods that allow to manage a profiling session lifecycle.
+.. attribute:: manafa</p>
+<blockquote>
+<div><p>EManafa profiler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>EManafa</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.export_results">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.export_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>does nothing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.get_dependencies_location">
+<span class="sig-name descname"><span class="pre">get_dependencies_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.get_dependencies_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.get_dependencies_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>return location of dependencies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to setup profiler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.install_profiler">
+<span class="sig-name descname"><span class="pre">install_profiler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.install_profiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.install_profiler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.needs_external_dependencies">
+<span class="sig-name descname"><span class="pre">needs_external_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.needs_external_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.needs_external_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if external dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.pull_results">
+<span class="sig-name descname"><span class="pre">pull_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.pull_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.pull_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>pull results from device and put them in target_dir</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.start_profiling">
+<span class="sig-name descname"><span class="pre">start_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.start_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.start_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to start profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.stop_profiling">
+<span class="sig-name descname"><span class="pre">stop_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.stop_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.stop_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to stop profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.ManafaProfiler.ManafaProfiler.update_state">
+<span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stopped'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/ManafaProfiler.html#ManafaProfiler.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.ManafaProfiler.ManafaProfiler.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>does nothing.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.profiler.NoneProfiler">
+<span id="anadroid-profiler-noneprofiler-module"></span><h2>anadroid.profiler.NoneProfiler module<a class="headerlink" href="#module-anadroid.profiler.NoneProfiler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.profiler.NoneProfiler.</span></span><span class="sig-name descname"><span class="pre">NoneProfiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">power_profile</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timezone</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hunter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler" title="anadroid.profiler.AbstractProfiler.AbstractProfiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.profiler.AbstractProfiler.AbstractProfiler</span></code></a></p>
+<p>Mock Profiler interaction.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.export_results">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.export_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>export profiling session results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.get_dependencies_location">
+<span class="sig-name descname"><span class="pre">get_dependencies_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.get_dependencies_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.get_dependencies_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>return location of dependencies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to setup profiler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.install_profiler">
+<span class="sig-name descname"><span class="pre">install_profiler</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.install_profiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.install_profiler" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.needs_external_dependencies">
+<span class="sig-name descname"><span class="pre">needs_external_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.needs_external_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.needs_external_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if external dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.pull_results">
+<span class="sig-name descname"><span class="pre">pull_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.pull_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.pull_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.start_profiling">
+<span class="sig-name descname"><span class="pre">start_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.start_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.start_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to start profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.stop_profiling">
+<span class="sig-name descname"><span class="pre">stop_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.stop_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.stop_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to stop profiling session.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.NoneProfiler.NoneProfiler.update_state">
+<span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stopped'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/NoneProfiler.html#NoneProfiler.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.NoneProfiler.NoneProfiler.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>log states/events during profiling session.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.profiler.TrepnProfiler">
+<span id="anadroid-profiler-trepnprofiler-module"></span><h2>anadroid.profiler.TrepnProfiler module<a class="headerlink" href="#module-anadroid.profiler.TrepnProfiler" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.profiler.TrepnProfiler.</span></span><span class="sig-name descname"><span class="pre">TrepnProfiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.profiler.AbstractProfiler.AbstractProfiler" title="anadroid.profiler.AbstractProfiler.AbstractProfiler"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.profiler.AbstractProfiler.AbstractProfiler</span></code></a></p>
+<p>Implements AbstractProfiler interface to allow profiling with Trepn profiler and TrepnLib.
+Provides a set of methods that allow to manage a profiling session lifecycle.
+.. attribute:: local_dep_location</p>
+<blockquote>
+<div><p>location of trepn apk.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.export_results">
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">out_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'trepnfile.csv'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.export_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>export results of the previous profiing session.
+:param out_filename: output filepath.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>output filepath.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>out_filename</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.get_dependencies_location">
+<span class="sig-name descname"><span class="pre">get_dependencies_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.get_dependencies_location"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.get_dependencies_location" title="Permalink to this definition">¶</a></dt>
+<dd><p>return location of dependencies.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.get_last_run_duration">
+<span class="sig-name descname"><span class="pre">get_last_run_duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.get_last_run_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.get_last_run_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>method to setup profiler.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.install_profiler">
+<span class="sig-name descname"><span class="pre">install_profiler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_loc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/profilers/Trepn/apks/com.quicinc.trepn-6.2-APK4Fun.com.apk'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.install_profiler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.install_profiler" title="Permalink to this definition">¶</a></dt>
+<dd><p>install trepn profiler on device.
+:param apk_loc: apk location.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.load_preferences_file">
+<span class="sig-name descname"><span class="pre">load_preferences_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pref_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.load_preferences_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.load_preferences_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>load trepn preferences file containing the list of resources to profile.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.log_run_duration">
+<span class="sig-name descname"><span class="pre">log_run_duration</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.log_run_duration"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.log_run_duration" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.needs_external_dependencies">
+<span class="sig-name descname"><span class="pre">needs_external_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.needs_external_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.needs_external_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if external dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.pull_results">
+<span class="sig-name descname"><span class="pre">pull_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.pull_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.pull_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>pull results from file</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_device_dir">
+<span class="sig-name descname"><span class="pre">setup_device_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.setup_device_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_device_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_trepn_device_dir">
+<span class="sig-name descname"><span class="pre">setup_trepn_device_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.setup_trepn_device_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_trepn_device_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>setup directory on device where results will be temporarly stored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.start_profiling">
+<span class="sig-name descname"><span class="pre">start_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.start_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.start_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>starts trepn service.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.stop_profiling">
+<span class="sig-name descname"><span class="pre">stop_profiling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.stop_profiling"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.stop_profiling" title="Permalink to this definition">¶</a></dt>
+<dd><p>stops trepn service.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.profiler.TrepnProfiler.TrepnProfiler.update_state">
+<span class="sig-name descname"><span class="pre">update_state</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">desc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'stopped'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/profiler/TrepnProfiler.html#TrepnProfiler.update_state"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.profiler.TrepnProfiler.TrepnProfiler.update_state" title="Permalink to this definition">¶</a></dt>
+<dd><p>updates state of trepn using activity manager.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.profiler">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.profiler" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="anadroid.profiler.greenScaler.html" class="btn btn-neutral float-right" title="anadroid.profiler.greenScaler package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="anadroid.instrument.html" class="btn btn-neutral float-left" title="anadroid.instrument package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

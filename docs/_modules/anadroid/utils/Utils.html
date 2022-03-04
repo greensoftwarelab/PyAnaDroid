@@ -1,0 +1,361 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.utils.Utils &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.utils.Utils</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.utils.Utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">Popen</span><span class="p">,</span> <span class="n">PIPE</span><span class="p">,</span> <span class="n">TimeoutExpired</span>
+
+<span class="kn">from</span> <span class="nn">manafa.utils.Logger</span> <span class="kn">import</span> <span class="n">LogSeverity</span>
+<span class="kn">from</span> <span class="nn">manafa.utils.Logger</span> <span class="kn">import</span> <span class="n">log</span> <span class="k">as</span> <span class="n">logm</span>
+
+<span class="kn">from</span> <span class="nn">textops</span> <span class="kn">import</span> <span class="n">find</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<div class="viewcode-block" id="get_reference_dir"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_reference_dir">[docs]</a><span class="k">def</span> <span class="nf">get_reference_dir</span><span class="p">(</span><span class="n">packname</span><span class="p">):</span>
+    <span class="n">base_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)))</span>
+    <span class="c1"># base_dir = sysconfig.get_path(&quot;purelib&quot;)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="n">packname</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_resources_dir"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_resources_dir">[docs]</a><span class="k">def</span> <span class="nf">get_resources_dir</span><span class="p">(</span><span class="n">packname</span><span class="o">=</span><span class="s2">&quot;anadroid&quot;</span><span class="p">,</span> <span class="n">default_res_dir</span><span class="o">=</span><span class="s2">&quot;resources&quot;</span><span class="p">):</span>
+    <span class="n">ref_dir</span> <span class="o">=</span> <span class="n">get_reference_dir</span><span class="p">(</span><span class="n">packname</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">ref_dir</span><span class="p">,</span> <span class="n">default_res_dir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_keystore_path"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_keystore_path">[docs]</a><span class="k">def</span> <span class="nf">get_keystore_path</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_resources_dir</span><span class="p">(),</span><span class="s2">&quot;keys&quot;</span><span class="p">,</span><span class="s2">&quot;pynadroid-releases.keystore&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_keystore_pwd"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_keystore_pwd">[docs]</a><span class="k">def</span> <span class="nf">get_keystore_pwd</span><span class="p">():</span>
+    <span class="k">return</span> <span class="s2">&quot;pynadroid&quot;</span></div>
+
+
+<div class="viewcode-block" id="get_general_config_dir"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_general_config_dir">[docs]</a><span class="k">def</span> <span class="nf">get_general_config_dir</span><span class="p">(</span><span class="n">packname</span><span class="o">=</span><span class="s2">&quot;anadroid&quot;</span><span class="p">,</span> <span class="n">default_res_dir</span><span class="o">=</span><span class="s2">&quot;resources&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_resources_dir</span><span class="p">(</span><span class="n">packname</span><span class="p">,</span> <span class="n">default_res_dir</span><span class="p">),</span> <span class="s2">&quot;config&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_pack_dir"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_pack_dir">[docs]</a><span class="k">def</span> <span class="nf">get_pack_dir</span><span class="p">(</span><span class="n">packname</span><span class="o">=</span><span class="s2">&quot;anadroid&quot;</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">get_reference_dir</span><span class="p">(</span><span class="n">packname</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_results_dir"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_results_dir">[docs]</a><span class="k">def</span> <span class="nf">get_results_dir</span><span class="p">(</span><span class="n">default_results_dir</span><span class="o">=</span><span class="s2">&quot;anadroid_results&quot;</span><span class="p">):</span>
+    <span class="n">ref_dir</span> <span class="o">=</span> <span class="n">default_results_dir</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">ref_dir</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">ref_dir</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">ref_dir</span></div>
+
+
+<div class="viewcode-block" id="extract_pkg_name_from_apk"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.extract_pkg_name_from_apk">[docs]</a><span class="k">def</span> <span class="nf">extract_pkg_name_from_apk</span><span class="p">(</span><span class="n">apkpath</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find $ANDROID_HOME/build-tools/ -name </span><span class="se">\&quot;</span><span class="s2">aapt</span><span class="se">\&quot;</span><span class="s2"> | head -1&quot;</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to find aapt executable&quot;</span><span class="p">))</span>
+    <span class="n">aapt_executable</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">aapt_executable</span><span class="si">}</span><span class="s2">  dump badging </span><span class="si">{</span><span class="n">apkpath</span><span class="si">}</span><span class="s2"> | grep &#39;package: name=&#39;&quot;</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error while executing aapt&quot;</span><span class="p">))</span>
+    <span class="n">pkg_name</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;name=&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">pkg_name</span></div>
+
+
+<div class="viewcode-block" id="extract_version_from_apk"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.extract_version_from_apk">[docs]</a><span class="k">def</span> <span class="nf">extract_version_from_apk</span><span class="p">(</span><span class="n">apkpath</span><span class="p">):</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find $ANDROID_HOME/build-tools/ -name </span><span class="se">\&quot;</span><span class="s2">aapt</span><span class="se">\&quot;</span><span class="s2"> | head -1&quot;</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to find aapt executable&quot;</span><span class="p">))</span>
+    <span class="n">aapt_executable</span> <span class="o">=</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">aapt_executable</span><span class="si">}</span><span class="s2">  dump badging </span><span class="si">{</span><span class="n">apkpath</span><span class="si">}</span><span class="s2"> | grep &#39;versionName=&#39;&quot;</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error while executing aapt&quot;</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;versionName=&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="get_date_str"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_date_str">[docs]</a><span class="k">def</span> <span class="nf">get_date_str</span><span class="p">():</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;date +</span><span class="se">\&quot;</span><span class="si">%d</span><span class="s2">_%m_%y_%H_%M_%S</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to get date&quot;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="get_apksigner_bin"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.get_apksigner_bin">[docs]</a><span class="k">def</span> <span class="nf">get_apksigner_bin</span><span class="p">():</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find $ANDROID_HOME/build-tools/ -name </span><span class="se">\&quot;</span><span class="s2">apksigner</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;No apksigner found&quot;</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="s2">&quot;$ANDROID_HOME/build-tools/30.0.3/apksigner&quot;</span></div>
+
+<div class="viewcode-block" id="sign_apk"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.sign_apk">[docs]</a><span class="k">def</span> <span class="nf">sign_apk</span><span class="p">(</span><span class="n">apk_path</span><span class="p">):</span>
+    <span class="c1"># deprecated after api 26: &quot;jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} &lt;&lt;&lt; \&quot;{passwd}\&quot;&quot;.format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)</span>
+    <span class="n">signer_bin</span> <span class="o">=</span> <span class="n">get_apksigner_bin</span><span class="p">()</span>
+    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="si">{signer_bin}</span><span class="s2"> sign --ks </span><span class="si">{keystore_path}</span><span class="s2"> </span><span class="si">{apk_path}</span><span class="s2"> &lt;&lt;&lt; </span><span class="si">{passwd}</span><span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+       <span class="n">signer_bin</span><span class="o">=</span><span class="n">signer_bin</span><span class="p">,</span>
+       <span class="n">keystore_path</span><span class="o">=</span><span class="n">get_keystore_path</span><span class="p">(),</span>
+       <span class="n">apk_path</span><span class="o">=</span><span class="n">apk_path</span><span class="p">,</span>
+       <span class="n">passwd</span><span class="o">=</span><span class="n">get_keystore_pwd</span><span class="p">()</span>
+    <span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+    <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="s2">&quot;error signing apk &quot;</span> <span class="o">+</span> <span class="n">apk_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="execute_shell_command"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.execute_shell_command">[docs]</a><span class="k">def</span> <span class="nf">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">timeout</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">command</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">cmd</span>
+    <span class="n">out</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+    <span class="n">err</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">()</span>
+    <span class="c1">#print(command)</span>
+    <span class="n">proc</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">out</span><span class="p">,</span> <span class="n">err</span> <span class="o">=</span> <span class="n">proc</span><span class="o">.</span><span class="n">communicate</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">timeout</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">TimeoutExpired</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;command &quot;</span> <span class="o">+</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot; timed out&quot;</span><span class="p">)</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">stdout</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">stdout</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">out</span>
+        <span class="n">err</span> <span class="o">=</span> <span class="n">e</span><span class="o">.</span><span class="n">stderr</span> <span class="k">if</span> <span class="n">e</span><span class="o">.</span><span class="n">stderr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">err</span>
+        <span class="n">proc</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span>
+        <span class="n">proc</span><span class="o">.</span><span class="n">returncode</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">COMMAND_RESULT</span><span class="p">(</span><span class="n">proc</span><span class="o">.</span><span class="n">returncode</span><span class="p">,</span> <span class="n">out</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="n">err</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s1">&#39;utf-8&#39;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="mega_find"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.mega_find">[docs]</a><span class="k">def</span> <span class="nf">mega_find</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">999</span><span class="p">,</span> <span class="n">mindepth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;n&#39;</span><span class="p">):</span>
+    <span class="n">basedir_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">basedir</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">find</span><span class="p">(</span><span class="n">basedir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="n">pattern</span><span class="p">,</span> <span class="n">only_files</span><span class="o">=</span><span class="n">type_file</span><span class="o">==</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">only_dirs</span><span class="o">=</span><span class="n">type_file</span><span class="o">==</span><span class="s1">&#39;d&#39;</span> <span class="p">)</span>
+    <span class="c1"># filter by depth</span>
+    <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">basedir_len</span> <span class="o">+</span> <span class="n">mindepth</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">))</span> <span class="o">&lt;=</span> <span class="n">maxdepth</span> <span class="o">+</span> <span class="n">basedir_len</span><span class="p">,</span> <span class="n">res</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="COMMAND_RESULT"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.COMMAND_RESULT">[docs]</a><span class="k">class</span> <span class="nc">COMMAND_RESULT</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">res</span><span class="p">,</span> <span class="n">out</span><span class="p">,</span> <span class="n">err</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">return_code</span> <span class="o">=</span> <span class="n">res</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output</span> <span class="o">=</span> <span class="n">out</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">err</span>
+
+<div class="viewcode-block" id="COMMAND_RESULT.validate"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.COMMAND_RESULT.validate">[docs]</a>    <span class="k">def</span> <span class="nf">validate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">e</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">return_code</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">errors</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">e</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+                <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="ne">Exception</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+                    <span class="k">raise</span> <span class="n">e</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">loge</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="kc">False</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1">#print(self)</span>
+                <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span>
+            <span class="p">{</span><span class="s1">&#39;return_code&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">return_code</span><span class="p">,</span>
+             <span class="s1">&#39;output&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+             <span class="s1">&#39;errors&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">errors</span>
+             <span class="p">})</span></div>
+
+
+<div class="viewcode-block" id="log_to_file"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.log_to_file">[docs]</a><span class="k">def</span> <span class="nf">log_to_file</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;a+&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">u</span><span class="p">:</span>
+        <span class="n">u</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">content</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="logi"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.logi">[docs]</a><span class="k">def</span> <span class="nf">logi</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">logm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="logw"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.logw">[docs]</a><span class="k">def</span> <span class="nf">logw</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">logm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="loge"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.loge">[docs]</a><span class="k">def</span> <span class="nf">loge</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">logm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="logf"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.logf">[docs]</a><span class="k">def</span> <span class="nf">logf</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">logm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">FATAL</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="logs"><a class="viewcode-back" href="../../../anadroid.utils.html#anadroid.utils.Utils.logs">[docs]</a><span class="k">def</span> <span class="nf">logs</span><span class="p">(</span><span class="n">message</span><span class="p">):</span>
+    <span class="n">logm</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

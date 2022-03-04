@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.instrument package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">anadroid.instrument package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-anadroid.instrument.AbstractInstrumenter">anadroid.instrument.AbstractInstrumenter module</a></li>
+<li><a class="reference internal" href="#module-anadroid.instrument.JInstInstrumenter">anadroid.instrument.JInstInstrumenter module</a></li>
+<li><a class="reference internal" href="#module-anadroid.instrument.NoneInstrumenter">anadroid.instrument.NoneInstrumenter module</a></li>
+<li><a class="reference internal" href="#module-anadroid.instrument.Types">anadroid.instrument.Types module</a></li>
+<li><a class="reference internal" href="#module-anadroid.instrument">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>anadroid.instrument package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.instrument.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-instrument-package">
+<h1>anadroid.instrument package<a class="headerlink" href="#anadroid-instrument-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.instrument.AbstractInstrumenter">
+<span id="anadroid-instrument-abstractinstrumenter-module"></span><h2>anadroid.instrument.AbstractInstrumenter module<a class="headerlink" href="#module-anadroid.instrument.AbstractInstrumenter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.instrument.AbstractInstrumenter.</span></span><span class="sig-name descname"><span class="pre">AbstractInstrumenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mirror_dirname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_TRANSFORMED_'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Provides basic interface to perform instrumentation of project sources of Android projects.
+.. attribute:: profiler</p>
+<blockquote>
+<div><p>targeted profiler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>Profiler</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.mirror_dirname">
+<span class="sig-name descname"><span class="pre">mirror_dirname</span></span><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.mirror_dirname" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the directory where the changes will be performed.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_classpaths">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.get_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed gradle dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_dependencies">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_build_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.get_build_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_plugins">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_build_plugins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.get_build_plugins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_build_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build plugins for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_instrumentation_log">
+<span class="sig-name descname"><span class="pre">get_instrumentation_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.get_instrumentation_log"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_instrumentation_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>loads information from the file containing the specs of the last instrumentation performed.
+:param proj: project.
+:type proj: AndroidProject</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>last instrumentation specs.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_log_filename">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_log_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.get_log_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.get_log_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the name of the log file where the instrumentation output will be written.
+:returns: name of the file.
+:rtype: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.init">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>inits class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.instrument">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">android_project</span></em>, <em class="sig-param"><span class="pre">mirror_dirname='_TRANSFORMED_'</span></em>, <em class="sig-param"><span class="pre">test_approach=&lt;TESTING_APPROACH.WHITEBOX:</span> <span class="pre">'WhiteBox'&gt;</span></em>, <em class="sig-param"><span class="pre">test_frame=&lt;TESTING_FRAMEWORK.MONKEY:</span> <span class="pre">'Monkey'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_strategy=&lt;INSTRUMENTATION_STRATEGY.METHOD_CALL:</span> <span class="pre">'Method</span> <span class="pre">Call'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_type=&lt;INSTRUMENTATION_TYPE.TEST:</span> <span class="pre">'TestOriented'&gt;</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.instrument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method responsible for instrument project sources.
+:param android_project: the project to instrument.
+:type android_project: AndroidProject
+:param mirror_dirname: name of the directory where the changes will be performed.
+:type mirror_dirname: str
+:param test_approach: testing approach.
+:type test_approach: TESTING_APPROACH
+:param test_frame: the testing framework to be used.
+:type test_frame: TESTING_FRAMEWORK
+:param instr_strategy: instrumentation strategy to perform.
+:type instr_strategy: INSTRUMENTATION_STRATEGY
+:param instr_type: type of instrumentation.
+:type instr_type: INSTRUMENTATION_TYPE
+:param **kwargs:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_classpaths">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">needs_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.needs_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional gradle dependencies are needed for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_dependency">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">needs_build_dependency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.needs_build_dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_dependency" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional build dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_plugin">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">needs_build_plugin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.needs_build_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_build_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if a build plugin is needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_reinstrumentation">
+<span class="sig-name descname"><span class="pre">needs_reinstrumentation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_approach</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instr_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instr_strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.needs_reinstrumentation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.needs_reinstrumentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if the project needs to be instrumented again (i.e. if the last instrumentation performed
+is equal to the instrumentation to be performed).
+:param proj: project.
+:type proj: AndroidProject
+:param test_approach: testing approach.
+:type test_approach: TESTING_APPROACH
+:param instr_strategy: instrumentation strategy to perform.
+:type instr_strategy: INSTRUMENTATION_STRATEGY
+:param instr_type: type of instrumentation.
+:type instr_type: INSTRUMENTATION_TYPE</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if needs to be instrumented again, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.write_instrumentation_log_file">
+<span class="sig-name descname"><span class="pre">write_instrumentation_log_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_approach</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instr_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instr_strategy</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/AbstractInstrumenter.html#AbstractInstrumenter.write_instrumentation_log_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter.write_instrumentation_log_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>write instrumentation attributes to  a file.
+This file is inspected when there is need to evaluate if there is need to instrument again.
+:param proj:
+:param test_approach:
+:param instr_type:
+:param instr_strategy:</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.instrument.JInstInstrumenter">
+<span id="anadroid-instrument-jinstinstrumenter-module"></span><h2>anadroid.instrument.JInstInstrumenter module<a class="headerlink" href="#module-anadroid.instrument.JInstInstrumenter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.instrument.JInstInstrumenter.</span></span><span class="sig-name descname"><span class="pre">JInstInstrumenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">profiler</span></em>, <em class="sig-param"><span class="pre">mirror_dirname='_TRANSFORMED_'</span></em>, <em class="sig-param"><span class="pre">build_system=&lt;BUILD_SYSTEM.GRADLE:</span> <span class="pre">'Gradle'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter" title="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter</span></code></a></p>
+<p>Implements defined interface of AbstractInstrumenter to perform source code instrumentation with JInst.
+.. attribute:: build_system</p>
+<blockquote>
+<div><p>build system to be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>BUILD_SYSTEM</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.build_dependencies">
+<span class="sig-name descname"><span class="pre">build_dependencies</span></span><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.build_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of build dependencies to insert in project’ build files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.classpath_dependencies">
+<span class="sig-name descname"><span class="pre">classpath_dependencies</span></span><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.classpath_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>set of classpath dependencies to insert in project’ build files.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.build_plugins">
+<span class="sig-name descname"><span class="pre">build_plugins</span></span><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.build_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>set of build plugins to insert in project’ build files</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_classpaths">
+<span class="sig-name descname"><span class="pre">get_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.get_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed gradle dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_dependencies">
+<span class="sig-name descname"><span class="pre">get_build_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.get_build_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_plugins">
+<span class="sig-name descname"><span class="pre">get_build_plugins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.get_build_plugins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_build_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build plugins for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_log_filename">
+<span class="sig-name descname"><span class="pre">get_log_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.get_log_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.get_log_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the name of the log file where the instrumentation output will be written.
+:returns: name of the file.
+:rtype: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>inits class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.instrument">
+<span class="sig-name descname"><span class="pre">instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">android_project</span></em>, <em class="sig-param"><span class="pre">mirror_dirname='_TRANSFORMED_'</span></em>, <em class="sig-param"><span class="pre">test_approach=&lt;TESTING_APPROACH.WHITEBOX:</span> <span class="pre">'WhiteBox'&gt;</span></em>, <em class="sig-param"><span class="pre">test_frame=&lt;TESTING_FRAMEWORK.MONKEY:</span> <span class="pre">'Monkey'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_strategy=&lt;INSTRUMENTATION_STRATEGY.METHOD_CALL:</span> <span class="pre">'Method</span> <span class="pre">Call'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_type=&lt;INSTRUMENTATION_TYPE.TEST:</span> <span class="pre">'TestOriented'&gt;</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.instrument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method responsible for instrument project sources.
+:param android_project: the project to instrument.
+:type android_project: AndroidProject
+:param mirror_dirname: name of the directory where the changes will be performed.
+:type mirror_dirname: str
+:param test_approach: testing approach.
+:type test_approach: TESTING_APPROACH
+:param test_frame: the testing framework to be used.
+:type test_frame: TESTING_FRAMEWORK
+:param instr_strategy: instrumentation strategy to perform.
+:type instr_strategy: INSTRUMENTATION_STRATEGY
+:param instr_type: type of instrumentation.
+:type instr_type: INSTRUMENTATION_TYPE
+:param **kwargs:</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_classpaths">
+<span class="sig-name descname"><span class="pre">needs_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.needs_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional gradle dependencies are needed for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_dependency">
+<span class="sig-name descname"><span class="pre">needs_build_dependency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.needs_build_dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_dependency" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional build dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_plugin">
+<span class="sig-name descname"><span class="pre">needs_build_plugin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/JInstInstrumenter.html#JInstInstrumenter.needs_build_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.JInstInstrumenter.JInstInstrumenter.needs_build_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if a build plugin is needed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.instrument.NoneInstrumenter">
+<span id="anadroid-instrument-noneinstrumenter-module"></span><h2>anadroid.instrument.NoneInstrumenter module<a class="headerlink" href="#module-anadroid.instrument.NoneInstrumenter" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.instrument.NoneInstrumenter.</span></span><span class="sig-name descname"><span class="pre">NoneInstrumenter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mirror_dirname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'_TRANSFORMED_'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter" title="anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.instrument.AbstractInstrumenter.AbstractInstrumenter</span></code></a></p>
+<p>Implements defined interface of AbstractInstrumenter to simulate instrumentation while not performing any
+project sources’ changes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_classpaths">
+<span class="sig-name descname"><span class="pre">get_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.get_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed gradle dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_dependencies">
+<span class="sig-name descname"><span class="pre">get_build_dependencies</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.get_build_dependencies"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_dependencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build dependencies for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_plugins">
+<span class="sig-name descname"><span class="pre">get_build_plugins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.get_build_plugins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_build_plugins" title="Permalink to this definition">¶</a></dt>
+<dd><p>retrieves the needed build plugins for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_log_filename">
+<span class="sig-name descname"><span class="pre">get_log_filename</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.get_log_filename"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.get_log_filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns the name of the log file where the instrumentation output will be written.
+:returns: name of the file.
+:rtype: str</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.init">
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>inits class.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.instrument">
+<span class="sig-name descname"><span class="pre">instrument</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">android_project</span></em>, <em class="sig-param"><span class="pre">mirror_dirname='_TRANSFORMED_'</span></em>, <em class="sig-param"><span class="pre">test_approach=&lt;TESTING_APPROACH.WHITEBOX:</span> <span class="pre">'WhiteBox'&gt;</span></em>, <em class="sig-param"><span class="pre">test_frame=&lt;TESTING_FRAMEWORK.MONKEY:</span> <span class="pre">'Monkey'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_strategy=&lt;INSTRUMENTATION_STRATEGY.METHOD_CALL:</span> <span class="pre">'Method</span> <span class="pre">Call'&gt;</span></em>, <em class="sig-param"><span class="pre">instr_type=&lt;INSTRUMENTATION_TYPE.TEST:</span> <span class="pre">'TestOriented'&gt;</span></em>, <em class="sig-param"><span class="pre">**kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.instrument"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.instrument" title="Permalink to this definition">¶</a></dt>
+<dd><p>just clone the project files to a new directory.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_classpaths">
+<span class="sig-name descname"><span class="pre">needs_build_classpaths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.needs_build_classpaths"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_classpaths" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional gradle dependencies are needed for the performed instrumentation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_dependency">
+<span class="sig-name descname"><span class="pre">needs_build_dependency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.needs_build_dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_dependency" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if additional build dependencies are needed.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_plugin">
+<span class="sig-name descname"><span class="pre">needs_build_plugin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/NoneInstrumenter.html#NoneInstrumenter.needs_build_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.NoneInstrumenter.NoneInstrumenter.needs_build_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>checks if a build plugin is needed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.instrument.Types">
+<span id="anadroid-instrument-types-module"></span><h2>anadroid.instrument.Types module<a class="headerlink" href="#module-anadroid.instrument.Types" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_STRATEGY">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.instrument.Types.</span></span><span class="sig-name descname"><span class="pre">INSTRUMENTATION_STRATEGY</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/Types.html#INSTRUMENTATION_STRATEGY"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_STRATEGY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerate the instrumentation strategies that can be applied</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.ANNOTATION">
+<span class="sig-name descname"><span class="pre">ANNOTATION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Annotation'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.ANNOTATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.BLOCK">
+<span class="sig-name descname"><span class="pre">BLOCK</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Block'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.BLOCK" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.METHOD_CALL">
+<span class="sig-name descname"><span class="pre">METHOD_CALL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Method</span> <span class="pre">Call'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_STRATEGY.METHOD_CALL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.instrument.Types.</span></span><span class="sig-name descname"><span class="pre">INSTRUMENTATION_TYPE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/instrument/Types.html#INSTRUMENTATION_TYPE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerate the type of instrumentation that can be performed</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE.ACTIVITY">
+<span class="sig-name descname"><span class="pre">ACTIVITY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">('ActivityOriented',)</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE.ACTIVITY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE.ANNOTATION">
+<span class="sig-name descname"><span class="pre">ANNOTATION</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'AnnotationOriented'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE.ANNOTATION" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE.METHOD">
+<span class="sig-name descname"><span class="pre">METHOD</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'MethodOriented'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE.METHOD" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'None'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.instrument.Types.INSTRUMENTATION_TYPE.TEST">
+<span class="sig-name descname"><span class="pre">TEST</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'TestOriented'</span></em><a class="headerlink" href="#anadroid.instrument.Types.INSTRUMENTATION_TYPE.TEST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.instrument">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.instrument" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

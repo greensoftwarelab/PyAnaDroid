@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.application package" href="anadroid.application.html" />
+    <link rel="prev" title="anadroid" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">anadroid package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anadroid-anadroid-module">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#anadroid-main-module">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-anadroid">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">anadroid</a> &raquo;</li>
+        
+      <li>anadroid package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-package">
+<h1>anadroid package<a class="headerlink" href="#anadroid-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application.AbstractApplication">anadroid.application.AbstractApplication module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application.AndroidProject">anadroid.application.AndroidProject module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application.Application">anadroid.application.Application module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application.Dependency">anadroid.application.Dependency module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application.ProjectModule">anadroid.application.ProjectModule module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.application.html#module-anadroid.application">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build.AbstractBuilder">anadroid.build.AbstractBuilder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build.GracleBuildErrorSolver">anadroid.build.GracleBuildErrorSolver module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build.GradleBuilder">anadroid.build.GradleBuilder module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build.SdkManagerWrapper">anadroid.build.SdkManagerWrapper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build.versionUpgrader">anadroid.build.versionUpgrader module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.build.html#module-anadroid.build">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#module-anadroid.device.AbstractDevice">anadroid.device.AbstractDevice module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#module-anadroid.device.Device">anadroid.device.Device module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#module-anadroid.device.DeviceState">anadroid.device.DeviceState module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#module-anadroid.device.MockedDevice">anadroid.device.MockedDevice module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.device.html#module-anadroid.device">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#module-anadroid.instrument.AbstractInstrumenter">anadroid.instrument.AbstractInstrumenter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#module-anadroid.instrument.JInstInstrumenter">anadroid.instrument.JInstInstrumenter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#module-anadroid.instrument.NoneInstrumenter">anadroid.instrument.NoneInstrumenter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#module-anadroid.instrument.Types">anadroid.instrument.Types module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.instrument.html#module-anadroid.instrument">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.profiler.greenScaler.html">anadroid.profiler.greenScaler package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.greenScaler.html#module-anadroid.profiler.greenScaler">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#module-anadroid.profiler.AbstractProfiler">anadroid.profiler.AbstractProfiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#anadroid-profiler-greenscalerprofiler-module">anadroid.profiler.GreenScalerProfiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#module-anadroid.profiler.ManafaProfiler">anadroid.profiler.ManafaProfiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#module-anadroid.profiler.NoneProfiler">anadroid.profiler.NoneProfiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#module-anadroid.profiler.TrepnProfiler">anadroid.profiler.TrepnProfiler module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.profiler.html#module-anadroid.profiler">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.resources.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.bin.html">anadroid.resources.bin package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.bin.html#module-anadroid.resources.bin">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.build.html">anadroid.resources.build package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.build.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.build.html#module-anadroid.resources.build">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.config.html">anadroid.resources.config package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.config.html#module-anadroid.resources.config">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.jars.html">anadroid.resources.jars package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.jars.html#module-anadroid.resources.jars">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.keys.html">anadroid.resources.keys package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.keys.html#module-anadroid.resources.keys">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.profilers.html">anadroid.resources.profilers package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.profilers.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.profilers.html#module-anadroid.resources.profilers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.resources.testingFrameworks.html">anadroid.resources.testingFrameworks package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.testingFrameworks.html#subpackages">Subpackages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.testingFrameworks.html#module-anadroid.resources.testingFrameworks">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.resources.html#module-anadroid.resources">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.results_analysis.filters.html">anadroid.results_analysis.filters package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.filters.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters.Filter">anadroid.results_analysis.filters.Filter module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters.Filters">anadroid.results_analysis.filters.Filters module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis.AbstractAnalyzer">anadroid.results_analysis.AbstractAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#anadroid-results-analysis-apkapianalyzer-module">anadroid.results_analysis.ApkAPIAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis.ComposedAnalyzer">anadroid.results_analysis.ComposedAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis.HunterAnalyzer">anadroid.results_analysis.HunterAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#anadroid-results-analysis-loganalyzer-module">anadroid.results_analysis.LogAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis.ManafaAnalyzer">anadroid.results_analysis.ManafaAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#anadroid-results-analysis-oldanadroidanalyzer-module">anadroid.results_analysis.OldAnaDroidAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis.SCCAnalyzer">anadroid.results_analysis.SCCAnalyzer module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.html#module-anadroid.results_analysis">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.test.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.test.build.html">anadroid.test.build package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.build.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.build.html#anadroid-test-build-test-build-demos-module">anadroid.test.build.test_build_demos module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.build.html#module-anadroid.test.build">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.test.device.html">anadroid.test.device package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.device.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.device.html#anadroid-test-device-test-device-module">anadroid.test.device.test_Device module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.device.html#anadroid-test-device-test-devicestate-module">anadroid.test.device.test_DeviceState module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.device.html#module-anadroid.test.device">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.test.dummy.html">anadroid.test.dummy package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.dummy.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.dummy.html#module-anadroid.test.dummy.test_dummy">anadroid.test.dummy.test_dummy module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.dummy.html#module-anadroid.test.dummy">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.test.html#module-anadroid.test">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html">anadroid.testing_framework.work package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AbstractWorkLoad">anadroid.testing_framework.work.AbstractWorkLoad module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AppCrawlerWorkUnit">anadroid.testing_framework.work.AppCrawlerWorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.DroidBotWorkUnit">anadroid.testing_framework.work.DroidBotWorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">anadroid.testing_framework.work.MonkeyRunnerWorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyWorkUnit">anadroid.testing_framework.work.MonkeyWorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.RERANWorkUnit">anadroid.testing_framework.work.RERANWorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkLoad">anadroid.testing_framework.work.WorkLoad module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkUnit">anadroid.testing_framework.work.WorkUnit module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.AbstractTestingFramework">anadroid.testing_framework.AbstractTestingFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.AppCrawlerFramework">anadroid.testing_framework.AppCrawlerFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.DroidBotFramework">anadroid.testing_framework.DroidBotFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.JUnitBasedFramework">anadroid.testing_framework.JUnitBasedFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.MonkeyFramework">anadroid.testing_framework.MonkeyFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.MonkeyRunnerFramework">anadroid.testing_framework.MonkeyRunnerFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework.RERANFramework">anadroid.testing_framework.RERANFramework module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.html#module-anadroid.testing_framework">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.utils.html#module-anadroid.utils.Utils">anadroid.utils.Utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.utils.html#module-anadroid.utils">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.view.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.view.cli.html">anadroid.view.cli package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.cli.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.cli.html#module-anadroid.view.cli.CliView">anadroid.view.cli.CliView module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.cli.html#module-anadroid.view.cli">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.view.html.html">anadroid.view.html package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html.html#module-anadroid.view.html">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.view.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.view.html#module-anadroid.view.AbstractView">anadroid.view.AbstractView module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.view.html#module-anadroid.view">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="anadroid-anadroid-module">
+<h2>anadroid.Anadroid module<a class="headerlink" href="#anadroid-anadroid-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.Config">
+<span id="anadroid-config-module"></span><h2>anadroid.Config module<a class="headerlink" href="#module-anadroid.Config" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.Config.get_general_config">
+<span class="sig-prename descclassname"><span class="pre">anadroid.Config.</span></span><span class="sig-name descname"><span class="pre">get_general_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/config/general_config.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Config.html#get_general_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Config.get_general_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.Config.set_general_config">
+<span class="sig-prename descclassname"><span class="pre">anadroid.Config.</span></span><span class="sig-name descname"><span class="pre">set_general_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cfg_type</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cfg_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/config/general_config.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Config.html#set_general_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Config.set_general_config" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.Types">
+<span id="anadroid-types-module"></span><h2>anadroid.Types module<a class="headerlink" href="#module-anadroid.Types" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.ANALYZER">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">ANALYZER</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#ANALYZER"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.ANALYZER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates the supported analyzers</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.ANALYZER.MANAFA_ANALYZER">
+<span class="sig-name descname"><span class="pre">MANAFA_ANALYZER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Manafa</span> <span class="pre">Analyzer'</span></em><a class="headerlink" href="#anadroid.Types.ANALYZER.MANAFA_ANALYZER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.ANALYZER.OLD_ANADROID_ANALYZER">
+<span class="sig-name descname"><span class="pre">OLD_ANADROID_ANALYZER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Old</span> <span class="pre">Anadroid</span> <span class="pre">Analyzer'</span></em><a class="headerlink" href="#anadroid.Types.ANALYZER.OLD_ANADROID_ANALYZER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.BUILD_SYSTEM">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">BUILD_SYSTEM</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#BUILD_SYSTEM"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.BUILD_SYSTEM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates the build systems that can be used to build Android apps.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.BUILD_SYSTEM.ANT">
+<span class="sig-name descname"><span class="pre">ANT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Ant'</span></em><a class="headerlink" href="#anadroid.Types.BUILD_SYSTEM.ANT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.BUILD_SYSTEM.GRADLE">
+<span class="sig-name descname"><span class="pre">GRADLE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Gradle'</span></em><a class="headerlink" href="#anadroid.Types.BUILD_SYSTEM.GRADLE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.BUILD_SYSTEM.MAVEN">
+<span class="sig-name descname"><span class="pre">MAVEN</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Maven'</span></em><a class="headerlink" href="#anadroid.Types.BUILD_SYSTEM.MAVEN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.BUILD_SYSTEM.UNKNOWN">
+<span class="sig-name descname"><span class="pre">UNKNOWN</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Unknown'</span></em><a class="headerlink" href="#anadroid.Types.BUILD_SYSTEM.UNKNOWN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.INSTRUMENTER">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">INSTRUMENTER</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#INSTRUMENTER"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.INSTRUMENTER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates sota instrumentation tools.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.INSTRUMENTER.HUNTER">
+<span class="sig-name descname"><span class="pre">HUNTER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Hunter'</span></em><a class="headerlink" href="#anadroid.Types.INSTRUMENTER.HUNTER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.INSTRUMENTER.JINST">
+<span class="sig-name descname"><span class="pre">JINST</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'JInst'</span></em><a class="headerlink" href="#anadroid.Types.INSTRUMENTER.JINST" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.INSTRUMENTER.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'None'</span></em><a class="headerlink" href="#anadroid.Types.INSTRUMENTER.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">PROFILER</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#PROFILER"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.PROFILER" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates sota energy profilers.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.GREENSCALER">
+<span class="sig-name descname"><span class="pre">GREENSCALER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'GreenScaler'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.GREENSCALER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.MANAFA">
+<span class="sig-name descname"><span class="pre">MANAFA</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'E-manafa'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.MANAFA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.MONSOON">
+<span class="sig-name descname"><span class="pre">MONSOON</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Monsoon'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.MONSOON" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'None'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.PETRA">
+<span class="sig-name descname"><span class="pre">PETRA</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Petra'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.PETRA" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.PROFILER.TREPN">
+<span class="sig-name descname"><span class="pre">TREPN</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Trepn'</span></em><a class="headerlink" href="#anadroid.Types.PROFILER.TREPN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_APPROACH">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">TESTING_APPROACH</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#TESTING_APPROACH"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.TESTING_APPROACH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates the 3 testing approaches.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_APPROACH.BLACKBOX">
+<span class="sig-name descname"><span class="pre">BLACKBOX</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'BlackBox'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_APPROACH.BLACKBOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_APPROACH.GREYBOX">
+<span class="sig-name descname"><span class="pre">GREYBOX</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'GreyBox'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_APPROACH.GREYBOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_APPROACH.WHITEBOX">
+<span class="sig-name descname"><span class="pre">WHITEBOX</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'WhiteBox'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_APPROACH.WHITEBOX" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.Types.</span></span><span class="sig-name descname"><span class="pre">TESTING_FRAMEWORK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/Types.html#TESTING_FRAMEWORK"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Enumerates supported testing frameworks</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.APP_CRAWLER">
+<span class="sig-name descname"><span class="pre">APP_CRAWLER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Crawler'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.APP_CRAWLER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.DROIDBOT">
+<span class="sig-name descname"><span class="pre">DROIDBOT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Droidbot'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.DROIDBOT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.ESPRESSO">
+<span class="sig-name descname"><span class="pre">ESPRESSO</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Espresso'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.ESPRESSO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.JUNIT">
+<span class="sig-name descname"><span class="pre">JUNIT</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'JUnit'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.JUNIT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.MONKEY">
+<span class="sig-name descname"><span class="pre">MONKEY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Monkey'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.MONKEY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.MONKEY_RUNNER">
+<span class="sig-name descname"><span class="pre">MONKEY_RUNNER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Monkeyrunner'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.MONKEY_RUNNER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.OTHER">
+<span class="sig-name descname"><span class="pre">OTHER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Other'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.OTHER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.RERAN">
+<span class="sig-name descname"><span class="pre">RERAN</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'RERAN'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.RERAN" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.Types.TESTING_FRAMEWORK.ROBOTIUM">
+<span class="sig-name descname"><span class="pre">ROBOTIUM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Robotium'</span></em><a class="headerlink" href="#anadroid.Types.TESTING_FRAMEWORK.ROBOTIUM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="anadroid-main-module">
+<h2>anadroid.main module<a class="headerlink" href="#anadroid-main-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="anadroid.application.html" class="btn btn-neutral float-right" title="anadroid.application package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="modules.html" class="btn btn-neutral float-left" title="anadroid" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

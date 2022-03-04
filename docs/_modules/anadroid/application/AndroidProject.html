@@ -1,0 +1,456 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.application.AndroidProject &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.application.AndroidProject</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.application.AndroidProject</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">mkdir</span><span class="p">,</span> <span class="n">listdir</span>
+
+<span class="kn">from</span> <span class="nn">textops</span> <span class="kn">import</span> <span class="n">cat</span><span class="p">,</span> <span class="n">grep</span><span class="p">,</span> <span class="n">cut</span><span class="p">,</span> <span class="n">sed</span><span class="p">,</span> <span class="n">echo</span><span class="p">,</span> <span class="n">grepv</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.application.Application</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">anadroid.application.ProjectModule</span> <span class="kn">import</span> <span class="n">ProjectModule</span>
+<span class="kn">from</span> <span class="nn">anadroid.build.versionUpgrader</span> <span class="kn">import</span> <span class="n">DefaultSemanticVersion</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">mega_find</span><span class="p">,</span> <span class="n">get_results_dir</span><span class="p">,</span> <span class="n">extract_version_from_apk</span>
+
+<span class="n">RESULTS_DIR</span> <span class="o">=</span> <span class="n">get_results_dir</span><span class="p">()</span>
+
+<div class="viewcode-block" id="BUILD_TYPE"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.BUILD_TYPE">[docs]</a><span class="k">class</span> <span class="nc">BUILD_TYPE</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">RELEASE</span> <span class="o">=</span> <span class="s2">&quot;Release&quot;</span>
+    <span class="n">DEBUG</span> <span class="o">=</span> <span class="s2">&quot;Debug&quot;</span>
+    <span class="n">CUSTOM</span> <span class="o">=</span> <span class="s2">&quot;Custom&quot;</span></div>
+
+<div class="viewcode-block" id="BUILD_FLAVOR"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.BUILD_FLAVOR">[docs]</a><span class="k">class</span> <span class="nc">BUILD_FLAVOR</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="n">DEMO</span> <span class="o">=</span> <span class="s2">&quot;Demo&quot;</span>
+    <span class="n">FULL</span> <span class="o">=</span> <span class="s2">&quot;full&quot;</span>
+    <span class="n">CUSTOM</span> <span class="o">=</span> <span class="s2">&quot;Custom&quot;</span>
+    <span class="n">NONE</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span> <span class="c1">#just defaultconfig ?</span></div>
+
+
+<div class="viewcode-block" id="mk_ma_dir"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.mk_ma_dir">[docs]</a><span class="k">def</span> <span class="nf">mk_ma_dir</span><span class="p">(</span><span class="n">path</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="is_android_project"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.is_android_project">[docs]</a><span class="k">def</span> <span class="nf">is_android_project</span><span class="p">(</span><span class="n">dirpath</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;determines if a given directory is an Android Project.</span>
+<span class="sd">    looks for settings.gradle files.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        dirpath: path of the directory.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        bool: True if file is in diretory, False otherwise.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;settings.gradle&quot;</span> <span class="ow">in</span> <span class="p">[</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">dirpath</span><span class="p">)]</span></div>
+
+<div class="viewcode-block" id="Project"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.Project">[docs]</a><span class="k">class</span> <span class="nc">Project</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that abstracts Projects.</span>
+
+<span class="sd">   Attributes:</span>
+<span class="sd">       projname: project name.</span>
+<span class="sd">       projir: project directory.</span>
+<span class="sd">       results_dir: directory where to store project&#39; results.</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projname</span><span class="p">,</span> <span class="n">projdir</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="n">RESULTS_DIR</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj_name</span> <span class="o">=</span> <span class="n">projname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span> <span class="o">=</span> <span class="n">projdir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_dir</span> <span class="o">=</span> <span class="n">results_dir</span>
+
+<div class="viewcode-block" id="Project.init_results_dir"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.Project.init_results_dir">[docs]</a>    <span class="k">def</span> <span class="nf">init_results_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;inits results dir.</span>
+<span class="sd">        Create directory if not exists.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            app_id: project&#39;s app id.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res_app_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">results_dir</span><span class="p">,</span> <span class="n">app_id</span><span class="p">)</span>
+        <span class="n">mk_ma_dir</span><span class="p">(</span><span class="n">res_app_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_dir</span> <span class="o">=</span> <span class="n">res_app_dir</span></div>
+
+<div class="viewcode-block" id="Project.clean_trasformations"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.Project.clean_trasformations">[docs]</a>    <span class="k">def</span> <span class="nf">clean_trasformations</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;remove previous project&#39; transformations from project sources.&quot;&quot;&quot;</span>
+        <span class="n">transforms</span> <span class="o">=</span> <span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*TRANSFORMED*&quot;</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;d&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">transforms</span><span class="p">:</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">rmtree</span><span class="p">(</span><span class="n">t</span><span class="p">)</span></div></div>
+
+<div class="viewcode-block" id="AndroidProject"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject">[docs]</a><span class="k">class</span> <span class="nc">AndroidProject</span><span class="p">(</span><span class="n">Project</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that abstracts Android Projects.</span>
+
+<span class="sd">       Attributes:</span>
+<span class="sd">           projname: project name.</span>
+<span class="sd">           projir: project directory.</span>
+<span class="sd">           results_dir: directory where to store project&#39; results.</span>
+<span class="sd">           root_build_file = project level gradle file.</span>
+<span class="sd">           main_manif_file = project manifest file.</span>
+<span class="sd">           tests_manif_file = manifest of test project.</span>
+
+
+<span class="sd">       &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">projname</span><span class="p">,</span> <span class="n">projdir</span><span class="p">,</span><span class="n">results_dir</span><span class="o">=</span><span class="n">RESULTS_DIR</span><span class="p">,</span> <span class="n">clean_instrumentations</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">AndroidProject</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">projname</span><span class="o">=</span><span class="n">projname</span><span class="p">,</span> <span class="n">projdir</span><span class="o">=</span><span class="n">projdir</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="n">results_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">root_build_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_root_build_file</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">main_manif_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_main_manif_file</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tests_manif_file</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">modules</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_modules</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_id</span><span class="p">,</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__gen_proj_id</span><span class="p">()</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">init_results_dir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj_version</span> <span class="o">=</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="s2">&quot;0.0&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apks</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Test&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Debug&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Release&#39;</span><span class="p">:</span> <span class="p">[],</span> <span class="s1">&#39;Custom&#39;</span><span class="p">:</span> <span class="p">[]}</span>
+        <span class="k">if</span> <span class="n">clean_instrumentations</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">clean_trasformations</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">__gen_proj_id</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;generates project&#39;s uid.</span>
+<span class="sd">        Returns:</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pkg_line</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">main_manif_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;package=</span><span class="se">\&quot;</span><span class="s2">[^</span><span class="se">\&quot;</span><span class="s2">]&quot;</span><span class="p">))</span>
+        <span class="n">pkg_name</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;package=(</span><span class="se">\&quot;</span><span class="s2">[^</span><span class="se">\&quot;</span><span class="s2">]*)&quot;</span><span class="p">,</span> <span class="n">pkg_line</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pkg_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj_name</span> <span class="o">+</span> <span class="s2">&quot;--&quot;</span> <span class="o">+</span> <span class="n">pkg_name</span>
+
+<div class="viewcode-block" id="AndroidProject.add_apk"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.add_apk">[docs]</a>    <span class="k">def</span> <span class="nf">add_apk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apk_path</span><span class="p">,</span> <span class="n">build_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;adds apk path of build_type to the known list of apks of the project.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            apk_path: path to apk.</span>
+<span class="sd">            build_type: apk build type (test, release, custom).</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">build_type</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="s1">&#39;Test&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tp</span> <span class="o">=</span> <span class="n">build_type</span><span class="o">.</span><span class="n">value</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">[</span><span class="n">tp</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">apk_path</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_build_files"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_build_files">[docs]</a>    <span class="k">def</span> <span class="nf">get_build_files</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns build.gradle files of the project.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            files_list(:obj:`list` of :obj:`str`): list of files.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">mindepth</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;build.gradle&quot;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_root_build_file"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_root_build_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_root_build_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns project level build.gradle file.</span>
+<span class="sd">        Assumes that it the one with the shortest path. Gets the list of the build.gradle file paths</span>
+<span class="sd">        and returns the shortest one.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            file_path(str): path of gradle file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">mindepth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;build.gradle&quot;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_main_manif_file"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_main_manif_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_main_manif_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns project&#39;s manifest file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            file_path(str): path of manifest file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">out</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">mindepth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;AndroidManifest.xml&quot;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">),</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">out</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="s2">&quot;test&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="nb">str</span><span class="p">(</span><span class="n">out</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="n">out</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_gradle_settings"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_gradle_settings">[docs]</a>    <span class="k">def</span> <span class="nf">get_gradle_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns settings.gradle file</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            file_path(str): path of  file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find </span><span class="si">%s</span><span class="s2"> -maxdepth 1 -type f -name </span><span class="se">\&quot;</span><span class="s2">settings.gradle</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span></div>
+
+    <span class="k">def</span> <span class="nf">__parse_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">setts_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Parses project modules.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            setts_file: settings.gradle file containing referring the modules.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            modules(:obj:`list` of :obj:`str`): list of modules.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">modules</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">modul_lines</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="n">setts_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s1">&#39;include&#39;</span><span class="p">)</span> <span class="o">|</span> <span class="n">grepv</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;(^\s*//)&quot;</span><span class="p">)</span> <span class="c1"># | cut(sep=&quot;:&quot;, col=1) | sed(pats=&quot;\&#39;|,&quot;, repls=&quot;&quot;)</span>
+        <span class="k">for</span> <span class="n">mod_line</span> <span class="ow">in</span> <span class="n">modul_lines</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">mod</span> <span class="ow">in</span> <span class="n">mod_line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="p">):</span>
+                <span class="n">module</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">echo</span><span class="p">(</span><span class="n">mod</span><span class="p">)</span> <span class="o">|</span> <span class="n">sed</span><span class="p">(</span><span class="s2">&quot;include&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">cut</span><span class="p">(</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">sed</span><span class="p">(</span><span class="n">pats</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">|,&quot;</span><span class="p">,</span> <span class="n">repls</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">modules</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">modules</span>
+
+    <span class="k">def</span> <span class="nf">__init_modules</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Init project modules.</span>
+<span class="sd">        For each module contained in settings.gradle file, constructs a ProjectModule obj and adds it the modules dict.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">setts_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_gradle_settings</span><span class="p">()</span>
+        <span class="n">modules</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__parse_modules</span><span class="p">(</span><span class="n">setts_file</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">mod_n</span> <span class="ow">in</span> <span class="n">modules</span><span class="p">:</span>
+            <span class="n">mod_name</span> <span class="o">=</span> <span class="n">mod_n</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find </span><span class="si">%s</span><span class="s2"> -maxdepth 1 -type d -name </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">mod_name</span><span class="p">))</span>
+            <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span> <span class="ow">and</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="n">mod_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">ProjectModule</span><span class="p">(</span><span class="n">mod_name</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+                <span class="c1">#print(self.modules[mod_name].module_type)</span>
+
+<div class="viewcode-block" id="AndroidProject.get_gradle_plugin"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_gradle_plugin">[docs]</a>    <span class="k">def</span> <span class="nf">get_gradle_plugin</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns gradle plugin version.</span>
+
+<span class="sd">        Parses gradle plugin version from root build file.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            gradle_plugin_version(str): plugin version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">gradle_plugin_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">root_build_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;com.android.tools.build&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">sed</span><span class="p">(</span><span class="s2">&quot;classpath|com.android.tools.build:gradle:|</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">gradle_plugin_version</span></div>
+
+<div class="viewcode-block" id="AndroidProject.create_inner_folder"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.create_inner_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_inner_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;libs&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;creates folder inside project.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            name: name of the folder to be created.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            path(str): path of the created folder.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mkdir</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">FileExistsError</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">path</span></div>
+
+<div class="viewcode-block" id="AndroidProject.has_gradle_wrapper"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.has_gradle_wrapper">[docs]</a>    <span class="k">def</span> <span class="nf">has_gradle_wrapper</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Determine if the project is ready to be built with gradle wrapper.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if gradlew file in project&#39; sources, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;gradlew&quot;</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_apks"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_apks">[docs]</a>    <span class="k">def</span> <span class="nf">get_apks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_type</span><span class="o">=</span><span class="n">BUILD_TYPE</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;get apks of a build type.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            build_type: build type.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            apk_list(:obj:`list` of :obj:`str`): list of apk paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">[</span><span class="n">build_type</span><span class="o">.</span><span class="n">value</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">[</span><span class="n">build_type</span><span class="o">.</span><span class="n">value</span><span class="p">]</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*.apk&quot;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">build_type</span><span class="o">.</span><span class="n">value</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">vals</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AndroidProject.get_test_apks"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.get_test_apks">[docs]</a>    <span class="k">def</span> <span class="nf">get_test_apks</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns test apks.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            apk_list(:obj:`list` of :obj:`str`): list of test apks&#39; paths.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">[</span><span class="s1">&#39;Test&#39;</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">[</span><span class="s1">&#39;Test&#39;</span><span class="p">]</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="n">mega_find</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;*.apk&quot;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;test&#39;</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">vals</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="AndroidProject.set_version"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.AndroidProject.AndroidProject.set_version">[docs]</a>    <span class="k">def</span> <span class="nf">set_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_type</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set project version.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            object:</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">apks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_apks</span><span class="p">(</span><span class="n">build_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">apks</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">proj_version</span> <span class="o">=</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="s2">&quot;0.0&quot;</span><span class="p">)</span>
+        <span class="n">ref_apk</span> <span class="o">=</span> <span class="n">apks</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># assuming first since main apk is build before building tests apk</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">extract_version_from_apk</span><span class="p">(</span><span class="n">ref_apk</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj_version</span> <span class="o">=</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="n">v</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,519 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.device.Device &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.device.Device</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.device.Device</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">manafa.utils.Logger</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">LogSeverity</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.application.AndroidProject</span> <span class="kn">import</span> <span class="n">BUILD_TYPE</span>
+<span class="kn">from</span> <span class="nn">anadroid.device.AbstractDevice</span> <span class="kn">import</span> <span class="n">AbstractDevice</span><span class="p">,</span> <span class="n">ADB_CONN</span>
+<span class="kn">import</span> <span class="nn">difflib</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.device.DeviceState</span> <span class="kn">import</span> <span class="n">DeviceState</span><span class="p">,</span> <span class="n">DEVICE_STATE_ENFORCE</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">get_resources_dir</span>
+
+<span class="n">CONFIG_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_resources_dir</span><span class="p">(),</span> <span class="s1">&#39;config&#39;</span><span class="p">)</span>
+<span class="n">CONFIG_TEST_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;device_state_on_test.json&quot;</span><span class="p">)</span>
+<span class="n">CONFIG_IDLE_FILE</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">CONFIG_DIR</span><span class="p">,</span> <span class="s2">&quot;device_state_on_idle.json&quot;</span><span class="p">)</span>
+<span class="n">TCP_PORT</span> <span class="o">=</span> <span class="mi">5555</span>
+
+
+<span class="c1"># assuming only 1 device connected</span>
+<div class="viewcode-block" id="set_device_conn"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.set_device_conn">[docs]</a><span class="k">def</span> <span class="nf">set_device_conn</span><span class="p">(</span><span class="n">conn_type</span><span class="p">,</span> <span class="n">device_id</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;sets connection of type conn_type with a connected device or a device with id == device_id.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        conn_type(ADB_CONN): connection type.</span>
+<span class="sd">        device_id: device id.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">device_string</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;-s </span><span class="si">{</span><span class="n">device_id</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">device_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">conn_type</span> <span class="o">==</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span> <span class="ow">or</span> <span class="n">conn_type</span> <span class="o">==</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;adb </span><span class="si">{</span><span class="n">device_string</span><span class="si">}</span><span class="s1"> disconnect; adb </span><span class="si">{</span><span class="n">device_string</span><span class="si">}</span><span class="s1"> usb&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="s2">&quot;No devices/emulators found&quot;</span><span class="p">):</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">&quot;Device is now connected via USB&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">conn_type</span> <span class="o">==</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">WIFI</span> <span class="ow">or</span> <span class="n">conn_type</span> <span class="o">==</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">WIFI</span><span class="o">.</span><span class="n">value</span><span class="p">:</span>
+        <span class="n">device</span> <span class="o">=</span> <span class="n">get_first_connected_device</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">device</span><span class="o">.</span><span class="n">conn_type</span> <span class="o">==</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">WIFI</span><span class="p">:</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">&quot;device already connected via wifi&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;adb </span><span class="si">{</span><span class="n">device_string</span><span class="si">}</span><span class="s2"> shell ip -f inet addr show wlan0&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="s2">&quot;more than one device&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">errors</span><span class="p">:</span>
+                <span class="n">log</span><span class="p">(</span><span class="s2">&quot;more than one device connected. please specify device id or unplug the device&quot;</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="s2">&quot;Error accessing device network interface&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+                <span class="n">log</span><span class="p">(</span><span class="s2">&quot;no wifi connection detected on the device. Please connect the device to a wireless network&quot;</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">reg</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+&#39;</span><span class="p">,</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">reg</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Bad address read&quot;</span><span class="p">)</span>
+                <span class="n">ip_addr</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">group</span><span class="p">()</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;adb </span><span class="si">{</span><span class="n">device_string</span><span class="si">}</span><span class="s2"> tcpip </span><span class="si">{</span><span class="n">TCP_PORT</span><span class="si">}</span><span class="s2">; adb </span><span class="si">{</span><span class="n">device_string</span><span class="si">}</span><span class="s2"> connect </span><span class="si">{</span><span class="n">ip_addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;error while connecting to </span><span class="si">{</span><span class="n">ip_addr</span><span class="si">}</span><span class="s2"> address&quot;</span><span class="p">)</span> <span class="ow">and</span> <span class="sa">f</span><span class="s2">&quot;connected to </span><span class="si">{</span><span class="n">ip_addr</span><span class="si">}</span><span class="s2">&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">:</span>
+                    <span class="n">log</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;successfully connected to </span><span class="si">{</span><span class="n">ip_addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">SUCCESS</span><span class="p">)</span>
+
+                <span class="n">log</span><span class="p">(</span><span class="s2">&quot;Please unplug the device from the workstation in order to disable USB connection&quot;</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unknown device connection type (not USB or WIFI)&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_first_connected_device"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.get_first_connected_device">[docs]</a><span class="k">def</span> <span class="nf">get_first_connected_device</span><span class="p">(</span><span class="n">conn_type</span><span class="o">=</span><span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span><span class="o">.</span><span class="n">value</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Retrieves the first connected device that it founds using adb.</span>
+<span class="sd">    Retrieves the first device of the list retrieved by adb devices -l command.</span>
+<span class="sd">    Args:</span>
+<span class="sd">        conn_type:</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Device: first device found.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s1">&#39;adb devices -l  | grep </span><span class="se">\&quot;</span><span class="s1">product</span><span class="se">\&quot;</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1"># #| cut -f1 -d\ &#39;)</span>
+    <span class="n">conn_type</span> <span class="o">=</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span> <span class="k">if</span> <span class="s2">&quot;usb&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">WIFI</span>
+    <span class="n">result</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">DeviceNotFoundError</span><span class="p">(</span><span class="s2">&quot;No devices/emulators found&quot;</span><span class="p">))</span>
+    <span class="n">device_serial</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot; &quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">device_serial</span> <span class="o">==</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">DeviceNotFoundError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;No devices/emulators connected via </span><span class="si">{</span><span class="n">conn_type</span><span class="si">}</span><span class="s2"> found&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">Device</span><span class="p">(</span><span class="n">device_serial</span><span class="p">,</span> <span class="n">conn_type</span><span class="o">=</span><span class="n">conn_type</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="DeviceNotFoundError"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.DeviceNotFoundError">[docs]</a><span class="k">class</span> <span class="nc">DeviceNotFoundError</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+    <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="Device"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device">[docs]</a><span class="k">class</span> <span class="nc">Device</span><span class="p">(</span><span class="n">AbstractDevice</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class that extends AbstractDevice to handle interaction with devices connected via ADB.&quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>  <span class="n">serial_nr</span><span class="p">,</span> <span class="n">conn_type</span><span class="o">=</span><span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">serial_nr</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn_type</span> <span class="o">=</span> <span class="n">conn_type</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">state</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_installed_packages</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__init_props</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_state</span> <span class="o">=</span> <span class="n">DeviceState</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_state_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_device_state</span><span class="p">(</span><span class="n">CONFIG_TEST_FILE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device_state_idle</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_device_state</span><span class="p">(</span><span class="n">CONFIG_IDLE_FILE</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">installed_apks</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="Device.get_device_props"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_device_props">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_props</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns props dict containing device properties that were obtained using getprop command.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            props(dict): dict with properties.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span></div>
+
+<div class="viewcode-block" id="Device.execute_command"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.execute_command">[docs]</a>    <span class="k">def</span> <span class="nf">execute_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">shell</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.execute_root_command"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.execute_root_command">[docs]</a>    <span class="k">def</span> <span class="nf">execute_root_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="p">,</span> <span class="n">shell</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.install_apks"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.install_apks">[docs]</a>    <span class="k">def</span> <span class="nf">install_apks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">andr_proj</span><span class="p">,</span> <span class="n">build_type</span><span class="o">=</span><span class="n">BUILD_TYPE</span><span class="o">.</span><span class="n">RELEASE</span><span class="p">,</span> <span class="n">install_test_apks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;install apks of type build_type of android project andr_proj.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            andr_proj(AndroidProject):</span>
+<span class="sd">            build_type(BUILD_TYPE): build type.</span>
+<span class="sd">            install_test_apks(bool): if test apk installation has to be performed.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            installed_packages(set): set of installed packages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">apks_built</span> <span class="o">=</span> <span class="n">andr_proj</span><span class="o">.</span><span class="n">get_apks</span><span class="p">(</span><span class="n">build_type</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">install_test_apks</span><span class="p">:</span>
+            <span class="n">apks_built</span> <span class="o">+=</span> <span class="n">andr_proj</span><span class="o">.</span><span class="n">get_test_apks</span><span class="p">()</span>
+        <span class="n">installed_packages</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">apk</span> <span class="ow">in</span> <span class="n">apks_built</span><span class="p">:</span>
+            <span class="n">old_packs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;install -r </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">apk</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">new_packs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_installed_packages</span><span class="p">()</span>
+            <span class="n">diff_pkgs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_packs</span><span class="p">,</span> <span class="n">new_packs</span><span class="p">))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">diff_pkgs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">log</span><span class="p">(</span><span class="s2">&quot;package already installed&quot;</span><span class="p">)</span>
+                <span class="n">the_pack</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_package_matching</span><span class="p">(</span><span class="n">andr_proj</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">the_pack</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">continue</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">diff_pkgs</span> <span class="o">=</span> <span class="p">[</span><span class="n">the_pack</span><span class="p">]</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">&quot;APK installed &quot;</span> <span class="o">+</span> <span class="n">apk</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">installed_apks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">apk</span><span class="p">)</span>
+            <span class="n">installed_pack</span> <span class="o">=</span> <span class="n">diff_pkgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">installed_packages</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">installed_pack</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">installed_pack</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">installed_packages</span></div>
+
+<div class="viewcode-block" id="Device.install_apk"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.install_apk">[docs]</a>    <span class="k">def</span> <span class="nf">install_apk</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apk_path</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;installs apk located in apk_path</span>
+<span class="sd">        Args:</span>
+<span class="sd">            apk_path(str): apk path.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            COMMAND_RESULT: result of installation command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;install -g -r &quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">apk_path</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>\
+            <span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to install package &quot;</span> <span class="o">+</span> <span class="n">apk_path</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.unlock_screen"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.unlock_screen">[docs]</a>    <span class="k">def</span> <span class="nf">unlock_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+       <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">unlock_screen</span><span class="p">(</span><span class="n">password</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.is_screen_dreaming"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.is_screen_dreaming">[docs]</a>    <span class="k">def</span> <span class="nf">is_screen_dreaming</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">is_screen_dreaming</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.is_screen_unlocked"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.is_screen_unlocked">[docs]</a>    <span class="k">def</span> <span class="nf">is_screen_unlocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">is_screen_unlocked</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.uninstall_pkg"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.uninstall_pkg">[docs]</a>    <span class="k">def</span> <span class="nf">uninstall_pkg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;uninstall &quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">pkg_name</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to uninstall package &quot;</span> <span class="o">+</span> <span class="n">pkg_name</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.list_installed_packages"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.list_installed_packages">[docs]</a>    <span class="k">def</span> <span class="nf">list_installed_packages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns list of device&#39;s installed packages.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            vals(:obj:`list` of :obj:`str`): list of packages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;pm list packages&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Error obtaining device packages&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;package:&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="n">vals</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">vals</span></div>
+
+<div class="viewcode-block" id="Device.get_min_sdk_version"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_min_sdk_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_min_sdk_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns min sdk version of device.</span>
+<span class="sd">        Gets ro.build.version.min_supported_target_sdk property.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: major min sdk version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;ro.build.version.min_supported_target_sdk&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="s2">&quot;ro.build.version.min_supported_target_sdk&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;ro.build.version.sdk&quot;</span><span class="p">])</span></div>
+
+<div class="viewcode-block" id="Device.get_device_sdk_version"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_device_sdk_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_sdk_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns device sdk version.</span>
+<span class="sd">        Gets ro.build.version.sdk.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: major min sdk version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="s2">&quot;ro.build.version.sdk&quot;</span><span class="p">])</span> <span class="k">if</span> <span class="s2">&quot;ro.build.version.sdk&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">props</span> <span class="k">else</span> <span class="mi">19</span></div>
+
+    <span class="k">def</span> <span class="nf">__init_props</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;fetch properties from device.</span>
+<span class="sd">        Fills props attribute with properties coming from getprop command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;getprop&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="n">DeviceNotFoundError</span><span class="p">(</span><span class="s2">&quot;There is no connected devices&quot;</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+            <span class="n">vals</span><span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\[|\]&#39;</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vals</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">props</span><span class="p">[</span><span class="n">vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">__init_installed_packages</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;updates installed packages list.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">packs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_installed_packages</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">packs</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Device.get_package_matching"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_package_matching">[docs]</a>    <span class="k">def</span> <span class="nf">get_package_matching</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg_aprox_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;gets installed package more alike with a given pkg name.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            pkg_aprox_name: name of the package.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: the most alike installed pkg name.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">matching_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pkg_aprox_name</span> <span class="ow">in</span> <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">matching_list</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span><span class="n">pkg_aprox_name</span><span class="p">,</span> <span class="n">matching_list</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># pkg_name diff after install</span>
+            <span class="k">return</span> <span class="n">difflib</span><span class="o">.</span><span class="n">get_close_matches</span><span class="p">(</span><span class="n">pkg_aprox_name</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="Device.lock_screen"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.lock_screen">[docs]</a>    <span class="k">def</span> <span class="nf">lock_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">lock_screen</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.has_package_installed"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.has_package_installed">[docs]</a>    <span class="k">def</span> <span class="nf">has_package_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pack_name</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if a given package is installed on device.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            pack_name: package name.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if installed, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">pack_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span></div>
+
+<div class="viewcode-block" id="Device.contains_file"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.contains_file">[docs]</a>    <span class="k">def</span> <span class="nf">contains_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;checks if device has a file in a given filepath.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath: path of file to check.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if file exists, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;test -e &quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">filepath</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">return_code</span> <span class="o">==</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="Device.clear_logcat"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.clear_logcat">[docs]</a>    <span class="k">def</span> <span class="nf">clear_logcat</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;clear device logs.&quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;logcat -c&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[])</span>\
+            <span class="o">.</span><span class="n">validate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.dump_logcat_to_file"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.dump_logcat_to_file">[docs]</a>    <span class="k">def</span> <span class="nf">dump_logcat_to_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s2">&quot;logcat.out&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;dumps device logs to file with path filename.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filename: path or name of file.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;logcat -d &gt; </span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[])</span> \
+            <span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to dump logcat to file&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.get_device_android_version"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_device_android_version">[docs]</a>    <span class="k">def</span> <span class="nf">get_device_android_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_device_android_version</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.is_rooted"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.is_rooted">[docs]</a>    <span class="k">def</span> <span class="nf">is_rooted</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;check if it is a rooted device.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if is rooted, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;su -c &#39;echo hi&#39;&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Device.load_device_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.load_device_state">[docs]</a>    <span class="k">def</span> <span class="nf">load_device_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load device state from a file located in filepath</span>
+<span class="sd">        Args:</span>
+<span class="sd">            filepath: location of file with the state.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            json_def(dict): dict with state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">json_def</span><span class="o">=</span><span class="p">{}</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">filehandle</span><span class="p">:</span>
+            <span class="n">json_def</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">filehandle</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json_def</span></div>
+
+<div class="viewcode-block" id="Device.set_device_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.set_device_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_device_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state_cfg</span><span class="o">=</span><span class="n">DEVICE_STATE_ENFORCE</span><span class="o">.</span><span class="n">TEST</span><span class="p">,</span> <span class="n">perm_json</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;enforces a given device state.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state_cfg(DEVICE_STATE_ENFORCE): type of state to enforce</span>
+<span class="sd">            perm_json: set of states to enforce according to the permission to give in such state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">vals</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">if</span> <span class="n">state_cfg</span> <span class="o">==</span> <span class="n">DEVICE_STATE_ENFORCE</span><span class="o">.</span><span class="n">APP</span> <span class="ow">and</span> <span class="n">perm_json</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">perm</span> <span class="ow">in</span> <span class="n">perm_json</span><span class="p">:</span>
+                <span class="n">vals</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_state</span><span class="o">.</span><span class="n">get_states_from_permission</span><span class="p">(</span><span class="n">perm</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">state_cfg</span> <span class="o">==</span> <span class="n">DEVICE_STATE_ENFORCE</span><span class="o">.</span><span class="n">TEST</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_state_test</span>
+        <span class="k">elif</span> <span class="n">state_cfg</span> <span class="o">==</span> <span class="n">DEVICE_STATE_ENFORCE</span><span class="o">.</span><span class="n">IDLE</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_state_idle</span>
+        <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">vals</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device_state</span><span class="o">.</span><span class="n">enforce_state</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Device.get_new_installed_pkgs"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.get_new_installed_pkgs">[docs]</a>    <span class="k">def</span> <span class="nf">get_new_installed_pkgs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;if a new pkg was installed, retrieves a list of the new installed packages.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            new_pkgs(:obj:`list` of :obj:`str`): list of new packages.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">old_pkgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">installed_packages</span>
+        <span class="n">new_pkgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">list_installed_packages</span><span class="p">()</span>
+        <span class="n">has_no_prefix</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">pklist</span><span class="p">:</span>  <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">z</span><span class="p">:</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">candidate</span> <span class="ow">and</span> <span class="n">z</span> <span class="o">!=</span> <span class="n">candidate</span><span class="p">,</span> <span class="n">pklist</span><span class="p">)))</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span>
+            <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">old_pkgs</span> <span class="ow">and</span> <span class="n">has_no_prefix</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">new_pkgs</span><span class="p">),</span>
+            <span class="n">new_pkgs</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="Device.set_log_size"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.Device.Device.set_log_size">[docs]</a>    <span class="k">def</span> <span class="nf">set_log_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_size_bytes</span><span class="o">=</span><span class="mi">16384</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets log size through persist.logd.size property.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            log_size_bytes: size in bytes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">Device</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;shell setprop persist.logd.size </span><span class="si">{</span><span class="n">log_size_bytes</span><span class="si">}</span><span class="s2">K&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div></div>
+
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

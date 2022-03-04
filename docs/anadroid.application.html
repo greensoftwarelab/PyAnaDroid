@@ -1,0 +1,805 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.application package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">anadroid.application package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-anadroid.application.AbstractApplication">anadroid.application.AbstractApplication module</a></li>
+<li><a class="reference internal" href="#module-anadroid.application.AndroidProject">anadroid.application.AndroidProject module</a></li>
+<li><a class="reference internal" href="#module-anadroid.application.Application">anadroid.application.Application module</a></li>
+<li><a class="reference internal" href="#module-anadroid.application.Dependency">anadroid.application.Dependency module</a></li>
+<li><a class="reference internal" href="#module-anadroid.application.ProjectModule">anadroid.application.ProjectModule module</a></li>
+<li><a class="reference internal" href="#module-anadroid.application">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>anadroid.application package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.application.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-application-package">
+<h1>anadroid.application package<a class="headerlink" href="#anadroid-application-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.application.AbstractApplication">
+<span id="anadroid-application-abstractapplication-module"></span><h2>anadroid.application.AbstractApplication module<a class="headerlink" href="#module-anadroid.application.AbstractApplication" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.AbstractApplication.</span></span><span class="sig-name descname"><span class="pre">AbstractApplication</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AbstractApplication.html#AbstractApplication"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Main class that abstracts an app.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.package_name">
+<span class="sig-name descname"><span class="pre">package_name</span></span><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.package_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>app package.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>app version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.kill">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AbstractApplication.html#AbstractApplication.kill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.performAction">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">performAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AbstractApplication.html#AbstractApplication.performAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.performAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.start">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AbstractApplication.html#AbstractApplication.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.start" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AbstractApplication.AbstractApplication.stop">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AbstractApplication.html#AbstractApplication.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AbstractApplication.AbstractApplication.stop" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.application.AndroidProject">
+<span id="anadroid-application-androidproject-module"></span><h2>anadroid.application.AndroidProject module<a class="headerlink" href="#module-anadroid.application.AndroidProject" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">AndroidProject</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anadroid_results'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clean_instrumentations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.application.AndroidProject.Project" title="anadroid.application.AndroidProject.Project"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.application.AndroidProject.Project</span></code></a></p>
+<p>Class that abstracts Android Projects.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.projname">
+<span class="sig-name descname"><span class="pre">projname</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.projname" title="Permalink to this definition">¶</a></dt>
+<dd><p>project name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.projir">
+<span class="sig-name descname"><span class="pre">projir</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.projir" title="Permalink to this definition">¶</a></dt>
+<dd><p>project directory.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.results_dir">
+<span class="sig-name descname"><span class="pre">results_dir</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.results_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>directory where to store project’ results.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">root_build_file</span> <span class="pre">=</span> <span class="pre">project</span> <span class="pre">level</span> <span class="pre">gradle</span> <span class="pre">file.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">main_manif_file</span> <span class="pre">=</span> <span class="pre">project</span> <span class="pre">manifest</span> <span class="pre">file.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">tests_manif_file</span> <span class="pre">=</span> <span class="pre">manifest</span> <span class="pre">of</span> <span class="pre">test</span> <span class="pre">project.</span></span></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.add_apk">
+<span class="sig-name descname"><span class="pre">add_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.add_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.add_apk" title="Permalink to this definition">¶</a></dt>
+<dd><p>adds apk path of build_type to the known list of apks of the project.
+:param apk_path: path to apk.
+:param build_type: apk build type (test, release, custom).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.create_inner_folder">
+<span class="sig-name descname"><span class="pre">create_inner_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'libs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.create_inner_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.create_inner_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates folder inside project.
+:param name: name of the folder to be created.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>path of the created folder.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>path(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_apks">
+<span class="sig-name descname"><span class="pre">get_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.DEBUG:</span> <span class="pre">'Debug'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_apks" title="Permalink to this definition">¶</a></dt>
+<dd><p>get apks of a build type.
+:param build_type: build type.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>list of apk paths.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>apk_list(<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_build_files">
+<span class="sig-name descname"><span class="pre">get_build_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_build_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_build_files" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns build.gradle files of the project.
+:returns: list of files.
+:rtype: files_list(<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_gradle_plugin">
+<span class="sig-name descname"><span class="pre">get_gradle_plugin</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_gradle_plugin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_gradle_plugin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns gradle plugin version.</p>
+<p>Parses gradle plugin version from root build file.
+:returns: plugin version.
+:rtype: gradle_plugin_version(str)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_gradle_settings">
+<span class="sig-name descname"><span class="pre">get_gradle_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_gradle_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_gradle_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns settings.gradle file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>path of  file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>file_path(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_main_manif_file">
+<span class="sig-name descname"><span class="pre">get_main_manif_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_main_manif_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_main_manif_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns project’s manifest file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>path of manifest file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>file_path(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_root_build_file">
+<span class="sig-name descname"><span class="pre">get_root_build_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_root_build_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_root_build_file" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns project level build.gradle file.
+Assumes that it the one with the shortest path. Gets the list of the build.gradle file paths
+and returns the shortest one.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>path of gradle file.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>file_path(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.get_test_apks">
+<span class="sig-name descname"><span class="pre">get_test_apks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.get_test_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.get_test_apks" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns test apks.
+:returns: list of test apks’ paths.
+:rtype: apk_list(<code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">str</span></code>)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.has_gradle_wrapper">
+<span class="sig-name descname"><span class="pre">has_gradle_wrapper</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.has_gradle_wrapper"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.has_gradle_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine if the project is ready to be built with gradle wrapper.
+:returns: True if gradlew file in project’ sources, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.AndroidProject.set_version">
+<span class="sig-name descname"><span class="pre">set_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#AndroidProject.set_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.AndroidProject.set_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>set project version.
+:returns:
+:rtype: object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_FLAVOR">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">BUILD_FLAVOR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#BUILD_FLAVOR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_FLAVOR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_FLAVOR.CUSTOM">
+<span class="sig-name descname"><span class="pre">CUSTOM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Custom'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_FLAVOR.CUSTOM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_FLAVOR.DEMO">
+<span class="sig-name descname"><span class="pre">DEMO</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Demo'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_FLAVOR.DEMO" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_FLAVOR.FULL">
+<span class="sig-name descname"><span class="pre">FULL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'full'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_FLAVOR.FULL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_FLAVOR.NONE">
+<span class="sig-name descname"><span class="pre">NONE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'None'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_FLAVOR.NONE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_TYPE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">BUILD_TYPE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#BUILD_TYPE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>An enumeration.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_TYPE.CUSTOM">
+<span class="sig-name descname"><span class="pre">CUSTOM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Custom'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_TYPE.CUSTOM" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_TYPE.DEBUG">
+<span class="sig-name descname"><span class="pre">DEBUG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Debug'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_TYPE.DEBUG" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.BUILD_TYPE.RELEASE">
+<span class="sig-name descname"><span class="pre">RELEASE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Release'</span></em><a class="headerlink" href="#anadroid.application.AndroidProject.BUILD_TYPE.RELEASE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">Project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">projname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">projdir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anadroid_results'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#Project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.Project" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class that abstracts Projects.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project.projname">
+<span class="sig-name descname"><span class="pre">projname</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.Project.projname" title="Permalink to this definition">¶</a></dt>
+<dd><p>project name.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project.projir">
+<span class="sig-name descname"><span class="pre">projir</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.Project.projir" title="Permalink to this definition">¶</a></dt>
+<dd><p>project directory.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project.results_dir">
+<span class="sig-name descname"><span class="pre">results_dir</span></span><a class="headerlink" href="#anadroid.application.AndroidProject.Project.results_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>directory where to store project’ results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project.clean_trasformations">
+<span class="sig-name descname"><span class="pre">clean_trasformations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#Project.clean_trasformations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.Project.clean_trasformations" title="Permalink to this definition">¶</a></dt>
+<dd><p>remove previous project’ transformations from project sources.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.Project.init_results_dir">
+<span class="sig-name descname"><span class="pre">init_results_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#Project.init_results_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.Project.init_results_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>inits results dir.
+Create directory if not exists.
+:param app_id: project’s app id.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.is_android_project">
+<span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">is_android_project</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dirpath</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#is_android_project"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.is_android_project" title="Permalink to this definition">¶</a></dt>
+<dd><p>determines if a given directory is an Android Project.
+looks for settings.gradle files.
+:param dirpath: path of the directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if file is in diretory, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.application.AndroidProject.mk_ma_dir">
+<span class="sig-prename descclassname"><span class="pre">anadroid.application.AndroidProject.</span></span><span class="sig-name descname"><span class="pre">mk_ma_dir</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/AndroidProject.html#mk_ma_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.AndroidProject.mk_ma_dir" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.application.Application">
+<span id="anadroid-application-application-module"></span><h2>anadroid.application.Application module<a class="headerlink" href="#module-anadroid.application.Application" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.Application.App">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.Application.</span></span><span class="sig-name descname"><span class="pre">App</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_res_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'app'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.application.AbstractApplication.AbstractApplication" title="anadroid.application.AbstractApplication.AbstractApplication"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.application.AbstractApplication.AbstractApplication</span></code></a></p>
+<p>Main class that abstracts an Android App.
+.. attribute:: device</p>
+<blockquote>
+<div><p>device where the app is.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>Device</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.proj">
+<span class="sig-name descname"><span class="pre">proj</span></span><a class="headerlink" href="#anadroid.application.Application.App.proj" title="Permalink to this definition">¶</a></dt>
+<dd><p>respective project.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#anadroid.application.AndroidProject.AndroidProject" title="anadroid.application.AndroidProject.AndroidProject">AndroidProject</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.package_name">
+<span class="sig-name descname"><span class="pre">package_name</span></span><a class="headerlink" href="#anadroid.application.Application.App.package_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>package name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.local_res_dir">
+<span class="sig-name descname"><span class="pre">local_res_dir</span></span><a class="headerlink" href="#anadroid.application.Application.App.local_res_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>local results dir.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.app_name">
+<span class="sig-name descname"><span class="pre">app_name</span></span><a class="headerlink" href="#anadroid.application.Application.App.app_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>name of the app.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#anadroid.application.Application.App.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>app version.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.clean_cache">
+<span class="sig-name descname"><span class="pre">clean_cache</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.clean_cache"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.clean_cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean app cache.
+Cleans app cache on device using package manager.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.init_local_test_">
+<span class="sig-name descname"><span class="pre">init_local_test_</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">testing_framework</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inst_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.init_local_test_"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.init_local_test_" title="Permalink to this definition">¶</a></dt>
+<dd><p>initialize directory for a current test being run with testing_framework, with app instrumented with inst_type
+:param testing_framework: testing framework.
+:param inst_type: instrumentation type.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.kill">
+<span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.kill"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.kill" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.performAction">
+<span class="sig-name descname"><span class="pre">performAction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">act</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.performAction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.performAction" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.set_immersive_mode">
+<span class="sig-name descname"><span class="pre">set_immersive_mode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.set_immersive_mode"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.set_immersive_mode" title="Permalink to this definition">¶</a></dt>
+<dd><p>sets immersive mode for this app if Android version &lt; 11.
+This feature is only available for devices running Android 10 or lower.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.start">
+<span class="sig-name descname"><span class="pre">start</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.start"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>starts application on device.
+Starts app by calling monkey -p &lt;pgk_name&gt; 1.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.Application.App.stop">
+<span class="sig-name descname"><span class="pre">stop</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#App.stop"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.App.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>stops running app.
+Stops app via activity manager (force-stop command).</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="anadroid.application.Application.get_prefix">
+<span class="sig-prename descclassname"><span class="pre">anadroid.application.Application.</span></span><span class="sig-name descname"><span class="pre">get_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">testing_framework</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inst_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Application.html#get_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Application.get_prefix" title="Permalink to this definition">¶</a></dt>
+<dd><p>gets adequate prefix for folder, given the testing framework and instrumentation type
+:param testing_framework:
+:param inst_type:</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>prefix.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>prefix(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.application.Dependency">
+<span id="anadroid-application-dependency-module"></span><h2>anadroid.application.Dependency module<a class="headerlink" href="#module-anadroid.application.Dependency" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.BuildDependency">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.Dependency.</span></span><span class="sig-name descname"><span class="pre">BuildDependency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">name</span></em>, <em class="sig-param"><span class="pre">dep_type=&lt;DependencyType.REMOTE:</span> <span class="pre">'Remote'&gt;</span></em>, <em class="sig-param"><span class="pre">version=None</span></em>, <em class="sig-param"><span class="pre">bin_type=None</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Dependency.html#BuildDependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Dependency.BuildDependency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents app build dependency referred on build files.
+.. attribute:: name</p>
+<blockquote>
+<div><p>dependency name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.BuildDependency.dep_type">
+<span class="sig-name descname"><span class="pre">dep_type</span></span><a class="headerlink" href="#anadroid.application.Dependency.BuildDependency.dep_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>type of dependency.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#anadroid.application.Dependency.DependencyType" title="anadroid.application.Dependency.DependencyType"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DependencyType</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.BuildDependency.version">
+<span class="sig-name descname"><span class="pre">version</span></span><a class="headerlink" href="#anadroid.application.Dependency.BuildDependency.version" title="Permalink to this definition">¶</a></dt>
+<dd><p>dependency version.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.BuildDependency.bin_type">
+<span class="sig-name descname"><span class="pre">bin_type</span></span><a class="headerlink" href="#anadroid.application.Dependency.BuildDependency.bin_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>binary type, used when it is a local dependency, such as an .aar.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.DependencyType">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.Dependency.</span></span><span class="sig-name descname"><span class="pre">DependencyType</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/Dependency.html#DependencyType"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.Dependency.DependencyType" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Represents build dependencies’ type.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.DependencyType.CLASSPATH">
+<span class="sig-name descname"><span class="pre">CLASSPATH</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Classpath'</span></em><a class="headerlink" href="#anadroid.application.Dependency.DependencyType.CLASSPATH" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.DependencyType.LOCAL_BINARY">
+<span class="sig-name descname"><span class="pre">LOCAL_BINARY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Local</span> <span class="pre">Binary'</span></em><a class="headerlink" href="#anadroid.application.Dependency.DependencyType.LOCAL_BINARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.DependencyType.LOCAL_MODULE">
+<span class="sig-name descname"><span class="pre">LOCAL_MODULE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Local</span> <span class="pre">Module'</span></em><a class="headerlink" href="#anadroid.application.Dependency.DependencyType.LOCAL_MODULE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.Dependency.DependencyType.REMOTE">
+<span class="sig-name descname"><span class="pre">REMOTE</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Remote'</span></em><a class="headerlink" href="#anadroid.application.Dependency.DependencyType.REMOTE" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.application.ProjectModule">
+<span id="anadroid-application-projectmodule-module"></span><h2>anadroid.application.ProjectModule module<a class="headerlink" href="#module-anadroid.application.ProjectModule" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.MODULE_TYPE">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.ProjectModule.</span></span><span class="sig-name descname"><span class="pre">MODULE_TYPE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/ProjectModule.html#MODULE_TYPE"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.ProjectModule.MODULE_TYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<p>Project Module types.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.MODULE_TYPE.APP">
+<span class="sig-name descname"><span class="pre">APP</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'App'</span></em><a class="headerlink" href="#anadroid.application.ProjectModule.MODULE_TYPE.APP" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.MODULE_TYPE.LIBRARY">
+<span class="sig-name descname"><span class="pre">LIBRARY</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Library'</span></em><a class="headerlink" href="#anadroid.application.ProjectModule.MODULE_TYPE.LIBRARY" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.ProjectModule">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.application.ProjectModule.</span></span><span class="sig-name descname"><span class="pre">ProjectModule</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mod_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/ProjectModule.html#ProjectModule"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.ProjectModule.ProjectModule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Represents an Android Project Module (<a class="reference external" href="https://developer.android.com/studio/projects#ApplicationModules">https://developer.android.com/studio/projects#ApplicationModules</a>).
+.. attribute:: name</p>
+<blockquote>
+<div><p>module name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.ProjectModule.mod_dir">
+<span class="sig-name descname"><span class="pre">mod_dir</span></span><a class="headerlink" href="#anadroid.application.ProjectModule.ProjectModule.mod_dir" title="Permalink to this definition">¶</a></dt>
+<dd><p>module directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.application.ProjectModule.ProjectModule.create_inner_folder">
+<span class="sig-name descname"><span class="pre">create_inner_folder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'libs'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/application/ProjectModule.html#ProjectModule.create_inner_folder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.application.ProjectModule.ProjectModule.create_inner_folder" title="Permalink to this definition">¶</a></dt>
+<dd><p>creates directory  inside module.
+:param name: directory name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>directory’s path.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>path(str)</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.application">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.application" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

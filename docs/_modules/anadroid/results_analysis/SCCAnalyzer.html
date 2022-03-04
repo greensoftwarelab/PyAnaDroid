@@ -1,0 +1,244 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.results_analysis.SCCAnalyzer &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.results_analysis.SCCAnalyzer</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.results_analysis.SCCAnalyzer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.AbstractAnalyzer</span> <span class="kn">import</span> <span class="n">AbstractAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">log_to_file</span>
+
+
+<div class="viewcode-block" id="SCCAnalyzer"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">SCCAnalyzer</span><span class="p">(</span><span class="n">AbstractAnalyzer</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements AbstractAnalyzer interface to allow to calculate app code results using scc tool.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">SCCAnalyzer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_cmd</span> <span class="o">=</span> <span class="s2">&quot;scc&quot;</span>
+
+<div class="viewcode-block" id="SCCAnalyzer.setup"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.analyze"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">output_log_file</span><span class="o">=</span><span class="s2">&quot;scc.log&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">input_dir</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_dir</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_cmd</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">input_dir</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to analyze sources with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_cmd</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)):</span>
+            <span class="n">log_to_file</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">,</span> <span class="n">output_log_file</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.show_results"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.show_results">[docs]</a>    <span class="k">def</span> <span class="nf">show_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_list</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.clean"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.get_val_for_filter"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.get_val_for_filter">[docs]</a>    <span class="k">def</span> <span class="nf">get_val_for_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">):</span>
+       <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_val_for_filter</span><span class="p">(</span><span class="n">filter_name</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.analyze_tests"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_tests">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">base_dir</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">local_res</span> <span class="k">if</span> <span class="n">results_dir</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">results_dir</span>
+        <span class="n">output_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">base_dir</span><span class="p">,</span> <span class="s1">&#39;scc.log&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">output_file</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.analyze_test"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_test">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.validate_test"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_test">[docs]</a>    <span class="k">def</span> <span class="nf">validate_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="SCCAnalyzer.validate_filters"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_filters">[docs]</a>    <span class="k">def</span> <span class="nf">validate_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">validate_filters</span><span class="p">()</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

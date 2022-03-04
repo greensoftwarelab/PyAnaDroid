@@ -1,4 +1,4 @@
-from src.view.AbstractView import AbstractView
+from anadroid.view.AbstractView import AbstractView
 from termcolor import colored
 
 class CLIView(AbstractView):

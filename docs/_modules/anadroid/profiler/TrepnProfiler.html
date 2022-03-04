@@ -1,0 +1,330 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.profiler.TrepnProfiler &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.profiler.TrepnProfiler</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.profiler.TrepnProfiler</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copyfile</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.application.Dependency</span> <span class="kn">import</span> <span class="n">BuildDependency</span><span class="p">,</span> <span class="n">DependencyType</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.AbstractProfiler</span> <span class="kn">import</span> <span class="n">AbstractProfiler</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">get_resources_dir</span>
+
+<span class="n">RESOURCES_DIR</span> <span class="o">=</span> <span class="n">get_resources_dir</span><span class="p">()</span>
+<span class="n">DEFAULT_FILENAME</span> <span class="o">=</span> <span class="s2">&quot;trepnfile&quot;</span>
+<span class="n">DEFAULT_PREF_FILE</span> <span class="o">=</span> <span class="s2">&quot;/sdcard/trepn/saved_preferences/All.pref&quot;</span>
+<span class="n">DEFAULT_APK_LOCATION</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;profilers&quot;</span><span class="p">,</span> <span class="s2">&quot;Trepn&quot;</span><span class="p">,</span> <span class="s2">&quot;apks&quot;</span><span class="p">,</span> <span class="s2">&quot;com.quicinc.trepn-6.2-APK4Fun.com.apk&quot;</span><span class="p">)</span>
+<span class="n">DEFAULT_PREFS_DIR</span><span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;profilers&quot;</span><span class="p">,</span> <span class="s2">&quot;Trepn&quot;</span><span class="p">,</span> <span class="s2">&quot;TrepnPreferences&quot;</span><span class="p">)</span>
+<span class="n">DEFAULT_LAST_RUN_FILE</span><span class="o">=</span><span class="s2">&quot;last_run_duration.log&quot;</span>
+<span class="n">EXPORT_THRESHOLD</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+
+<div class="viewcode-block" id="TrepnProfiler"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler">[docs]</a><span class="k">class</span> <span class="nc">TrepnProfiler</span><span class="p">(</span><span class="n">AbstractProfiler</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Implements AbstractProfiler interface to allow profiling with Trepn profiler and TrepnLib.</span>
+<span class="sd">    Provides a set of methods that allow to manage a profiling session lifecycle.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        local_dep_location(str): location of trepn apk.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="n">dependency_lib</span> <span class="o">=</span> <span class="n">BuildDependency</span><span class="p">(</span><span class="s2">&quot;TrepnLib-release&quot;</span><span class="p">,</span> <span class="n">DependencyType</span><span class="o">.</span><span class="n">LOCAL_BINARY</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">bin_type</span><span class="o">=</span><span class="s2">&quot;aar&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">local_dep_location</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;profilers&quot;</span><span class="p">,</span> <span class="s2">&quot;Trepn&quot;</span><span class="p">,</span><span class="s2">&quot;libsAdded&quot;</span><span class="p">,</span>  <span class="n">dependency_lib</span><span class="o">.</span><span class="n">name</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">dependency_lib</span><span class="o">.</span><span class="n">bin_type</span><span class="p">)</span> <span class="c1">#TODO</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">TrepnProfiler</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">pkg_name</span><span class="o">=</span><span class="s2">&quot;com.quicinc.trepn&quot;</span><span class="p">,</span> <span class="n">device_dir</span><span class="o">=</span><span class="s2">&quot;sdcard/trepn&quot;</span><span class="p">,</span> <span class="n">dependency</span><span class="o">=</span><span class="n">dependency_lib</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">device</span><span class="o">.</span><span class="n">has_package_installed</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">install_profiler</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">device</span><span class="o">.</span><span class="n">contains_file</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device_dir</span><span class="o">+</span><span class="s2">&quot;/GDFlag&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">setup_trepn_device_dir</span><span class="p">()</span>
+
+<div class="viewcode-block" id="TrepnProfiler.install_profiler"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.install_profiler">[docs]</a>    <span class="k">def</span> <span class="nf">install_profiler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apk_loc</span><span class="o">=</span><span class="n">DEFAULT_APK_LOCATION</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;install trepn profiler on device.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            apk_loc: apk location.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;installing trepn&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;install -g -r </span><span class="si">{</span><span class="n">apk_loc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to install Trepn Profiler&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.setup_trepn_device_dir"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_trepn_device_dir">[docs]</a>    <span class="k">def</span> <span class="nf">setup_trepn_device_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;setup directory on device where results will be temporarly stored.&quot;&quot;&quot;</span>
+        <span class="n">trepn_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;mkdir -p </span><span class="si">{</span><span class="n">trepn_dir</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">trepn_dir</span><span class="si">}</span><span class="s2">/Traces </span><span class="si">{</span><span class="n">trepn_dir</span><span class="si">}</span><span class="s2">/Measures </span><span class="si">{</span><span class="n">trepn_dir</span><span class="si">}</span><span class="s2">/TracedTests&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">prefs_dir</span> <span class="o">=</span> <span class="n">DEFAULT_PREFS_DIR</span>
+        <span class="c1"># push files: TODO this is not working. ignore for now (push is blocking )</span>
+        <span class="c1">#self.device.execute_command(f&quot;push {prefs_dir} {trepn_dir}/&quot;).validate(Exception(&quot;error pushing trepn prefs&quot;))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">echo 0 &gt; </span><span class="si">{</span><span class="n">trepn_dir</span><span class="si">}</span><span class="s2">/GDFlag</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.init"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.init">[docs]</a>    <span class="k">def</span> <span class="nf">init</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="c1"># start trepn app - trepn app to foreground -&gt; start service -&gt; put app in background</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;monkey -p </span><span class="si">{pkg}</span><span class="s2"> -c android.intent.category.LAUNCHER 1&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Profiling error&quot;</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am startservice --user 0 </span><span class="si">{pkg}</span><span class="s2">/.TrepnService&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Profiling error&quot;</span><span class="p">))</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am start -a android.intent.action.MAIN -c android.intent.category.HOME&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.start_profiling"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.start_profiling">[docs]</a>    <span class="k">def</span> <span class="nf">start_profiling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;starts trepn service.&quot;&quot;&quot;</span>
+        <span class="c1"># (adb shell am broadcast -a com.quicinc.trepn.start_profiling -e com.quicinc.trepn.database_file &quot;myfile&quot;)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;date +</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am broadcast -a </span><span class="si">{pkg}</span><span class="s2">.start_profiling -e </span><span class="si">{pkg}</span><span class="s2">.database_file </span><span class="si">{filename}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="n">DEFAULT_FILENAME</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Profiling error&quot;</span><span class="p">))</span></div>
+
+
+<div class="viewcode-block" id="TrepnProfiler.stop_profiling"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.stop_profiling">[docs]</a>    <span class="k">def</span> <span class="nf">stop_profiling</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tag</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="n">export</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;stops trepn service.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">update_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am broadcast -a </span><span class="si">{pkg}</span><span class="s2">.stop_profiling&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Profiling error: stop profiling&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_run_duration</span><span class="p">()</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">export</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">export_results</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.update_state"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.update_state">[docs]</a>    <span class="k">def</span> <span class="nf">update_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">desc</span><span class="o">=</span><span class="s2">&quot;stopped&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;updates state of trepn using activity manager.&quot;&quot;&quot;</span>
+        <span class="c1"># adb shell am broadcast -a com.quicinc.Trepn.UpdateAppState -e com.quicinc.Trepn.UpdateAppState.Value 1 -e com.quicinc.Trepn.UpdateAppState.Value.Desc &quot;started&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am broadcast -a </span><span class="si">{pkg}</span><span class="s2">.UpdateAppState -e </span><span class="si">{pkg}</span><span class="s2">.UpdateAppState.Value </span><span class="si">{val}</span><span class="s2"> -e </span><span class="si">{pkg}</span><span class="s2">.UpdateAppState.Value.Desc </span><span class="se">\&quot;</span><span class="si">{desc}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">,</span><span class="n">val</span><span class="o">=</span><span class="n">val</span><span class="p">,</span><span class="n">desc</span><span class="o">=</span><span class="n">desc</span><span class="p">),</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Error updating trepn state&quot;</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.export_results"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.export_results">[docs]</a>    <span class="k">def</span> <span class="nf">export_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">out_filename</span><span class="o">=</span><span class="s2">&quot;trepnfile.csv&quot;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;export results of the previous profiing session.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            out_filename: output filepath.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            out_filename: output filepath.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">run_duration</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_run_duration</span><span class="p">()</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am broadcast -a  </span><span class="si">{pkg}</span><span class="s2">.export_to_csv -e  </span><span class="si">{pkg}</span><span class="s2">.export_db_input_file </span><span class="si">{filename}</span><span class="s2"> -e </span><span class="si">{pkg}</span><span class="s2">.export_csv_output_file </span><span class="si">{outfile}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">,</span><span class="n">filename</span><span class="o">=</span><span class="n">DEFAULT_FILENAME</span><span class="p">,</span> <span class="n">outfile</span><span class="o">=</span><span class="n">out_filename</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span> <span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error while exporting results&quot;</span><span class="p">))</span>
+        <span class="n">time_to_sleep</span> <span class="o">=</span> <span class="n">run_duration</span> <span class="o">*</span> <span class="n">EXPORT_THRESHOLD</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">time_to_sleep</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">out_filename</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.pull_results"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.pull_results">[docs]</a>    <span class="k">def</span> <span class="nf">pull_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file_id</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;pull results from file&quot;&quot;&quot;</span>
+        <span class="n">device_filepath</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">file_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;pull&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[</span><span class="n">device_filepath</span><span class="p">,</span> <span class="n">target_dir</span><span class="p">],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error pulling results&quot;</span><span class="p">))</span>
+        <span class="n">all_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span> <span class="s2">&quot;..&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.get_dependencies_location"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.get_dependencies_location">[docs]</a>    <span class="k">def</span> <span class="nf">get_dependencies_location</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">local_dep_location</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.load_preferences_file"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.load_preferences_file">[docs]</a>    <span class="k">def</span> <span class="nf">load_preferences_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pref_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;load trepn preferences file containing the list of resources to profile.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">pref_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">pref_file</span> <span class="o">=</span> <span class="n">DEFAULT_PREF_FILE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;am broadcast -a </span><span class="si">{pkg}</span><span class="s2">.load_preferences -e </span><span class="si">{pkg}</span><span class="s2">.load_preferences_file </span><span class="si">{pref_file}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pkg_name</span><span class="p">,</span><span class="n">pref_file</span><span class="o">=</span><span class="n">pref_file</span><span class="p">),</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error loading pref file &quot;</span> <span class="o">+</span> <span class="n">pref_file</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.setup_device_dir"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.setup_device_dir">[docs]</a>    <span class="k">def</span> <span class="nf">setup_device_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.needs_external_dependencies"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.needs_external_dependencies">[docs]</a>    <span class="k">def</span> <span class="nf">needs_external_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.get_last_run_duration"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.get_last_run_duration">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_run_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">last_dur_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">DEFAULT_LAST_RUN_FILE</span>
+        <span class="n">file_ctent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;cat </span><span class="si">{</span><span class="n">last_dur_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file_ctent</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="mi">10</span>
+        <span class="k">return</span> <span class="n">val</span></div>
+
+<div class="viewcode-block" id="TrepnProfiler.log_run_duration"><a class="viewcode-back" href="../../../anadroid.profiler.html#anadroid.profiler.TrepnProfiler.TrepnProfiler.log_run_duration">[docs]</a>    <span class="k">def</span> <span class="nf">log_run_duration</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">cur_time</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;date +</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">output</span><span class="p">)</span>
+        <span class="n">run_duration</span> <span class="o">=</span> <span class="n">cur_time</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">start_time</span>
+        <span class="n">last_dur_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device_dir</span> <span class="o">+</span> <span class="s2">&quot;/&quot;</span> <span class="o">+</span> <span class="n">DEFAULT_LAST_RUN_FILE</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\&quot;</span><span class="s2">echo </span><span class="si">{</span><span class="n">run_duration</span><span class="si">}</span><span class="s2"> &gt; </span><span class="si">{</span><span class="n">last_dur_file</span><span class="si">}</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error logging run time&quot;</span><span class="p">))</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

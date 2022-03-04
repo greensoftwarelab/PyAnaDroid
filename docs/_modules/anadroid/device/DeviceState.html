@@ -1,0 +1,619 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.device.DeviceState &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.device.DeviceState</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.device.DeviceState</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">loge</span>
+
+
+<div class="viewcode-block" id="DEVICE_STATE_ENFORCE"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DEVICE_STATE_ENFORCE">[docs]</a><span class="k">class</span> <span class="nc">DEVICE_STATE_ENFORCE</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Enumerates different states of device during benchmarking activity&quot;&quot;&quot;</span>
+    <span class="n">IDLE</span> <span class="o">=</span> <span class="s2">&quot;Idle&quot;</span>
+    <span class="n">TEST</span> <span class="o">=</span> <span class="s2">&quot;Test conditions&quot;</span>
+    <span class="n">APP</span> <span class="o">=</span> <span class="s2">&quot;App conditions&quot;</span></div>
+
+
+<span class="n">KNOWN_STATE_KEYS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;screen_locked&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;screen_brightness&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;screen_always_on&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;screen_auto_rotate&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;screen_orientation&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;bluetooth&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;wifi&quot;</span><span class="p">,</span>
+    <span class="c1"># &quot;hotspot_state&quot;,</span>
+    <span class="s1">&#39;gps&#39;</span><span class="p">,</span>
+    <span class="s2">&quot;nfc_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;mobile_data_state&quot;</span><span class="p">,</span>
+    <span class="s1">&#39;speakers_state&#39;</span>
+<span class="p">}</span>
+
+<span class="n">PERMISSIONS_TO_STATE</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;ACCESS_FINE_LOCATION&quot;</span><span class="p">:</span> <span class="s2">&quot;gps_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BLUETOOTH&quot;</span><span class="p">:</span> <span class="s2">&quot;bluetooth_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BLUETOOTH_ADMIN&quot;</span><span class="p">:</span> <span class="s2">&quot;bluetooth_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;BLUETOOTH_PRIVILEGED&quot;</span><span class="p">:</span> <span class="s2">&quot;bluetooth_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;INTERNET&quot;</span><span class="p">:</span> <span class="s2">&quot;wifi&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NFC&quot;</span><span class="p">:</span> <span class="s2">&quot;nfc_state&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;NFC_TRANSACTION_EVENT&quot;</span><span class="p">:</span> <span class="s2">&quot;nfc_state&quot;</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_known_state_keys"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.get_known_state_keys">[docs]</a><span class="k">def</span> <span class="nf">get_known_state_keys</span><span class="p">():</span>
+    <span class="k">return</span> <span class="n">KNOWN_STATE_KEYS</span></div>
+
+
+<div class="viewcode-block" id="DeviceState"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState">[docs]</a><span class="k">class</span> <span class="nc">DeviceState</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;class that stores and represents the state of device components.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        device(Device): device.</span>
+<span class="sd">        screen_locked(int): 1 if screen locked, 0 otherwise.</span>
+<span class="sd">        screen_brightness(int): screen brightness value (0-255).</span>
+<span class="sd">        screen_always_on(int): if the screen should be always on.</span>
+<span class="sd">        screen_auto_rotate(int): if the screen should rotate automatically.</span>
+<span class="sd">        screen_orientation(int): screen orientation.</span>
+<span class="sd">        bluetooth(int): state of bluetooth.</span>
+<span class="sd">        wifi(int): wifi state.</span>
+<span class="sd">        gps(int): gps state.</span>
+<span class="sd">        nfc_state(int): nfc_state state.</span>
+<span class="sd">        mobile_data_state(int): mobile_data_state state.</span>
+<span class="sd">        speakers_state(int): speakers_state state.</span>
+<span class="sd">        flashlight(int): flashlight state.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_locked</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_lock_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_brightness</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_brightness</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_always_on</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_always_on</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_auto_rotate</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_auto_rotate</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_orientation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_orientation</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bluetooth</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bluetooth_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wifi</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wifi_state</span><span class="p">()</span>
+        <span class="c1"># self.hotspot_state = self.get_hotspot_state()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gps</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_gps_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nfc_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nfc_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mobile_data_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mobile_data_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">speakers_state</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_speakers_state</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">flashlight</span> <span class="o">=</span> <span class="mi">0</span>
+
+<div class="viewcode-block" id="DeviceState.get_screen_lock_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_screen_lock_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_lock_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve screen lock state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if unlocked, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">is_screen_unlocked</span><span class="p">()</span> <span class="k">else</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_screen_brightness"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_screen_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve screen brightness value.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 - 255.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get system screen_brightness&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain screen brightness&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]+&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_screen_always_on"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_screen_always_on">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_always_on</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve screen always on state.</span>
+<span class="sd">        gets value of stay_on_while_plugged_in setting.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">           int: value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get global stay_on_while_plugged_in&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain screen always_on val&quot;</span><span class="p">)):</span>
+            <span class="n">val</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]+&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span>
+            <span class="k">return</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">val</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_screen_auto_rotate"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_screen_auto_rotate">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_auto_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve screen auto rotation state.</span>
+<span class="sd">        gets value of system setting accelerometer_rotation.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">           int: value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get system accelerometer_rotation&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain screen auto rotate val&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]+&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_screen_orientation"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_screen_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">get_screen_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve screen orientation state.</span>
+<span class="sd">        gets value of system setting user_rotation.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">           int: value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get system user_rotation&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to obtain screen auto rotate val&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-9]+&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_bluetooth_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_bluetooth_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_bluetooth_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve bluetooh state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get global bluetooth_on&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain bluetooth state&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-1]&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_wifi_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_wifi_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_wifi_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve wifi state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get global wifi_on&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain wifi state&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;[0-1]&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">group</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_hotspot_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_hotspot_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_hotspot_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve hotspot state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys wifi | grep </span><span class="se">\&quot;</span><span class="s2">curState=TetheredState</span><span class="se">\&quot;</span><span class="s2">  | grep -E </span><span class="se">\&quot;</span><span class="s2">[A-Za-z]</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+                                          <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys wifi | grep </span><span class="se">\&quot;</span><span class="s2">curState=ApEnabledState</span><span class="se">\&quot;</span><span class="s2">  | grep -E </span><span class="se">\&quot;</span><span class="s2">[A-Za-z]</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span>
+                                           <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span> <span class="ow">and</span> <span class="n">res1</span><span class="o">.</span><span class="n">validate</span><span class="p">():</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span> <span class="ow">or</span> <span class="n">res1</span><span class="o">.</span><span class="n">output</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="k">return</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_gps_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_gps_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_gps_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve gps state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get secure location_providers_allowed | grep </span><span class="se">\&quot;</span><span class="s2">gps</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain gps state&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="s2">&quot;gps&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_nfc_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_nfc_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_nfc_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve nfc state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys nfc | grep </span><span class="se">\&quot;</span><span class="s2">mState=on</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="s2">&quot;Unable to obtain nfc state&quot;</span><span class="p">):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="s2">&quot;on&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_mobile_data_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_mobile_data_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_mobile_data_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve mobile data state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;settings get global  device_provisioning_mobile_data&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to obtain mobile data state&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="s2">&quot;1&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_speakers_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_speakers_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_speakers_state</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;retrieve speakers state.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            int: 0 if off, 1 otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># ring and notifications vol?</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys audio | grep </span><span class="se">\&quot;</span><span class="s2">STREAM_SYSTEM:</span><span class="se">\&quot;</span><span class="s2"> -A 1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;unable to obtain speakers state &quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="mi">1</span> <span class="k">if</span> <span class="s2">&quot;false&quot;</span> <span class="ow">in</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">else</span> <span class="mi">0</span></div>
+
+    <span class="c1"># setters</span>
+<div class="viewcode-block" id="DeviceState.set_screen_lock_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_screen_lock_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen_lock_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set screen lock state. if state = 0, unlocks screen. Otherwise, it locks the screen.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            state: lock state.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">state</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1"># unlock</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">unlock_screen</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># lock</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">lock_screen</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_locked</span> <span class="o">=</span> <span class="n">state</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_screen_brightness"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_screen_brightness">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen_brightness</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;sets brightness value.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: value between 0-255.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;settings put system screen_brightness </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;unable to set brightness value of </span><span class="si">%d</span><span class="s2"> &quot;</span> <span class="o">%</span> <span class="n">value</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_brightness</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_screen_always_on_while_plugged"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_screen_always_on_while_plugged">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen_always_on_while_plugged</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set screen always on state. if state = 1 set stay on value.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># adb shell settings put global stay_on_while_plugged_in 3</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># res = self.device.execute_command(f&quot;settings put global stay_on_while_plugged_in 3&quot;, shell=True)</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc power stayon true&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc power stayon false&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;unable to turn on/off screen always on &quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_always_on</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_screen_auto_rotate"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_screen_auto_rotate">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen_auto_rotate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set screen auto rotate state. if state = 1 set auto rotate value as 1 (enable).</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; settings put system accelerometer_rotation 1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># adb shell settings put system accelerometer_rotation 0  #disable auto-rotate</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; settings put system accelerometer_rotation 0&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;unable to turn on/off screen autorotate&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_auto_rotate</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_screen_orientation"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_screen_orientation">[docs]</a>    <span class="k">def</span> <span class="nf">set_screen_orientation</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set screen orientation state. if state = 1, sets landscape mode. Otherwise, sets</span>
+<span class="sd">        orientation as portrait mode.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># adb shell settings put system user_rotation 0 -&gt; portrait</span>
+        <span class="c1"># adb shell settings put system user_rotation 1 -&gt; landscape</span>
+        <span class="n">is_auto_rotating</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">screen_auto_rotate</span>
+        <span class="k">if</span> <span class="n">is_auto_rotating</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_auto_rotate</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;settings put system user_rotation </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="sa">f</span><span class="s2">&quot;unable to rotate screen to val </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">screen_orientation</span> <span class="o">=</span> <span class="n">value</span>
+        <span class="k">if</span> <span class="n">is_auto_rotating</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_auto_rotate</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_bluetooth_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_bluetooth_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_bluetooth_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set bluetooth state. if state = 1 enables bluetooth. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">is_rooted</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># adb shell su -c &quot;pm enable com.android.bluetooth&quot;</span>
+                <span class="c1"># adb shell su -c &quot;service call bluetooth_manager 6&quot;</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pm enable com.android.bluetooth&quot;</span><span class="p">)</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;service call bluetooth_manager 6&quot;</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pm disable com.android.bluetooth&quot;</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change bluetooth state&quot;</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+             <span class="n">loge</span><span class="p">(</span><span class="s2">&quot;changing bluetooth state is only available for rooted devices&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bluetooth</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_gps_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_gps_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_gps_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set gps state. if state = 1 enables gps. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="c1"># adb shell settings put secure location_providers_allowed -gps</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;settings put secure location_providers_allowed +gps&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;settings put secure location_providers_allowed -gps&quot;</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change gps state&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">gps</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_nfc_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_nfc_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_nfc_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set nfc state. if state = 1 enables nft. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc nfc enable&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc nfc disable&quot;</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change nfc state&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">nfc_state</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.change_speaker_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.change_speaker_state">[docs]</a>    <span class="k">def</span> <span class="nf">change_speaker_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set speaker state. if state = 1 enables speakers. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">speakers_state</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;input keyevent 164&#39;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change speakers state&quot;</span><span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">speakers_state</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_hotspot_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_hotspot_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_hotspot_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="bp">NotImplemented</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_mobile_data_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_mobile_data_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_mobile_data_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set mobile date state. if state = 1 enables mobile data. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc data enable&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc data disable&quot;</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change nfc state&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mobile_data_state</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.set_wifi_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.set_wifi_state">[docs]</a>    <span class="k">def</span> <span class="nf">set_wifi_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">value</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;set wifi state. if state = 1 enables wifi. Otherwise, disables it.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            value: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">value</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc wifi enable&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_root_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;svc wifi disable&quot;</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">((</span><span class="s2">&quot;Unable to change wifi state&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">wifi</span> <span class="o">=</span> <span class="n">value</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_states_from_permission"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_states_from_permission">[docs]</a>    <span class="k">def</span> <span class="nf">get_states_from_permission</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">perm_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;infers needed state changes from permission.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            perm_id: permission key.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">perm_id</span> <span class="ow">in</span> <span class="n">PERMISSIONS_TO_STATE</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">enforce_state</span><span class="p">(</span><span class="n">PERMISSIONS_TO_STATE</span><span class="p">[</span><span class="n">perm_id</span><span class="p">],</span> <span class="mi">1</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DeviceState.get_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.get_state">[docs]</a>    <span class="k">def</span> <span class="nf">get_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;given a component uid/key, returns the current state of such component.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            key: component uid/key.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            int: value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">KNOWN_STATE_KEYS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_locked&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_lock_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_brightness&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_brightness</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_always_on&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_always_on</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_auto_rotate&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_auto_rotate</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_orientation&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_screen_orientation</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;bluetooth&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bluetooth_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;wifi&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_wifi_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;gps&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_gps_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;nfc_state&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_nfc_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;mobile_data_state&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_mobile_data_state</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;speakers_state&#39;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_speakers_state</span><span class="p">()</span>
+        <span class="c1"># elif key == &#39;hotspot_state&#39;:</span>
+        <span class="c1">#    self.set_hotspot_state(val)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> not implemented&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="DeviceState.enforce_state"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.DeviceState.DeviceState.enforce_state">[docs]</a>    <span class="k">def</span> <span class="nf">enforce_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">val</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;enforces a component state.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            key: component uid/key.</span>
+<span class="sd">            val: state value.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">KNOWN_STATE_KEYS</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_locked&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_lock_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_brightness&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_brightness</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_always_on&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_always_on_while_plugged</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_auto_rotate&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_auto_rotate</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;screen_orientation&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_screen_orientation</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;bluetooth&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_bluetooth_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;wifi&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_wifi_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;gps&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_gps_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;nfc_state&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_nfc_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;mobile_data_state&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">set_mobile_data_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">key</span> <span class="o">==</span> <span class="s1">&#39;speakers_state&#39;</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">change_speaker_state</span><span class="p">(</span><span class="n">val</span><span class="p">)</span>
+        <span class="c1"># elif key == &#39;hotspot_state&#39;:</span>
+        <span class="c1">#    self.set_hotspot_state(val)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2"> not implemented&quot;</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

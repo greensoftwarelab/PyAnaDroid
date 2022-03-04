@@ -1,0 +1,345 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.device.AbstractDevice &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"></div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../index.html">Module code</a> &raquo;</li>
+        
+      <li>anadroid.device.AbstractDevice</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for anadroid.device.AbstractDevice</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span><span class="p">,</span> <span class="n">abstractmethod</span>
+<span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
+
+<span class="kn">from</span> <span class="nn">manafa.utils.Logger</span> <span class="kn">import</span> <span class="n">log</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.build.versionUpgrader</span> <span class="kn">import</span> <span class="n">DefaultSemanticVersion</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span>
+
+
+<div class="viewcode-block" id="ADB_CONN"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.ADB_CONN">[docs]</a><span class="k">class</span> <span class="nc">ADB_CONN</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Class to enumerate different connectivity alternatives using ADB.&quot;&quot;&quot;</span>
+    <span class="n">USB</span> <span class="o">=</span> <span class="s2">&quot;USB&quot;</span>
+    <span class="n">WIFI</span> <span class="o">=</span> <span class="s2">&quot;WIFI&quot;</span></div>
+
+
+<div class="viewcode-block" id="AbstractDevice"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice">[docs]</a><span class="k">class</span> <span class="nc">AbstractDevice</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Provides basic interface and functionality to interact with devices.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        serial_nr(str): device serial number / uuid.</span>
+<span class="sd">        conn_type(ADB_CONN): type of connection.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">serial_nr</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">serial_nr</span> <span class="o">=</span> <span class="n">serial_nr</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">conn_type</span> <span class="o">=</span> <span class="n">ADB_CONN</span><span class="o">.</span><span class="n">USB</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+
+<div class="viewcode-block" id="AbstractDevice.execute_command"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.execute_command">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">execute_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;execute remote shell command with args on device.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            res(COMMAND_RESULT): result of command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span>
+            <span class="s2">&quot;adb -s </span><span class="si">{serial}</span><span class="s2"> </span><span class="si">{shell}</span><span class="s2"> </span><span class="si">{command}</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial_nr</span><span class="p">,</span>
+                        <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">shell</span> <span class="k">else</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+                        <span class="n">command</span><span class="o">=</span><span class="n">cmd</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">res</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.execute_root_command"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.execute_root_command">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">execute_root_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cmd</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;execute remote shell command with args on device in superuser mode.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            res(COMMAND_RESULT): result of command.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="n">cmd</span> <span class="o">+</span> <span class="s2">&quot; &quot;</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span>
+            <span class="s2">&quot;adb -s </span><span class="si">{serial}</span><span class="s2"> </span><span class="si">{shell}</span><span class="s2"> su -c &#39;</span><span class="si">{command}</span><span class="s2">&#39; &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">serial</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">serial_nr</span><span class="p">,</span>
+                <span class="n">shell</span><span class="o">=</span><span class="s2">&quot;&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">shell</span> <span class="k">else</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span>
+                <span class="n">command</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">ret</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.install_apks"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.install_apks">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">install_apks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apk_paths</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.uninstall_pkg"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.uninstall_pkg">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">uninstall_pkg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pkg_name</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.list_installed_packages"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.list_installed_packages">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">list_installed_packages</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">prop_name</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.unlock_screen"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.unlock_screen">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">unlock_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pwd</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;unlock device screen.</span>
+<span class="sd">        Tries several approaches to unlock screen. It starts by trying to press lock button, followed by trying</span>
+<span class="sd">        to type a password if a password is required. If none of these worked, tries to press menu button and finally,</span>
+<span class="sd">        it tries to perform a swipe up.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            pwd: password to provide if devices requires password to be unlocked.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_screen_unlocked</span><span class="p">():</span>
+            <span class="n">log</span><span class="p">(</span><span class="s2">&quot;screen is unlocked&quot;</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_screen_dreaming</span><span class="p">():</span>
+            <span class="c1"># wake screen (pressing lock btn)</span>
+            <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;input keyevent 26;&quot;</span>
+        <span class="k">if</span> <span class="n">pwd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># press lock btn -&gt; swipe up -&gt; passwd -&gt; press enter</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Inserting password&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span>
+                <span class="s2">&quot;</span><span class="se">\&#39;</span><span class="si">{cmd}</span><span class="s2">input touchscreen swipe 930 880 930 380 ; input text </span><span class="si">{pwd}</span><span class="s2">; input input keyevent 66 </span><span class="se">\&#39;</span><span class="s2"> &quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">,</span>
+                    <span class="n">pwd</span><span class="o">=</span><span class="n">pwd</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[])</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># press lock button -&gt; KEYCODE_MENU</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\&#39;</span><span class="si">{cmd}</span><span class="s2"> input keyevent 82</span><span class="se">\&#39;</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cmd</span><span class="o">=</span><span class="n">cmd</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_screen_unlocked</span><span class="p">():</span>
+                <span class="c1"># if still locked -&gt; swipe up</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;input touchscreen swipe 930 880 930 180 #&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.is_screen_unlocked"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.is_screen_unlocked">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">is_screen_unlocked</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if screen is unlocked.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if unlocked, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys window | grep mDreamingLockscreen&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">()</span>
+        <span class="n">is_locked</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot;mDreamingLockscreen=(true|false|null)&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">return</span> <span class="ow">not</span> <span class="n">is_locked</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.lock_screen"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.lock_screen">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">lock_screen</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if screen is locked.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if locked, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_screen_unlocked</span><span class="p">():</span>
+            <span class="k">return</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;input keyevent 26&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.is_screen_dreaming"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.is_screen_dreaming">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">is_screen_dreaming</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks if screen is dreaming.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if dreaming, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;dumpsys window&quot;</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">is_dreaming</span> <span class="o">=</span> <span class="s2">&quot;true&quot;</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot; dreaming=(true|false|null)&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> \
+                      <span class="ow">or</span> <span class="s2">&quot;true&quot;</span> <span class="ow">in</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s2">&quot; mDreamingLockscreen=(true|false|null)&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">is_dreaming</span></div>
+
+<div class="viewcode-block" id="AbstractDevice.get_device_android_version"><a class="viewcode-back" href="../../../anadroid.device.html#anadroid.device.AbstractDevice.AbstractDevice.get_device_android_version">[docs]</a>    <span class="nd">@abstractmethod</span>
+    <span class="k">def</span> <span class="nf">get_device_android_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;returns device android version.</span>
+<span class="sd">        Retrieves value of ro.build.version.release property.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            DefaultSemanticVersion: android version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;getprop ro.build.version.release&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable do get android device version&quot;</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span></div></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

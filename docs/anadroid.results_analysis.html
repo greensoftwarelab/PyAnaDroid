@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>anadroid.results_analysis package &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.results_analysis.filters package" href="anadroid.results_analysis.filters.html" />
+    <link rel="prev" title="anadroid.resources.testingFrameworks.monkey-runner.tests package" href="anadroid.resources.testingFrameworks.monkey-runner.tests.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="anadroid.html">anadroid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="anadroid.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#anadroid-anadroid-module">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#anadroid-main-module">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="modules.html">anadroid</a> &raquo;</li>
+        
+          <li><a href="anadroid.html">anadroid package</a> &raquo;</li>
+        
+      <li>anadroid.results_analysis package</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/anadroid.results_analysis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid-results-analysis-package">
+<h1>anadroid.results_analysis package<a class="headerlink" href="#anadroid-results-analysis-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="anadroid.results_analysis.filters.html">anadroid.results_analysis.filters package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.filters.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters.Filter">anadroid.results_analysis.filters.Filter module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters.Filters">anadroid.results_analysis.filters.Filters module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.results_analysis.filters.html#module-anadroid.results_analysis.filters">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.results_analysis.AbstractAnalyzer">
+<span id="anadroid-results-analysis-abstractanalyzer-module"></span><h2>anadroid.results_analysis.AbstractAnalyzer module<a class="headerlink" href="#module-anadroid.results_analysis.AbstractAnalyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.results_analysis.AbstractAnalyzer.</span></span><span class="sig-name descname"><span class="pre">AbstractAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzers_cfg_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/config/analyzer_filters.json'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<p>Defines a basic interface to be implemented by programs aiming to analyze and produce results about the data
+collected during the profiling session and profiled apps.
+.. attribute:: profiler</p>
+<blockquote>
+<div><p>profiler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">type</dt>
+<dd class="field-odd"><p>Profiler</p>
+</dd>
+</dl>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.supported_filters">
+<span class="sig-name descname"><span class="pre">supported_filters</span></span><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.supported_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>default set of filters to validate analyzed results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validation_filters">
+<span class="sig-name descname"><span class="pre">validation_filters</span></span><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validation_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>additional set of filters provided via config file to validate analyzed results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type</dt>
+<dd class="field-odd"><p>set</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.analyze_test">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">analyze_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.analyze_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.analyze_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze test identified by test_id of a given app.
+:param app: app.
+:type app: App
+:param test_id: test uuid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.analyze_tests">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">analyze_tests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.analyze_tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.analyze_tests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze a set of tests of a given app.
+:param app: app.
+:type app: App
+:param results_dir: directory where to store results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.clean">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean previous results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.get_supported_filters">
+<span class="sig-name descname"><span class="pre">get_supported_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.get_supported_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.get_supported_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>return set of supported filters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.get_val_for_filter">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">get_val_for_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.get_val_for_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.get_val_for_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>get correspondent value of a given filter
+:param filter_name: name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filter value.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.setup">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.show_results">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">show_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.show_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.show_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.supports_filter">
+<span class="sig-name descname"><span class="pre">supports_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.supports_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.supports_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>check if a given filter is supported.
+:param filter_name: name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>True if supported, False otherwise.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validate_filters">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">validate_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.validate_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validate_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate supported filters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validate_test">
+<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">validate_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/AbstractAnalyzer.html#AbstractAnalyzer.validate_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer.validate_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate results of a certain test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="anadroid-results-analysis-apkapianalyzer-module">
+<h2>anadroid.results_analysis.ApkAPIAnalyzer module<a class="headerlink" href="#anadroid-results-analysis-apkapianalyzer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.results_analysis.ComposedAnalyzer">
+<span id="anadroid-results-analysis-composedanalyzer-module"></span><h2>anadroid.results_analysis.ComposedAnalyzer module<a class="headerlink" href="#module-anadroid.results_analysis.ComposedAnalyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.results_analysis.ComposedAnalyzer.</span></span><span class="sig-name descname"><span class="pre">ComposedAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">inner_analyzers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer</span></code></a></p>
+<p>Provides a way to abstract the usage of a set of AbstractAnalyzers through a single api call.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.analyze_test">
+<span class="sig-name descname"><span class="pre">analyze_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.analyze_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.analyze_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze test identified by test_id of a given app.
+:param app: app.
+:type app: App
+:param test_id: test uuid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.analyze_tests">
+<span class="sig-name descname"><span class="pre">analyze_tests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.analyze_tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.analyze_tests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze a set of tests of a given app.
+:param app: app.
+:type app: App
+:param results_dir: directory where to store results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean previous results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.get_val_for_filter">
+<span class="sig-name descname"><span class="pre">get_val_for_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.get_val_for_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.get_val_for_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>get correspondent value of a given filter
+:param filter_name: name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filter value.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.show_results">
+<span class="sig-name descname"><span class="pre">show_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.show_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.show_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.validate_filters">
+<span class="sig-name descname"><span class="pre">validate_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.validate_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.validate_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate supported filters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.validate_test">
+<span class="sig-name descname"><span class="pre">validate_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ComposedAnalyzer.html#ComposedAnalyzer.validate_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ComposedAnalyzer.ComposedAnalyzer.validate_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate results of a certain test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.results_analysis.HunterAnalyzer">
+<span id="anadroid-results-analysis-hunteranalyzer-module"></span><h2>anadroid.results_analysis.HunterAnalyzer module<a class="headerlink" href="#module-anadroid.results_analysis.HunterAnalyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.results_analysis.HunterAnalyzer.</span></span><span class="sig-name descname"><span class="pre">HunterAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer</span></code></a></p>
+<p>Implements AbstractAnalyzer interface to allow analyze app traces produced during profiling sessions
+with HunterEmanafa.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'hunter.log'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.analyze_apis">
+<span class="sig-name descname"><span class="pre">analyze_apis</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer.analyze_apis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.analyze_apis" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean previous results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.show_results">
+<span class="sig-name descname"><span class="pre">show_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/HunterAnalyzer.html#HunterAnalyzer.show_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.HunterAnalyzer.HunterAnalyzer.show_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="anadroid-results-analysis-loganalyzer-module">
+<h2>anadroid.results_analysis.LogAnalyzer module<a class="headerlink" href="#anadroid-results-analysis-loganalyzer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.results_analysis.ManafaAnalyzer">
+<span id="anadroid-results-analysis-manafaanalyzer-module"></span><h2>anadroid.results_analysis.ManafaAnalyzer module<a class="headerlink" href="#module-anadroid.results_analysis.ManafaAnalyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.results_analysis.ManafaAnalyzer.</span></span><span class="sig-name descname"><span class="pre">ManafaAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer</span></code></a></p>
+<p>Implements AbstractAnalyzer interface to allow analyze profiled results with EManafa profiler.
+Calculate statistics about the produced results to analyze, validate and characterize executions.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.analyze_test">
+<span class="sig-name descname"><span class="pre">analyze_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.analyze_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.analyze_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze test identified by test_id of a given app.
+:param app: app.
+:type app: App
+:param test_id: test uuid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.analyze_tests">
+<span class="sig-name descname"><span class="pre">analyze_tests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.analyze_tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.analyze_tests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze a set of tests of a given app.
+:param app: app.
+:type app: App
+:param results_dir: directory where to store results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean previous results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.get_val_for_filter">
+<span class="sig-name descname"><span class="pre">get_val_for_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.get_val_for_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.get_val_for_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>get correspondent value of a given filter
+:param filter_name: name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filter value.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.show_results">
+<span class="sig-name descname"><span class="pre">show_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.show_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.show_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.validate_filters">
+<span class="sig-name descname"><span class="pre">validate_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.validate_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.validate_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate supported filters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.validate_test">
+<span class="sig-name descname"><span class="pre">validate_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/ManafaAnalyzer.html#ManafaAnalyzer.validate_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.ManafaAnalyzer.ManafaAnalyzer.validate_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate results of a certain test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="anadroid-results-analysis-oldanadroidanalyzer-module">
+<h2>anadroid.results_analysis.OldAnaDroidAnalyzer module<a class="headerlink" href="#anadroid-results-analysis-oldanadroidanalyzer-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-anadroid.results_analysis.SCCAnalyzer">
+<span id="anadroid-results-analysis-sccanalyzer-module"></span><h2>anadroid.results_analysis.SCCAnalyzer module<a class="headerlink" href="#module-anadroid.results_analysis.SCCAnalyzer" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.results_analysis.SCCAnalyzer.</span></span><span class="sig-name descname"><span class="pre">SCCAnalyzer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer</span></code></a></p>
+<p>Implements AbstractAnalyzer interface to allow to calculate app code results using scc tool.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze">
+<span class="sig-name descname"><span class="pre">analyze</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_log_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'scc.log'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.analyze"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_test">
+<span class="sig-name descname"><span class="pre">analyze_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.analyze_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze test identified by test_id of a given app.
+:param app: app.
+:type app: App
+:param test_id: test uuid.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_tests">
+<span class="sig-name descname"><span class="pre">analyze_tests</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.analyze_tests"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.analyze_tests" title="Permalink to this definition">¶</a></dt>
+<dd><p>Analyze a set of tests of a given app.
+:param app: app.
+:type app: App
+:param results_dir: directory where to store results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.clean">
+<span class="sig-name descname"><span class="pre">clean</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.clean"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.clean" title="Permalink to this definition">¶</a></dt>
+<dd><p>clean previous results.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.get_val_for_filter">
+<span class="sig-name descname"><span class="pre">get_val_for_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filter_name</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.get_val_for_filter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.get_val_for_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>get correspondent value of a given filter
+:param filter_name: name of the filter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>filter value.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.setup" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.show_results">
+<span class="sig-name descname"><span class="pre">show_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_list</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.show_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.show_results" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_filters">
+<span class="sig-name descname"><span class="pre">validate_filters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.validate_filters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_filters" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate supported filters.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_test">
+<span class="sig-name descname"><span class="pre">validate_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">arg1</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/results_analysis/SCCAnalyzer.html#SCCAnalyzer.validate_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.results_analysis.SCCAnalyzer.SCCAnalyzer.validate_test" title="Permalink to this definition">¶</a></dt>
+<dd><p>validate results of a certain test.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-anadroid.results_analysis">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.results_analysis" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="anadroid.results_analysis.filters.html" class="btn btn-neutral float-right" title="anadroid.results_analysis.filters package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="anadroid.resources.testingFrameworks.monkey-runner.tests.html" class="btn btn-neutral float-left" title="anadroid.resources.testingFrameworks.monkey-runner.tests package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
