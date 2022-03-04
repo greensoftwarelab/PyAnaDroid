@@ -10,6 +10,7 @@ Welcome to pyanadroid's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   README.md
    modules
 
 .. autosummary::

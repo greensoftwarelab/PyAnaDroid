@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>AnaDroid &mdash; pyanadroid 0.3.5 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid" href="modules.html" />
+    <link rel="prev" title="Welcome to pyanadroid’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> pyanadroid
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">AnaDroid</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#use-cases">Use cases:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-test-frameworks">Supported Test Frameworks:</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#supported-energy-profilers">Supported energy profilers:</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#installation">Installation:</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-python-pip">Using python-pip</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#from-sauce">From sauce</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#plug-and-play-execution">Plug-and-play execution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">From Sauce</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#execute-a-simple-monkey-test-over-an-application">Execute a simple Monkey test over an application</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#todo">TODO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">anadroid</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">pyanadroid</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>AnaDroid</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/README.md.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="anadroid">
+<h1>AnaDroid<a class="headerlink" href="#anadroid" title="Permalink to this headline">¶</a></h1>
+<p><a class="reference external" href="https://travis-ci.com/RRua/pyAnaDroid"><img alt="Build Status" src="https://travis-ci.com/RRua/pyAnaDroid.svg?branch=main" /></a>
+<a class="reference external" href="https://www.python.org/"><img alt="made-with-python" src="https://img.shields.io/badge/Made%20with-Python-1f425f.svg" /></a>
+<a class="reference external" href="https://badge.fury.io/py/anadroid"><img alt="PyPI version" src="https://badge.fury.io/py/anadroid.svg" /></a>
+<a class="reference external" href="https://pypi.python.org/pypi/anadroid"><img alt="PyPI license" src="https://img.shields.io/pypi/l/ansicolortags.svg" /></a>
+<a class="reference external" href="https://pypi.python.org/pypi/anadroid"><img alt="PyPI status" src="https://img.shields.io/pypi/status/ansicolortags.svg" /></a></p>
+<p>Anadroid is a tool capable of automating the process of analyzing and benchmarking Android applications’ energy consumption, using state-of-the-art energy analysis tools. Anadroid can be configured to use different energy profilers and test frameworks in its execution pipeline, being able to perform automatic instrumentation and building of application source code. It can be used to perform both white-box and lack-box testing.</p>
+<div class="section" id="use-cases">
+<h2>Use cases:<a class="headerlink" href="#use-cases" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Application Benchmarking: Replicating test work/procedures on different applications to carry out comparative studies of energy consumption.</p></li>
+<li><p>Detection of energy hotspots in application code;</p></li>
+<li><p>Detection of energy-greedy coding practices;</p></li>
+<li><p>Calibration of energy consumption prediction models;</p></li>
+<li><p>Many others.</p></li>
+</ul>
+</div>
+<div class="section" id="supported-test-frameworks">
+<h2>Supported Test Frameworks:<a class="headerlink" href="#supported-test-frameworks" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Any JUnit-based framework (Robotium, Espresso, JUnit);</p></li>
+<li><p>Application UI/Exerciser Monkey;</p></li>
+<li><p>Monkeyrunner;</p></li>
+<li><p>DroidBot;</p></li>
+<li><p>App Crawler;</p></li>
+<li><p>RERAN;</p></li>
+<li><p>Monkey++ (soon);</p></li>
+</ul>
+</div>
+<div class="section" id="supported-energy-profilers">
+<h2>Supported energy profilers:<a class="headerlink" href="#supported-energy-profilers" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Trepn Profiler;</p></li>
+<li><p>Manafa;</p></li>
+<li><p>GreenScaler;</p></li>
+<li><p>Monsoon (soon);</p></li>
+<li><p>Petra (soon);</p></li>
+</ul>
+</div>
+</div>
+<div class="section" id="workflow">
+<h1>Workflow<a class="headerlink" href="#workflow" title="Permalink to this headline">¶</a></h1>
+<p>By default, Anadroid is configured to perform white-box testing of applications, instrumenting its code (Java and/or Kotlin), in order to collect tracing of the methods invoked during application execution and estimate the energy consumed by these. After the instrumentation phase, a project is created in the original directory, which is a copy of it, with the code and build scripts already instrumented. Then, the source code and apk are built from the sources of the instrumented project (both debug and release builds are supported), and the application is installed on the device. After installation, the energy profiler is enabled and the application tests are executed. At the end of the process, the monitoring process is stopped and its results collected, and the application is uninstalled.</p>
+<p><img alt="Anadroid Workflow" src="AnaDroid.png" /></p>
+</div>
+<div class="section" id="installation">
+<h1>Installation:<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="using-python-pip">
+<h2>Using python-pip<a class="headerlink" href="#using-python-pip" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install anadroid
+</pre></div>
+</div>
+</div>
+<div class="section" id="from-sauce">
+<h2>From sauce<a class="headerlink" href="#from-sauce" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recurse-submodules https://github.com/greensoftwarelab/pyanadroid.git
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="examples">
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="plug-and-play-execution">
+<h2>Plug-and-play execution<a class="headerlink" href="#plug-and-play-execution" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pyanadroid [-h] [-t {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Other}] [-p {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}]
+             [-b {Release,Debug,Custom}] [-i {JInst,Hunter}] [-it {MethodOriented,TestOriented,&#39;ActivityOriented&#39;,),AnnotationOriented,None}]
+             [-a {MethodOriented,TestOriented,(&#39;ActivityOriented&#39;,,AnnotationOriented,None}] [-d DIRETORY] [-bo] [-r] [-rb] [-ri] [-ja] [-sc {USB,WIFI}]
+             [-ds DEVICE_SERIAL] [-td TESTS_DIR] [-n PACKAGE_NAMES [PACKAGE_NAMES ...]] [-apk APPLICATION_PACKAGES [APPLICATION_PACKAGES ...]]
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h2>From Sauce<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="execute-a-simple-monkey-test-over-an-application">
+<h3>Execute a simple Monkey test over an application<a class="headerlink" href="#execute-a-simple-monkey-test-over-an-application" title="Permalink to this headline">¶</a></h3>
+<p>By default, Anadroid uses Manafa profiler to estimate energy consumption. The Monkey test (or any other test with other supported testing framework) and its parameters can be configured by modifying the .cfg present in the resources/testingFrameworks/<framework> directory. The results are stored in the results/&lt;app_id&gt;/&lt;app_version&gt; directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">anadroid.Anadroid</span> <span class="kn">import</span> <span class="n">AnaDroid</span>
+
+<span class="n">folder_of_app</span> <span class="o">=</span> <span class="s2">&quot;demoProjects/SampleApp&quot;</span>
+<span class="n">anadroid</span> <span class="o">=</span> <span class="n">AnaDroid</span><span class="p">(</span><span class="n">folder_of_app</span><span class="p">,</span> <span class="n">testing_framework</span><span class="o">=</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">)</span>
+<span class="n">anadroid</span><span class="o">.</span><span class="n">defaultWorkflow</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="todo">
+<h1>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p>merge test apk with androguard</p></li>
+<li><p>results resume file</p></li>
+<li><p>test greenscaler on rooted devices</p></li>
+<li><p>monsoon</p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="modules.html" class="btn btn-neutral float-right" title="anadroid" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to pyanadroid’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, Rui Rua.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
