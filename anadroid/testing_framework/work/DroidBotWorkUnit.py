@@ -12,6 +12,7 @@ def convert_arg(key, val):
 
 
 class DroidBotWorkUnit(WorkUnit):
+    """extends WorkUnit functionality to adapt it to droidbot framework executions."""
     def __init__(self, bin_cmd):
         super(DroidBotWorkUnit, self).__init__(bin_cmd)
         x = set()

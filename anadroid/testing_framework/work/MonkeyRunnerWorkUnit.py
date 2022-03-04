@@ -13,7 +13,9 @@ def convert_arg(key,val):
     else:
         return "-" + key + " " + val
 
+
 class MonkeyRunnerWorkUnit(WorkUnit):
+    """extends WorkUnit functionality to adapt it to monkeyrunner executions."""
     def __init__(self, bin_cmd):
         super(MonkeyRunnerWorkUnit, self).__init__(bin_cmd)
 

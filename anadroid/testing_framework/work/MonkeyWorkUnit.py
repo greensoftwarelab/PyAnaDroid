@@ -38,6 +38,7 @@ def convert_arg(key, val):
 
 
 class MonkeyWorkUnit(WorkUnit):
+    """extends WorkUnit functionality to adapt it to UI Exerciser Monkey executions."""
     def __init__(self, bin_cmd):
        super(MonkeyWorkUnit, self).__init__(bin_cmd)
 

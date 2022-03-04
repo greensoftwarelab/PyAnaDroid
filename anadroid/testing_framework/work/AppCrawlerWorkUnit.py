@@ -22,10 +22,10 @@ CUSTOM_CRAWLER_OPTIONS={
 }
 
 
-LOG_FILE="crawler.out"
-DEFAULT_EVENT_COUNT=1000
-TIMEOUT_SECS=20
-CRAWLER_STOP_PHRASE="Crawl finished"
+LOG_FILE = "crawler.out"
+DEFAULT_EVENT_COUNT = 1000
+TIMEOUT_SECS = 20
+CRAWLER_STOP_PHRASE = "Crawl finished"
 EXPECTED_OUTPUT_DIR = "crawl_output"
 
 
@@ -48,7 +48,9 @@ def detect_crawl_finish(retry=False, stop_call=None):
     if stop_call is not None:
         stop_call()
 
+
 class AppCrawlerWorkUnit(WorkUnit):
+    """extends WorkUnit functionality to adapt it to App Crawler framework executions."""
     def __init__(self, bin_cmd, stop_call=None):
         super(AppCrawlerWorkUnit, self).__init__(bin_cmd)
         self.stop_call = stop_call

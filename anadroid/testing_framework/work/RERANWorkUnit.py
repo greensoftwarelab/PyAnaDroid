@@ -2,6 +2,7 @@ from anadroid.testing_framework.work.WorkUnit import WorkUnit
 
 
 class RERANWorkUnit(WorkUnit):
+    """extends WorkUnit functionality to adapt it to RERAN framework executions."""
     def __init__(self, bin_cmd):
        super(RERANWorkUnit, self).__init__(bin_cmd)
 
