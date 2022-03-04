@@ -7,29 +7,32 @@
 
 Anadroid is a tool capable of automating the process of analyzing and benchmarking Android applications' energy consumption, using state-of-the-art energy analysis tools. Anadroid can be configured to use different energy profilers and test frameworks in its execution pipeline, being able to perform automatic instrumentation and building of application source code. It can be used to perform both white-box and lack-box testing.
 
-## Use cases:
+## Documentation
+
+https://greensoftwarelab.github.io/PyAnaDroid/anadroid.html#
+
+## Use cases
 - Application Benchmarking: Replicating test work/procedures on different applications to carry out comparative studies of energy consumption.
 - Detection of energy hotspots in application code;
 - Detection of energy-greedy coding practices;
 - Calibration of energy consumption prediction models;
 - Many others.  
 
-
-## Supported Test Frameworks:
-- Any JUnit-based framework (Robotium, Espresso, JUnit);
+## Supported Test Frameworks
+- JUnit-based frameworks (Robotium, Espresso, JUnit);
 - Application UI/Exerciser Monkey;
 - Monkeyrunner;
 - DroidBot;
 - App Crawler;
 - RERAN;
-- Monkey++ (soon);
+- Monkey++ (soon).
 
 ## Supported energy profilers:
 - Trepn Profiler;
 - Manafa;
 - GreenScaler;
 - Monsoon (soon);
-- Petra (soon);
+- Petra (soon).
 
 
 # Workflow
