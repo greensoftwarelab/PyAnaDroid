@@ -40,7 +40,7 @@ def get_results_dir(default_results_dir="anadroid_results"):
 
 
 def extract_pkg_name_from_apk(apkpath):
-    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | sort | tail -1")
     res.validate(Exception("Unable to find aapt executable"))
     aapt_executable = res.output.strip()
     res = execute_shell_command(f"{aapt_executable}  dump badging {apkpath} | grep 'package: name='")
@@ -50,7 +50,7 @@ def extract_pkg_name_from_apk(apkpath):
 
 
 def extract_version_from_apk(apkpath):
-    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | head -1")
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"aapt\" | sort | tail -1")
     res.validate(Exception("Unable to find aapt executable"))
     aapt_executable = res.output.strip()
     res = execute_shell_command(f"{aapt_executable}  dump badging {apkpath} | grep 'versionName='")
