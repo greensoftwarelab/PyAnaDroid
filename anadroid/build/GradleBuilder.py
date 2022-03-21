@@ -62,6 +62,7 @@ ATTRIBS_NAME_REMAPS = {
 
 BUILD_RESULTS_FILE = "buildStatus.json"
 SUCCESS_VALUE = "Success"
+ERROR_VALUE = "Error"
 BUILD_SUCCESS_VALUE = "BUILD SUCCESSFUL"
 DEFAULT_BUILD_TIMES_TO_TRY = 5
 DEFAULT_BUILD_TOOLS_VERSION = '25.0.3'# TODO
@@ -129,6 +130,7 @@ class GradleBuilder(AbstractBuilder):
         self.gradle_plg_version = proj.get_gradle_plugin()
         self.build_tools_version = None
         set_transitive_names(self.gradle_plg_version)
+        self.retry_on_fail = self.get_config("retry_failed", True)
 
     def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG, build_tests_apk=False, rebuild=False):
         """builds project and generates apk of build type. It can optionally build the tests apk and/or rebuild
@@ -250,6 +252,7 @@ class GradleBuilder(AbstractBuilder):
                 self.proj.add_apk(apk, build_type)
         else:
             log("Error Building APK", log_sev=LogSeverity.ERROR)
+            self.regist_error_build(task)
             return False
         return True
 
@@ -274,6 +277,7 @@ class GradleBuilder(AbstractBuilder):
                 self.proj.add_apk(apks_test, None)
         else:
             log("Error Building test APK", log_sev=LogSeverity.ERROR)
+            self.regist_error_build(task)
             return False
         return True
 
@@ -285,10 +289,16 @@ class GradleBuilder(AbstractBuilder):
         Returns:
             bool: True if success, False otherwise.
         """
-        if self.was_last_build_successful() and not rebuild:
+        build_was_succcessful = self.was_last_build_successful()
+        if build_was_succcessful and not rebuild:
             log("Not building again. Last build was successful", log_sev=LogSeverity.INFO)
             return True
-        self.__execute_gradlew_task("clean")# mainly to ensure that built apks from original proj do not persist
+
+        if not self.retry_on_fail and not build_was_succcessful and self.was_attempted_to_build_before():
+            log("Skipping failed build. Retry on failed flag is enabled", log_sev=LogSeverity.INFO)
+            return True
+
+        self.__execute_gradlew_task("clean") # mainly to ensure that built apks from original proj do not persist
         for mod_name, proj_module in self.proj.modules.items():
             bld_file = proj_module.build_file
             self.__set_build_tools_version(bld_file)
@@ -335,6 +345,7 @@ class GradleBuilder(AbstractBuilder):
             else:
                 print(val)
                 loge("Unable to solve Building error")
+                self.regist_error_build(target_task)
                 log_to_file(f"{val}\n-------", os.path.join(self.proj.proj_dir, "unknown_errors.log"))
                 return False
 
@@ -576,6 +587,21 @@ class GradleBuilder(AbstractBuilder):
         with open(filename, 'w') as outfile:
             json.dump(js, outfile)
 
+    def regist_error_build(self, task="build"):
+        """record successful build in file.
+        Args:
+            task: build task name.
+        """
+        filename = os.path.join(self.proj.proj_dir, BUILD_RESULTS_FILE)
+        js = {}
+        if os.path.exists(filename):
+            with open(filename, 'r') as fl:
+                js = json.load(fl)
+
+        js[task] = ERROR_VALUE
+        with open(filename, 'w') as outfile:
+            json.dump(js, outfile)
+
     def __set_build_tools_version(self, bld_file, btools_version=DEFAULT_BUILD_TOOLS_VERSION):
         """sets build tools version btools_version on bld_file.
         Args:
@@ -670,3 +696,12 @@ class GradleBuilder(AbstractBuilder):
             bool: True if needs, False otherwise.
         """
         return not self.__has_built_apks()  # TODO check build type and maybe last build output, lint, etc
+
+    def was_attempted_to_build_before(self):
+        """checks if there was a build attempt before.
+        Returns:
+            bool: True if yes, False otherwise.
+        """
+        filename = os.path.join(self.proj.proj_dir, BUILD_RESULTS_FILE)
+        return os.path.exists(filename)
+
