@@ -18,6 +18,7 @@ from anadroid.profiler.GreenScalerProfiler import GreenScalerProfiler
 from anadroid.profiler.ManafaProfiler import ManafaProfiler
 from anadroid.profiler.NoneProfiler import NoneProfiler
 from anadroid.profiler.TrepnProfiler import TrepnProfiler
+from anadroid.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
 from anadroid.results_analysis.ComposedAnalyzer import ComposedAnalyzer
 from anadroid.results_analysis.LogAnalyzer import LogAnalyzer
 from anadroid.results_analysis.ManafaAnalyzer import ManafaAnalyzer
@@ -194,7 +195,7 @@ class AnaDroid(object):
         Returns:
             AbstractAnalyzer: inferred analyzer.
         """
-        analyzers = [LogAnalyzer(self.profiler), SCCAnalyzer(self.profiler)]
+        analyzers = [LogAnalyzer(self.profiler), SCCAnalyzer(self.profiler), ApkAPIAnalyzer(self.profiler)]
         if not ana in SUPPORTED_ANALYZERS:
             raise Exception(f"Unsupported Analyzer {ana}")
         if profiler == profiler.TREPN:

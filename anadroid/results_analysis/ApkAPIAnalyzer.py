@@ -1,9 +1,13 @@
+import os
 import sys
+from shutil import copyfile
 
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 from androguard.misc import AnalyzeAPK
 import re
 import json
+
+from anadroid.utils.Utils import mega_find
 
 knownRetTypes = {
     "V": "Void",
@@ -177,10 +181,19 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
     def __init__(self, profiler):
         super(ApkAPIAnalyzer, self).__init__(profiler)
 
+    def eval_app(self, app):
+        app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if
+                                  "allMethods.json" not in x]
+        app_file_exists = len(app_methods_candidates) > 0
+        if not app_file_exists:
+            filename = eval(app.apk, app.package_name)
+            target_dir = os.path.join(app.local_res, "all")
+            copyfile(filename, os.path.join(target_dir, os.path.basename(filename)))
+
     def setup(self, **kwargs):
         pass
 
-    def analyze(self,apk_path, apk_name):
+    def analyze(self, apk_path, apk_name):
         return eval(apk_path, apk_name)
 
     def clean(self):
@@ -193,12 +206,15 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
         return super().get_val_for_filter(filter_name, add_data)
 
     def analyze_tests(self, app, results_dir=None, **kwargs):
+        self.eval_app(app)
         return super().analyze_tests(app, results_dir=results_dir, **kwargs)
 
     def analyze_test(self, app, test_id, **kwargs):
+        self.eval_app(app)
         return super().analyze_test(app, test_id=test_id, **kwargs)
 
     def validate_test(self, app, arg1, **kwargs):
+        self.eval_app(app)
         return super().validate_test(app, arg1, **kwargs)
 
     def validate_filters(self):

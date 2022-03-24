@@ -69,7 +69,7 @@ def get_first_connected_device(conn_type=ADB_CONN.USB.value):
     result.validate(DeviceNotFoundError("No devices/emulators found"))
     device_serial = result.output.split(" ")[0]
     if device_serial == "":
-        raise DeviceNotFoundError(f"No devices/emulators connected via {conn_type} found")
+        raise DeviceNotFoundError(f"No devices/emulators connected.")
 
     return Device(device_serial, conn_type=conn_type)
 
@@ -222,12 +222,11 @@ class Device(AbstractDevice):
         Returns:
             str: the most alike installed pkg name.
         """
-        matching_list = list(filter(lambda x: pkg_aprox_name in x, self.installed_packages))
-        if len(matching_list) > 0:
-            return difflib.get_close_matches(pkg_aprox_name, matching_list)[0]
+        candidates = difflib.get_close_matches(pkg_aprox_name, self.installed_packages, n=1)
+        if len(candidates) > 0:
+            return candidates[0]
         else:
-            # pkg_name diff after install
-            return difflib.get_close_matches(pkg_aprox_name, self.installed_packages)[0]
+            return difflib.get_close_matches(pkg_aprox_name, self.list_installed_packages(), n=1)[0]
 
     def lock_screen(self):
         super(Device, self).lock_screen()

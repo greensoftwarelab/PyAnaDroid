@@ -63,7 +63,7 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
             with open(app_methods_file, 'r') as j:
                 app_methods = json.load(j)
         else:
-            loge("all_methods.json file not found")
+            loge("no app methods found")
         methods = []
         for da_class, class_obj in app_methods.items():
             if 'class_methods' not in class_obj:
@@ -104,6 +104,7 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
             res = 0
             if test_id in self.functions:
                 coverage_pct = (len(self.functions[test_id]) / len(self.app_methods)) if len(self.app_methods) > 0 else 0
+                print(f"method coverage {coverage_pct}")
                 return coverage_pct
         val = super().get_val_for_filter(filter_name, test_id)
         if val is None:

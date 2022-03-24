@@ -20,7 +20,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
         super(OldAnaDroidAnalyzer, self).__init__(profiler)
         self.bin_cmd = "java -jar " + (DEFAULT_JAR_PATH if jarpath is None else jarpath)
         self.remote_url = "NONE" if remote_url is None else remote_url
-        self.inner_analyzers = [ApkAPIAnalyzer(profiler)]
+        self.inner_analyzers = [] #[ApkAPIAnalyzer(profiler)]
 
     def setup(self, **kwargs):
         pass
@@ -36,9 +36,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
                 analyzer.analyze(instr_proj.proj_dir, test_orient, output_log_file=os.path.join(app.local_res, "scc.log"))
             elif isinstance(analyzer, ApkAPIAnalyzer):
                 filename = analyzer.analyze(app.apk, app.package_name)
-                print("filename " + filename)
                 target_dir = os.path.join(app.local_res, "all")
-                print("ai vai copiar pro " + target_dir)
                 copyfile(filename, os.path.join(target_dir,  os.path.basename(filename)))
 
     def analyze(self, app, **kwargs):

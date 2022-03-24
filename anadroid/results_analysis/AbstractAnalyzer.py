@@ -8,6 +8,7 @@ from anadroid.utils.Utils import get_resources_dir
 
 DEFAULT_CFG_ANALYZERS_FILE = os.path.join(get_resources_dir(), "config", "analyzer_filters.json")
 
+
 class AbstractAnalyzer(ABC):
     """Defines a basic interface to be implemented by programs aiming to analyze and produce results about the data
     collected during the profiling session and profiled apps.
