@@ -1,6 +1,6 @@
 import argparse
 import os
-
+import traceback
 
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, \
     SUPPORTED_INSTRUMENTERS, \
@@ -21,6 +21,7 @@ from anadroid.profiler.TrepnProfiler import TrepnProfiler
 from anadroid.results_analysis.ComposedAnalyzer import ComposedAnalyzer
 from anadroid.results_analysis.LogAnalyzer import LogAnalyzer
 from anadroid.results_analysis.ManafaAnalyzer import ManafaAnalyzer
+from anadroid.results_analysis.ManafaMethodCoverageAnalyzer import ManafaMethodCoverageAnalyzer
 from anadroid.results_analysis.OldAnaDroidAnalyzer import OldAnaDroidAnalyzer
 from anadroid.results_analysis.SCCAnalyzer import SCCAnalyzer
 from anadroid.testing_framework.AppCrawlerFramework import AppCrawlerFramework
@@ -110,7 +111,8 @@ class AnaDroid(object):
             da_proj.init_results_dir(pkg)
             self.apps.append(App(self.device, da_proj, pkg, apk_path="", local_res_dir=da_proj.results_dir))
 
-    def __create_apps_from_apk_names(self, apk_list):
+    @staticmethod
+    def __create_apps_from_apk_names(apk_list):
         return apk_list
         '''for apk in apk_list:
             if not os.path.exists(apk):
@@ -199,6 +201,7 @@ class AnaDroid(object):
             analyzers.append(OldAnaDroidAnalyzer(self.profiler))
         elif profiler == profiler.MANAFA and ana == ANALYZER.MANAFA_ANALYZER:
             analyzers.append(ManafaAnalyzer(self.profiler))
+            analyzers.append(ManafaMethodCoverageAnalyzer(self.profiler))
         return ComposedAnalyzer(self.profiler, analyzers)
 
     def __infer_build_system(self, build_system):
@@ -228,15 +231,8 @@ class AnaDroid(object):
         in software ready to be used and tested on the connected device, using the selected testing framework.
         """
         for app_proj in self.app_projects_ut:
-            app_name = os.path.basename(app_proj)
-            logi("Processing app " + app_name + " in " + app_proj)
-            original_proj = AndroidProject(projname=app_name, projdir=app_proj, clean_instrumentations=self.reinstrument)
-            instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
-            instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
-            builder = self.init_builder(instr_proj)
-            res = builder.build_proj_and_apk(build_type=self.build_type, build_tests_apk=self.needs_tests_apk(), rebuild=self.rebuild_apps)
-            if not res:
-                loge(f"Unable to build {app_name}. Skipping app")
+            instr_proj, builder = self.build_app_project(app_proj, build_apks=True)
+            if builder is None:
                 continue
             installed_apps_list = builder.install_apks(build_type=self.build_type, install_apk_test=self.needs_tests_apk())
             self.do_work(installed_apps_list)
@@ -259,15 +255,19 @@ class AnaDroid(object):
     def do_work(self, apps):
         """Executes the testing framework for each app in apps."""
         for i, app in enumerate(apps):
-            logi("testing package " + app.package_name)
-            app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
-            app.set_immersive_mode()
-            self.testing_framework.init_default_workload(pkg=app.package_name, tests_dir=self.tests_dir)
-            self.testing_framework.test_app(self.device, app)
-            self.device.uninstall_pkg(app.package_name)
-            self.analyzer.analyze_tests(app, **{'instr_type': self.instrumentation_type,
-                                                'testing_framework': self.testing_framework,
-                                                })
+            logi("testing app package " + app.package_name)
+            try:
+                app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
+                app.set_immersive_mode()
+                self.testing_framework.init_default_workload(pkg=app.package_name, tests_dir=self.tests_dir)
+                self.testing_framework.test_app(self.device, app)
+                self.device.uninstall_pkg(app.package_name)
+
+                self.analyzer.analyze_tests(app, **{'instr_type': self.instrumentation_type,
+                                                    'testing_framework': self.testing_framework,
+                                                    })
+            except Exception as e:
+                loge(traceback.format_exc())
 
     def __validate_suite(self, profiler):
         """checks if the selected profiler can be combined with the selected instrumentation tyoe.
@@ -281,15 +281,30 @@ class AnaDroid(object):
     def just_build_apps(self):
         """builds apps from app_projects_ut."""
         for app_proj in self.app_projects_ut:
-            app_name = os.path.basename(app_proj)
-            logi("Processing app " + app_name + " in " + app_proj)
-            original_proj = AndroidProject(projname=app_name, projdir=app_proj, clean_instrumentations=self.reinstrument)
+            self.build_app_project(app_proj, build_apks=True)
+
+    def build_app_project(self, app_project, build_apks=False):
+        app_name = os.path.basename(app_project)
+        logi("Processing app " + app_name + " in " + app_project)
+        res = False
+        instr_proj = None
+        builder = None
+        try:
+            original_proj = AndroidProject(projname=app_name, projdir=app_project, clean_instrumentations=self.reinstrument)
             instrumented_proj_dir = self.instrumenter.instrument(original_proj, instr_type=self.instrumentation_type)
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
-
             builder = self.init_builder(instr_proj)
-            builder.build_proj_and_apk(build_type=self.build_type,
-                                       build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
+            if build_apks:
+               res = builder.build_proj_and_apk(build_type=self.build_type, build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
+            else:
+                res = builder.build()
+        except Exception:
+            loge(traceback.format_exc())
+
+        if not res:
+            loge(f"Unable to build {app_name}. Skipping app")
+            return instr_proj, None
+        return instr_proj, builder
 
     def just_analyze(self):
         """analyze apps obtained from app_projects_ut."""
