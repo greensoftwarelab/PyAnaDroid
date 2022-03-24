@@ -189,8 +189,8 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
     def show_results(self, app_list):
         pass
 
-    def get_val_for_filter(self, filter_name):
-        return super().get_val_for_filter(filter_name)
+    def get_val_for_filter(self, filter_name, add_data=None):
+        return super().get_val_for_filter(filter_name, add_data)
 
     def analyze_tests(self, app, results_dir=None, **kwargs):
         return super().analyze_tests(app, results_dir=results_dir, **kwargs)

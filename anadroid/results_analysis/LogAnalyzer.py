@@ -55,7 +55,7 @@ class LogAnalyzer(AbstractAnalyzer):
         for filter_name, fv in self.validation_filters.filters.items():
             if filter_name in self.supported_filters:
                 for filt in fv:
-                    val_for_filter = self.get_val_for_filter(filter_name)
+                    val_for_filter = self.get_val_for_filter(filter_name, )
                     if not filt.apply_filter(val_for_filter):
                         log(f"filter {filter_name} failed. value: {val_for_filter}")
                         return False
@@ -64,12 +64,12 @@ class LogAnalyzer(AbstractAnalyzer):
                 return False
         return True
 
-    def get_val_for_filter(self, filter_name):
+    def get_val_for_filter(self, filter_name, add_data=None):
         if filter_name == "fatal_errors":
             return self.logcatparser.get_parser_resume()['stats']['fatal']
         elif filter_name == "ANR":
             return self.logcatparser.get_parser_resume()['known_errors']['ANR']
-        val = super().get_val_for_filter(filter_name)
+        val = super().get_val_for_filter(filter_name, add_data)
         if val is None:
             log(f"unsupported filter {filter_name} by {self.__class__}")
         return val

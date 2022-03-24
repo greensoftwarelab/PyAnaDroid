@@ -2,7 +2,7 @@ import os
 from enum import Enum
 from os import mkdir
 
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, loge
 from textops import cat, grep, cut
 import re
 
@@ -72,8 +72,11 @@ class ProjectModule(object):
         for dep_line in inside_dependencies:
             is_imp = str(grep(dep_line, pattern="implementation"))
             if is_imp != "":
-                splits = re.search('(\'|\")(.*)(\'|\"?)', is_imp).groups()[1].split(":")
-                dependency = splits[0]
+                splits = re.search('(\'|\")(.*)(\'|\"?)', is_imp)
+                if splits is not None:
+                    dependency = splits.groups()[1].split(":")[0]
+                else:
+                    loge(f"error detecting dependencies of module {self.mod_name}")
             else:
                 is_comp = str(grep(dep_line, pattern="compile"))
                 if is_comp != "":

@@ -1,3 +1,4 @@
+import json
 import os
 import re
 import shutil
@@ -54,6 +55,7 @@ class Project(object):
         self.proj_name = projname
         self.proj_dir = projdir
         self.results_dir = results_dir
+        self.apps = []
 
     def init_results_dir(self, app_id):
         """inits results dir.
@@ -81,10 +83,8 @@ class AndroidProject(Project):
            root_build_file = project level gradle file.
            main_manif_file = project manifest file.
            tests_manif_file = manifest of test project.
-
-
        """
-    def __init__(self, projname, projdir,results_dir=RESULTS_DIR, clean_instrumentations=False):
+    def __init__(self, projname, projdir, results_dir=RESULTS_DIR, clean_instrumentations=False):
         super(AndroidProject, self).__init__(projname=projname, projdir=projdir, results_dir=results_dir)
         self.root_build_file = self.get_root_build_file()
         self.main_manif_file = self.get_main_manif_file()
@@ -255,3 +255,19 @@ class AndroidProject(Project):
         ref_apk = apks[0] # assuming first since main apk is build before building tests apk
         v = extract_version_from_apk(ref_apk)
         self.proj_version = DefaultSemanticVersion(v)
+
+    def get_proj_json(self):
+        return {
+            'project_id': self.proj_name,
+            'project_desc': '',
+            'project_build_tool': "gradle",
+            'project_packages': [self.pkg_name],
+            'project_location': self.proj_dir,
+            'project_apps': [ x.get_app_json() for x in self.apps ]
+        }
+
+    def save_proj_json(self, path):
+        js = self.get_proj_json()
+        filename = f'{self.app_id}.json'
+        with open(os.path.join(path, filename), 'w') as jj:
+            json.dump(js, jj)

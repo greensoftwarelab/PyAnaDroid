@@ -156,8 +156,8 @@ class RERANFramework(AbstractTestingFramework):
         app.stop()
         self.profiler.stop_profiling()
         device.clear_logcat()
-        self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
-        self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
+        self.profiler.export_results(test_id)
+        self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")

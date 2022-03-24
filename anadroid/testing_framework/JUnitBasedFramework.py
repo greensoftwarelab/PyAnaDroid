@@ -112,8 +112,8 @@ class JUnitBasedFramework(AbstractTestingFramework):
         self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
         # app.stop()
         self.profiler.stop_profiling()
-        self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
-        self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
+        self.profiler.export_results(test_id)
+        self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
         device.clear_logcat()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):

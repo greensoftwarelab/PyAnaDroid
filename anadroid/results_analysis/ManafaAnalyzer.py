@@ -24,10 +24,10 @@ class ManafaAnalyzer(AbstractAnalyzer):
     # def analyze(self, app, output_log_file="hunter.log"):
     def analyze_tests(self, app, results_dir=None, **kwargs):
         #total, per_component, metrics = self.profiler.manafa.getConsumptionInBetween()
-        hunter_trace = {}
+        results_dir = results_dir if results_dir is not None else app.curr_local_dir
         if isinstance(self.profiler.manafa, HunterEManafa):
+            hunter_trace = {}
             output_log_file = "hunter.log"
-            results_dir = results_dir if results_dir is not None else app.curr_local_dir
             hunter_logs = [os.path.join(results_dir, f) for f in os.listdir(results_dir) if 'hunter' in f]
             final_hunter = os.path.join(results_dir, output_log_file)
             # concat all hunter logs on final hunter
@@ -45,12 +45,12 @@ class ManafaAnalyzer(AbstractAnalyzer):
                                 outfile.write(line)
                         between_tests += 1
 
-            # concat all consumption logs on final consumption
-            consumption_logs = [f for f in os.listdir(results_dir) if 'consumption' in f]
-            final_consumption = os.path.join(results_dir, "consumption.log")
-            interval_line = "------------------------------------------\n"
-            with open(final_consumption, 'w') as file:
-                file.write(interval_line.join([open(i).read() for i in consumption_logs]))
+        # concat all consumption logs on final consumption
+        consumption_logs = [f for f in os.listdir(results_dir) if 'consumption' in f]
+        final_consumption = os.path.join(results_dir, "consumption.log")
+        interval_line = "------------------------------------------\n"
+        with open(final_consumption, 'w') as file:
+            file.write(interval_line.join([open(i).read() for i in consumption_logs]))
 
     def validate_test(self, app, test_id, **kwargs):
         return self.validate_filters()
@@ -71,11 +71,11 @@ class ManafaAnalyzer(AbstractAnalyzer):
                 return False
         return True
 
-    def get_val_for_filter(self, filter_name):
+    def get_val_for_filter(self, filter_name, add_data=None):
         if filter_name == "total_energy":
             tot, _, _ = self.profiler.manafa.getConsumptionInBetween()
             return tot
-        val = super().get_val_for_filter(filter_name)
+        val = super().get_val_for_filter(filter_name, add_data)
         if val is None:
             log(f"unsupported filter {filter_name} by {self.__class__}")
         return val

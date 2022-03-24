@@ -3,5 +3,6 @@
       "ANR__eq" : 0,
       "total_energy__gt": 0,
       "flashlight__eq": 0,
-      "screen_brightness__le" : 255
+      "screen_brightness__le" : 255,
+      "method_coverage__ge" : 0
 }

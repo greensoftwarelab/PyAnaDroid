@@ -295,7 +295,7 @@ class GradleBuilder(AbstractBuilder):
             return True
 
         if not self.retry_on_fail and not build_was_succcessful and self.was_attempted_to_build_before():
-            log("Skipping failed build. Retry on failed flag is enabled", log_sev=LogSeverity.INFO)
+            log("Skipping failed build. Retry on failed flag is disabled", log_sev=LogSeverity.ERROR)
             return True
 
         self.__execute_gradlew_task("clean") # mainly to ensure that built apks from original proj do not persist

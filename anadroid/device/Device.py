@@ -201,6 +201,13 @@ class Device(AbstractDevice):
             if len(vals) > 1:
                 self.props[vals[0]] = vals[1]
 
+    def get_prop(self, key):
+        if key in self.props:
+            return self.props[key]
+        res = super().execute_command("getprop", args=[key], shell=True)
+        res.validate(DeviceNotFoundError("There is no connected devices"))
+        return res.output.strip()
+
     def __init_installed_packages(self):
         """updates installed packages list.
         """
@@ -318,3 +325,62 @@ class Device(AbstractDevice):
         """
         super(Device, self).execute_root_command(f"shell setprop persist.logd.size {log_size_bytes}K", shell=True)
 
+    def get_device_model(self):
+        return self.get_prop("ro.product.model")
+
+    def get_device_brand(self):
+        return self.get_prop("ro.product.brand")
+
+    def get_device_ram(self):
+        res = self.execute_command(" cat /proc/meminfo | grep 'MemTotal' | cut -f2 -d:", args=[], shell=True)
+        res.validate("Unable to get device ram")
+        return res.output.strip().replace(" ","")
+
+    def get_device_cores(self):
+        res = self.execute_command(" cat /proc/cpuinfo | grep processor | wc -l", args=[], shell=True)
+        res.validate("Unable to get device cores")
+        return res.output.strip()
+
+    def get_device_max_cpu_freq(self):
+        res = self.execute_command(" cat /proc/cpumaxfreq", args=[], shell=True)
+        if res.validate("Unable to get device max cpu freq"):
+            return res.output.strip().replace(" ","")
+        return "0"
+
+    def get_kernel_version(self):
+        res = self.execute_command("cat /proc/version", args=[], shell=True)
+        res.validate("Unable to get kernel version")
+        return res.output.strip()
+
+    def get_device_specs(self):
+        return {
+            "device_serial_number": self.serial_nr,
+            "device_model": self.get_device_model(),
+            "device_brand": self.get_device_brand(),
+            "device_ram": self.get_device_ram(),
+            "device_cores": self.get_device_cores(),
+            "device_max_cpu_freq": self.get_device_max_cpu_freq()
+        }
+
+    def get_device_info(self):
+        return {
+            "state_device_id": self.serial_nr,
+            "state_os_version": self.get_prop("ro.build.version"),
+            "state_miui_version": self.get_prop("ro.miui.cust_variant"),
+            "state_api_version": self.get_prop("ro.build.version.sdk"),
+            "state_kernel_version": self.get_kernel_version()[:200],
+            "state_operator": self.get_prop("gsm.sim.operator.alpha"),
+            "state_operator_country": self.get_prop("gsm.operator.iso-country"),
+            "state_nr_installed_apps": len(self.installed_packages),
+            "state_current_lang": self.get_prop("persist.sys.locale")
+        }
+
+    def save_device_specs(self, filepath):
+        res = self.get_device_specs()
+        with open(filepath, 'w') as jj:
+            json.dump(res, jj)
+
+    def save_device_info(self, filepath):
+        res = self.get_device_info()
+        with open(filepath, 'w') as jj:
+            json.dump(res, jj)

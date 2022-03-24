@@ -16,7 +16,6 @@ GRADLE_RES_DIR = os.path.join(RES_DIR, "build", "gradle")
 GRADLE_WRAPPER_DIR = os.path.join(GRADLE_RES_DIR, "wrapper", "gradle")
 
 
-
 class KNOWN_ERROR(Enum):
     """Enumerates the list of known gradle build errors that possibly can be fixed the framework."""
     GOOGLE_REPO_ERROR = "method google() for arguments"

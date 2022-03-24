@@ -137,8 +137,8 @@ class AppCrawlerFramework(AbstractTestingFramework):
         self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
         app.stop()
         wk_unit.export_results(app.curr_local_dir)
-        self.profiler.export_results("GreendroidResultTrace0.csv")
-        self.profiler.pull_results("GreendroidResultTrace0.csv", app.curr_local_dir)
+        self.profiler.export_results(test_id)
+        self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")

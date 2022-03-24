@@ -78,7 +78,7 @@ class AbstractAnalyzer(ABC):
         pass
 
     @abstractmethod
-    def get_val_for_filter(self, filter_name):
+    def get_val_for_filter(self, filter_name, add_data=None):
         """get correspondent value of a given filter
         Args:
             filter_name: name of the filter.

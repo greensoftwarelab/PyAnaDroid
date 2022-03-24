@@ -1,3 +1,4 @@
+import json
 import os
 import time
 
@@ -11,6 +12,7 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 RESOURCES_DIR = os.path.join(get_resources_dir(), "profilers", "Manafa")
 HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
+TEST_INDEX_FILENAME = "tests_index.json"
 
 class ManafaProfiler(AbstractProfiler):
     """Implements AbstractProfiler interface to allow profiling with Manafa profiler.
@@ -26,6 +28,7 @@ class ManafaProfiler(AbstractProfiler):
                 timezone=timezone,
                 instrument_file=HUNTER_INSTRUMENT_FILE,
                 not_instrument_file=HUNTER_NOT_INSTRUMENT_FILE)
+        self.test_index_file = TEST_INDEX_FILENAME
 
     def install_profiler(self):
         res = self.device.execute_command("perfetto -h", shell=True)
@@ -49,16 +52,36 @@ class ManafaProfiler(AbstractProfiler):
         """does nothing."""
         pass
 
-    def pull_results(self, file_id, target_dir):
-        """pull results from device and put them in target_dir"""
+    def pull_results(self, test_id, target_dir):
+        """pull results from device and put them in target_dir.
+
+        Pulls results from device, place them in target_dir and update tests index.
+
+        """
         hunter_log = ""
         consumptions_log = ""
+        da_list = [
+            os.path.join(target_dir, os.path.basename(self.manafa.bts_out_file)),
+            os.path.join(target_dir, os.path.basename(self.manafa.pft_out_file)),
+        ]
         if isinstance(self.manafa, HunterEManafa):
             hunter_log = self.manafa.hunter_out_file
             consumptions_log = self.manafa.app_consumptions_log
+            da_list.append( os.path.join(target_dir, os.path.basename(hunter_log)))
+            da_list.append(os.path.join(target_dir, os.path.basename(consumptions_log)))
         cmd = f"cp -r {self.manafa.bts_out_file} {self.manafa.pft_out_file} {hunter_log} {consumptions_log} {target_dir}"
         execute_shell_command(cmd)\
             .validate(Exception("No result files to pull"))
+        # update or create test index
+        test_index_file = os.path.join(target_dir, self.test_index_file)
+        js = {}
+        if os.path.exists(test_index_file):
+            #update file
+            with open(test_index_file, 'w') as jj:
+                js = json.load(jj)
+        js[test_id] = da_list
+        with open(test_index_file, 'w') as jj:
+            json.dump(js, jj)
 
     def get_dependencies_location(self):
         return []

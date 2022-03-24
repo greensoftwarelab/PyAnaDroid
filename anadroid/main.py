@@ -40,6 +40,7 @@ def main():
     parser.add_argument("-d", "--diretory", default="demoProjects", type=str, help="app(s)' folder")
     parser.add_argument("-bo", "--buildonly", help="just build apps", action='store_true')
     parser.add_argument("-r", "--record", help="record test", action='store_true')
+    #parser.add_argument("-rt", "--retry", help="retry build if previously failed", action='store_true')
     parser.add_argument("-rb", "--rebuild", help="rebuild apps", action='store_true')
     parser.add_argument("-ri", "--reinstrument", help="reinstrument app", action='store_true')
     parser.add_argument("-ja", "--justanalyze", help="just analyze apps", action='store_true')

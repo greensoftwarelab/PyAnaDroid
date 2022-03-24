@@ -43,5 +43,5 @@ class ComposedAnalyzer(AbstractAnalyzer):
                 return False
         return True
 
-    def get_val_for_filter(self, filter_name):
-        return super().get_val_for_filter(filter_name)
+    def get_val_for_filter(self, filter_name, add_data=None):
+        return super().get_val_for_filter(filter_name, add_data)

@@ -30,6 +30,7 @@ class TrepnProfiler(AbstractProfiler):
             self.install_profiler()
         if not device.contains_file(self.device_dir+"/GDFlag"):
             self.setup_trepn_device_dir()
+        self.output_filename = "GreendroidResultTrace%s.csv"
 
     def install_profiler(self, apk_loc=DEFAULT_APK_LOCATION):
         """install trepn profiler on device.
@@ -95,7 +96,8 @@ class TrepnProfiler(AbstractProfiler):
 
     def pull_results(self, file_id, target_dir):
         """pull results from file"""
-        device_filepath = self.device_dir + "/" + file_id
+        filename = self.output_filename % file_id if '%' in self.output_filename else self.output_filename
+        device_filepath = os.path.join(self.device_dir,  filename)
         self.device.execute_command("pull", args=[device_filepath, target_dir], shell=False).validate(Exception("error pulling results"))
         all_dir = os.path.join(target_dir, "..", "all")
 

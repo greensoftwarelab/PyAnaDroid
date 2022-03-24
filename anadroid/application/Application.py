@@ -52,6 +52,7 @@ class App(AbstractApplication):
         self.name = app_name
         self.curr_local_dir = None
         self.__init_res_dir()
+        self.proj.apps.append(self)
 
     def __init_res_dir(self):
         """initialize results dir and subdirectories."""
@@ -84,6 +85,9 @@ class App(AbstractApplication):
         dirname = os.path.join(self.local_res, get_prefix(testing_framework, inst_type))
         os.mkdir(dirname)
         self.curr_local_dir = dirname
+        self.proj.save_proj_json(self.curr_local_dir)
+        self.device.save_device_specs(os.path.join(self.curr_local_dir, "device.json"))
+        self.device.save_device_info(os.path.join(self.curr_local_dir, "deviceState.json"))
 
     def start(self):
         """starts application on device.
@@ -138,3 +142,12 @@ class App(AbstractApplication):
         if res.validate(Exception("unable to determinate version of package")):
             version = echo(res.output | grep("versionName") | cut("=", 1))
             return DefaultSemanticVersion(str(version))
+
+    def get_app_json(self):
+        return {
+            'app_id': self.proj.app_id,
+            'app_package': self.package_name,
+            'app_version': str(self.version),
+            'app_project': self.proj.proj_name,
+            'app_language': 'Java'
+        }

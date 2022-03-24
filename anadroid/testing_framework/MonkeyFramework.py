@@ -88,7 +88,7 @@ class MonkeyFramework(AbstractTestingFramework):
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
-    def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
+    def exec_one_test(self, test_id, device, app, wk_unit, n_retries=1):
         """executes one test identified by test_id of an given app on a given device.
         Args:
             test_id: test uuid.
@@ -110,12 +110,11 @@ class MonkeyFramework(AbstractTestingFramework):
         app.stop()
         self.profiler.stop_profiling()
         device.clear_logcat()
-        self.profiler.export_results(f"GreendroidResultTrace{test_id}.csv")
-        self.profiler.pull_results(f"GreendroidResultTrace{test_id}.csv", app.curr_local_dir)
+        self.profiler.export_results(test_id)
+        self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
-            logs(f"Test {test_id} PASSED ")
-
+            logs(f"Test {test_id} PASSED")
