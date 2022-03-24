@@ -69,6 +69,7 @@ class ManafaProfiler(AbstractProfiler):
             consumptions_log = self.manafa.app_consumptions_log
             da_list.append( os.path.join(target_dir, os.path.basename(hunter_log)))
             da_list.append(os.path.join(target_dir, os.path.basename(consumptions_log)))
+            da_list.append(os.path.join(target_dir, os.path.basename(consumptions_log)))
         cmd = f"cp -r {self.manafa.bts_out_file} {self.manafa.pft_out_file} {hunter_log} {consumptions_log} {target_dir}"
         execute_shell_command(cmd)\
             .validate(Exception("No result files to pull"))
@@ -79,7 +80,7 @@ class ManafaProfiler(AbstractProfiler):
             #update file
             with open(test_index_file, 'w') as jj:
                 js = json.load(jj)
-        js[test_id] = da_list
+        js[str(test_id)] = da_list
         with open(test_index_file, 'w') as jj:
             json.dump(js, jj)
 

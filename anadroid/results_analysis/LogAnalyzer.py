@@ -4,7 +4,7 @@ import re
 from logcatparser.logCatParser import LogCatParser
 
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, loge
 from manafa.utils.Logger import log
 
 
@@ -44,7 +44,8 @@ class LogAnalyzer(AbstractAnalyzer):
     def show_results(self, app_list):
         #for analyzed_app in app_list:
         #print(analyzed_app)
-        print("loganalyzer TODO show result for each test")
+        #print("loganalyzer TODO show result for each test")
+        pass
 
     def validate_test(self, app, test_id, **kwargs):
         log_file = kwargs.get('log_filename') if 'log_filename' in kwargs else 'batata' # todo
@@ -71,5 +72,5 @@ class LogAnalyzer(AbstractAnalyzer):
             return self.logcatparser.get_parser_resume()['known_errors']['ANR']
         val = super().get_val_for_filter(filter_name, add_data)
         if val is None:
-            log(f"unsupported filter {filter_name} by {self.__class__}")
+            loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")
         return val

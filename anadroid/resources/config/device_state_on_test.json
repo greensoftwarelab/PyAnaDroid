@@ -5,7 +5,7 @@
   "wifi" : 0,
   "flashlight" : 0,
   "gps" : 0,
-  "screen_brightness": 50,
+  "screen_brightness": 250,
   "screen_auto_rotate": 0,
   "nfc_state": 0,
   "mobile_data_state": 0,

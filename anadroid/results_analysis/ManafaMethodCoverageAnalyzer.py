@@ -26,28 +26,23 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
 
     # def analyze(self, app, output_log_file="hunter.log"):
     def analyze_tests(self, app, results_dir=None, **kwargs):
-        results_dir = results_dir if results_dir is not None else app.curr_local_dir
-        consumption_logs = [f for f in os.listdir(results_dir) if 'consumption' in f]
-        final_consumption = os.path.join(results_dir, "consumption.log")
-        interval_line = "------------------------------------------\n"
-        with open(final_consumption, 'w') as file:
-            file.write(interval_line.join([open(i).read() for i in consumption_logs]))
+        pass
 
     def validate_test(self, app, test_id, **kwargs):
         self.get_test_stats(app, test_id)
         return self.validate_filters_for_test(test_id)
 
     def clean(self):
-        self.app_methods = {}
+        self.app_methods = []
         self.functions = {}
 
     def get_test_stats(self, app, test_id):
-        self.app_methods = self.__get_app_methods(app)
-        self.functions = self.__get_functions_consumption_of_test(app, test_id)
-
+        self.app_methods = self.__get_app_methods(app) if len(self.app_methods) == 0 else self.app_methods
+        self.functions[str(test_id)] = self.__get_functions_consumption_of_test(app, test_id)
 
     def __get_functions_consumption_of_test(self, app, test_id, index_file="tests_index.json", lookup_str="functions_"):
         functions = {}
+        test_id = str(test_id)
         if not os.path.exists(os.path.join(app.curr_local_dir, index_file)):
             return functions
         with open(os.path.join(app.curr_local_dir, index_file), 'r') as j:
@@ -61,15 +56,20 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
 
     @staticmethod
     def __get_app_methods(app):
-        app_methods_file = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='d', maxdepth=1) if "allMethods.json" not in x][0]
-        with open(app_methods_file, 'r') as j:
-            app_methods = json.load(j)
-        methods = set()
-        for da_class, class_obj in app_methods_file.items():
+        app_methods = {}
+        app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if "allMethods.json" not in x]
+        if len(app_methods_candidates) > 0:
+            app_methods_file = app_methods_candidates[0]
+            with open(app_methods_file, 'r') as j:
+                app_methods = json.load(j)
+        else:
+            loge("all_methods.json file not found")
+        methods = []
+        for da_class, class_obj in app_methods.items():
             if 'class_methods' not in class_obj:
                 continue
             for method in class_obj['class_methods'].keys():
-                methods[method] = class_obj['class_methods'][method]
+                methods.append(class_obj['class_methods'][method])
         return methods
 
     def validate_filters(self):
@@ -90,7 +90,6 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
             if filter_name in self.supported_filters:
                 for filt in fv:
                     val_for_filter = self.get_val_for_filter(filter_name, test_id)
-                    logi(f"filter {filter_name}. value: {val_for_filter}")
                     if not filt.apply_filter(val_for_filter):
                         loge(f"filter {filter_name} failed. value: {val_for_filter}")
                         return False
@@ -100,13 +99,13 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
         return True
 
     def get_val_for_filter(self, filter_name, add_data=None):
-        test_id = add_data if add_data is not None else 1
+        test_id = str( add_data if add_data is not None else 0 )
         if filter_name == "method_coverage":
             res = 0
             if test_id in self.functions:
-                coverage_pct = len(self.functions[test_id]) / len(self.app_methods)
+                coverage_pct = (len(self.functions[test_id]) / len(self.app_methods)) if len(self.app_methods) > 0 else 0
                 return coverage_pct
         val = super().get_val_for_filter(filter_name, test_id)
         if val is None:
-            loge(f"unsupported filter {filter_name} by {self.__class__}")
+            loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")
         return val

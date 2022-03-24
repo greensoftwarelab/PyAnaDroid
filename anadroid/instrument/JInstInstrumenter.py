@@ -76,7 +76,7 @@ class JInstInstrumenter(AbstractInstrumenter):
             # remove other instrumentations inside if needed
             any(shutil.rmtree(tr_dir) for tr_dir in mega_find(target_dir, pattern=f'*{mirror_dirname}*', type_file='d', maxdepth=1))
             res.validate(Exception("unable to instrument project "))
-            copyfile("allMethods.json", os.path.join(android_project.proj_dir, "allMethods.json"))
+            copyfile("allMethods.json", os.path.join(target_dir, "allMethods.json"))
             self.write_instrumentation_log_file(android_project, test_approach, instr_type, instr_strategy)
         else:
             log("Same instrumentation of last time. Skipping instrumentation phase", log_sev=LogSeverity.WARNING)

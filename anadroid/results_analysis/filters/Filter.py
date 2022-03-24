@@ -30,7 +30,9 @@ class Filter(object):
         res = filter_id.split(separator)
         self.name, self.operator = res[0], res[1]
 
-    def apply_filter(self, cmp_val):
+    def apply_filter(self, cmp_val, allow_nulls=False):
+        if cmp_val is None:
+            return allow_nulls
         if self.operator == 'eq':
             return self.val == cmp_val
         elif self.operator == 'neq':

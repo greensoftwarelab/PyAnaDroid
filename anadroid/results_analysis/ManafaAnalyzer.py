@@ -73,9 +73,9 @@ class ManafaAnalyzer(AbstractAnalyzer):
 
     def get_val_for_filter(self, filter_name, add_data=None):
         if filter_name == "total_energy":
-            tot, _, _ = self.profiler.manafa.getConsumptionInBetween()
+            tot, _, _ = self.profiler.manafa.get_consumption_in_between()
             return tot
         val = super().get_val_for_filter(filter_name, add_data)
         if val is None:
-            log(f"unsupported filter {filter_name} by {self.__class__}")
+            loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")
         return val
