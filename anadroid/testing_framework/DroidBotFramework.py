@@ -6,7 +6,7 @@ from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.AppCrawlerWorkUnit import AppCrawlerWorkUnit
 from anadroid.testing_framework.work.DroidBotWorkUnit import DroidBotWorkUnit
-from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir, loge, logw, logs
+from anadroid.utils.Utils import mega_find, execute_shell_command, get_resources_dir, loge, logw, logs, logi
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
 
@@ -47,7 +47,7 @@ class DroidBotFramework(AbstractTestingFramework):
         self.workload = None
         self.res_dir = resdir
         if default_workload:
-            self.init_default_workload()
+            self.init_default_workload("")
 
     def init_default_workload(self, pkg, args_file=None, tests_dir=None):
         """Initializes the workload with AppCrawlerWorkUnits.
@@ -114,6 +114,7 @@ class DroidBotFramework(AbstractTestingFramework):
             app(App): app.
         """
         retries_per_test = self.get_config("test_fail_retries", 1)
+        print(self.workload.work_units)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
@@ -129,6 +130,7 @@ class DroidBotFramework(AbstractTestingFramework):
         if n_retries < 0:
             loge(f"Validation failed. Ignoring test {test_id}")
             return
+        logi(f"Executing test {test_id}")
         device.unlock_screen()
         time.sleep(1)
         self.profiler.init()
@@ -141,10 +143,10 @@ class DroidBotFramework(AbstractTestingFramework):
         self.profiler.stop_profiling()
         device.clear_logcat()
         self.profiler.export_results(TEST_OUTPUT_FILENAME)
-        self.profiler.pull_results(TEST_OUTPUT_FILENAME, app.curr_local_dir)
+        self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
         else:
-            logs(f"Test {test_id} PASSED ")(f"Test {test_id} PASSED")
+            logs(f"Test {test_id} PASSED ")
