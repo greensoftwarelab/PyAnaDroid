@@ -26,7 +26,7 @@ class MonkeyRunnerWorkUnit(WorkUnit):
         for v in args:
             self.command += " " + v
         print("executing command: " + self.command)
-        execute_shell_command(self.command).validate(Exception("Error running command"))
+        execute_shell_command(self.command).validate(("Error running command"))
 
 
     def config(self, filepath=None, **kwargs):
