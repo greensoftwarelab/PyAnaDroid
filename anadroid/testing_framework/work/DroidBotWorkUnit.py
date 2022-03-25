@@ -21,7 +21,7 @@ class DroidBotWorkUnit(WorkUnit):
         cmd = self.command
         if extras:
             cmd = f'{cmd} {extras}'
-        execute_shell_command(cmd).validate(Exception("Error executing command " + cmd))
+        execute_shell_command(cmd).validate(("Error executing command " + cmd))
 
     def config(self, id=None, **kwargs):
         cmd = self.command
