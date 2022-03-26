@@ -37,7 +37,7 @@ LINT_ISSUES = {
 
 DEX_OPTIONS = {
     'preDexLibraries': 'false',
-    'javaMaxHeapSize': '"4g"'
+    'javaMaxHeapSize': '"8g"'
 }
 
 LINT_OPTIONS = {
@@ -314,9 +314,9 @@ class GradleBuilder(AbstractBuilder):
         self.__add_build_classpaths()
         self.__add_external_libs_to_repositories()
         self.__add_or_replace_local_properties_files()
-        return self.build_with_gradlew(self.get_config("build_fail_retries", DEFAULT_BUILD_TIMES_TO_TRY))
+        return self.build_with_gradlew(self.get_config("build_fail_retries", DEFAULT_BUILD_TIMES_TO_TRY), skip_lint=True)
 
-    def build_with_gradlew(self, tries=DEFAULT_BUILD_TIMES_TO_TRY, target_task="build"):
+    def build_with_gradlew(self, tries=DEFAULT_BUILD_TIMES_TO_TRY, target_task="build", skip_lint=False):
         """performs build task with gradle.
         Args:
             tries: number max of tries to fix build errors.
@@ -329,7 +329,8 @@ class GradleBuilder(AbstractBuilder):
         if not has_gradle_wrapper:
             # create gradle wrapper
             copy(os.path.join(self.resources_dir, "build", "gradle", "gradlew"), self.proj.proj_dir)
-        val = self.__execute_gradlew_task(target_task)
+        lint_option_cmd = " -x lint" if skip_lint else ""
+        val = self.__execute_gradlew_task(target_task + lint_option_cmd)
         was_success = BUILD_SUCCESS_VALUE in val
         if was_success:
             log(f"{target_task}: BUILD SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
@@ -358,14 +359,17 @@ class GradleBuilder(AbstractBuilder):
             str: command output.
         """
         log(f"Executing Gradle task: {task}", log_sev=LogSeverity.INFO)
-        build_timeout_val = self.get_config("build_timeout", 0)
-        build_timeout = f'timeout {build_timeout_val}' if build_timeout_val > 0 else ""
-        res = execute_shell_command(
-            "cd {projdir}; chmod +x gradlew ; {build_timeout} ./gradlew {task}".format(
-                projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout))
+        build_timeout_val = self.get_config("build_timeout", None)
+        build_timeout_val = None if build_timeout_val == 0 else build_timeout_val
+        #build_timeout = f'gtimeout  -s 9 {build_timeout_val}' if build_timeout_val > 0 else ""
+        #print(build_timeout)
+        cmd = "cd {projdir}; chmod +x gradlew ; ./gradlew {task}".format(
+                projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout_val)
+        res = execute_shell_command(cmd, timeout=build_timeout_val)
         if res.validate("error running gradle task"):
             return res.output
         else:
+            print(res.output)
             return res.errors
 
     def needs_min_sdk_upgrade(self, gradle_file):
