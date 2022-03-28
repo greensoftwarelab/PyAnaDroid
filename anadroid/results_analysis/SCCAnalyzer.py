@@ -16,7 +16,7 @@ class SCCAnalyzer(AbstractAnalyzer):
 
     def analyze(self, app, output_log_file="scc.log", **kwargs):
         input_dir = app.proj.proj_dir
-        cmd = f"{self.bin_cmd} {input_dir}"
+        cmd = f"{self.bin_cmd} {input_dir} -f json"
         res = execute_shell_command(cmd)
         if res.validate(Exception(f"Unable to analyze sources with {self.bin_cmd}")):
             log_to_file(res.output, output_log_file)
