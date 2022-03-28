@@ -14,7 +14,7 @@ class SCCAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def analyze(self, app, output_log_file="scc.log", **kwargs):
+    def analyze(self, app, output_log_file="scc.json", **kwargs):
         input_dir = app.proj.proj_dir
         cmd = f"{self.bin_cmd} {input_dir} -f json"
         res = execute_shell_command(cmd)

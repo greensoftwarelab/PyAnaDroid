@@ -33,7 +33,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
         test_orient = kwargs.get("instr_type")
         for analyzer in self.inner_analyzers:
             if isinstance(analyzer, SCCAnalyzer):
-                analyzer.analyze(instr_proj.proj_dir, test_orient, output_log_file=os.path.join(app.local_res, "scc.log"))
+                analyzer.analyze(instr_proj.proj_dir, test_orient, output_log_file=os.path.join(app.local_res, "scc.json"))
             elif isinstance(analyzer, ApkAPIAnalyzer):
                 filename = analyzer.analyze(app.apk, app.package_name)
                 target_dir = os.path.join(app.local_res, "all")
