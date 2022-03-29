@@ -213,6 +213,7 @@ class DeviceState(object):
         res = self.device.execute_command(f"settings put system screen_brightness {value}", shell=True)
         res.validate(("unable to set brightness value of %d " % value))
         self.screen_brightness = value
+        print("olaaa")
 
     def set_screen_always_on_while_plugged(self, value=0):
         """set screen always on state. if state = 1 set stay on value.

@@ -143,8 +143,12 @@ class GradleBuilder(AbstractBuilder):
 		Returns:
 			bool: build results.
 		"""
-		return self.build(rebuild=rebuild) \
-			   and self.build_apk(build_type=build_type) \
+		res = self.build(rebuild=rebuild) # might fail because of release only tasks
+		if build_type == BUILD_TYPE.RELEASE:
+			return res and self.build_apk(build_type=build_type) \
+				   and self.proj.set_version(build_type) is None \
+				   and (True if not build_tests_apk else self.build_tests_apk())
+		return self.build_apk(build_type=build_type) \
 			   and self.proj.set_version(build_type) is None \
 			   and (True if not build_tests_apk else self.build_tests_apk())
 
@@ -369,7 +373,6 @@ class GradleBuilder(AbstractBuilder):
 		if res.validate("error running gradle task"):
 			return res.output
 		else:
-			print(res.output)
 			return res.errors
 
 	def needs_min_sdk_upgrade(self, gradle_file):

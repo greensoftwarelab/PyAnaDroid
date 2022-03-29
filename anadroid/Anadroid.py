@@ -346,6 +346,7 @@ class AnaDroid(object):
                 for child in children_dirs:
                     child_path_dir = os.path.join(path_dir, child)
                     proj_fldr = self.__get_project_root_dir(child_path_dir)
+                    print(proj_fldr)
                     if proj_fldr is not None:
                         return_projs.append(proj_fldr)
         return return_projs

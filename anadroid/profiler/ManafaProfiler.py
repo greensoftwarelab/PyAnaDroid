@@ -33,6 +33,7 @@ class ManafaProfiler(AbstractProfiler):
     def install_profiler(self):
         res = self.device.execute_command("perfetto -h", shell=True)
         print(res)
+        print("TODO")
         pass
 
     def init(self, **kwargs):

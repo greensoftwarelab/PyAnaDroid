@@ -3,6 +3,7 @@ import os
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 from anadroid.utils.Utils import execute_shell_command, log_to_file
 
+DEFAULT_FILENAME = "scc.json"
 
 class SCCAnalyzer(AbstractAnalyzer):
     """Implements AbstractAnalyzer interface to allow to calculate app code results using scc tool.
@@ -14,7 +15,7 @@ class SCCAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def analyze(self, app, output_log_file="scc.json", **kwargs):
+    def analyze(self, app, output_log_file=DEFAULT_FILENAME, **kwargs):
         input_dir = app.proj.proj_dir
         cmd = f"{self.bin_cmd} {input_dir} -f json"
         res = execute_shell_command(cmd)
@@ -32,7 +33,7 @@ class SCCAnalyzer(AbstractAnalyzer):
 
     def analyze_tests(self, app, results_dir=None, **kwargs):
         base_dir = app.local_res if results_dir is None else results_dir
-        output_file = os.path.join(base_dir, 'scc.log')
+        output_file = os.path.join(base_dir, DEFAULT_FILENAME)
         self.analyze(app, output_file, **kwargs)
 
     def analyze_test(self, app, test_id, **kwargs):

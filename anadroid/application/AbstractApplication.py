@@ -14,6 +14,9 @@ class AbstractApplication(ABC):
         self.version = version
         self.on_fg = False
 
+    def get_app_id(self):
+        return f'{self.package_name}_{self.version}'
+
     @abstractmethod
     def start(self):
         pass

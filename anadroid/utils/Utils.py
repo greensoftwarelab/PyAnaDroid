@@ -6,10 +6,12 @@ from manafa.utils.Logger import log as logm
 from textops import find
 import os
 
+
 def get_reference_dir(packname):
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
     # base_dir = sysconfig.get_path("purelib")
     return os.path.join(base_dir, packname)
+
 
 def get_resources_dir(packname="anadroid", default_res_dir="resources"):
     ref_dir = get_reference_dir(packname)
@@ -57,6 +59,7 @@ def extract_version_from_apk(apkpath):
     res.validate(Exception("error while executing aapt"))
     return res.output.split(" ")[3].replace("versionName=", "").replace("'", "")
 
+
 def get_date_str():
     res = execute_shell_command("date +\"%d_%m_%y_%H_%M_%S\"")
     if res.validate(Exception("Unable to get date")):
@@ -68,6 +71,7 @@ def get_apksigner_bin():
     if res.validate(Exception("No apksigner found")):
         return res.output.split()[0]
     return "$ANDROID_HOME/build-tools/30.0.3/apksigner"
+
 
 def sign_apk(apk_path):
     # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\"".format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
@@ -81,6 +85,7 @@ def sign_apk(apk_path):
     res = execute_shell_command(cmd)
     res.validate("error signing apk " + apk_path)
     return res
+
 
 def execute_shell_command(cmd, args=[], timeout=None):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
@@ -100,10 +105,11 @@ def execute_shell_command(cmd, args=[], timeout=None):
 
 
 def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
-    basedir_len = len(basedir.split("/"))
-    res = find(basedir, pattern=pattern, only_files=type_file=='f', only_dirs=type_file=='d' )
+    basedir_len = len(basedir.split(os.sep))
+    res = find(basedir, pattern=pattern, only_files=type_file == 'f', only_dirs=type_file == 'd')
     # filter by depth
-    return list(filter(lambda x: basedir_len + mindepth <= len(x.split("/")) <= maxdepth + basedir_len, res))
+    return list(filter(lambda x: basedir_len + mindepth <= len(x.split(os.sep)) <= maxdepth + basedir_len, res))
+
 
 class COMMAND_RESULT(object):
     def __init__(self, res, out, err):

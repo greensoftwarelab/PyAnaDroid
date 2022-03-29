@@ -10,6 +10,6 @@
   "build": {
     "build_fail_retries" : 5,
     "build_timeout" : 0,
-    "retry_failed" : false
+    "retry_failed" : true
   }
 }
