@@ -322,7 +322,7 @@ class AnaDroid(object):
 
     def __get_project_root_dir(self, dir_path):
         """infers Android project root directory."""
-        has_gradle_right_next = mega_find(dir_path, pattern="build.gradle", maxdepth=2, type_file='f')
+        has_gradle_right_next = mega_find(dir_path, pattern="build.gradle", maxdepth=4, type_file='f')
         if len(has_gradle_right_next) > 0:
             top_gradle_file = min(has_gradle_right_next, key=len)
             return os.path.dirname(top_gradle_file)
@@ -346,7 +346,6 @@ class AnaDroid(object):
                 for child in children_dirs:
                     child_path_dir = os.path.join(path_dir, child)
                     proj_fldr = self.__get_project_root_dir(child_path_dir)
-                    print(proj_fldr)
                     if proj_fldr is not None:
                         return_projs.append(proj_fldr)
         return return_projs
