@@ -1,6 +1,8 @@
 import argparse
 import os
+import re
 import traceback
+from datetime import datetime
 
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, \
     SUPPORTED_INSTRUMENTERS, \
@@ -32,8 +34,8 @@ from anadroid.testing_framework.MonkeyFramework import MonkeyFramework
 from anadroid.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramework
 from anadroid.testing_framework.RERANFramework import RERANFramework
 from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_results_dir, logw, logi, loge, \
-    get_resources_dir
-
+    get_resources_dir, get_log_dir
+from pathlib import Path
 
 class AnaDroid(object):
     """Provides a configurable pipeline to benchmark and analyze Android Projects and Applications.
@@ -60,7 +62,7 @@ class AnaDroid(object):
     def __init__(self, arg1, results_dir=get_results_dir(), profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
-                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False, reinstrument=False):
+                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False, reinstrument=False, recover_from_last_run=False):
         self.device = device if device is not None else get_first_connected_device()
         self.app_projects_ut = []
         self.tests_dir = tests_dir
@@ -68,6 +70,7 @@ class AnaDroid(object):
         self.reinstrument = reinstrument
         self.apps = [] # apps created from package names passed by argument
         self.apks = [] # apk paths passed by argument
+        self.recover_from_last_run = recover_from_last_run
         if isinstance(arg1, argparse.Namespace):
             self.__setup_from_argparse(arg1)
         else:
@@ -348,7 +351,36 @@ class AnaDroid(object):
                     proj_fldr = self.__get_project_root_dir(child_path_dir)
                     if proj_fldr is not None:
                         return_projs.append(proj_fldr)
+
+        if self.recover_from_last_run:
+            projs_to_exclude = self.get_projs_from_last_run()
+            return_projs = [x for x in return_projs if x not in projs_to_exclude]
+            if len(return_projs) == 0:
+                logw(f"All projects executed in the last run or no projects found in {self.apps_dir}")
         return return_projs
+
+    def get_projs_from_last_run(self):
+        processed_projs_last_run = []
+        file_lines = []
+        regex = r"Processing app "
+        last_run_file = self.get_last_run_file()
+        if last_run_file is None:
+            return []
+        with open(last_run_file, 'r') as file:
+            file_lines = file.readlines()
+        for line in file_lines:
+            if re.search(regex, line):
+                proj_dir = line.split("in ")[1].strip()
+                processed_projs_last_run.append(proj_dir)
+        return processed_projs_last_run
+
+    def get_last_run_file(self):
+        run_regex = r"\d+-\d+-\d+-\d+-\d+.*.log"
+        prev_logs = list(filter(lambda t : re.search(run_regex, t), mega_find(get_log_dir(), pattern='*.log', type_file='f', maxdepth=1)))
+        if len(prev_logs) == 0:
+            return None
+        sorted_list = sorted(prev_logs, key=os.path.getmtime)
+        return sorted_list[-1]
 
     def record_test(self, tests_dir=None):
         """records tests that can be replayed later.

@@ -1,15 +1,50 @@
+import re
+from datetime import datetime
 from subprocess import Popen, PIPE, TimeoutExpired
-
-from manafa.utils.Logger import LogSeverity
-from manafa.utils.Logger import log as logm
-
 from textops import find
 import os
+import time
+from enum import Enum
+
+from termcolor import colored
+
+
+class LogSeverity(Enum):
+    SUCCESS = "Success"
+    WARNING = "Warning"
+    INFO = "Info"
+    ERROR = "Error"
+    FATAL = "Fatal"
+
+
+def getColor(sev):
+    return {
+        'Success': 'green',
+        'Warning': 'yellow',
+        'Info': 'blue',
+        'Error': 'magenta',
+        'Fatal': 'red'
+    }.get(sev, 'green')
+
+
+def log(message, log_sev=LogSeverity.INFO, time=time.time(), to_file=True):
+    color = getColor(log_sev.value)
+    adapted_time = re.sub("\s|:", "-", str(datetime.fromtimestamp(time)))
+    str_to_print ="[%s] %s: %s" % (log_sev.value, adapted_time, message)
+    print(colored(str_to_print, color))
+    if to_file:
+        filename = f'{adapted_time}.log'
+        f = open(os.path.join(get_log_dir(), filename), "a+")
+        f.write(str_to_print+"\n")
+        f.close()
+
+
+def get_log_dir():
+    return os.path.join(os.getcwd(), "logs")
 
 
 def get_reference_dir(packname):
     base_dir = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    # base_dir = sysconfig.get_path("purelib")
     return os.path.join(base_dir, packname)
 
 
@@ -19,7 +54,7 @@ def get_resources_dir(packname="anadroid", default_res_dir="resources"):
 
 
 def get_keystore_path():
-    return os.path.join(get_resources_dir(),"keys","pynadroid-releases.keystore")
+    return os.path.join(get_resources_dir(), "keys", "pynadroid-releases.keystore")
 
 
 def get_keystore_pwd():
@@ -148,21 +183,21 @@ def log_to_file(content, filename):
         u.write(content + "\n")
 
 
-def logi(message):
-    logm(message, log_sev=LogSeverity.INFO)
+def logi(message, to_file=True):
+    log(message, log_sev=LogSeverity.INFO, to_file=to_file)
 
 
-def logw(message):
-    logm(message, log_sev=LogSeverity.WARNING)
+def logw(message, to_file=True):
+    log(message, log_sev=LogSeverity.WARNING, to_file=to_file)
 
 
-def loge(message):
-    logm(message, log_sev=LogSeverity.ERROR)
+def loge(message, to_file=True):
+    log(message, log_sev=LogSeverity.ERROR, to_file=to_file)
 
 
-def logf(message):
-    logm(message, log_sev=LogSeverity.FATAL)
+def logf(message, to_file=True):
+    log(message, log_sev=LogSeverity.FATAL, to_file=to_file)
 
 
-def logs(message):
-    logm(message, log_sev=LogSeverity.SUCCESS)
+def logs(message, to_file=True):
+    log(message, log_sev=LogSeverity.SUCCESS, to_file=to_file)

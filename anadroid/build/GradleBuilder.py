@@ -1,8 +1,6 @@
 import os
 from shutil import copy
 
-from manafa.utils.Logger import log, LogSeverity
-from termcolor import colored
 from textops import grep, cat, sed, head, echo
 import json
 import re
@@ -12,7 +10,7 @@ from anadroid.application.Application import App
 from anadroid.application.Dependency import DependencyType
 from anadroid.build.AbstractBuilder import AbstractBuilder
 from anadroid.build.versionUpgrader import DefaultSemanticVersion, can_be_semantic_version
-from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge, logw
+from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge, logw, logs, logi
 from anadroid.build.GracleBuildErrorSolver import is_known_error, solve_known_error
 
 TRANSITIVE = "implementation"
@@ -166,7 +164,7 @@ class GradleBuilder(AbstractBuilder):
 		val = self.__execute_gradlew_task(task_name)
 		was_success = re.search(BUILD_SUCCESS_VALUE, val)
 		if was_success:
-			log(f"{task_name}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+			logs(f"{task_name}: SUCCESSFUL")
 			app = self.create_app_from_installed_apk(val, build_type)
 			apps_list.append(app)
 		filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
@@ -177,7 +175,7 @@ class GradleBuilder(AbstractBuilder):
 			val = self.__execute_gradlew_task(task_name)
 			was_success = re.search(BUILD_SUCCESS_VALUE, val)
 			if was_success:
-				log(f"{task_name}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+				logs(f"{task_name}: SUCCESSFUL")
 			filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
 				"SUCCESS" if was_success else "ERROR")))
 			log_to_file(content=val, filename=filename)
@@ -204,7 +202,7 @@ class GradleBuilder(AbstractBuilder):
 		new_pkgs = self.device.get_new_installed_pkgs()
 		if len(new_pkgs) == 0:
 			# app was already installed
-			log("app already installed", log_sev=LogSeverity.INFO)
+			logi("app already installed")
 			app_pack = self.device.get_package_matching(self.proj.pkg_name)
 			new_pkgs.append(app_pack)
 		apk_pkg = new_pkgs[-1]  # ASSUMING JUST ONE
@@ -224,7 +222,7 @@ class GradleBuilder(AbstractBuilder):
 		for apk_path in self.proj.get_apks(build_type):
 			ret, o, e = sign_apk(apk_path)
 			if ret == 0 and len(e) < 3:
-				log("APK Successfully signed", log_sev=LogSeverity.SUCCESS)
+				logs("APK Successfully signed")
 				return True
 			else:
 				loge(f"Error signing apk {apk_path} {e}")
@@ -240,13 +238,13 @@ class GradleBuilder(AbstractBuilder):
 		"""
 		task = f"assemble{build_type.value}"
 		if self.was_last_build_successful(task) and not self.needs_rebuild():
-			log(f"Not building again {build_type}. Last build was successful", log_sev=LogSeverity.INFO)
+			logi(f"Not building again {build_type}. Last build was successful")
 			return True
 		apks_built = self.proj.get_apks()
 		val = self.__execute_gradlew_task(task=task)
 		was_success = BUILD_SUCCESS_VALUE in val
 		if was_success:
-			log(f"BUILD ({build_type.value}) SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+			logs(f"BUILD ({build_type.value}) SUCCESSFUL")
 			self.regist_successful_build(task)
 			apks_now = self.proj.get_apks()
 			fresh_apks = [x for x in apks_now if x not in apks_built]
@@ -255,7 +253,7 @@ class GradleBuilder(AbstractBuilder):
 					sign_apk(apk)
 				self.proj.add_apk(apk, build_type)
 		else:
-			log("Error Building APK", log_sev=LogSeverity.ERROR)
+			loge("Error Building APK")
 			self.regist_error_build(task)
 			return False
 		return True
@@ -267,20 +265,20 @@ class GradleBuilder(AbstractBuilder):
 		"""
 		task = "assembleAndroidTest"
 		if self.was_last_build_successful(task) and not self.needs_rebuild():
-			log("Not building again. Last build was successful", log_sev=LogSeverity.WARNING)
+			logw("Not building again. Last build was successful")
 			return True
 		apks_built = self.proj.get_apks()
 		val = self.__execute_gradlew_task(task=task)
 		was_success = str(val | grep(BUILD_SUCCESS_VALUE)) != ""
 		if was_success:
-			log(f"{task}: SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+			logs(f"{task}: SUCCESSFUL")
 			self.regist_successful_build(task)
 			apks_now = self.proj.get_apks()
 			apks_test = [x for x in apks_now if x not in apks_built]
 			for apks_test in apks_test:
 				self.proj.add_apk(apks_test, None)
 		else:
-			log("Error Building test APK", log_sev=LogSeverity.ERROR)
+			loge("Error Building test APK")
 			self.regist_error_build(task)
 			return False
 		return True
@@ -295,11 +293,11 @@ class GradleBuilder(AbstractBuilder):
 		"""
 		build_was_succcessful = self.was_last_build_successful()
 		if build_was_succcessful and not rebuild:
-			log("Not building again. Last build was successful", log_sev=LogSeverity.INFO)
+			logi("Not building again. Last build was successful")
 			return True
 
 		if not self.retry_on_fail and not build_was_succcessful and self.was_attempted_to_build_before():
-			log("Skipping failed build. Retry on failed flag is disabled", log_sev=LogSeverity.ERROR)
+			logw("Skipping failed build. Retry on failed flag is disabled")
 			return True
 
 		self.__execute_gradlew_task("clean") # mainly to ensure that built apks from original proj do not persist
@@ -337,14 +335,14 @@ class GradleBuilder(AbstractBuilder):
 		val = self.__execute_gradlew_task(target_task + lint_option_cmd)
 		was_success = BUILD_SUCCESS_VALUE in val
 		if was_success:
-			log(f"{target_task}: BUILD SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
+			logs(f"{target_task}: BUILD SUCCESSFUL")
 			self.regist_successful_build(target_task)
 			return True
 		else:
 			error = is_known_error(val)
 			if error is not None and tries > 0:
 				solve_known_error(self.proj, error, error_msg=val, **{'build-tools': self.build_tools_version})
-				log(f"{target_task}: BUILD FAILED. error is known ({error}). Fixing error and retrying", log_sev=LogSeverity.WARNING)
+				loge(f"{target_task}: BUILD FAILED. error is known ({error}). Fixing error and retrying")
 				log_to_file(f"{error}", os.path.join(self.proj.proj_dir, "registered_errors.log"))
 				return self.build_with_gradlew(tries=tries - 1, target_task=target_task)
 			else:
@@ -362,7 +360,7 @@ class GradleBuilder(AbstractBuilder):
 		Returns:
 			str: command output.
 		"""
-		log(f"Executing Gradle task: {task}", log_sev=LogSeverity.INFO)
+		logi(f"Executing Gradle task: {task}")
 		build_timeout_val = self.get_config("build_timeout", None)
 		build_timeout_val = None if build_timeout_val == 0 else build_timeout_val
 		#build_timeout = f'gtimeout  -s 9 {build_timeout_val}' if build_timeout_val > 0 else ""
@@ -385,8 +383,8 @@ class GradleBuilder(AbstractBuilder):
 			min_sdk = has_min_sdk | sed('minSdkVersion| |=|\n', "") | head(1)
 			device_sdk_version = self.device.get_device_sdk_version()
 			if int(str(min_sdk)) > device_sdk_version:
-				log(f"This app target sdk version {min_sdk}. This is greater than the device version and the application"
-					f" might not work properly on the connected device", log_sev=LogSeverity.ERROR)
+				logw(f"This app target sdk version {min_sdk}. This is greater than the device version and the application"
+					f" might not work properly on the connected device")
 				new_file = re.sub(r'minSdkVersion (.+)', r'minSdkVersion %d' % device_sdk_version,
 								  str(cat(gradle_file)))
 				with open(gradle_file, 'w') as u:
