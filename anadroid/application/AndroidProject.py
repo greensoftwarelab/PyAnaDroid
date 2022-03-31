@@ -10,7 +10,7 @@ from textops import cat, grep, cut, sed, echo, grepv
 from anadroid.application.Application import App
 from anadroid.application.ProjectModule import ProjectModule
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir, extract_version_from_apk
+from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir, extract_version_from_apk, logw
 
 RESULTS_DIR = get_results_dir()
 
@@ -172,8 +172,12 @@ class AndroidProject(Project):
         modul_lines = cat(setts_file) | grep('include') | grepv(r"(^\s*//)") # | cut(sep=":", col=1) | sed(pats="\'|,", repls="")
         for mod_line in modul_lines:
             for mod in mod_line.split(","):
-                module = str(echo(mod) | sed("include", "") | cut(sep=":", col=1) | sed(pats="\'|,", repls="")).strip()
-                modules.append(module)
+                module_name = str(echo(mod) | sed("include", "") | cut(sep=":", col=1) | sed(pats="\'|,", repls="")).strip()
+                module_is_not_empty = any(mega_find(os.path.join(self.proj_dir, module_name), maxdepth=2, mindepth=1))
+                if module_is_not_empty:
+                    modules.append(module_name)
+                else:
+                    logw(f"ignoring empty module {module_name}")
         return modules
 
     def __init_modules(self):
