@@ -1,7 +1,7 @@
 from anadroid.device.Device import Device
 from anadroid.utils.Utils import COMMAND_RESULT
 
-DEFAULT_SDK_VERSION = 28
+DEFAULT_SDK_VERSION = 29
 
 class MockedDevice(Device):
     """Mocks a connected device.

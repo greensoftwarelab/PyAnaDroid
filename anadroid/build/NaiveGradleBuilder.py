@@ -114,7 +114,7 @@ def is_library_gradle(bld_file):
     return 'com.android.library' in str(cat(bld_file))
 
 
-class NaiveBuilder(AbstractBuilder):
+class NaiveGradleBuilder(AbstractBuilder):
     """Class that extends AbstractBuilder functionality in order to build Gradle projects using a naive approach.
 	This class sets up gradle wrapper to try to build Android Projects.
 	Attributes:
@@ -124,7 +124,7 @@ class NaiveBuilder(AbstractBuilder):
 	"""
 
     def __init__(self, proj, device, resources_dir, instrumenter):
-        super(NaiveBuilder, self).__init__(proj, device, resources_dir, instrumenter)
+        super(NaiveGradleBuilder, self).__init__(proj, device, resources_dir, instrumenter)
         self.gradle_plg_version = proj.get_gradle_plugin()
         self.retry_on_fail = False
 
@@ -347,6 +347,7 @@ class NaiveBuilder(AbstractBuilder):
                 if error is not None:
                     log(f"{target_task}: BUILD FAILED. error is known ({error})", log_sev=LogSeverity.WARNING)
                 loge("Unable to solve Building error")
+                print(val)
                 self.regist_error_build(target_task)
                 log_to_file(f"{val}\n-------", os.path.join(self.proj.proj_dir, "unknown_errors.log"))
                 return False
@@ -370,6 +371,7 @@ class NaiveBuilder(AbstractBuilder):
         if res.validate("error running gradle task"):
             return res.output
         else:
+            print(res)
             return res.errors
 
     def needs_min_sdk_upgrade(self, gradle_file):

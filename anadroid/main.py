@@ -2,6 +2,7 @@ import argparse
 from enum import Enum
 
 from anadroid.Anadroid import AnaDroid
+from anadroid.AnadroidWithNaiveBuilder import AnadroidWithNaiveBuilder
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.Device import set_device_conn
@@ -10,6 +11,18 @@ from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
 
 def init_PyAnaDroid_from_args(args):
+    if args.naive:
+        return AnadroidWithNaiveBuilder(arg1=args.diretory if (len(args.package_names) + len(args.application_packages) == 0) else args,
+                        testing_framework=TESTING_FRAMEWORK(args.testingframework),
+                        device=MockedDevice() if args.buildonly or args.justanalyze else None,
+                        profiler=PROFILER(args.profiler),
+                        build_type=BUILD_TYPE(args.buildtype),
+                        instrumenter=INSTRUMENTER(args.instrumenter),
+                        instrumentation_type=INSTRUMENTATION_TYPE(args.instrumentationtype),
+                        analyzer=ANALYZER(args.analyzer),
+                        tests_dir=args.tests_dir,
+                        rebuild_apps=args.rebuild,
+                        reinstrument=args.reinstrument)
     return AnaDroid(arg1=args.diretory if (len(args.package_names) + len(args.application_packages) == 0) else args,
                     testing_framework=TESTING_FRAMEWORK(args.testingframework),
                     device=MockedDevice() if args.buildonly or args.justanalyze else None,
@@ -50,6 +63,7 @@ def main():
     parser.add_argument("-td", "--tests_dir", help="tests directory", type=str, default=None)
     parser.add_argument("-n", "--package_names", help="package(s) of already installed apps", nargs='+', default=[])
     parser.add_argument("-apk", "--application_packages", help="path of apk(s) to process", nargs='+', default=[])
+    parser.add_argument("-nv", "--naive", help="anadroid with naive builder", action='store_true')
     args = parser.parse_args()
     if args.setconnection:
         set_device_conn(args.setconnection, device_id=args.device_serial)
