@@ -1,4 +1,5 @@
 import json
+import math
 import os
 from os import listdir
 
@@ -135,12 +136,13 @@ class AppBuildStats(object):
         self.parsed_proj_info.append(proj_info)
 
     def get_stats(self):
-        avg_min_sdk = int(get_avg(list(map(lambda x: x['proj_min_sdk'], self.parsed_proj_info))))
-        avg_target_sdk = int(get_avg(list(map(lambda x: x['proj_target_sdk'], self.parsed_proj_info))))
-        avg_compile_sdk = int(get_avg(list(map(lambda x: x['proj_compile_sdk'], self.parsed_proj_info))))
-        avg_dep = int(get_avg(list(map(lambda x: x['proj_dependencies'], self.parsed_proj_info))))
-        avg_tdep = int(get_avg(list(map(lambda x: x['proj_test_dependencies'], self.parsed_proj_info))))
-        avg_atdep = int(get_avg(list(map(lambda x: x['proj_android_test_dependencies'], self.parsed_proj_info))))
+        avg_min_sdk = int(get_avg(list(map(lambda x: x['proj_min_sdk'], filter(lambda t : t['proj_min_sdk'] is not None and not math.isnan(t['proj_min_sdk']), self.parsed_proj_info)))))
+
+        avg_target_sdk = int(get_avg(list(map(lambda x: x['proj_target_sdk'],filter(lambda t : t['proj_target_sdk'] is not None and not math.isnan(t['proj_target_sdk']), self.parsed_proj_info)))))
+        avg_compile_sdk = int(get_avg(list(map(lambda x: x['proj_compile_sdk'], filter(lambda t :  t['proj_compile_sdk'] is not None and not math.isnan(t['proj_compile_sdk']), self.parsed_proj_info)))))
+        avg_dep = int(get_avg(list(map(lambda x: x['proj_dependencies'], filter(lambda t : t['proj_dependencies'] is not None and not math.isnan(t['proj_dependencies']), self.parsed_proj_info)))))
+        avg_tdep = int(get_avg(list(map(lambda x: x['proj_test_dependencies'], filter(lambda t :  t['proj_test_dependencies'] is not None and not math.isnan(t['proj_test_dependencies']), self.parsed_proj_info)))))
+        avg_atdep = int(get_avg(list(map(lambda x: x['proj_android_test_dependencies'], filter(lambda t : t['proj_android_test_dependencies'] is not None and not math.isnan(t['proj_android_test_dependencies']), self.parsed_proj_info)))))
 
         print(f"average minsdk version:{avg_min_sdk}")
         print(f"average targetsdk version:{avg_target_sdk}")
