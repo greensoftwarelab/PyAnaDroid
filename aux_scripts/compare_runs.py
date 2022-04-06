@@ -148,7 +148,7 @@ class ExecAppStats(object):
             for vals in y.values():    
                 x.append(vals['avg_energy'])'''
         print(ys)
-        gen_box_plot(labels, ys)
+        gen_box_plot(labels, ys, title="energy")
 
     def plot_errors_boxplot_each_tf(self):
         labels = self.parsed_execs.keys()
@@ -160,14 +160,14 @@ class ExecAppStats(object):
         npis = [list([t['errors']['NoProviderInfo'] for t in y.values()]) for x, y in self.parsed_execs.items()]
         pcs = [list([t['errors']['ProcessCrash'] for t in y.values()]) for x, y in self.parsed_execs.items()]
         ukns = [list([t['errors']['Unknown'] for t in y.values()]) for x, y in self.parsed_execs.items()]
-        gen_box_plot(labels, anrs)
-        gen_box_plot(labels, jexcep)
-        gen_box_plot(labels, excep)
-        gen_box_plot(labels, nrels)
-        gen_box_plot(labels, rls)
-        gen_box_plot(labels, npis)
-        gen_box_plot(labels, pcs)
-        gen_box_plot(labels, ukns)
+        gen_box_plot(labels, anrs, title="ANRs")
+        gen_box_plot(labels, jexcep, title="JavaException")
+        gen_box_plot(labels, excep, title="Exception")
+        gen_box_plot(labels, nrels, title="NoRelease")
+        gen_box_plot(labels, rls, title="ResourceLeak")
+        gen_box_plot(labels, npis, title="NoProviderInfo")
+        gen_box_plot(labels, pcs, title="ProcessCrash")
+        gen_box_plot(labels, ukns, title="Unknown")
 
     def plot_coverage_boxplot_each_tf(self):
         labels = self.parsed_execs.keys()
@@ -178,7 +178,7 @@ class ExecAppStats(object):
             for vals in y.values():    
                 x.append(vals['avg_energy'])'''
         print(ys)
-        gen_box_plot(labels, ys)
+        gen_box_plot(labels, ys, title="coverage")
 
 
 def get_app_execs(app_res_dir):
@@ -207,10 +207,17 @@ def filter_only_last_runs(runs_list):
         ret_d[tf] = reconstructed_path
     return ret_d
 
-def gen_box_plot(key_list, list_of_lists):
+def gen_box_plot(key_list, list_of_lists, title="ai"):
     # eg gen_box_plot(['group1', 'group2'], [[1, 2],[3, 4]]):
     fig1, en_box = plt.subplots()
-    bp_dict = en_box.boxplot(list_of_lists, key_list, patch_artist=True)
+    the_list = list_of_lists
+
+    bp_dict = en_box.boxplot(x=the_list,
+                             notch=False,  # notch shape
+                             vert=True,  # vertical box aligmnent
+                             sym='ko',  # red circle for outliers
+                             patch_artist=True,  # fill with color
+                             )
     i = 0
     for line in bp_dict['medians']:
         x, y = line.get_xydata()[1]  # top of median line
@@ -219,14 +226,35 @@ def gen_box_plot(key_list, list_of_lists):
         # text(xx, en_box.get_ylim()[1] * 0.98, '%.2f' % np.average(list_all_samples[i]), color='darkkhaki')
         i = i + 1
 
-    # set colors
+        # set colors
     colors = ['lightblue', 'darkkhaki']
     i = 0
     for bplot in bp_dict['boxes']:
         i = i + 1
         bplot.set_facecolor(colors[i % len(colors)])
+
     xtickNames = plt.setp(en_box, xticklabels=key_list)
     plt.setp(xtickNames, rotation=90, fontsize=5)
+    plt.suptitle(title)
+    plt.show()
+
+def gen_violin_plot(key_list, list_of_lists, title="ai"):
+    # eg gen_box_plot(['group1', 'group2'], [[1, 2],[3, 4]]):
+    fig1, en_box = plt.subplots()
+    the_list = list_of_lists
+
+    bp_dict = en_box.violinplot(the_list)
+    print(bp_dict)
+        # set colors
+    colors = ['lightblue', 'darkkhaki']
+    i = 0
+    for bplot in bp_dict['bodies']:
+        i = i + 1
+        bplot.set_facecolor(colors[i % len(colors)])
+
+    xtickNames = plt.setp(en_box, xticklabels=key_list)
+    plt.setp(xtickNames, rotation=90, fontsize=5)
+    plt.suptitle(title)
     plt.show()
 
 

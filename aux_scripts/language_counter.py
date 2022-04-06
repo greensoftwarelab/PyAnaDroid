@@ -192,6 +192,8 @@ class LanguageStats(object):
         plt.suptitle("All Projects' #Files")
         plt.show()
 
+    def gen_stats(self):
+        print(json.dumps(self.language_info, indent=1))
 
 def get_project_root_dir(proj_path):
     """infers Android project root directory."""
@@ -251,9 +253,10 @@ def main(lookup_dir):
     ls = LanguageStats()
     ls.search_and_parse_files_in_dir(lookup_dir, expected_filename="scc.json")
     #print(json.dumps(ls.language_info, indent=1))
-    ls.gen_langs_boxplots_loc()
-    ls.gen_langs_boxplots_cc()
-    ls.gen_langs_boxplots_total_files()
+    #ls.gen_langs_boxplots_loc()
+    #ls.gen_langs_boxplots_cc()
+    #ls.gen_langs_boxplots_total_files()
+    ls.gen_stats()
 
 
 if __name__ == '__main__':
