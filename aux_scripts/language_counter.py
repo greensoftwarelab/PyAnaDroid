@@ -9,6 +9,7 @@ from pylab import *
 from textops import find
 
 EXCLUDED_LANGS = {'gitignore', 'Markdown', 'License', 'JSON', 'YAML', 'Prolog', 'Batch', 'Properties File'}
+INCLUDED_LANGS = {'Java', 'Python', 'TypeScript', 'JavaScript', 'C', 'C Header', 'C++', 'Kotlin', 'Rust'}
 
 
 def execute_shell_command(cmd, args=[], timeout=None):
@@ -42,7 +43,7 @@ class LanguageStats(object):
 
     def add_language_info(self, lang_info):
         #print(lang_info)
-        if 'Name' not in lang_info or lang_info['Name'] in EXCLUDED_LANGS:
+        if 'Name' not in lang_info or lang_info['Name'] in EXCLUDED_LANGS or lang_info['Name'] not in INCLUDED_LANGS:
             return
         if lang_info['Name'] in self.language_info:
             # update stats
@@ -80,7 +81,37 @@ class LanguageStats(object):
         fig1, en_box = plt.subplots()
         the_list = [ list(map(lambda z: z['Code'], x)) for x in map(lambda t: t['proj_files'], self.language_info.values())]
         print(the_list)
-        bp_dict = en_box.boxplot(the_list, self.language_info.keys(), patch_artist=True)
+
+        bp_dict = en_box.boxplot(x=the_list,
+                            notch=False,  # notch shape
+                            vert=True,  # vertical box aligmnent
+                            sym='ko',  # red circle for outliers
+                            patch_artist=True,  # fill with color
+                            )
+        i = 0
+        for line in bp_dict['medians']:
+            x, y = line.get_xydata()[1]  # top of median line
+            xx, yy = line.get_xydata()[0]
+            text(x, y, '%.2f' % y, fontsize=6)  # draw above, centered
+            # text(xx, en_box.get_ylim()[1] * 0.98, '%.2f' % np.average(list_all_samples[i]), color='darkkhaki')
+            i = i + 1
+
+            # set colors
+        colors = ['lightblue', 'darkkhaki']
+        i = 0
+        for bplot in bp_dict['boxes']:
+            i = i + 1
+            bplot.set_facecolor(colors[i % len(colors)])
+
+        xtickNames = plt.setp(en_box, xticklabels=list(self.language_info.keys()))
+        plt.setp(xtickNames, rotation=90, fontsize=5)
+        plt.suptitle("All Projects' LoC")
+        plt.show()
+
+
+
+        x='''
+        bp_dict = plt.boxplot(the_list, self.language_info.keys(),  patch_artist=True)
         i = 0
         for line in bp_dict['medians']:
             x, y = line.get_xydata()[1]  # top of median line
@@ -98,12 +129,18 @@ class LanguageStats(object):
 
         xtickNames = plt.setp(en_box, xticklabels=list(self.language_info.keys()))
         plt.setp(xtickNames, rotation=90, fontsize=5)
-        plt.show()
+        plt.show()'''
 
     def gen_langs_boxplots_cc(self):
         fig1, en_box = plt.subplots()
         the_list = [ list(map(lambda z: z['Complexity'], x)) for x in map(lambda t: t['proj_files'], self.language_info.values())]
-        bp_dict = en_box.boxplot(the_list, self.language_info.keys(), patch_artist=True)
+
+        bp_dict = en_box.boxplot(x=the_list,
+                            notch=False,  # notch shape
+                            vert=True,  # vertical box aligmnent
+                            sym='ko',  # red circle for outliers
+                            patch_artist=True,  # fill with color
+                            )
         i = 0
         for line in bp_dict['medians']:
             x, y = line.get_xydata()[1]  # top of median line
@@ -112,14 +149,47 @@ class LanguageStats(object):
             # text(xx, en_box.get_ylim()[1] * 0.98, '%.2f' % np.average(list_all_samples[i]), color='darkkhaki')
             i = i + 1
 
-        # set colors
+            # set colors
         colors = ['lightblue', 'darkkhaki']
         i = 0
         for bplot in bp_dict['boxes']:
             i = i + 1
             bplot.set_facecolor(colors[i % len(colors)])
+
         xtickNames = plt.setp(en_box, xticklabels=list(self.language_info.keys()))
         plt.setp(xtickNames, rotation=90, fontsize=5)
+        plt.suptitle("All Projects' CC")
+        plt.show()
+
+    def gen_langs_boxplots_total_files(self):
+        fig1, en_box = plt.subplots()
+        the_list = [list(map(lambda z: z['Count'], x)) for x in
+                    map(lambda t: t['proj_files'], self.language_info.values())]
+
+        bp_dict = en_box.boxplot(x=the_list,
+                                 notch=False,  # notch shape
+                                 vert=True,  # vertical box aligmnent
+                                 sym='ko',  # red circle for outliers
+                                 patch_artist=True,  # fill with color
+                                 )
+        i = 0
+        for line in bp_dict['medians']:
+            x, y = line.get_xydata()[1]  # top of median line
+            xx, yy = line.get_xydata()[0]
+            text(x, y, '%.2f' % y, fontsize=6)  # draw above, centered
+            # text(xx, en_box.get_ylim()[1] * 0.98, '%.2f' % np.average(list_all_samples[i]), color='darkkhaki')
+            i = i + 1
+
+            # set colors
+        colors = ['lightblue', 'darkkhaki']
+        i = 0
+        for bplot in bp_dict['boxes']:
+            i = i + 1
+            bplot.set_facecolor(colors[i % len(colors)])
+
+        xtickNames = plt.setp(en_box, xticklabels=list(self.language_info.keys()))
+        plt.setp(xtickNames, rotation=90, fontsize=5)
+        plt.suptitle("All Projects' #Files")
         plt.show()
 
 
@@ -175,15 +245,19 @@ def build_scc_json_for_all_projs(dirpath):
         res, o, e = execute_shell_command(f"scc {pdir} -f json > {os.path.join(pdir,'scc.json')}")
 
 
-def main():
-    lookup_dir = "/Users/ruirua/repos/pyAnaDroid/demoProjects"
-    build_scc_json_for_all_projs(lookup_dir)
+def main(lookup_dir):
+    #lookup_dir = "/Users/ruirua/repos/pyAnaDroid/demoProjects"
+    #build_scc_json_for_all_projs(lookup_dir)
     ls = LanguageStats()
     ls.search_and_parse_files_in_dir(lookup_dir, expected_filename="scc.json")
     #print(json.dumps(ls.language_info, indent=1))
     ls.gen_langs_boxplots_loc()
-    #ls.gen_langs_boxplots_cc()
+    ls.gen_langs_boxplots_cc()
+    ls.gen_langs_boxplots_total_files()
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        print("error. provide input dir")

@@ -290,8 +290,8 @@ def get_avg_test_errors(test_folder_path):
     }
 
 
-def main():
-    lookup_dir = "/Users/ruirua/repos/pyAnaDroid/anadroid_results"
+def main(lookup_dir):
+    #lookup_dir = "/Users/ruirua/repos/pyAnaDroid/anadroid_results"
     app_res_fldrs = [os.path.join(lookup_dir, x) for x in os.listdir(lookup_dir)]
     print(app_res_fldrs)
     eas = ExecAppStats()
@@ -303,4 +303,7 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        print("error. provide input dir")

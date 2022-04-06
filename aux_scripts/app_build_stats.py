@@ -174,8 +174,8 @@ def gen_box_plot(key_list, list_of_lists):
     plt.show()
 
 
-def main():
-    lookup_dir = "/Users/ruirua/repos/pyAnaDroid/demoProjects"
+def main(lookup_dir):
+    #lookup_dir = "/Users/ruirua/repos/pyAnaDroid/demoProjects"
     proj_dirs = load_projects(lookup_dir)
     projs = [AndroidProject(projname=os.path.basename(p), projdir=p) for p in proj_dirs]
     abs = AppBuildStats()
@@ -183,6 +183,8 @@ def main():
         abs.process_proj(p)
     abs.get_stats()
 
-
 if __name__ == '__main__':
-    main()
+    if len(sys.argv) > 1:
+        main(sys.argv[1])
+    else:
+        print("error. provide input dir")
