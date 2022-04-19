@@ -2,7 +2,7 @@ androguard==3.4.0a1
 incremental>=17.5.0
 lxml==4.6.5
 six>=1.15.0
-manafa>=0.3.108
+manafa>=0.3.112
 physalia==0.0.1.dev122
 termcolor==1.1.0
-pylogcatparser==0.2.4
+pylogcatparser>=0.2.6

@@ -39,7 +39,7 @@ class LogAnalyzer(AbstractAnalyzer):
 
     def clean(self):
         super().clean()
-        #self.logcatparser = LogCatParser(log_format="threadtime")
+        self.logcatparser = LogCatParser(log_format="threadtime")
 
     def show_results(self, app_list):
         #for analyzed_app in app_list:

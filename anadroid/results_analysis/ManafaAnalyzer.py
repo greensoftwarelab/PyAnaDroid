@@ -30,7 +30,7 @@ class ManafaAnalyzer(AbstractAnalyzer):
         results_dir = results_dir if results_dir is not None else app.curr_local_dir
         if isinstance(self.profiler.manafa, HunterEManafa):
             hunter_trace = {}
-            output_log_file = "hunter.log"
+            output_log_file = self.profiler.manafa.bts_out_file.replace("bstats", "hunter")
             hunter_logs = [os.path.join(results_dir, f) for f in os.listdir(results_dir) if 'hunter' in f]
             final_hunter = os.path.join(results_dir, output_log_file)
             # concat all hunter logs on final hunter

@@ -27,9 +27,10 @@ def getColor(sev):
     }.get(sev, 'green')
 
 
-def log(message, log_sev=LogSeverity.INFO, time=time.time(), to_file=True):
+def log(message, log_sev=LogSeverity.INFO, curr_time=None, to_file=True):
+    curr_time = time.time() if curr_time is None else curr_time
     color = getColor(log_sev.value)
-    adapted_time = re.sub("\s|:", "-", str(datetime.fromtimestamp(time)))
+    adapted_time = re.sub("\s|:", "-", str(datetime.fromtimestamp(curr_time)))
     str_to_print ="[%s] %s: %s" % (log_sev.value, adapted_time, message)
     print(colored(str_to_print, color))
     if to_file:
