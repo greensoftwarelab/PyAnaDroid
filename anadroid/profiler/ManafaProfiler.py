@@ -79,11 +79,12 @@ class ManafaProfiler(AbstractProfiler):
         js = {}
         if os.path.exists(test_index_file):
             #update file
-            with open(test_index_file, 'w') as jj:
+            with open(test_index_file, 'r') as jj:
                 js = json.load(jj)
         js[str(test_id)] = da_list
         with open(test_index_file, 'w') as jj:
             json.dump(js, jj)
+        self.manafa.save_final_report(run_id=test_id, output_filepath=os.path.join(target_dir, f'manafa_resume_{test_id}.json'))
 
     def get_dependencies_location(self):
         return []

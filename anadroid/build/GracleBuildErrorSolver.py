@@ -3,7 +3,7 @@ import re
 import shutil
 from enum import Enum
 
-from manafa.utils.Logger import log, LogSeverity
+
 from termcolor import colored
 from textops import grep, cat, echo, sed
 from distutils.dir_util import copy_tree
@@ -124,7 +124,7 @@ def solve_known_error(proj, error, error_msg, **kwargs):
         #solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)
 
     elif error == KNOWN_ERROR.NDK_BAD_CONFIG:
-        log("BAD NDK configuration. please update ndk path in resources/config/local.properties", log_sev=LogSeverity.ERROR)
+        loge("BAD NDK configuration. please update ndk path in resources/config/local.properties")
         local_Prop_file = os.path.join(RES_DIR, "config", "local.properties")
         shutil.copy(local_Prop_file, proj.proj_dir)
     elif error == KNOWN_ERROR.GOOGLE_REPO_ERROR:

@@ -114,7 +114,6 @@ class DroidBotFramework(AbstractTestingFramework):
             app(App): app.
         """
         retries_per_test = self.get_config("test_fail_retries", 1)
-        print(self.workload.work_units)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 

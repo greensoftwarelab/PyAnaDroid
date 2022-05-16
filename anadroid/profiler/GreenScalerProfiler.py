@@ -3,14 +3,13 @@ import subprocess
 import time
 from enum import Enum
 
-from manafa.utils.Logger import log, LogSeverity
 
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
 from anadroid.profiler.greenScaler.GreenScaler.greenscaler import cpu_measurement, get_foreground_app, syscall_trace, \
     screen_capture
 from anadroid.profiler.greenScaler.GreenScaler.libmutation import greenscalerapplication, model
 from anadroid.profiler.greenScaler.GreenScaler.libmutation.greenscalerapplication import GreenScalerApplication
-from anadroid.utils.Utils import execute_shell_command, get_resources_dir
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir, logi, loge
 
 DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "profilers", "GreenScaler")
 INSTALL_SCRIPT_NAME = "push.sh"
@@ -87,18 +86,18 @@ class GreenScalerProfiler(AbstractProfiler):
         """
         n = runs
         app = greenscalerapplication.GreenScalerApplication(package, package, runTestCommand=exec_command)
-        log("executing greenscaler test")
+        logi("executing greenscaler test")
         cpu_measurement(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
         if foreground_app != package:
-            log("Error detected. App crashed or stopped during execution", log_sev=LogSeverity.ERROR)
+            loge("Error detected. App crashed or stopped during execution")
             return
         app.stop_and_clean_app()
-        log("capturing system calls")
+        logi("capturing system calls")
         syscall_trace(app, package, n, package, test_cmd)
         foreground_app = get_foreground_app()
         if foreground_app != package:
-            log("Error detected. App crashed or stopped during execution",log_sev=LogSeverity.ERROR)
+            loge("Error detected. App crashed or stopped during execution")
             return
         app.stop_and_clean_app()
         #print("Now run to capture screen shots")
@@ -110,7 +109,7 @@ class GreenScalerProfiler(AbstractProfiler):
             if n_image == 1:
                 break
         energy = model.estimate_energy(package, app, n)
-        log(f"Energy = {energy} Joules")
+        logi(f"Energy = {energy} Joules")
         app.stop_and_clean_app()
 
 

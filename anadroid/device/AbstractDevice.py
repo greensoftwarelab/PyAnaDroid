@@ -2,10 +2,9 @@ import re
 from abc import ABC, abstractmethod
 from enum import Enum
 
-from manafa.utils.Logger import log
 
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
-from anadroid.utils.Utils import execute_shell_command
+from anadroid.utils.Utils import execute_shell_command, logi
 
 
 class ADB_CONN(Enum):
@@ -67,7 +66,7 @@ class AbstractDevice(ABC):
         pass
 
     @abstractmethod
-    def list_installed_packages(self,prop_name):
+    def list_installed_packages(self):
         pass
 
     @abstractmethod
@@ -81,7 +80,7 @@ class AbstractDevice(ABC):
         """
         cmd = ""
         if self.is_screen_unlocked():
-            log("screen is unlocked")
+            logi("screen is unlocked")
             return
 
         if self.is_screen_dreaming():
@@ -96,10 +95,10 @@ class AbstractDevice(ABC):
                     pwd=pwd), args=[])
         else:
             # press lock button -> KEYCODE_MENU
-            res = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[],shell=True)
+            res = self.execute_command("\'{cmd} input keyevent 82\'".format(cmd=cmd), args=[], shell=True)
             if not self.is_screen_unlocked():
                 # if still locked -> swipe up
-                res = self.execute_command("input touchscreen swipe 930 880 930 180 #", args=[],shell=True)
+                res = self.execute_command("input touchscreen swipe 930 880 930 180 #", args=[], shell=True)
             res.validate()
 
     @abstractmethod
@@ -121,7 +120,7 @@ class AbstractDevice(ABC):
         """
         if not self.is_screen_unlocked():
             return
-        res = self.execute_command("input keyevent 26", args=[], shell=True)
+        self.execute_command("input keyevent 26", args=[], shell=True)
 
     @abstractmethod
     def is_screen_dreaming(self):

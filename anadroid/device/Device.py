@@ -1,16 +1,13 @@
 import json
 import os
 import re
-from enum import Enum
-
-from manafa.utils.Logger import log, LogSeverity
 
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.AbstractDevice import AbstractDevice, ADB_CONN
 import difflib
 
 from anadroid.device.DeviceState import DeviceState, DEVICE_STATE_ENFORCE
-from anadroid.utils.Utils import execute_shell_command, get_resources_dir
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir, logi, loge, logs, logw
 
 CONFIG_DIR = os.path.join(get_resources_dir(), 'config')
 CONFIG_TEST_FILE = os.path.join(CONFIG_DIR, "device_state_on_test.json")
@@ -30,17 +27,17 @@ def set_device_conn(conn_type, device_id=None):
     if conn_type == ADB_CONN.USB or conn_type == ADB_CONN.USB.value:
         result = execute_shell_command(f'adb {device_string} disconnect; adb {device_string} usb')
         if result.validate("No devices/emulators found"):
-            log("Device is now connected via USB")
+            logi("Device is now connected via USB")
     elif conn_type == ADB_CONN.WIFI or conn_type == ADB_CONN.WIFI.value:
         device = get_first_connected_device()
         if device.conn_type == ADB_CONN.WIFI:
-            log("device already connected via wifi")
+            logi("device already connected via wifi")
         else:
             res = execute_shell_command(f"adb {device_string} shell ip -f inet addr show wlan0")
             if "more than one device" in res.errors:
-                log("more than one device connected. please specify device id or unplug the device", log_sev=LogSeverity.ERROR)
+                loge("more than one device connected. please specify device id or unplug the device")
             elif res.validate("Error accessing device network interface") and res.output == "":
-                log("no wifi connection detected on the device. Please connect the device to a wireless network", log_sev=LogSeverity.ERROR)
+                loge("no wifi connection detected on the device. Please connect the device to a wireless network")
             else:
                 reg = re.search(r'[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+', (res.output))
                 if reg is None:
@@ -48,9 +45,9 @@ def set_device_conn(conn_type, device_id=None):
                 ip_addr = reg.group()
                 res = execute_shell_command(f"adb {device_string} tcpip {TCP_PORT}; adb {device_string} connect {ip_addr}")
                 if res.validate(f"error while connecting to {ip_addr} address") and f"connected to {ip_addr}" in res.output:
-                    log(f"successfully connected to {ip_addr}", log_sev=LogSeverity.SUCCESS)
+                    logs(f"successfully connected to {ip_addr}")
 
-                log("Please unplug the device from the workstation in order to disable USB connection", log_sev=LogSeverity.WARNING)
+                logw("Please unplug the device from the workstation in order to disable USB connection")
     else:
         raise Exception("Unknown device connection type (not USB or WIFI)")
 
@@ -126,13 +123,13 @@ class Device(AbstractDevice):
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
-                log("package already installed")
+                logw("package already installed")
                 the_pack = self.get_package_matching(andr_proj.pkg_name)
                 if the_pack is None:
                     continue
                 else:
                     diff_pkgs = [the_pack]
-            log("APK installed " + apk)
+            logi("APK installed " + apk)
             self.installed_apks.append(apk)
             installed_pack = diff_pkgs[0]
             installed_packages.add(installed_pack)
@@ -343,7 +340,7 @@ class Device(AbstractDevice):
     def get_device_max_cpu_freq(self):
         res = self.execute_command(" cat /proc/cpumaxfreq", args=[], shell=True)
         if res.validate("Unable to get device max cpu freq"):
-            return res.output.strip().replace(" ","")
+            return res.output.strip().replace(" ", "")
         return "0"
 
     def get_kernel_version(self):

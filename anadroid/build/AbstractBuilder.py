@@ -11,7 +11,7 @@ class AbstractBuilder(ABC):
         proj(`obj:`AndroidProject`): project to build.
         device(`obj:`Device`): targeted device.
         resources_dir(str): pyanadroid resources directory.
-        instrumenter(`obj:`AbstracInstrumenter`): instrumentation tool used.
+        instrumenter(`obj:`AbstractInstrumenter`): instrumentation tool used.
         config: build configurations.
     """
     def __init__(self, proj, device, resources_dir, instrumenter):

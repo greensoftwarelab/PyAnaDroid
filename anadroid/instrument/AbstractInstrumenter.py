@@ -80,7 +80,7 @@ class AbstractInstrumenter(ABC):
 
     def needs_reinstrumentation(self, proj, test_approach, instr_type, instr_strategy):
         """checks if the project needs to be instrumented again (i.e. if the last instrumentation performed
-        is equal to the instrumentation to be performed).
+        is == to the instrumentation to be performed).
         Args:
             proj(AndroidProject): project.
             test_approach(TESTING_APPROACH): testing approach.

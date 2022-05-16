@@ -19,14 +19,20 @@ class NoneInstrumenter(AbstractInstrumenter):
     def init(self):
         pass
 
-    def instrument(self, android_project, mirror_dirname="_TRANSFORMED_",test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
+    def needs_reinstrumentation(self, proj, test_approach, instr_type, instr_strategy):
+        return
+
+    def get_dirname(self, mirror_dirname="_TRANSFORMED_"):
+        return f'NONE{mirror_dirname}'
+
+    def instrument(self, android_project, mirror_dirname="_TRANSFORMED_", test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
                    instr_strategy=INSTRUMENTATION_STRATEGY.METHOD_CALL, instr_type=INSTRUMENTATION_TYPE.TEST, **kwargs):
         """
         just clone the project files to a new directory.
         """
         new_dir_name = f'NONE{mirror_dirname}'
         new_proj_dir = os.path.join(android_project.proj_dir, new_dir_name)
-        if self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):
+        if not os.path.exists(new_proj_dir) or self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):
             if not os.path.exists(new_proj_dir):
                 os.mkdir(new_proj_dir)
             all_proj_files = list(map(lambda x: x.replace(android_project.proj_dir + "/", ""),

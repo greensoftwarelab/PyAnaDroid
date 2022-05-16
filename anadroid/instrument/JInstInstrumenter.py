@@ -1,14 +1,14 @@
 import json, os
 import shutil
 
-from manafa.utils.Logger import log, LogSeverity
+
 
 from anadroid.application.Dependency import BuildDependency, DependencyType
 from anadroid.instrument.AbstractInstrumenter import AbstractInstrumenter
 import subprocess
 from anadroid.Types import BUILD_SYSTEM, TESTING_APPROACH, TESTING_FRAMEWORK
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE, INSTRUMENTATION_STRATEGY
-from anadroid.utils.Utils import execute_shell_command, get_resources_dir, mega_find
+from anadroid.utils.Utils import execute_shell_command, get_resources_dir, mega_find, logi, logw
 from shutil import copyfile
 
 #JINST_PATH = "resources/jars/jInst.jar"  # loadFromConfig
@@ -45,6 +45,7 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.classpath_dependencies = []
         self.build_plugins = []
         if instr_type == INSTRUMENTATION_TYPE.ANNOTATION:
+            #self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="1.0.1"))
             self.build_dependencies.append(BuildDependency("io.github.greensoftwarelab:hunter-emanafa-library", version="1.0.1"))
             self.classpath_dependencies.append(
                 BuildDependency("io.github.raphael28:hunter-debug-plugin", dep_type=DependencyType.CLASSPATH,
@@ -59,7 +60,7 @@ class JInstInstrumenter(AbstractInstrumenter):
         self.__update_dependencies_and_plugins(instr_type)
         target_dir = os.path.join(android_project.proj_dir, self.mirror_dirname)
         if self.needs_reinstrumentation(android_project, test_approach, instr_type, instr_strategy):
-            log("instrumenting project sources", log_sev=LogSeverity.INFO)
+            logi("instrumenting project sources")
             command = "java -jar \"{JInst_jar}\" -{build_system} \"{mir_dir}\" \"X\" \"{proj_dir}\" \"{manif_file}\" \"{test_manif_file}\" -{test_ori} -{test_frame} \"{app_id}\" -{test_approach}".format(
                 JInst_jar=JINST_PATH,
                 build_system=self.build_system.GRADLE.value.lower(),
@@ -79,7 +80,7 @@ class JInstInstrumenter(AbstractInstrumenter):
             copyfile("allMethods.json", os.path.join(target_dir, "allMethods.json"))
             self.write_instrumentation_log_file(android_project, test_approach, instr_type, instr_strategy)
         else:
-            log("Same instrumentation of last time. Skipping instrumentation phase", log_sev=LogSeverity.WARNING)
+            logw("Same instrumentation of last time. Skipping instrumentation phase")
         return target_dir
 
     def needs_build_plugin(self):
