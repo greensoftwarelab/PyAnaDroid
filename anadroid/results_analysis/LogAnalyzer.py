@@ -28,7 +28,7 @@ class LogAnalyzer(AbstractAnalyzer):
     def analyze_tests(self, app, results_dir=None, **kwargs):
         target_dir = app.curr_local_dir if results_dir is None else results_dir
         for log_file in self.fetch_log_files(target_dir):
-            test_id = kwargs['test_id'] if 'test_id' in kwargs else log_file.split("_")[1].split(".")[0]
+            test_id = kwargs['test_id'] if 'test_id' in kwargs else os.path.basename(log_file).split("_")[1].split(".")[0]
             self.analyze_test(app, log_file, output_filename=f'test_{test_id}_logresume.json')
             self.clean()
 

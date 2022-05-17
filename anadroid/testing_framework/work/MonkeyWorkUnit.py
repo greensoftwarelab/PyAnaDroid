@@ -44,7 +44,7 @@ class MonkeyWorkUnit(WorkUnit):
 
     def execute(self, package_name, *args, **kwargs):
         el_commandant = self.command % package_name
-        #print("executing command: " + el_commandant)
+        print("executing command: " + el_commandant)
         execute_shell_command(el_commandant).validate(("Error executing command " + el_commandant))
 
     def config(self, seed=None, **kwargs):
@@ -54,11 +54,10 @@ class MonkeyWorkUnit(WorkUnit):
         if seed is not None:
             cmd += " -s {seed} ".format(seed=seed)
         if "event-count" in kwargs.keys():
-            nr_events = kwargs["event-count"] if 'event_count' in kwargs else nr_events
+            nr_events = kwargs["event-count"]
             kwargs.pop("event-count")
         for k, v in kwargs.items():
             cmd += " " + convert_arg(k, v)
-
         self.command = cmd + " -p %s " + str(nr_events)
 
     def export_results(self, target_dir=None):

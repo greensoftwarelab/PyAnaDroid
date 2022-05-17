@@ -104,11 +104,13 @@ class MonkeyFramework(AbstractTestingFramework):
         time.sleep(1)
         self.profiler.init(**{'app': app})
         log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
+        # log device state
         self.profiler.start_profiling()
         app.start()
         self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
         app.stop()
         self.profiler.stop_profiling()
+        # log device state
         device.clear_logcat()
         self.profiler.export_results(test_id)
         self.profiler.pull_results(test_id, app.curr_local_dir)
