@@ -109,7 +109,8 @@ class AbstractDevice(ABC):
         """
         res = self.execute_command("dumpsys window | grep mDreamingLockscreen", args=[], shell=True)
         res.validate()
-        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower()
+        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower() \
+            if len(re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()) > 0 else False
         return not is_locked
 
     @abstractmethod
