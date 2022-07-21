@@ -380,3 +380,9 @@ class Device(AbstractDevice):
         res = self.get_device_info()
         with open(filepath, 'w') as jj:
             json.dump(res, jj)
+
+    def save_device_state(self, filepath="state.json"):
+        device_stt = self.device_state.get_device_state()
+
+        with open(filepath, 'w') as jj:
+            json.dump(device_stt, jj, indent=1)

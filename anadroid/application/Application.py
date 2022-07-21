@@ -5,6 +5,7 @@ from textops import cut, grep, echo
 
 from anadroid.Types import TESTING_FRAMEWORK
 from anadroid.application.AbstractApplication import AbstractApplication
+from anadroid.application.AndroidProject import AndroidProject
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 from anadroid.utils.Utils import get_date_str, logw, logi
@@ -143,7 +144,7 @@ class App(AbstractApplication):
         Returns:
             object(DefaultSemanticVersion): app version.
         """
-        if self.proj.proj_version != DefaultSemanticVersion("0.0"):
+        if isinstance(self.proj, AndroidProject) and self.proj.proj_version != DefaultSemanticVersion("0.0"):
             return self.proj.proj_version
         res = self.device.execute_command(f"dumpsys package {self.package_name}", shell=True)
         if res.validate(Exception("unable to determinate version of package")):
@@ -158,3 +159,9 @@ class App(AbstractApplication):
             'app_project': self.proj.proj_name,
             'app_language': 'Java'
         }
+
+    def get_permissions_json(self):
+        print(self.curr_local_dir)
+        file_to_look = os.path.join(self.curr_local_dir, "appPermissions.json")
+        print(file_to_look)
+        return None if not os.path.exists(file_to_look) else file_to_look

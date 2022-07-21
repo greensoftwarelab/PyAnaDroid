@@ -210,6 +210,8 @@ class DeviceState(object):
         Args:
             value: value between 0-255.
         """
+        if self.get_screen_brightness() == value:
+            return
         res = self.device.execute_command(f"settings put system screen_brightness {value}", shell=True)
         res.validate(("unable to set brightness value of %d " % value))
         self.screen_brightness = value
@@ -219,6 +221,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_screen_always_on() == value:
+            return
         # adb shell settings put global stay_on_while_plugged_in 3
         if value == 1:
             # res = self.device.execute_command(f"settings put global stay_on_while_plugged_in 3", shell=True)
@@ -233,6 +237,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_screen_auto_rotate() == value:
+            return
         if value == 1:
             res = self.device.execute_command(f" settings put system accelerometer_rotation 1", shell=True)
         else:
@@ -247,6 +253,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_screen_orientation() == value:
+            return
         # adb shell settings put system user_rotation 0 -> portrait
         # adb shell settings put system user_rotation 1 -> landscape
         is_auto_rotating = self.screen_auto_rotate
@@ -264,6 +272,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_bluetooth_state() == value:
+            return
         if self.device.is_rooted():
             if value == 1:
                 # adb shell su -c "pm enable com.android.bluetooth"
@@ -282,6 +292,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_gps_state() == value:
+            return
         if value == 1:
             # adb shell settings put secure location_providers_allowed -gps
             res = self.device.execute_root_command(f"settings put secure location_providers_allowed +gps")
@@ -295,6 +307,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_nfc_state() == value:
+            return
         if value == 1:
             res = self.device.execute_root_command(f"svc nfc enable")
         else:
@@ -320,11 +334,13 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_mobile_data_state() == value:
+            return
         if value == 1:
             res = self.device.execute_root_command(f"svc data enable")
         else:
             res = self.device.execute_root_command(f"svc data disable")
-        res.validate(("Unable to change nfc state"))
+        res.validate(("Unable to change mobile data state"))
         self.mobile_data_state = value
 
     def set_wifi_state(self, value=0):
@@ -332,6 +348,8 @@ class DeviceState(object):
         Args:
             value: state value.
         """
+        if self.get_wifi_state() == value:
+            return
         if value == 1:
             res = self.device.execute_root_command(f"svc wifi enable")
         else:
@@ -346,6 +364,31 @@ class DeviceState(object):
         """
         if perm_id in PERMISSIONS_TO_STATE:
             self.enforce_state(PERMISSIONS_TO_STATE[perm_id], 1)
+
+    def get_used_cpu_averages(self):
+        res = self.device.execute_command("dumpsys cpuinfo | grep  \"Load\" | cut -f2 -d: | sed 's/ //g'", shell=True)
+        if res.validate("Unable to get cpu averages"):
+            return res.output.strip()
+        return ""
+
+    def get_used_ram_pss(self):
+        res = self.device.execute_command("dumpsys meminfo | grep \"Used RAM.*\" | cut -f2 -d\( | cut -f1 -d+ | cut -f1 -d\ ", shell=True)
+        if res.validate("Unable to get ram pss"):
+            return res.output.strip()
+        return ""
+
+    def get_used_ram_kernel(self):
+        res = self.device.execute_command("dumpsys meminfo | grep \"Used RAM.*\" | cut -f2 -d+ | sed 's/kernel)//g' | sed 's/ //g'", shell=True)
+        if res.validate("Unable to get ram pss"):
+            return res.output.strip()
+        return ""
+
+    def get_nr_processes_running(self):
+        res = self.device.execute_command(
+            "ps -o STAT  | egrep \"^R|L\" | wc -l | sed 's/ //g'", shell=True)
+        if res.validate("Unable to get ram pss"):
+            return res.output.strip()
+        return ""
 
     def get_state(self, key):
         """given a component uid/key, returns the current state of such component.
@@ -418,3 +461,23 @@ class DeviceState(object):
         #    self.set_hotspot_state(val)
         else:
             raise Exception(f"{key} not implemented")
+
+    def get_device_state(self):
+        return {
+            "screen_locked" : self.get_screen_lock_state(),
+            "screen_brightness": self.get_screen_brightness(),
+            "screen_always_on": self.get_screen_always_on(),
+            "screen_auto_rotate": self.get_screen_auto_rotate(),
+            "screen_orientation": self.get_screen_orientation(),
+            "bluetooth": self.get_bluetooth_state(),
+            "wifi": self.get_wifi_state(),
+            # "hotspot_state",
+            'gps': self.get_gps_state(),
+            "nfc_state": self.get_nfc_state(),
+            "mobile_data_state": self.get_mobile_data_state(),
+            'speakers_state': self.get_speakers_state(),
+            "used_cpu": self.get_used_cpu_averages(),
+            "used_mem_pss": self.get_used_ram_pss(),
+            "used_mem_kernel": self.get_used_ram_kernel(),
+            "nr_procceses": self.get_nr_processes_running()
+        }

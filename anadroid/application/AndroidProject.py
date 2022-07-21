@@ -6,18 +6,18 @@ from enum import Enum
 from os import mkdir, listdir
 
 from textops import cat, grep, cut, sed, echo, grepv
-
-from anadroid.application.Application import App
 from anadroid.application.ProjectModule import ProjectModule
 from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.utils.Utils import execute_shell_command, mega_find, get_results_dir, extract_version_from_apk, logw
 
 RESULTS_DIR = get_results_dir()
 
+
 class BUILD_TYPE(Enum):
     RELEASE = "Release"
     DEBUG = "Debug"
     CUSTOM = "Custom"
+
 
 class BUILD_FLAVOR(Enum):
     DEMO = "Demo"
@@ -32,6 +32,7 @@ def mk_ma_dir(path):
     except FileExistsError:
         pass
 
+
 def is_android_project(dirpath):
     """determines if a given directory is an Android Project.
     looks for settings.gradle files.
@@ -42,6 +43,7 @@ def is_android_project(dirpath):
         bool: True if file is in diretory, False otherwise.
     """
     return "settings.gradle" in [f for f in listdir(dirpath)]
+
 
 class Project(object):
     """Class that abstracts Projects.
@@ -72,6 +74,10 @@ class Project(object):
         transforms = mega_find(self.proj_dir, pattern="*TRANSFORMED*", maxdepth=1, type_file='d')
         for t in transforms:
             shutil.rmtree(t)
+
+    def save_proj_json(self, path):
+        pass
+
 
 class AndroidProject(Project):
     """Class that abstracts Android Projects.
