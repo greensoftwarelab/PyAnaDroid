@@ -14,7 +14,7 @@ class LogAnalyzer(AbstractAnalyzer):
     Calculate statistics about the produced logs to analyze and characterize test executions.
     """
     def __init__(self, profiler):
-        self.supported_filters = {"fatal_errors", "ANR"}
+        self.supported_filters = {"fatal_errors", "ANR", "Exceptions"}
         super(LogAnalyzer, self).__init__(profiler)
         self.logcatparser = LogCatParser(log_format="threadtime")
 
@@ -70,6 +70,8 @@ class LogAnalyzer(AbstractAnalyzer):
             return self.logcatparser.get_parser_resume()['stats']['fatal']
         elif filter_name == "ANR":
             return self.logcatparser.get_parser_resume()['known_errors']['ANR']
+        elif filter_name == "Exceptions":
+            return self.logcatparser.get_parser_resume()['known_errors']['Exception']
         val = super().get_val_for_filter(filter_name, add_data)
         if val is None:
             loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")

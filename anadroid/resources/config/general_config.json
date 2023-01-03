@@ -1,7 +1,7 @@
 {
  "tests": {
-   "tests_per_app" : 25,
-   "test_timeout" : 100,
+   "tests_per_app" : 1,
+   "test_timeout" : 1000,
    "test_fail_retries" : 2
  },
   "general": {

@@ -170,6 +170,7 @@ class GradleBuilder(AbstractBuilder):
 		filename = os.path.join(self.proj.proj_dir, "{task}_{results}.log".format(task=task_name, results=(
 				"SUCCESS" if was_success else "ERROR")))
 		log_to_file(content=val, filename=filename)
+
 		if install_apk_test:
 			task_name = f"install{build_type.value}AndroidTest"
 			val = self.__execute_gradlew_task(task_name)
@@ -368,7 +369,7 @@ class GradleBuilder(AbstractBuilder):
 		cmd = "cd {projdir}; chmod +x gradlew ; ./gradlew {task}".format(
 				projdir=self.proj.proj_dir, task=task, build_timeout=build_timeout_val)
 		res = execute_shell_command(cmd, timeout=build_timeout_val)
-		if res.validate("error running gradle task"):
+		if res.validate(f"error running gradle task ({task})"):
 			return res.output
 		else:
 			return res.errors

@@ -20,6 +20,7 @@ class TESTING_FRAMEWORK(Enum):
     ROBOTIUM = "Robotium"
     APP_CRAWLER = "Crawler"
     DROIDBOT = "Droidbot"
+    CUSTOM = "Custom"
     OTHER = "Other"
 
 

@@ -4,46 +4,33 @@ import time
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER
 from anadroid.device.DeviceState import DEVICE_STATE_ENFORCE
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
-from anadroid.testing_framework.work.MonkeyWorkUnit import MonkeyWorkUnit
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
+from anadroid.testing_framework.work.WorkUnit import WorkUnit
 from anadroid.utils.Utils import get_resources_dir, loge, logw, logs, execute_shell_command
 
-#DEFAULT_RES_DIR = "resources/testingFrameworks/monkey/"
-DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "monkey")
-DEFAULT_SEEDS_FILE = "monkey_seeds.txt"
-DEFAULT_CONFIG_FILE = "monkey_cmd.cfg"
+DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks")
 
 
-class MonkeyFramework(AbstractTestingFramework):
-    """Implements AbstractTestingFramework interface to allow executing tests using Monkey testing framework.
+class CustomCommandFramework(AbstractTestingFramework):
+    """Implements AbstractTestingFramework interface to allow executing tests using an arbitrary command string
     Attributes:
-        executable_prefix(str): prefix for test command. It is basically a call to the executable.
-        workload(WorkLoad): workload object containing the work units to be executed.
-        res_dir(str): directory containing app crawler resources.
+        command(str): command to execute the test
+        workload(WorkLoad): workload object containing the work units to be executed..
     """
-    def __init__(self, profiler, analyzer, default_workload=False, resdir=DEFAULT_RES_DIR):
-        super(MonkeyFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY, profiler=profiler, analyzer=analyzer)
-        self.executable_prefix = "adb shell monkey"
+    def __init__(self, profiler, analyzer, command, default_workload=False, resdir=DEFAULT_RES_DIR):
+        super(CustomCommandFramework, self).__init__(id=TESTING_FRAMEWORK.CUSTOM, profiler=profiler, analyzer=analyzer)
+        self.command = f'{command} '
         self.workload = None
         self.res_dir = resdir
         if default_workload:
-            self.init_default_workload(DEFAULT_SEEDS_FILE)
+            self.init_default_workload()
 
-    def init_default_workload(self, pkg, seeds_file=DEFAULT_SEEDS_FILE, tests_dir=None):
+    def init_default_workload(self, pkg=None, unusedarg2=None, tests_dir=None):
         self.workload = WorkLoad()
-        wl_filename = os.path.join(self.res_dir, seeds_file)
-        config = self.__load_config_file()
-        ofile = open(wl_filename, "r")
-        i=0
-        max_tests_per_app = self.get_config("tests_per_app", 100000000)
-        for seed in ofile:
-            if i >= max_tests_per_app:
-                break
-            wk = MonkeyWorkUnit(self.executable_prefix)
-            wk.config(seed=seed.strip(), **config)
+        max_tests_per_app = self.get_config("tests_per_app", 25)
+        for i in range(0, max_tests_per_app):
+            wk = WorkUnit(self.command)
             self.workload.add_unit(wk)
-            i = i+1
-        ofile.close()
 
     def execute_test(self, package, wunit=None, timeout=None, *args, **kwargs):
         if wunit is None:
@@ -57,7 +44,8 @@ class MonkeyFramework(AbstractTestingFramework):
         else:
             wunit.execute(package, *args, **kwargs)
         if 'log_filename' in kwargs:
-            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
+            execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}")\
+                .validate(Exception("Unable to extract device log"))
 
     def init(self):
         pass
@@ -67,16 +55,6 @@ class MonkeyFramework(AbstractTestingFramework):
 
     def uninstall(self):
         pass
-
-    def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE):
-        cfg_file = os.path.join(self.res_dir, cfg_filename)
-        cfg = {}
-        ofile = open(cfg_file, "r")
-        for aline in ofile:
-            key, pair = aline.split("=")
-            cfg[key] = pair.strip()
-        ofile.close()
-        return cfg
 
     def test_app(self, device, app):
         """test a given app on a given device.
@@ -110,7 +88,7 @@ class MonkeyFramework(AbstractTestingFramework):
         # log device state
         self.profiler.start_profiling()
         app.start()
-        self.execute_test(app.package_name, wk_unit, **{'log_filename': log_file})
+        self.execute_test("", wk_unit, **{'log_filename': log_file})
         app.stop()
         self.profiler.stop_profiling()
         # log device state

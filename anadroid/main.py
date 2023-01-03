@@ -21,7 +21,8 @@ def init_PyAnaDroid_from_args(args):
                     tests_dir=args.tests_dir,
                     rebuild_apps=args.rebuild,
                     reinstrument=args.reinstrument,
-                    recover_from_last_run = args.recover
+                    recover_from_last_run=args.recover,
+                    test_cmd=args.command
                     )
 
 
@@ -53,6 +54,7 @@ def main():
     parser.add_argument("-n", "--package_names", help="package(s) of already installed apps", nargs='+', default=[])
     parser.add_argument("-apk", "--application_packages", help="path of apk(s) to process", nargs='+', default=[])
     parser.add_argument("-rec", "--recover", help="recover progress of the previous run", action='store_true')
+    parser.add_argument("-cmd", "--command", help="test command", type=str, default=None)
     args = parser.parse_args()
     if args.setconnection:
         set_device_conn(args.setconnection, device_id=args.device_serial)

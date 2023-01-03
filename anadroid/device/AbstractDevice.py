@@ -85,6 +85,7 @@ class AbstractDevice(ABC):
 
         if self.is_screen_dreaming():
             # wake screen (pressing lock btn)
+            logi("screen is dreaming")
             cmd = "input keyevent 26;"
         if pwd is not None:
             # press lock btn -> swipe up -> passwd -> press enter

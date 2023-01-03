@@ -1,7 +1,4 @@
 import json
-
-from manafa.utils.Logger import log, LogSeverity
-
 from anadroid.results_analysis.filters.Filter import Filter, is_valid_filter
 
 

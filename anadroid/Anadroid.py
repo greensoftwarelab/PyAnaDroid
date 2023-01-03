@@ -28,6 +28,7 @@ from anadroid.results_analysis.ManafaMethodCoverageAnalyzer import ManafaMethodC
 from anadroid.results_analysis.OldAnaDroidAnalyzer import OldAnaDroidAnalyzer
 from anadroid.results_analysis.SCCAnalyzer import SCCAnalyzer
 from anadroid.testing_framework.AppCrawlerFramework import AppCrawlerFramework
+from anadroid.testing_framework.CustomCommandFramework import CustomCommandFramework
 from anadroid.testing_framework.DroidBotFramework import DroidBotFramework
 from anadroid.testing_framework.JUnitBasedFramework import JUnitBasedFramework
 from anadroid.testing_framework.MonkeyFramework import MonkeyFramework
@@ -62,7 +63,8 @@ class AnaDroid(object):
     def __init__(self, arg1, results_dir=get_results_dir(), profiler=PROFILER.MANAFA,
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
-                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False, reinstrument=False, recover_from_last_run=False):
+                 build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False,
+                 reinstrument=False, recover_from_last_run=False, test_cmd=None):
         self.device = device if device is not None else get_first_connected_device()
         self.app_projects_ut = []
         self.tests_dir = tests_dir
@@ -77,6 +79,7 @@ class AnaDroid(object):
             self.apps_dir = os.path.realpath(arg1)
             self.app_projects_ut = self.load_projects()
         self.results_dir = results_dir
+        self.test_cmd = test_cmd
         self.instrumentation_type = self.__infer_instrumentation_type(instrumentation_type)
         self.profiler = self.__infer_profiler(profiler)
         self.analyzer = self.__infer_analyzer(analyzer, profiler)
@@ -168,6 +171,11 @@ class AnaDroid(object):
                 return JUnitBasedFramework(profiler=self.profiler, analyzer=self.analyzer)
             elif tf == TESTING_FRAMEWORK.DROIDBOT:
                 return DroidBotFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer)
+            elif tf == TESTING_FRAMEWORK.CUSTOM:
+                if self.test_cmd is None:
+                    raise Exception("Unable to execute CustomCommandFramework without providing a command as input")
+                return CustomCommandFramework(default_workload=True, profiler=self.profiler, analyzer=self.analyzer,
+                                              command=self.test_cmd)
             else:
                 return None
         else:
