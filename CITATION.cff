@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Rua"
+  given-names: "Rui"
+  orcid: "https://orcid.org/0000-0000-0000-0000"
+title: "PyAnaDroid: A replicable, fully-customizable
+execution pipeline for analyzing and benchmarking
+Android Applications"
+version: 0.5.30
+doi: 10.5281/zenodo.6518166
+date-released: 2021-12-18
+url: "https://github.com/greensoftwarelab/PyAnaDroid"
