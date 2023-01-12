@@ -10,12 +10,13 @@ with open('requirements.txt') as f:
 
 setup(
     name='anadroid',
-    description='Anadroid: Energy benchmarking/analyzer tool for Android',
+    description='PyAnaDroid: A replicable, fully-customizable execution pipeline for'
+                'analyzing and benchmarking Android Applications',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author='Rui Rua',
     author_email='rui.rrua@gmail.com',
-    url='https://github.com/RRua/pyAnaDroid',
+    url='https://github.com/greensoftwarelab/PyAnaDroid',
     license='MIT',
     packages=setuptools.find_packages(),
     use_incremental=True,
@@ -30,7 +31,7 @@ setup(
         'Programming Language :: Python :: 3.8',
     ],
     project_urls={
-        'Bug Tracker':  'https://github.com/RRua/pyAnaDroid/issues'
+        'Bug Tracker':  'https://github.com/greensoftwarelab/PyAnaDroid/issues'
         },
     python_requires=">=3.8",
 )
