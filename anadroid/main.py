@@ -21,6 +21,7 @@ def init_PyAnaDroid_from_args(args):
                     reinstrument=args.reinstrument,
                     recover_from_last_run=args.recover,
                     test_cmd=args.command,
+                    load_projects=not args.run_only
                     )
 
 

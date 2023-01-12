@@ -62,7 +62,7 @@ class AnaDroid(object):
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
                  build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False,
-                 reinstrument=False, recover_from_last_run=False, test_cmd=None):
+                 reinstrument=False, recover_from_last_run=False, test_cmd=None, load_projects=True):
         self.device = device if device is not None else get_first_connected_device()
         self.app_projects_ut = []
         self.tests_dir = tests_dir
@@ -75,7 +75,7 @@ class AnaDroid(object):
             self.__setup_from_argparse(arg1)
         else:
             self.apps_dir = os.path.realpath(arg1)
-            self.app_projects_ut = self.load_projects()
+            self.app_projects_ut = self.load_projects() if load_projects else []
         self.results_dir = results_dir
         self.test_cmd = test_cmd
         self.instrumentation_type = self.__infer_instrumentation_type(instrumentation_type)
