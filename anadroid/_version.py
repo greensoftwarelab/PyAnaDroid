@@ -7,5 +7,5 @@ Provides anadroid version information.
 
 from incremental import Version
 
-__version__ = Version("anadroid", 0, 5, 33)
+__version__ = Version("anadroid", 0, 5, 34)
 __all__ = ["__version__"]
