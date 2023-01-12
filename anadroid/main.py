@@ -1,6 +1,4 @@
 import argparse
-from enum import Enum
-
 from anadroid.Anadroid import AnaDroid
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
@@ -22,7 +20,7 @@ def init_PyAnaDroid_from_args(args):
                     rebuild_apps=args.rebuild,
                     reinstrument=args.reinstrument,
                     recover_from_last_run=args.recover,
-                    test_cmd=args.command
+                    test_cmd=args.command,
                     )
 
 
@@ -42,7 +40,8 @@ def main():
                         choices=[e.value for e in INSTRUMENTATION_TYPE])
     parser.add_argument("-d", "--diretory", default="demoProjects", type=str, help="app(s)' folder")
     parser.add_argument("-bo", "--buildonly", help="just build apps", action='store_true')
-    parser.add_argument("-r", "--record", help="record test", action='store_true')
+    parser.add_argument("-record", "--record", help="record test", action='store_true', default=False)
+    parser.add_argument("-run", "--run_only", help="run only", action='store_true')
     #parser.add_argument("-rt", "--retry", help="retry build if previously failed", action='store_true')
     parser.add_argument("-rb", "--rebuild", help="rebuild apps", action='store_true')
     parser.add_argument("-ri", "--reinstrument", help="reinstrument app", action='store_true')
@@ -65,8 +64,10 @@ def main():
     elif args.justanalyze:
         raise NotImplementedError()
         # anadroid.just_analyze()
-    elif args.record:
+    if args.record:
         anadroid.record_test(args.tests_dir)
+    if args.run_only:
+        anadroid.exec_command()
     else:
         anadroid.default_workflow()
 

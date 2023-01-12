@@ -25,7 +25,7 @@ class ManafaAnalyzer(AbstractAnalyzer):
         pass
 
     # def analyze(self, app, output_log_file="hunter.log"):
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
         #total, per_component, metrics = self.profiler.manafa.getConsumptionInBetween()
         results_dir = results_dir if results_dir is not None else app.curr_local_dir
         if isinstance(self.profiler.manafa, HunterEManafa):

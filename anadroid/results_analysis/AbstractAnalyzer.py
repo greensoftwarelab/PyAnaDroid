@@ -29,7 +29,7 @@ class AbstractAnalyzer(ABC):
         pass
 
     @abstractmethod
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
         """Analyze a set of tests of a given app.
         Args:
             app(App): app.

@@ -1,6 +1,10 @@
+import os
 from abc import ABC, abstractmethod
 
 from anadroid.Config import get_general_config
+from anadroid.utils.Utils import get_results_dir
+
+DEFAULT_TEST_RES_DIR = os.path.join(get_results_dir(), "custom_test_results")
 
 
 class AbstractTestingFramework(ABC):
@@ -13,12 +17,13 @@ class AbstractTestingFramework(ABC):
         config(dict): set of testing frameowrk configurations.
 
     """
-    def __init__(self, id, profiler, analyzer):
+    def __init__(self, id, profiler, analyzer, default_test_res=DEFAULT_TEST_RES_DIR):
         super().__init__()
         self.id = id
         self.profiler = profiler
         self.analyzer = analyzer
         self.config = get_general_config("tests")
+        self.default_test_res = default_test_res
 
     @abstractmethod
     def init_default_workload(self, pkg, args_file=None, tests_dir=None):
@@ -74,3 +79,6 @@ class AbstractTestingFramework(ABC):
     def record_test(self, app_id=None, test_id=None, output_dir=None):
         """record test to be replayed later."""
         pass
+
+    def get_default_test_dir(self):
+        return self.default_test_res

@@ -182,6 +182,8 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
         super(ApkAPIAnalyzer, self).__init__(profiler)
 
     def eval_app(self, app):
+        if app is None:
+            return
         app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if
                                   "allMethods.json" not in x]
         app_file_exists = len(app_methods_candidates) > 0
@@ -205,7 +207,9 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
     def get_val_for_filter(self, filter_name, add_data=None):
         return super().get_val_for_filter(filter_name, add_data)
 
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
+        if app is None:
+            return True
         self.eval_app(app)
         return super().analyze_tests(app, results_dir=results_dir, **kwargs)
 
@@ -214,6 +218,8 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
         return super().analyze_test(app, test_id=test_id, **kwargs)
 
     def validate_test(self, app, arg1, **kwargs):
+        if app is None:
+            return True
         self.eval_app(app)
         return super().validate_test(app, arg1, **kwargs)
 

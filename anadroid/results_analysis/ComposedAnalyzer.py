@@ -23,7 +23,7 @@ class ComposedAnalyzer(AbstractAnalyzer):
         for inn in self.inner_analyzers:
             inn.show_results(app_list)
 
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
         for inn in self.inner_analyzers:
             inn.analyze_tests(app, results_dir, **kwargs)
 

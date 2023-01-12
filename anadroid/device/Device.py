@@ -383,6 +383,7 @@ class Device(AbstractDevice):
 
     def save_device_state(self, filepath="state.json"):
         device_stt = self.device_state.get_device_state()
-
+        if not os.path.exists(os.path.dirname(filepath)):
+            os.mkdir(os.path.dirname(filepath))
         with open(filepath, 'w') as jj:
             json.dump(device_stt, jj, indent=1)
