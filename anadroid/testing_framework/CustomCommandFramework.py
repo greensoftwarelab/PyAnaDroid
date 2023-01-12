@@ -6,7 +6,7 @@ from anadroid.device.DeviceState import DEVICE_STATE_ENFORCE
 from anadroid.testing_framework.AbstractTestingFramework import AbstractTestingFramework
 from anadroid.testing_framework.work.WorkLoad import WorkLoad
 from anadroid.testing_framework.work.WorkUnit import WorkUnit
-from anadroid.utils.Utils import get_resources_dir, loge, logw, logs, execute_shell_command
+from anadroid.utils.Utils import get_resources_dir, loge, logw, logs, execute_shell_command, get_results_dir
 
 DEFAULT_RES_DIR = os.path.join(get_resources_dir(), "testingFrameworks")
 
@@ -76,6 +76,8 @@ class CustomCommandFramework(AbstractTestingFramework):
             wk_unit(WorkUnit): work unit to be executed.
             n_retries(int): number of times to try run the test in case it fails.
         """
+        if app is None:
+            return self.exec_one_test_app_none(test_id, device, wk_unit, n_retries=n_retries)
         if n_retries < 0:
             loge(f"Validation failed. Ignoring test {test_id}")
             return
@@ -87,18 +89,50 @@ class CustomCommandFramework(AbstractTestingFramework):
         log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
         # log device state
         self.profiler.start_profiling()
-        app.start()
         self.execute_test("", wk_unit, **{'log_filename': log_file})
-        app.stop()
         self.profiler.stop_profiling()
         # log device state
         device.clear_logcat()
         device.save_device_state(filepath=os.path.join(app.curr_local_dir, f'end_state{test_id}.json'))
         self.profiler.export_results(test_id)
         self.profiler.pull_results(test_id, app.curr_local_dir)
-        app.clean_cache()
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)
+        else:
+            logs(f"Test {test_id} PASSED")
+
+    def exec_one_test_app_none(self, test_id, device, wk_unit, n_retries=1):
+        """executes one test identified by test_id on a given device.
+        Args:
+            test_id: test uuid.
+            device(Device): device.
+            wk_unit(WorkUnit): work unit to be executed.
+            n_retries(int): number of times to try run the test in case it fails.
+        """
+        test_dir = self.get_default_test_dir()
+        if n_retries < 0:
+            loge(f"Validation failed. Ignoring test {test_id}")
+            return
+        if not os.path.exists(test_dir):
+            os.mkdir(test_dir)
+        device.unlock_screen()
+        time.sleep(1)
+        device.set_device_state(state_cfg=DEVICE_STATE_ENFORCE.TEST)
+        device.save_device_state(filepath=os.path.join(test_dir, f'begin_state{test_id}.json'))
+        self.profiler.init()
+        log_file = os.path.join(test_dir, f"test_{test_id}.logcat")
+        # log device state
+        self.profiler.start_profiling()
+        self.execute_test("", wk_unit, **{'log_filename': log_file})
+        self.profiler.stop_profiling()
+        # log device state
+        device.clear_logcat()
+        device.save_device_state(filepath=os.path.join(test_dir, f'end_state{test_id}.json'))
+        self.profiler.export_results(test_id)
+        self.profiler.pull_results(test_id, test_dir)
+        if not self.analyzer.validate_test(None, test_id, **{'log_filename': log_file}):
+            logw("Validation failed. Retrying")
+            self.exec_one_test_app_none(test_id, device, wk_unit, n_retries=n_retries-1)
         else:
             logs(f"Test {test_id} PASSED")

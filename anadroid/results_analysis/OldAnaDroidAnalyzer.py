@@ -61,13 +61,15 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
     def get_val_for_filter(self, filter_name, add_data=None):
         return super().get_val_for_filter(filter_name, add_data)
 
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
         self.analyze(app, **kwargs)
 
     def analyze_test(self, app, test_id, **kwargs):
         pass
 
     def validate_test(self, app, arg1, **kwargs):
+        if app is None:
+            return True
         for inn in self.inner_analyzers:
             if not inn.validate_test(app, arg1):
                 return False

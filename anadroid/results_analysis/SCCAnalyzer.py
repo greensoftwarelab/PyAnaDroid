@@ -31,7 +31,9 @@ class SCCAnalyzer(AbstractAnalyzer):
     def get_val_for_filter(self, filter_name, add_data=None):
         return super().get_val_for_filter(filter_name, add_data)
 
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
+        if app is None:
+            return True
         base_dir = app.local_res if results_dir is None else results_dir
         output_file = os.path.join(base_dir, DEFAULT_FILENAME)
         self.analyze(app, output_file, **kwargs)

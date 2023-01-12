@@ -2,8 +2,6 @@ import argparse
 import os
 import re
 import traceback
-from datetime import datetime
-
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, \
     SUPPORTED_INSTRUMENTERS, \
     SUPPORTED_INSTRUMENTATION_TYPES, SUPPORTED_SUITES, SUPPORTED_BUILDING_SYSTEMS
@@ -12,7 +10,6 @@ from anadroid.application.AndroidProject import AndroidProject, BUILD_TYPE, is_a
 from anadroid.application.Application import App
 from anadroid.build.GradleBuilder import GradleBuilder
 from anadroid.device.Device import get_first_connected_device
-
 from anadroid.instrument.JInstInstrumenter import JInstInstrumenter
 from anadroid.instrument.NoneInstrumenter import NoneInstrumenter
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
@@ -36,7 +33,8 @@ from anadroid.testing_framework.MonkeyRunnerFramework import MonkeyRunnerFramewo
 from anadroid.testing_framework.RERANFramework import RERANFramework
 from anadroid.utils.Utils import mega_find, extract_pkg_name_from_apk, get_results_dir, logw, logi, loge, \
     get_resources_dir, get_log_dir
-from pathlib import Path
+
+
 
 class AnaDroid(object):
     """Provides a configurable pipeline to benchmark and analyze Android Projects and Applications.
@@ -281,6 +279,17 @@ class AnaDroid(object):
             except Exception as e:
                 loge(traceback.format_exc())
 
+    def exec_command(self):
+        try:
+            self.testing_framework.init_default_workload()
+            self.testing_framework.test_app(self.device, app=None)
+            self.analyzer.analyze_tests(results_dir=self.testing_framework.get_default_test_dir(), **{
+                                                'testing_framework': self.testing_framework,
+                                                })
+        except Exception:
+            loge(traceback.format_exc())
+
+
     def __validate_suite(self, profiler):
         """checks if the selected profiler can be combined with the selected instrumentation tyoe.
         Args:
@@ -336,7 +345,7 @@ class AnaDroid(object):
         has_gradle_right_next = mega_find(dir_path, pattern="build.gradle", maxdepth=4, type_file='f')
         if len(has_gradle_right_next) > 0:
             top_gradle_file = min(has_gradle_right_next, key=len)
-            return os.path.dirname(top_gradle_file)
+            return os.path.dirname(top_gradle_file) if top_gradle_file is not None else None
         return None
 
     def load_projects(self):

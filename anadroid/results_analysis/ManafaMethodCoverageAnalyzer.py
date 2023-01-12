@@ -41,13 +41,17 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
             json.dump( obj, jj)
 
     # def analyze(self, app, output_log_file="hunter.log"):
-    def analyze_tests(self, app, results_dir=None, **kwargs):
+    def analyze_tests(self, app=None, results_dir=None, **kwargs):
+        if app is None:
+            return
         if self.current_app_id == app.get_app_id():
             self.save_coverage_info(app, None)
         else:
             print("not writing coverage")
 
     def validate_test(self, app, test_id, **kwargs):
+        if app is None:
+            return True
         self.get_test_stats(app, test_id)
         return self.validate_filters_for_test(test_id)
 
