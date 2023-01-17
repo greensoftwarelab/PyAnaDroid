@@ -17,7 +17,7 @@ class LogSeverity(Enum):
     FATAL = "Fatal"
 
 
-def getColor(sev):
+def get_color(sev):
     return {
         'Success': 'green',
         'Warning': 'yellow',
@@ -29,9 +29,9 @@ def getColor(sev):
 
 def log(message, log_sev=LogSeverity.INFO, curr_time=None, to_file=True):
     curr_time = time.time() if curr_time is None else curr_time
-    color = getColor(log_sev.value)
+    color = get_color(log_sev.value)
     adapted_time = re.sub("\s|:", "-", str(datetime.fromtimestamp(curr_time)))
-    str_to_print ="[%s] %s: %s" % (log_sev.value, adapted_time, message)
+    str_to_print = "[%s] %s: %s" % (log_sev.value, adapted_time, message)
     print(colored(str_to_print, color))
     if to_file:
         filename = f'{adapted_time}.log'
@@ -103,14 +103,16 @@ def get_date_str():
 
 
 def get_apksigner_bin():
-    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"apksigner\"")
+    res = execute_shell_command("find $ANDROID_HOME/build-tools/ -name \"apksigner\" | sort")
     if res.validate(Exception("No apksigner found")):
         return res.output.split()[0]
     return "$ANDROID_HOME/build-tools/30.0.3/apksigner"
 
 
 def sign_apk(apk_path):
-    # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256  -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\"".format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
+    # deprecated after api 26: "jarsigner -verbose -sigalg SHA2-256withRSA -digestalg SHA2-256
+    # -keystore {keystore} {apk_path} {key_alias} <<< \"{passwd}\""
+    # .format(keystore=PYNADROID_KEYSTORE_PATH,apk_path=apk_path,key_alias=KEY_ALIAS,passwd=PASSWORD)
     signer_bin = get_apksigner_bin()
     cmd = """{signer_bin} sign --ks {keystore_path} {apk_path} <<< {passwd}""".format(
        signer_bin=signer_bin,
@@ -118,17 +120,18 @@ def sign_apk(apk_path):
        apk_path=apk_path,
        passwd=get_keystore_pwd()
     )
+    print(cmd)
     res = execute_shell_command(cmd)
     res.validate("error signing apk " + apk_path)
     return res
 
 
-def execute_shell_command(cmd, args=[], timeout=None):
+def execute_shell_command(cmd, args=(), timeout=None):
     command = cmd + " " + " ".join(args) if len(args) > 0 else cmd
     out = bytes()
     err = bytes()
     #print(command)
-    proc = Popen(command, stdout=PIPE, stderr=PIPE,shell=True)
+    proc = Popen(command, stdout=PIPE, stderr=PIPE, shell=True)
     try:
         out, err = proc.communicate(timeout=timeout)
     except TimeoutExpired as e:
@@ -137,7 +140,7 @@ def execute_shell_command(cmd, args=[], timeout=None):
         err = e.stderr if e.stderr is not None else err
         proc.kill()
         proc.returncode = 1
-    return COMMAND_RESULT(proc.returncode, out.decode("utf-8"), err.decode('utf-8'))
+    return COMMAND_RESULT(proc.returncode, out.decode("utf-8", errors='replace'), err.decode('utf-8', errors='replace'))
 
 
 def mega_find(basedir, pattern="*", maxdepth=999, mindepth=0, type_file='n'):
@@ -164,6 +167,7 @@ class COMMAND_RESULT(object):
                     raise e
                 else:
                     loge(e)
+                    print(self)
                     return False
             else:
                 #print(self)

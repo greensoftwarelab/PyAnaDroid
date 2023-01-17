@@ -227,6 +227,7 @@ class GradleBuilder(AbstractBuilder):
 				return True
 			else:
 				loge(f"Error signing apk {apk_path} {e}")
+				print(e)
 				return False
 
 	def build_apk(self, build_type=BUILD_TYPE.DEBUG):
@@ -247,7 +248,7 @@ class GradleBuilder(AbstractBuilder):
 		if was_success:
 			logs(f"BUILD ({build_type.value}) SUCCESSFUL")
 			self.regist_successful_build(task)
-			apks_now = self.proj.get_apks()
+			apks_now = self.proj.get_apks(build_type=build_type)
 			fresh_apks = [x for x in apks_now if x not in apks_built]
 			for apk in fresh_apks:
 				if build_type == BUILD_TYPE.RELEASE:
@@ -333,7 +334,7 @@ class GradleBuilder(AbstractBuilder):
 			# create gradle wrapper
 			copy(os.path.join(self.resources_dir, "build", "gradle", "gradlew"), self.proj.proj_dir)
 		lint_option_cmd = " -x lint" if skip_lint else ""
-		val = self.__execute_gradlew_task(target_task + lint_option_cmd)
+		val = self.__execute_gradlew_task(target_task + lint_option_cmd  + " -x test")
 		was_success = BUILD_SUCCESS_VALUE in val
 		if was_success:
 			logs(f"{target_task}: BUILD SUCCESSFUL")

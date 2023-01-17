@@ -393,7 +393,10 @@ class AnaDroid(object):
 
     def get_last_run_file(self):
         run_regex = r"\d+-\d+-\d+-\d+-\d+.*.log"
-        prev_logs = list(filter(lambda t: re.search(run_regex, t), mega_find(get_log_dir(), pattern='*.log', type_file='f', maxdepth=1)))
+        log_dir = get_log_dir()
+        if not os.path.exists(log_dir):
+            return None
+        prev_logs = list(filter(lambda t: re.search(run_regex, t), mega_find(log_dir, pattern='*.log', type_file='f', maxdepth=1)))
         if len(prev_logs) == 0:
             return None
         sorted_list = sorted(prev_logs, key=os.path.getmtime)

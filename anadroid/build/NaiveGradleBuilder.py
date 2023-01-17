@@ -210,7 +210,6 @@ class NaiveBuilder(AbstractBuilder):
         """Sign project apks of build_type.
 		Args:
 			build_type: build type.
-
 		Returns:
 			bool: True if success, False otherwise.
 		"""
@@ -223,6 +222,7 @@ class NaiveBuilder(AbstractBuilder):
                 return True
             else:
                 loge(f"Error signing apk {apk_path} {e}")
+                print(e)
                 return False
 
     def build_apk(self, build_type=BUILD_TYPE.DEBUG):
@@ -330,7 +330,7 @@ class NaiveBuilder(AbstractBuilder):
             # create gradle wrapper
             copy(os.path.join(self.resources_dir, "build", "gradle", "gradlew"), self.proj.proj_dir)
         lint_option_cmd = " -x lint" if skip_lint else ""
-        val = self.__execute_gradlew_task(target_task + lint_option_cmd)
+        val = self.__execute_gradlew_task(target_task + lint_option_cmd + " -x test")
         was_success = BUILD_SUCCESS_VALUE in val
         if was_success:
             log(f"{target_task}: BUILD SUCCESSFUL", log_sev=LogSeverity.SUCCESS)
