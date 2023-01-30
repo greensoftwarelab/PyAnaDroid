@@ -176,7 +176,7 @@ class LanguageStats(object):
         for line in bp_dict['medians']:
             x, y = line.get_xydata()[1]  # top of median line
             xx, yy = line.get_xydata()[0]
-            text(x, y, '%.2f' % y, fontsize=6)  # draw above, centered
+            text(x, y, '%.2f' % y, fontsize=12)  # draw above, centered
             # text(xx, en_box.get_ylim()[1] * 0.98, '%.2f' % np.average(list_all_samples[i]), color='darkkhaki')
             i = i + 1
 
@@ -253,10 +253,10 @@ def main(lookup_dir):
     ls = LanguageStats()
     ls.search_and_parse_files_in_dir(lookup_dir, expected_filename="scc.json")
     #print(json.dumps(ls.language_info, indent=1))
-    #ls.gen_langs_boxplots_loc()
-    #ls.gen_langs_boxplots_cc()
-    #ls.gen_langs_boxplots_total_files()
-    ls.gen_stats()
+    ls.gen_langs_boxplots_loc()
+    ls.gen_langs_boxplots_cc()
+    ls.gen_langs_boxplots_total_files()
+    #ls.gen_stats()
 
 
 if __name__ == '__main__':
