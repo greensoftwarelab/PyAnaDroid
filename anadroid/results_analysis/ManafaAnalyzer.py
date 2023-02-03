@@ -49,7 +49,7 @@ class ManafaAnalyzer(AbstractAnalyzer):
                         between_tests += 1
 
         # concat all consumption logs on final consumption
-        consumption_logs = [f for f in os.listdir(results_dir) if 'consumption' in f]
+        consumption_logs = [os.path.join(results_dir, f) for f in os.listdir(results_dir) if 'consumption' in f]
         final_consumption = os.path.join(results_dir, "consumption.log")
         interval_line = "------------------------------------------\n"
         with open(final_consumption, 'w') as file:
