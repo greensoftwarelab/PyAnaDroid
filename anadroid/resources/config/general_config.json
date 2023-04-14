@@ -1,15 +1,15 @@
 {
  "tests": {
-   "tests_per_app" : 1,
-   "test_timeout" : 1000,
-   "test_fail_retries" : 2
+  "tests_per_app": 5,
+  "test_timeout": 1000,
+  "test_fail_retries": 2
  },
-  "general": {
-    "commands_prefix": "arch -x86_64"
-  },
-  "build": {
-    "build_fail_retries" : 5,
-    "build_timeout" : 0,
-    "retry_failed" : true
-  }
+ "general": {
+  "commands_prefix": "arch -x86_64"
+ },
+ "build": {
+  "build_fail_retries": 5,
+  "build_timeout": 0,
+  "retry_failed": true
+ }
 }

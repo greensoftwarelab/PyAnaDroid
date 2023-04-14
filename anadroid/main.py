@@ -1,5 +1,6 @@
 import argparse
 from anadroid.Anadroid import AnaDroid
+from anadroid.Config import set_general_config
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.Device import set_device_conn
@@ -23,6 +24,12 @@ def init_PyAnaDroid_from_args(args):
                     test_cmd=args.command,
                     load_projects=not args.run_only
                     )
+
+
+def process_general_config(args_obj):
+    n_times = args_obj.n_times if args_obj.n_times != 0 else 0
+    if n_times != 0:
+        set_general_config('tests', 'tests_per_app', n_times)
 
 
 def main():
@@ -55,7 +62,10 @@ def main():
     parser.add_argument("-apk", "--application_packages", help="path of apk(s) to process", nargs='+', default=[])
     parser.add_argument("-rec", "--recover", help="recover progress of the previous run", action='store_true')
     parser.add_argument("-cmd", "--command", help="test command", type=str, default=None)
+    parser.add_argument("-nt", "--n_times", help="times to repeat test (overrides config)", type=int, default=0)
     args = parser.parse_args()
+    process_general_config(args)
+    exit(0)
     if args.setconnection:
         set_device_conn(args.setconnection, device_id=args.device_serial)
         exit(0)
