@@ -65,7 +65,6 @@ def main():
     parser.add_argument("-nt", "--n_times", help="times to repeat test (overrides config)", type=int, default=0)
     args = parser.parse_args()
     process_general_config(args)
-    exit(0)
     if args.setconnection:
         set_device_conn(args.setconnection, device_id=args.device_serial)
         exit(0)
