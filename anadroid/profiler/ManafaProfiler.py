@@ -14,6 +14,7 @@ HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
 TEST_INDEX_FILENAME = "tests_index.json"
 
+
 class ManafaProfiler(AbstractProfiler):
     """Implements AbstractProfiler interface to allow profiling with Manafa profiler.
     Provides a set of methods that allow to manage a profiling session lifecycle.
@@ -84,7 +85,9 @@ class ManafaProfiler(AbstractProfiler):
         js[str(test_id)] = da_list
         with open(test_index_file, 'w') as jj:
             json.dump(js, jj)
-        self.manafa.save_final_report(run_id=test_id, output_filepath=os.path.join(target_dir, f'manafa_resume_{test_id}.json'))
+        self.manafa.save_final_report(run_id=test_id,
+                                      output_filepath=os.path.join(target_dir, f'manafa_resume_{test_id}.json'))
+        self.manafa.clean()
 
     def get_dependencies_location(self):
         return []
