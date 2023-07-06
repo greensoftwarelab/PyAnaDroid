@@ -13,6 +13,10 @@ Anadroid is a tool capable of automating the process of analyzing and benchmarki
 
 https://greensoftwarelab.github.io/PyAnaDroid/anadroid.html#
 
+## Video Demo
+
+https://greensoftwarelab.github.io/PyAnaDroid/anadroid.html#
+
 ## Use cases
 - Application Benchmarking: Replicating test work/procedures on different applications to carry out comparative studies of energy consumption.
 - Detection of energy hotspots in application code;
