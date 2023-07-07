@@ -64,20 +64,60 @@ $ git clone --recurse-submodules https://github.com/greensoftwarelab/pyanadroid.
 # Examples
 
 
-### Plug-and-play execution
+## Plug-and-play execution
 
 ```
-$ pyanadroid [-h] [-t {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Other}] [-p {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}]
-             [-b {Release,Debug,Custom}] [-i {JInst,Hunter}] [-it {MethodOriented,TestOriented,'ActivityOriented',),AnnotationOriented,None}]
-             [-a {MethodOriented,TestOriented,('ActivityOriented',,AnnotationOriented,None}] [-d DIRETORY] [-bo] [-r] [-rb] [-ri] [-ja] [-sc {USB,WIFI}]
-             [-ds DEVICE_SERIAL] [-td TESTS_DIR] [-n PACKAGE_NAMES [PACKAGE_NAMES ...]] [-apk APPLICATION_PACKAGES [APPLICATION_PACKAGES ...]]
+$ usage: pyanadroid [-h] [-t {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Custom,Other}] [-p {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}]
+               [-b {Release,Debug,Custom}] [-i {JInst,Hunter,None}] [-it {MethodOriented,TestOriented,'ActivityOriented',),AnnotationOriented,None}]
+               [-a {MethodOriented,TestOriented,('ActivityOriented',,AnnotationOriented,None}] [-d DIRETORY] [-bo] [-record] [-run] [-rb] [-ri] [-ja] [-sc {USB,WIFI}]
+               [-ds DEVICE_SERIAL] [-td TESTS_DIR] [-n PACKAGE_NAMES [PACKAGE_NAMES ...]] [-apk APPLICATION_PACKAGES [APPLICATION_PACKAGES ...]] [-rec] [-cmd COMMAND]
+               [-nt N_TIMES]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -t {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Custom,Other}, --testingframework {Monkey,Monkeyrunner,JUnit,RERAN,Espresso,Robotium,Crawler,Droidbot,Custom,Other}
+                        testing framework to exercise app(s)
+  -p {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}, --profiler {Trepn,GreenScaler,Petra,Monsoon,E-manafa,None}
+                        energy profiler
+  -b {Release,Debug,Custom}, --buildtype {Release,Debug,Custom}
+                        app build type
+  -i {JInst,Hunter,None}, --instrumenter {JInst,Hunter,None}
+                        Source code instrumenter
+  -it {MethodOriented,TestOriented,('ActivityOriented',),AnnotationOriented,None}, --instrumentationtype {MethodOriented,TestOriented,('ActivityOriented',),AnnotationOriented,None}
+                        instrumentation type
+  -a {MethodOriented,TestOriented,('ActivityOriented',),AnnotationOriented,None}, --analyzer {MethodOriented,TestOriented,('ActivityOriented',),AnnotationOriented,None}
+                        results analyzer
+  -d DIRETORY, --diretory DIRETORY
+                        app(s)' folder
+  -bo, --buildonly      just build apps
+  -record, --record     record test
+  -run, --run_only      run only
+  -rb, --rebuild        rebuild apps
+  -ri, --reinstrument   reinstrument app
+  -ja, --justanalyze    just analyze apps
+  -sc {USB,WIFI}, --setconnection {USB,WIFI}
+                        set connection to device and exit
+  -ds DEVICE_SERIAL, --device_serial DEVICE_SERIAL
+                        device serial id
+  -td TESTS_DIR, --tests_dir TESTS_DIR
+                        tests directory
+  -n PACKAGE_NAMES [PACKAGE_NAMES ...], --package_names PACKAGE_NAMES [PACKAGE_NAMES ...]
+                        package(s) of already installed apps
+  -apk APPLICATION_PACKAGES [APPLICATION_PACKAGES ...], --application_packages APPLICATION_PACKAGES [APPLICATION_PACKAGES ...]
+                        path of apk(s) to process
+  -rec, --recover       recover progress of the previous run
+  -cmd COMMAND, --command COMMAND
+                        test command
+  -nt N_TIMES, --n_times N_TIMES
+                        times to repeat test (overrides config)
+
 ```
 
 
-### From Sauce
+## From Sauce
 
 
-#### Execute a simple Monkey test over an application
+### Execute a simple Monkey test over an application
 
 By default, Anadroid uses Manafa profiler to estimate energy consumption. The Monkey test (or any other test with other supported testing framework) and its parameters can be configured by modifying the .cfg present in the resources/testingFrameworks/<framework> directory. The results are stored in the results/<app_id>/<app_version> directory
 
@@ -89,11 +129,50 @@ anadroid = AnaDroid(folder_of_app, testing_framework=TESTING_FRAMEWORK.MONKEY)
 anadroid.defaultWorkflow()
 ```
 
-# TODO
-- merge test apk with androguard
-- results resume file
-- test greenscaler on rooted devices
-- monsoon
+
+## Working Examples
 
 
+### Example 1 - Using DroidBot to automatically test an Android project(s) and monitor its energy consumption (from command-line)
+
+```
+$ pyanadroid -d projects_dir> -t Droidbot
+```
+
+### Example 2 - Perform a custom test (e.g touch app screen)
+
+```
+$ pyanadroid -d <projects_dir> -t Custom 'adb shell input touchscreen tap 500 500'
+```
+
+###  Example 3 - Extend PyAnaDroid workflow to perform 
+
+#### 1) Create a new subclass of the AnaDroid class and implement and override the default_workflow method 
+
+```
+from anadroid.Anadroid import AnaDroid
+
+class MyCustomAnaDroidWorkflow(AnaDroid):
+
+  def default_workflow():
+    # example: reboot device after each test suite
+    super(AnaDroid, self).default_workflow()
+    self.device.reboot()    
+
+```
+
+#### 2) Invoke the new custom workflow
+
+```
+custom_wkflow = MyCustomAnaDroidWorkflow()
+custom_wkflow.defaultWorkflow()
+
+```
+
+###  Example 4 - Skip instrumentation and building phase and perform black-box analysis only over the apks.
+Note: the process will still be monitored using the profiler but the performance metrics will only be given at the test level (e.g. the energy consumption of each test execution).
+
+```
+$ pyanadroid -d <projects_dir> -run -t Custom 'adb shell input touchscreen tap 500 500'
+```
 
