@@ -176,11 +176,11 @@ Note: the process will still be monitored using the profiler but the performance
 $ pyanadroid -d <projects_dir> -run -t Custom 'adb shell input touchscreen tap 500 500'
 ```
 
-PyAnaDroid produces a large amount of results from the analysis it does on its execution blocks. These results are stored in the form of files in specific directories. For each execution of a certain version of a certain app, a subdirectory is created in the directory anadroid_results/<app-name>--<app-package>/<app-version> where all the results of the analyzes carried out on the applications will appear. For each execution of a test framework on an application, a subdirectory <testing-framework><instrumentation-type><timestamp> is created inside the previous directory and that contains the results related to that execution. The result files are as follows:
-- tests_index.json: contains the list of files associated with each test run, identified by <test-id>.
-- test_<test-id>.logcat: contains device logs captured during test execution;
-- test_<test-id>_logresume.json: contains a summary made from the analysis of the logs contained in the file test_<test-id>.logcat. It has metrics such as the number of exceptions thrown, fatal or error log messages, etc.
+PyAnaDroid produces a large amount of results from the analysis it does on its execution blocks. These results are stored in the form of files in specific directories. For each execution of a certain version of a certain app, a subdirectory is created in the directory anadroid_results/\<app-name\>--\<app-package\>/\<app-version\> where all the results of the analyzes carried out on the applications will appear. For each execution of a test framework on an application, a subdirectory \<testing-framework\>\<instrumentation-type\>\<timestamp\> is created inside the previous directory and that contains the results related to that execution. The result files are as follows:
+- tests_index.json: contains the list of files associated with each test run, identified by test id.
+- test_\<test-id\>.logcat: contains device logs captured during test execution;
+- test_\<test-id\>_logresume.json: contains a summary made from the analysis of the logs contained in the file test_<test-id>.logcat. It has metrics such as the number of exceptions thrown, fatal or error log messages, etc.
 - device.json: contains the specs of the device where the tests were conducted (brand, model, ram, cpu cores, serial nr, etc)
 - manafa_resume_<test_id>.json: contains test-level performance metrics reported by E-Manafa (if used);
-- functions_<timestamp>.json: contains performance metrics for each of the executed functions/methods of the app in a certain test.
-- trace-<timestamp>-<timestamp>.systrace: contains the cpu frequency changes logged during a certain test id;
+- functions_\<timestamp\>.json: contains performance metrics for each of the executed functions/methods of the app in a certain test.
+- trace-\<timestamp\>-\<timestamp\>.systrace: contains the cpu frequency changes logged during a certain test id;
