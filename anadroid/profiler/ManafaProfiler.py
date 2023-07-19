@@ -94,5 +94,3 @@ class ManafaProfiler(AbstractProfiler):
 
     def needs_external_dependencies(self):
         return False
-
-

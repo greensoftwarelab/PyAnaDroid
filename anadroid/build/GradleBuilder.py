@@ -159,6 +159,7 @@ class GradleBuilder(AbstractBuilder):
 		Returns:
 			apps_list(list): list of installed apks.
 		"""
+		# TODO background installer
 		apps_list = []
 		task_name = "install" + build_type.value
 		val = self.__execute_gradlew_task(task_name)

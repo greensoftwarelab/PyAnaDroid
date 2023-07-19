@@ -78,7 +78,7 @@ class AbstractDevice(ABC):
         Args:
             pwd: password to provide if devices requires password to be unlocked.
         """
-        cmd = ""
+        cmd = "input keyevent 26;"  # lock button
         if self.is_screen_unlocked():
             logi("screen is unlocked")
             return
@@ -86,7 +86,8 @@ class AbstractDevice(ABC):
         if self.is_screen_dreaming():
             # wake screen (pressing lock btn)
             logi("screen is dreaming")
-            cmd = "input keyevent 26;"
+            execute_shell_command("adb shell input tap 300 300", args=[])
+            cmd = ''
         if pwd is not None:
             # press lock btn -> swipe up -> passwd -> press enter
             print("Inserting password")
@@ -102,6 +103,14 @@ class AbstractDevice(ABC):
                 res = self.execute_command("input touchscreen swipe 930 880 930 180 #", args=[], shell=True)
             res.validate()
 
+    def touch_screen(self, x_coord=500, y_coord=500):
+        res = self.execute_command(f"input touchscreen tap {x_coord} {y_coord}", args=[], shell=True)
+        res.validate()
+
+    def press_lock_button(self):
+        res = self.execute_command(" input keyevent 26", args=[], shell=True)
+        res.validate()
+
     @abstractmethod
     def is_screen_unlocked(self):
         """Checks if screen is unlocked.
@@ -110,8 +119,10 @@ class AbstractDevice(ABC):
         """
         res = self.execute_command("dumpsys window | grep mDreamingLockscreen", args=[], shell=True)
         res.validate()
-        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower() \
-            if len(re.search("mDreamingLockscreen=(true|false|null)", res.output).groups()) > 0 else False
+        is_locked = "true" in re.search("mDreamingLockscreen=(true|false|null)",
+                                        res.output).groups()[0].lower() \
+            if len(re.search("mDreamingLockscreen=(true|false|null)",
+                             res.output).groups()) > 0 else False
         return not is_locked
 
     @abstractmethod
@@ -130,10 +141,14 @@ class AbstractDevice(ABC):
         Returns:
             bool: True if dreaming, False otherwise.
         """
-        res = self.execute_command("dumpsys window", args=[], shell=True)
-        is_dreaming = "true" in re.search(" dreaming=(true|false|null)", res.output).groups()[0].lower() \
-                      or "true" in re.search(" mDreamingLockscreen=(true|false|null)", res.output).groups()[0].lower()
+        res = self.execute_command("dumpsys power", args=[], shell=True)
+        is_dreaming = 'true' in \
+                      re.search("mHoldingDisplaySuspendBlocker=(true|false|null)", res.output).groups()[0].lower()
         return is_dreaming
+
+
+    def reboot(self):
+        self.execute_command('reboot', shell=False)
 
     @abstractmethod
     def get_device_android_version(self):

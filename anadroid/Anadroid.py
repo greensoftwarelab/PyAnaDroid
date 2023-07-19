@@ -244,7 +244,8 @@ class AnaDroid(object):
             instr_proj, builder = self.build_app_project(app_proj, build_apks=True)
             if builder is None:
                 continue
-            installed_apps_list = builder.install_apks(build_type=self.build_type, install_apk_test=self.needs_tests_apk())
+            installed_apps_list = self.device.install_apks(instr_proj, build_type=self.build_type,
+                                                           install_test_apks=self.needs_tests_apk())
             self.do_work(installed_apps_list)
             builder.uninstall_all_apks()
             self.analyzer.show_results(installed_apps_list)
@@ -268,6 +269,7 @@ class AnaDroid(object):
             logi("testing app package " + app.package_name)
             try:
                 app.init_local_test_(self.testing_framework.id, self.instrumentation_type)
+                self.device.unlock_screen()
                 app.set_immersive_mode()
                 self.testing_framework.init_default_workload(pkg=app.package_name, tests_dir=self.tests_dir)
                 self.testing_framework.test_app(self.device, app)

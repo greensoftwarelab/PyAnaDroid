@@ -1,8 +1,11 @@
 import json
 import os
 import re
-
+import threading
+import time
+from com.dtmilano.android.viewclient import ViewClient
 from anadroid.application.AndroidProject import BUILD_TYPE
+from anadroid.application.Application import App
 from anadroid.device.AbstractDevice import AbstractDevice, ADB_CONN
 import difflib
 
@@ -13,6 +16,30 @@ CONFIG_DIR = os.path.join(get_resources_dir(), 'config')
 CONFIG_TEST_FILE = os.path.join(CONFIG_DIR, "device_state_on_test.json")
 CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, "device_state_on_idle.json")
 TCP_PORT = 5555
+
+
+def background_installer(serial_nr):
+    time.sleep(2)
+    if has_to_click_to_install(serial_nr):
+        click_to_install(serial_nr)
+
+
+def has_to_click_to_install(serial_nr):
+    vc = ViewClient(*ViewClient.connectToDeviceOrExit(serialno=serial_nr))
+    try:
+        vc.findViewByIdOrRaise('com.google.securitycenter:id/name')
+    except:
+        try:
+            vc.findViewByIdOrRaise('com.miui.securitycenter:id/name')
+        except:
+            return False
+    return True
+
+
+def click_to_install(serial_nr):
+    vc = ViewClient(*ViewClient.connectToDeviceOrExit(serialno=serial_nr))
+    res = vc.findViewByIdOrRaise('android:id/button2')
+    res.touch()
 
 
 # assuming only 1 device connected
@@ -103,7 +130,8 @@ class Device(AbstractDevice):
     def execute_root_command(self, cmd, args=[], shell=False):
         return super(Device, self).execute_root_command(cmd, args, shell)
 
-    def install_apks(self, andr_proj, build_type=BUILD_TYPE.RELEASE, install_test_apks=False):
+    def install_apks(self, andr_proj, build_type=BUILD_TYPE.RELEASE, accept_install=False,
+                                                                    install_test_apks=False, retry=True):
         """install apks of type build_type of android project andr_proj.
         Args:
             andr_proj(AndroidProject):
@@ -113,41 +141,59 @@ class Device(AbstractDevice):
         Returns:
             installed_packages(set): set of installed packages.
         """
+        installed_packages = set()
+        installed_app_list = set()
         apks_built = andr_proj.get_apks(build_type)
         if install_test_apks:
             apks_built += andr_proj.get_test_apks()
-        installed_packages = set()
         for apk in apks_built:
             old_packs = self.installed_packages
-            res = super().execute_command("install -r %s" % apk, args=[], shell=False)
+            try:
+                print(f"installing {apk}")
+                self.install_apk(apk)
+            except:
+                if retry:
+                    self.install_apks(andr_proj, build_type, accept_install=True, retry=False,
+                                      install_test_apks=install_test_apks)
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
                 logw("package already installed")
                 the_pack = self.get_package_matching(andr_proj.pkg_name)
+                app = App(self, andr_proj, the_pack, apk_path=apk, local_res_dir=andr_proj.results_dir)
                 if the_pack is None:
                     continue
                 else:
                     diff_pkgs = [the_pack]
             logi("APK installed " + apk)
             self.installed_apks.append(apk)
+            app = App(self, andr_proj, andr_proj.pkg_name, apk_path=apk, local_res_dir=andr_proj.results_dir)
+            installed_app_list.add(app)
             installed_pack = diff_pkgs[0]
             installed_packages.add(installed_pack)
             self.installed_packages.add(installed_pack)
-        return installed_packages
+            #return installed_packages
+        return installed_app_list
 
-    def install_apk(self, apk_path):
+    def install_apk(self, apk_path, accept_install=True):
         """installs apk located in apk_path
         Args:
             apk_path(str): apk path.
         Returns:
             COMMAND_RESULT: result of installation command.
         """
-        super(Device, self).execute_command("install -g -r ", args=[apk_path], shell=False)\
-            .validate(Exception("Unable to install package " + apk_path))
+        if accept_install:
+            unlocked = self.is_screen_unlocked()
+            if not unlocked:
+                self.unlock_screen()
+            thread1 = threading.Thread(target=background_installer, args=[self.serial_nr])
+            thread1.start()
+        print("installing main apks")
+        res = super().execute_command("install -r %s" % apk_path, args=[], shell=False)
+        res.validate(Exception("Unable to install package " + apk_path))
 
     def unlock_screen(self, password=None):
-       super(Device, self).unlock_screen(password)
+        super(Device, self).unlock_screen(password)
 
     def is_screen_dreaming(self):
         return super(Device, self).is_screen_dreaming()
@@ -165,7 +211,7 @@ class Device(AbstractDevice):
         """
         vals = []
         res = super().execute_command("pm list packages", args=[], shell=True)
-        res.validate( Exception("Error obtaining device packages"))
+        res.validate(Exception("Error obtaining device packages"))
         for line in res.output.splitlines():
             val = re.sub(r'package:', '', line).strip()
             vals.append(val)
@@ -223,7 +269,8 @@ class Device(AbstractDevice):
         if len(candidates) > 0:
             return candidates[0]
         else:
-            return difflib.get_close_matches(pkg_aprox_name, self.list_installed_packages(), n=1)[0]
+            new_cands = difflib.get_close_matches(pkg_aprox_name, self.list_installed_packages(), n=1)
+            return new_cands[0] if len(new_cands) > 0 else None
 
     def lock_screen(self):
         super(Device, self).lock_screen()
