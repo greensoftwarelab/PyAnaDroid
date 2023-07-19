@@ -142,7 +142,7 @@ $ pyanadroid -d projects_dir> -t Droidbot
 ### Example 2 - Perform a custom test (e.g touch app screen)
 
 ```
-$ pyanadroid -d <projects_dir> -t Custom 'adb shell input touchscreen tap 500 500'
+$ pyanadroid -d <projects_dir> -t Custom -cmd 'adb shell input touchscreen tap 500 500'
 ```
 
 ###  Example 3 - Extend PyAnaDroid workflow to perform 
