@@ -176,3 +176,16 @@ Note: the process will still be monitored using the profiler but the performance
 $ pyanadroid -d <projects_dir> -run -t Custom 'adb shell input touchscreen tap 500 500'
 ```
 
+O PyAnaDroid produz um grande quantidade de resultados a partir das analises que faz em todos os seus blocos de execução. Estes resultados são armazenados sob a forma de ficheiros em diretorias especificas. Para cada execução de uma determinada versão de uma determinada app, é criada uma subdiretoria na diretoria anadroid_results/<app-name>--<app-package>/<app-version> onde vão constar todos os resultados das analises feitas sobre as aplicações. Para cada execução de uma framework de teste sobre uma aplicação, é criada uma subdiretoria <testing-framework><instrumentation-type><timestamp> dentro da diretoria anterior e que contém os resultados relativos a essa execução. Os ficheiros de resultados são os seguintes:
+    - tests_index.json: contém a lista de ficheiros associados a cada teste executado, identificado por <test-id>.
+    - test_<test-id>.logcat: contém os logs do dispositivo capturados durante a execucao dos testes;
+    - test_<test-id>_logresume.json: contém um resumo feito a partir da analise dos logs contidos no ficheiro test_<test-id>.logcat. Possui Métricas como numero de excepcoes lancadas, mensagens de logs de severidade fatal ou error, etc.
+    - device.json: contains the specs of the device where the tests were conducted (brand, model, ram, cpu cores, serial nr, etc)
+    - manafa_resume_<test_id>.json: contains test-level performance metrics reported by E-Manafa (if used);
+    - functions_<timestamp>.json: contains performance metrics for each of the executed functions/methods of the app in a certain test. 
+    - trace-<timestamp>-<timestamp>.systrace: contains the cpu frequency changes logged during a certain testd;
+    - ../scc.json: contains static metrics collected with scc like LoC, CC, programing lanaguages used, etc;
+    
+    
+  
+
