@@ -13,7 +13,7 @@ from anadroid.testing_framework.work.WorkUnit import WorkUnit
 
 DROIDBOT_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "droidbot")
 TEST_OUTPUT_FILENAME = "DROIBOT_RESULT"
-DEFAULT_CONFIG_FILE = "droidbot_cmd.cfg"
+DEFAULT_CONFIG_FILE = "droidbot.cfg"
 
 
 def get_machine_arch():
@@ -44,6 +44,7 @@ class DroidBotFramework(AbstractTestingFramework):
         exec_prefix = get_general_config("general")['commands_prefix'] if \
             'commands_prefix' in get_general_config("general") else " "
         self.executable_prefix = f'{exec_prefix} python3 {os.path.join(resdir,"start.py")}'
+        print(self.executable_prefix)
         self.workload = None
         self.res_dir = resdir
         if default_workload:
@@ -95,7 +96,7 @@ class DroidBotFramework(AbstractTestingFramework):
         pass
 
     def __load_config_file(self, cfg_filename=None):
-        cfg_file = os.path.join(self.res_dir, DEFAULT_CONFIG_FILE) if cfg_filename is None else cfg_filename
+        cfg_file = os.path.join(self.res_dir, cfg_filename) if not os.path.exists(cfg_filename) else cfg_filename
         cfg = {}
         if os.path.exists(cfg_file):
             ofile = open(cfg_file, "r")
@@ -116,6 +117,7 @@ class DroidBotFramework(AbstractTestingFramework):
         retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
+        print("arretei")
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
         """executes one test identified by test_id of an given app on a given device.

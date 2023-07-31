@@ -23,7 +23,8 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
         resources_dir(str): directory containing app crawler resources.
     """
     def __init__(self, profiler, analyzer, default_workload=False, resources_dir=MONKEY_RUNNER_RESOURCES_DIR):
-        super(MonkeyRunnerFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY_RUNNER, profiler=profiler, analyzer=analyzer)
+        super(MonkeyRunnerFramework, self).__init__(id=TESTING_FRAMEWORK.MONKEY_RUNNER,
+                                                    profiler=profiler, analyzer=analyzer)
         self.workload = None
         self.resources_dir = resources_dir
         self.__is_installed()
@@ -32,7 +33,8 @@ class MonkeyRunnerFramework(AbstractTestingFramework):
 
     def __is_installed(self):
         res = execute_shell_command(f"which {MONKEY_RUNNER_BIN_NAME}")
-        return res.validate(Exception("Monkeyrunner not installed. There is probabably an error with your ANDROID SDK installation"))
+        return res.validate(Exception("Monkeyrunner not installed."
+                                      " There is probabably an error with your ANDROID SDK installation"))
 
     def install(self):
        pass

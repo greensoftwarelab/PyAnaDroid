@@ -10,11 +10,11 @@ from anadroid.resources.testingFrameworks.reran.src.RERANWrapper import RERANWra
 
 RERAN_RESOURCES_DIR = os.path.join(get_resources_dir(), "testingFrameworks", "RERAN")
 TRANSLATOR_JAR_PATH = os.path.join(RERAN_RESOURCES_DIR, "build", "RERANTranslate.jar")
-RERAN_CONFIG_FILE = "config.cfg"
+RERAN_CONFIG_FILE = "reran.cfg"
 REPLAY_EXECUTABLE_PATH = os.path.join(RERAN_RESOURCES_DIR, "build", "replay")
 REPLAY_EXECUTABLE_NAME = "replay"
 REPLAY_DEVICE_INSTALL_DIR = "/sdcard/RERAN"
-RECORDED_TESTS_DIR = os.path.join(RERAN_RESOURCES_DIR,"tests")
+RECORDED_TESTS_DIR = os.path.join(RERAN_RESOURCES_DIR, "tests")
 TESTS_PREFIX = "translated_"
 
 
@@ -36,7 +36,8 @@ class RERANFramework(AbstractTestingFramework):
             self.install()
 
     def __load_config(self):
-        cfg_file = os.path.join(self.resources_dir, RERAN_CONFIG_FILE)
+        cfg_file = os.path.join(self.resources_dir, RERAN_CONFIG_FILE) \
+            if not os.path.exists(RERAN_CONFIG_FILE) else RERAN_CONFIG_FILE
         cfg = {}
         if os.path.exists(cfg_file):
             ofile = open(cfg_file, "r")

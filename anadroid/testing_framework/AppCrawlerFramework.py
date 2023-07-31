@@ -76,7 +76,7 @@ class AppCrawlerFramework(AbstractTestingFramework):
         pass
 
     def __load_config_file(self, cfg_filename=DEFAULT_CONFIG_FILE ):
-        cfg_file = os.path.join(self.res_dir, cfg_filename)
+        cfg_file = os.path.join(self.res_dir, cfg_filename) if not os.path.exists(cfg_filename) else cfg_filename
         cfg = {}
         ofile = open(cfg_file, "r")
         for aline in ofile:
