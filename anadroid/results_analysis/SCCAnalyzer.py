@@ -5,6 +5,7 @@ from anadroid.utils.Utils import execute_shell_command, log_to_file
 
 DEFAULT_FILENAME = "scc.json"
 
+
 class SCCAnalyzer(AbstractAnalyzer):
     """Implements AbstractAnalyzer interface to allow to calculate app code results using scc tool.
     """
@@ -20,7 +21,7 @@ class SCCAnalyzer(AbstractAnalyzer):
         cmd = f"{self.bin_cmd} {input_dir} -f json"
         res = execute_shell_command(cmd)
         if res.validate(Exception(f"Unable to analyze sources with {self.bin_cmd}")):
-            log_to_file(res.output, output_log_file)
+            log_to_file(res.output, output_log_file, mode='w')
 
     def show_results(self, app_list):
         pass

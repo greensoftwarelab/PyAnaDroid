@@ -278,7 +278,7 @@ class AnaDroid(object):
                 self.analyzer.analyze_tests(app, **{'instr_type': self.instrumentation_type,
                                                     'testing_framework': self.testing_framework,
                                                     })
-            except Exception as e:
+            except Exception:
                 loge(traceback.format_exc())
 
     def exec_command(self):

@@ -188,7 +188,7 @@ class Device(AbstractDevice):
                 self.unlock_screen()
             thread1 = threading.Thread(target=background_installer, args=[self.serial_nr])
             thread1.start()
-        print("installing main apks")
+        print("installing main APK(s)")
         res = super().execute_command("install -r %s" % apk_path, args=[], shell=False)
         res.validate(Exception("Unable to install package " + apk_path))
 

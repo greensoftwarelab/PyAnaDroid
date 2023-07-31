@@ -183,8 +183,8 @@ class COMMAND_RESULT(object):
              })
 
 
-def log_to_file(content, filename):
-    with open(filename, 'a+') as u:
+def log_to_file(content, filename, mode='a+'):
+    with open(filename, mode) as u:
         u.write(content + "\n")
 
 
