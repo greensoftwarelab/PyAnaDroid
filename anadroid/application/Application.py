@@ -161,7 +161,7 @@ class App(AbstractApplication):
         }
 
     def get_permissions_json(self):
-        print(self.curr_local_dir)
+
         file_to_look = os.path.join(self.curr_local_dir, "appPermissions.json")
-        print(file_to_look)
+
         return None if not os.path.exists(file_to_look) else file_to_look

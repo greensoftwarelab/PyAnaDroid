@@ -203,11 +203,9 @@ class AnaDroid(object):
         Returns:
             AbstractAnalyzer: inferred analyzer.
         """
-        analyzers = [LogAnalyzer(self.profiler)]
+        analyzers = [LogAnalyzer(self.profiler), ApkAPIAnalyzer(self.profiler)]
         if len(self.apps) > 0:
             analyzers.append(SCCAnalyzer(self.profiler))
-        if len(self.apps) != 0 or len(self.apks) != 0:
-            analyzers.append(ApkAPIAnalyzer(self.profiler))
         if not ana in SUPPORTED_ANALYZERS:
             raise Exception(f"Unsupported Analyzer {ana}")
         if profiler == profiler.TREPN:

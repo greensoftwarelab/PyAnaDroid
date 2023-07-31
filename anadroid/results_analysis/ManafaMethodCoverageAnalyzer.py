@@ -80,7 +80,8 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
     @staticmethod
     def __get_app_methods(app):
         app_methods = {}
-        app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if "allMethods.json" not in x]
+        app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1)
+                                  if "allMethods.json" not in x]
         if len(app_methods_candidates) > 0:
             app_methods_file = app_methods_candidates[0]
             with open(app_methods_file, 'r') as j:
@@ -131,7 +132,7 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
         if filter_name == "method_coverage":
             if test_id in self.functions:
                 coverage_pct = self.get_method_coverage(test_id)
-                logi(f"Method coverage: {coverage_pct*100}%")
+                logi(f"Method coverage: {coverage_pct * 100}%")
                 return coverage_pct
         val = super().get_val_for_filter(filter_name, test_id)
         if val is None:

@@ -56,7 +56,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
         print(cmd)
         res = execute_shell_command(cmd)
         res.validate(Exception("Analyzer error"))
-        print(res)
+        #print(res)
 
     def get_val_for_filter(self, filter_name, add_data=None):
         return super().get_val_for_filter(filter_name, add_data)

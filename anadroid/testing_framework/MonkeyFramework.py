@@ -87,6 +87,7 @@ class MonkeyFramework(AbstractTestingFramework):
             app(App): app.
         """
         retries_per_test = self.get_config("test_fail_retries", 1)
+        device.set_device_state(state_cfg=DEVICE_STATE_ENFORCE.TEST, perm_json=app.get_permissions_json())
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
 
@@ -120,6 +121,7 @@ class MonkeyFramework(AbstractTestingFramework):
         self.profiler.export_results(test_id)
         self.profiler.pull_results(test_id, app.curr_local_dir)
         app.clean_cache()
+        device.set_device_state(state_cfg=DEVICE_STATE_ENFORCE.TEST, perm_json=app.get_permissions_json())
         if not self.analyzer.validate_test(app, test_id, **{'log_filename': log_file}):
             logw("Validation failed. Retrying")
             self.exec_one_test(test_id, device, app, wk_unit, n_retries=n_retries-1)

@@ -12,7 +12,7 @@ import difflib
 from anadroid.device.DeviceState import DeviceState, DEVICE_STATE_ENFORCE
 from anadroid.utils.Utils import execute_shell_command, get_resources_dir, logi, loge, logs, logw
 
-
+DEFAULT_TCP_PORT = 5555
 DEVICE_STATE_TEST_FILENAME = "device_state_on_test.json"
 DEVICE_STATE_IDLE_FILENAME = "device_state_on_idle.json"
 CONFIG_DIR = os.path.join(get_resources_dir(), 'config')
@@ -20,7 +20,6 @@ CONFIG_TEST_FILE = os.path.join(CONFIG_DIR, DEVICE_STATE_TEST_FILENAME) \
     if not os.path.exists(DEVICE_STATE_TEST_FILENAME) else DEVICE_STATE_TEST_FILENAME
 CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, DEVICE_STATE_IDLE_FILENAME) if\
     not os.path.exists(DEVICE_STATE_IDLE_FILENAME) else DEVICE_STATE_IDLE_FILENAME
-TCP_PORT = 5555
 
 
 def background_installer(serial_nr):
@@ -75,7 +74,7 @@ def set_device_conn(conn_type, device_id=None):
                 if reg is None:
                     raise Exception("Bad address read")
                 ip_addr = reg.group()
-                res = execute_shell_command(f"adb {device_string} tcpip {TCP_PORT}; adb {device_string} connect {ip_addr}")
+                res = execute_shell_command(f"adb {device_string} tcpip {DEFAULT_TCP_PORT}; adb {device_string} connect {ip_addr}")
                 if res.validate(f"error while connecting to {ip_addr} address") and f"connected to {ip_addr}" in res.output:
                     logs(f"successfully connected to {ip_addr}")
 

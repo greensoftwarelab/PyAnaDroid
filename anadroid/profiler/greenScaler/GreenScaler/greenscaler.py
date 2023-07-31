@@ -24,7 +24,6 @@ from os import listdir
 
 
 def cleaning(pkg, apk):
-
 	print("Uninstall app if already installed")
 	utils.uninstall_app(pkg)
 	print("Install app")

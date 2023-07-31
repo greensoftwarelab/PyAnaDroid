@@ -117,7 +117,7 @@ class DroidBotFramework(AbstractTestingFramework):
         retries_per_test = self.get_config("test_fail_retries", 1)
         for i, wk_unit in enumerate(self.workload.work_units):
             self.exec_one_test(i, device, app, wk_unit, n_retries=retries_per_test)
-        print("arretei")
+
 
     def exec_one_test(self, test_id, device, app,  wk_unit, n_retries=1):
         """executes one test identified by test_id of an given app on a given device.

@@ -200,6 +200,7 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
         pass
 
     def analyze(self, apk_path, apk_name):
+        print("analyzing apk")
         return eval(apk_path, apk_name)
 
     def clean(self):
