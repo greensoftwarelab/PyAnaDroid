@@ -15,7 +15,7 @@ def get_general_config(cfg_type, cfg_file=CONFIG_FILE):
     with open(cfg_file, 'r') as jj:
         cfg = json.load(jj)
     if cfg_type not in cfg:
-        loge("invalid config type {cfg_type}")
+        loge(f"invalid config type {cfg_type}")
         return {}
     return cfg[cfg_type] #[key] if key in cfg[cfg_type] else None
 
