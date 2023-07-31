@@ -89,7 +89,9 @@ class CustomCommandFramework(AbstractTestingFramework):
         log_file = os.path.join(app.curr_local_dir, f"test_{test_id}.logcat")
         # log device state
         self.profiler.start_profiling()
+        app.start()
         self.execute_test("", wk_unit, **{'log_filename': log_file})
+        app.stop()
         self.profiler.stop_profiling()
         # log device state
         device.clear_logcat()
