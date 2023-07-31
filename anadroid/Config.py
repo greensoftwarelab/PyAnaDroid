@@ -7,7 +7,8 @@ from anadroid.utils.Utils import get_general_config_dir, loge
 
 GENERAL_CONFIG_FILE_NAME = "general_config.json"
 RESOURCES_CONFIG_DIR = get_general_config_dir()
-CONFIG_FILE = os.path.join(RESOURCES_CONFIG_DIR, GENERAL_CONFIG_FILE_NAME)
+CONFIG_FILE = os.path.join(RESOURCES_CONFIG_DIR, GENERAL_CONFIG_FILE_NAME) \
+    if not os.path.exists(GENERAL_CONFIG_FILE_NAME) else GENERAL_CONFIG_FILE_NAME
 
 
 def get_general_config(cfg_type, cfg_file=CONFIG_FILE):

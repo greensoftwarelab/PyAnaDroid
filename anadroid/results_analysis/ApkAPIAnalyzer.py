@@ -7,7 +7,7 @@ from androguard.misc import AnalyzeAPK
 import re
 import json
 
-from anadroid.utils.Utils import mega_find
+from anadroid.utils.Utils import mega_find, logw
 
 knownRetTypes = {
     "V": "Void",
@@ -184,10 +184,14 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
     def eval_app(self, app):
         if app is None:
             return
+        if app.apk is None:
+            logw(f"Unable to analyze apk of {app.package_name} (Missing APK path).")
+            return
         app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if
                                   "allMethods.json" not in x]
         app_file_exists = len(app_methods_candidates) > 0
         if not app_file_exists:
+            print(f"apk: {app.apk} | name: {app.package_name}")
             filename = eval(app.apk, app.package_name)
             target_dir = os.path.join(app.local_res, "all")
             copyfile(filename, os.path.join(target_dir, os.path.basename(filename)))

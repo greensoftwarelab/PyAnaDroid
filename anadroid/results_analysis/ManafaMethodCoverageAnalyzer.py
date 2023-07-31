@@ -2,7 +2,7 @@ import json
 import os
 
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
-from anadroid.utils.Utils import loge, mega_find
+from anadroid.utils.Utils import loge, mega_find, logi
 
 
 class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
@@ -26,17 +26,17 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
         if self.current_app_id != app.get_app_id():
             self.get_test_stats(app, test_id)
         self.current_app_id = app.get_app_id()
-        self.save_coverage_info(app, test_id)
+        self.save_coverage_info(app.curr_local_dir, test_id)
 
     def save_coverage_info(self, target_dir, test_id=None):
         filename = (f'test_coverage_{test_id}' if test_id is not None else 'tests_coverage_') + '.json'
-        target_file = os.path.join(target_dir,filename )
+        target_file = os.path.join(target_dir, filename)
         obj = {'app_methods': len(self.app_methods), 'tests': {}}
         if test_id is None:
             for t, i in self.functions.items():
-                obj[t] = { 'method_coverage' :self.get_method_coverage(t) }
+                obj[t] = {'method_coverage': self.get_method_coverage(t)}
         else:
-            obj = { 'method_coverage' : self.get_method_coverage(test_id) }
+            obj = {'method_coverage': self.get_method_coverage(test_id)}
         with open(target_file, 'w') as jj:
             json.dump( obj, jj)
 
@@ -44,10 +44,10 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
     def analyze_tests(self, app=None, results_dir=None, **kwargs):
         if app is None:
             return
-        if self.current_app_id == app.get_app_id():
-            self.save_coverage_info(app, None)
+        if self.current_app_id is None or self.current_app_id == app.get_app_id():
+            self.save_coverage_info(app.curr_local_dir, None)
         else:
-            print("not writing coverage")
+            loge("Different app. Not writing coverage")
 
     def validate_test(self, app, test_id, **kwargs):
         if app is None:
@@ -127,12 +127,11 @@ class ManafaMethodCoverageAnalyzer(AbstractAnalyzer):
         return 0
 
     def get_val_for_filter(self, filter_name, add_data=None):
-        test_id = str( add_data if add_data is not None else 0 )
+        test_id = str(add_data if add_data is not None else 0)
         if filter_name == "method_coverage":
-            res = 0
             if test_id in self.functions:
                 coverage_pct = self.get_method_coverage(test_id)
-                print(f"method coverage: {coverage_pct*100}%")
+                logi(f"Method coverage: {coverage_pct*100}%")
                 return coverage_pct
         val = super().get_val_for_filter(filter_name, test_id)
         if val is None:

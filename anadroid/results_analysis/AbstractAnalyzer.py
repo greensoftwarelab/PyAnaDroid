@@ -3,10 +3,9 @@ from abc import ABC, abstractmethod
 
 from anadroid.device.DeviceState import get_known_state_keys, DeviceState
 from anadroid.results_analysis.filters.Filters import Filters
-from anadroid.utils.Utils import get_resources_dir
+from anadroid.utils.Utils import get_analyzers_filter_file
 
-
-DEFAULT_CFG_ANALYZERS_FILE = os.path.join(get_resources_dir(), "config", "analyzer_filters.json")
+DEFAULT_CFG_ANALYZERS_FILE = get_analyzers_filter_file()
 
 
 class AbstractAnalyzer(ABC):

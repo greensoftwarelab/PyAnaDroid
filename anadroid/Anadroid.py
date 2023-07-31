@@ -114,14 +114,13 @@ class AnaDroid(object):
         for pkg in package_names:
             da_proj = Project(pkg, pkg)
             da_proj.init_results_dir(pkg)
-            self.apps.append(App(self.device, da_proj, pkg, apk_path="", local_res_dir=da_proj.results_dir))
+            self.apps.append(App(self.device, da_proj, pkg, apk_path=None, local_res_dir=da_proj.results_dir))
 
     @staticmethod
     def __create_apps_from_apk_names(apk_list):
         return apk_list
         '''for apk in apk_list:
             if not os.path.exists(apk):
-                print("olha que nao ha")
                 #raise FileNotFoundError()
             pkg = extract_pkg_name_from_apk(apk)
             da_proj = Project(pkg, pkg)
@@ -204,7 +203,11 @@ class AnaDroid(object):
         Returns:
             AbstractAnalyzer: inferred analyzer.
         """
-        analyzers = [LogAnalyzer(self.profiler), SCCAnalyzer(self.profiler), ApkAPIAnalyzer(self.profiler)]
+        analyzers = [LogAnalyzer(self.profiler)]
+        if len(self.apps) > 0:
+            analyzers.append(SCCAnalyzer(self.profiler))
+        if len(self.apps) != 0 or len(self.apks) != 0:
+            analyzers.append(ApkAPIAnalyzer(self.profiler))
         if not ana in SUPPORTED_ANALYZERS:
             raise Exception(f"Unsupported Analyzer {ana}")
         if profiler == profiler.TREPN:

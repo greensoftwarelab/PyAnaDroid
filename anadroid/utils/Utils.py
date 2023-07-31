@@ -8,6 +8,7 @@ from enum import Enum
 
 from termcolor import colored
 
+DEFAULT_ANALYZERS_FILENAME =  "analyzer_filters.json"
 
 class LogSeverity(Enum):
     SUCCESS = "Success"
@@ -27,6 +28,11 @@ def get_color(sev):
     }.get(sev, 'green')
 
 
+def get_analyzers_filter_file():
+    return os.path.join(get_general_config_dir(), DEFAULT_ANALYZERS_FILENAME)\
+        if not os.path.exists(DEFAULT_ANALYZERS_FILENAME) else DEFAULT_ANALYZERS_FILENAME
+
+
 def log(message, log_sev=LogSeverity.INFO, curr_time=None, to_file=True):
     curr_time = time.time() if curr_time is None else curr_time
     color = get_color(log_sev.value)
@@ -34,6 +40,9 @@ def log(message, log_sev=LogSeverity.INFO, curr_time=None, to_file=True):
     str_to_print = "[%s] %s: %s" % (log_sev.value, adapted_time, message)
     print(colored(str_to_print, color))
     if to_file:
+        log_dir = get_log_dir()
+        if not os.path.exists(log_dir):
+            os.mkdir(log_dir)
         filename = f'{adapted_time}.log'
         f = open(os.path.join(get_log_dir(), filename), "a+")
         f.write(str_to_print+"\n")
