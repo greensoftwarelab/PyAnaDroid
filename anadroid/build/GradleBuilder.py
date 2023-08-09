@@ -10,6 +10,7 @@ from anadroid.application.Application import App
 from anadroid.application.Dependency import DependencyType
 from anadroid.build.AbstractBuilder import AbstractBuilder
 from anadroid.build.versionUpgrader import DefaultSemanticVersion, can_be_semantic_version
+from anadroid.device.MockedDevice import MockedDevice
 from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge, logw, logs, logi
 from anadroid.build.GracleBuildErrorSolver import is_known_error, solve_known_error
 
@@ -185,6 +186,8 @@ class GradleBuilder(AbstractBuilder):
 
 	def uninstall_all_apks(self):
 		"""uninstall all project apks."""
+		if isinstance(self.device, MockedDevice):
+			return
 		task_name = "uninstallAll"
 		self.__execute_gradlew_task(task_name)
 

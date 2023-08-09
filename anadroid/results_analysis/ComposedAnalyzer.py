@@ -24,6 +24,7 @@ class ComposedAnalyzer(AbstractAnalyzer):
             inn.show_results(app_list)
 
     def analyze_tests(self, app=None, results_dir=None, **kwargs):
+        print(self.inner_analyzers)
         for inn in self.inner_analyzers:
             inn.analyze_tests(app, results_dir, **kwargs)
 

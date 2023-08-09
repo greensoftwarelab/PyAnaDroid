@@ -162,13 +162,12 @@ class Device(AbstractDevice):
             new_packs = self.list_installed_packages()
             diff_pkgs = list(filter(lambda x: x not in old_packs, new_packs))
             if len(diff_pkgs) == 0:
-                logw("package already installed")
+                logw("package already installed or mocked device")
                 the_pack = self.get_package_matching(andr_proj.pkg_name)
-                app = App(self, andr_proj, the_pack, apk_path=apk, local_res_dir=andr_proj.results_dir)
                 if the_pack is None:
-                    continue
-                else:
-                    diff_pkgs = [the_pack]
+                    # mocked device
+                    the_pack = andr_proj.pkg_name
+                diff_pkgs = [the_pack]
             logi("APK installed " + apk)
             self.installed_apks.append(apk)
             app = App(self, andr_proj, andr_proj.pkg_name, apk_path=apk, local_res_dir=andr_proj.results_dir)
@@ -192,7 +191,7 @@ class Device(AbstractDevice):
                 self.unlock_screen()
             thread1 = threading.Thread(target=background_installer, args=[self.serial_nr])
             thread1.start()
-        print("installing main APK(s)")
+        logi("installing main APK(s)")
         res = super().execute_command("install -r %s" % apk_path, args=[], shell=False)
         res.validate(Exception("Unable to install package " + apk_path))
 
@@ -214,7 +213,7 @@ class Device(AbstractDevice):
             vals(:obj:`list` of :obj:`str`): list of packages.
         """
         vals = []
-        res = super().execute_command("pm list packages", args=[], shell=True)
+        res = self.execute_command("pm list packages", args=[], shell=True)
         res.validate(Exception("Error obtaining device packages"))
         for line in res.output.splitlines():
             val = re.sub(r'package:', '', line).strip()

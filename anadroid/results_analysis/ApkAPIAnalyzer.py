@@ -2,6 +2,8 @@ import os
 import sys
 from shutil import copyfile
 
+from androguard.core.analysis.analysis import MethodAnalysis
+
 from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
 from androguard.misc import AnalyzeAPK
 import re
@@ -36,7 +38,8 @@ def inferType(st):
 
 
 def parseMethod(full):
-    full = re.sub(r'^\[', '', str(full))
+    #print(f"full: {full}")
+    full = re.sub(r'^\[', '', str(full)).replace(';', '')
     return re.sub(r'^L', '', full).replace("/", ".").replace(r';|_',"")
     #return re.sub(r'^L', '', full).replace("/", ".").replace(";", "").replace("_", "")
 
@@ -95,6 +98,7 @@ def parseArgs(descriptor):
 
 
 def methodAPIStringToJSON(method_string):
+    #print(f"metostring {method_string}")
     jsonObj = {}
     z = re.search(r'->.*\)([A-Za-z]|\/)+', method_string)
     if z is not None:
@@ -104,6 +108,7 @@ def methodAPIStringToJSON(method_string):
         l = method_string.split("->")
         if len(l) == 2:
             class_name = parseMethod(l[0])
+            #print(f"a classe {class_name}")
             x = method_name.replace("->", "").split("(")
             method_name_s = x[0]
             jsonObj['name'] = parseMethod(class_name + "." + method_name_s)
@@ -166,7 +171,8 @@ def eval(path, pack):
             if len(m.get_xref_to()) > 0:
                 classe['class_methods'][str_id] = m_id
             for other_class, callee, offset in m.get_xref_to():
-                m_id['method_apis'].append(methodAPIStringToJSON(str(callee)))
+                str_to_consider = str(callee.get_method()) if isinstance(callee, MethodAnalysis) else str(callee)
+                m_id['method_apis'].append(methodAPIStringToJSON(str_to_consider))
             classe['class_methods'][str_id] = m_id
         graph[classe['class_name']] = classe
     filename = pack + ".json"
@@ -188,8 +194,8 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
             logw(f"Unable to analyze apk of {app.package_name} (Missing APK path).")
             return
         app_methods_candidates = [x for x in mega_find(os.path.join(app.local_res, "all"), type_file='f', maxdepth=1) if
-                                  "allMethods.json" not in x]
-        app_file_exists = len(app_methods_candidates) > 0
+                                  "allMethods.json" not in x and "DS_Store" not in x]
+        app_file_exists = len(app_methods_candidates) > 1 # TODO 0
         if not app_file_exists:
             print(f"apk: {app.apk} | name: {app.package_name}")
             filename = eval(app.apk, app.package_name)

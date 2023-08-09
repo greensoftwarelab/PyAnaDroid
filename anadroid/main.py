@@ -72,11 +72,10 @@ def main():
     if args.buildonly:
         anadroid.just_build_apps()
     elif args.justanalyze:
-        raise NotImplementedError()
-        # anadroid.just_analyze()
-    if args.record:
+        anadroid.just_analyze()
+    elif args.record:
         anadroid.record_test(args.tests_dir)
-    if args.run_only:
+    elif args.run_only:
         anadroid.exec_command()
     else:
         anadroid.default_workflow()

@@ -203,8 +203,10 @@ class AnaDroid(object):
         Returns:
             AbstractAnalyzer: inferred analyzer.
         """
-        analyzers = [LogAnalyzer(self.profiler), ApkAPIAnalyzer(self.profiler)]
-        if len(self.apps) > 0:
+        analyzers = [ApkAPIAnalyzer(self.profiler)]
+        if self.profiler is not None and not isinstance(self.profiler, NoneProfiler):
+            analyzers.append(LogAnalyzer(self.profiler))
+        if len(self.apps) + len(self.app_projects_ut) > 0:
             analyzers.append(SCCAnalyzer(self.profiler))
         if not ana in SUPPORTED_ANALYZERS:
             raise Exception(f"Unsupported Analyzer {ana}")
@@ -335,10 +337,12 @@ class AnaDroid(object):
         for app_proj in self.app_projects_ut:
             app_name = os.path.basename(app_proj)
             logi("Processing app " + app_name + " in " + app_proj)
-            original_proj = AndroidProject(projname=app_name, projdir=app_proj)
-            app = App(self.device, original_proj, original_proj.pkg_name, apk_path="",
-                      local_res_dir=original_proj.results_dir)
-            raise NotImplementedError()
+            for app_proj in self.app_projects_ut:
+                instr_proj, builder = self.build_app_project(app_proj, build_apks=True)
+                installed_apps_list = self.device.install_apks(instr_proj, build_type=self.build_type)
+                for app in installed_apps_list:
+                    self.analyzer.analyze_tests(app, **{'instr_type': self.instrumentation_type})
+
             # builder = self.init_builder(instr_proj)
             # builder.build_proj_and_apk(build_type=self.build_type,build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
             # self.analyzer.analyze(app, **{'instr_type': self.instrumentation_type, 'testing_framework': self.testing_framework})

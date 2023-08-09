@@ -3,6 +3,7 @@ from anadroid.utils.Utils import COMMAND_RESULT
 
 DEFAULT_SDK_VERSION = 28
 
+
 class MockedDevice(Device):
     """Mocks a connected device.
     The main use case is to mock some devices with custom properties or when the framework is building apps without
@@ -13,15 +14,25 @@ class MockedDevice(Device):
         self.installed_packages = set()
         self.__init_installed_packages()
         self.__init_props()
+        self.installed_apks = []
 
     def execute_command(self, cmd, args=[], shell=False):
-        return COMMAND_RESULT(-1, "", "Mocked Device")
+        return COMMAND_RESULT(0, "", "Mocked Device")
 
     def execute_root_command(self, cmd, args=[], shell=True):
-        return COMMAND_RESULT(-1, "", "Mocked Device")
+        return COMMAND_RESULT(0, "", "Mocked Device")
     
     def __init_installed_packages(self):
         pass
 
     def __init_props(self):
         self.props["ro.build.version.sdk"] = DEFAULT_SDK_VERSION
+
+    def is_screen_dreaming(self):
+        return False
+
+    def is_screen_unlocked(self):
+        return True
+
+    def install_apk(self, apk_path, accept_install=True):
+        return True
