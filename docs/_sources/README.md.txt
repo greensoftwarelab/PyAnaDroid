@@ -15,7 +15,7 @@ https://greensoftwarelab.github.io/PyAnaDroid/anadroid.html#
 
 ## Video Demo
 
-https://greensoftwarelab.github.io/PyAnaDroid/anadroid.html#
+https://www.youtube.com/watch?v=7AV3nrh4Qc8
 
 ## Use cases
 - Application Benchmarking: Replicating test work/procedures on different applications to carry out comparative studies of energy consumption.
@@ -145,7 +145,7 @@ $ pyanadroid -d projects_dir> -t Droidbot
 $ pyanadroid -d <projects_dir> -t Custom -cmd 'adb shell input touchscreen tap 500 500'
 ```
 
-###  Example 3 - Extend PyAnaDroid workflow to perform 
+###  Example 3 - Extend PyAnaDroid workflow to perform custom actions
 
 #### 1) Create a new subclass of the AnaDroid class and implement and override the default_workflow method 
 
