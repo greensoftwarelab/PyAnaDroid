@@ -281,7 +281,8 @@ def update_gradle_wrapper_version(gradle_wrap_prop_filepath, new_v):
         new_v: new version.
     """
     fl_ctnt = file_content = str(cat(gradle_wrap_prop_filepath))
-    current_v = str(echo(fl_ctnt) | grep("distributionUrl=.*")).split("/")[-1].replace("gradle-", "").replace(".zip",                                                                                 "")
+    current_v = str(echo(fl_ctnt)
+                    | grep("distributionUrl=.*")).split("/")[-1].replace("gradle-", "").replace(".zip", "")
     file_content = re.sub(current_v,  new_v, file_content)
     with open(gradle_wrap_prop_filepath, 'w') as u:
         u.write(file_content)
@@ -292,10 +293,11 @@ def get_gradle_plugin_version(gradle_file):
     gets value of com.android.tools.build contained in gradle_file.
 
     Args:
-        gradle_file: build.gradle filepath.
+        gradle_fileU (str): build.gradle filepath.
 
     Returns:
-        gradle_plugin_version(str): plugin version.
+        gradle_plugin_version (str): plugin version.
     """
-    gradle_plugin_version = str(cat(gradle_file) | grep("com.android.tools.build") | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip().replace("'","")
+    gradle_plugin_version = str(cat(gradle_file) | grep("com.android.tools.build")
+                                | sed("classpath|com.android.tools.build:gradle:|\"", "")).strip().replace("'","")
     return gradle_plugin_version

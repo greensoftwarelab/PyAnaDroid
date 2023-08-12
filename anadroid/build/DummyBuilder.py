@@ -6,6 +6,7 @@ from textops import grep, cat
 import json
 import re
 
+# Import statements for relevant classes from the project
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.application.Application import App
 from anadroid.application.Dependency import DependencyType
@@ -14,42 +15,47 @@ from anadroid.build.versionUpgrader import DefaultSemanticVersion
 from anadroid.utils.Utils import mega_find, execute_shell_command, sign_apk, log_to_file, loge
 from anadroid.build.GracleBuildErrorSolver import is_known_error
 
-
+# Constants
 BUILD_RESULTS_FILE = "buildStatus.json"
 SUCCESS_VALUE = "Success"
 ERROR_VALUE = "Error"
 BUILD_SUCCESS_VALUE = "BUILD SUCCESSFUL"
 DEFAULT_BUILD_TIMES_TO_TRY = 5
-DEFAULT_BUILD_TOOLS_VERSION = '25.0.3'  # TODO
+DEFAULT_BUILD_TOOLS_VERSION = '25.0.3'  # TODO: Decide on the default build tools version
+
+# Global variable for transitive dependency keyword
+TRANSITIVE = None
 
 
 def gen_dependency_string(dependency):
-    """generates dependency format to be inserted in gradle files.
-	Args:
-		dependency(obj: `BuildDependency`): dependency.
+    """Generates the dependency format to be inserted in gradle files.
+    Args:
+        dependency (obj: BuildDependency): The dependency object.
 
-	Returns:
-		dependency_string(str): dependency format as string.
-	"""
+    Returns:
+        dependency_string (str): The formatted dependency string.
+    """
+    # Logic to generate the dependency string based on the dependency type
     if dependency.dep_type == DependencyType.LOCAL_BINARY:
-        return """{transitive} (name:'{name}', ext:'{tp}')""".format(transitive=TRANSITIVE, name=dependency.name,
-                                                                     tp=dependency.bin_type)
+        return """{transitive} (name:'{name}', ext:'{tp}')""".format(
+            transitive=TRANSITIVE, name=dependency.name, tp=dependency.bin_type)
     elif dependency.dep_type == DependencyType.LOCAL_MODULE:
         return "{transitive} project(:{name})".format(transitive=TRANSITIVE, name=dependency.name)
     elif dependency.dep_type == DependencyType.CLASSPATH:
-        return "classpath '{name}".format(name=dependency.name) \
-               + ":{version}'".format(version=dependency.version) if dependency.version is not None else "'"
+        return "classpath '{name}".format(name=dependency.name) + \
+               ":{version}'".format(version=dependency.version) if dependency.version is not None else "'"
     else:
-        return "{transitive} '{name}".format(transitive=TRANSITIVE, name=dependency.name) \
-               + ":{version}'".format(version=dependency.version) if dependency.version is not None else "'"
+        return "{transitive} '{name}".format(transitive=TRANSITIVE, name=dependency.name) + \
+               ":{version}'".format(version=dependency.version) if dependency.version is not None else "'"
 
 
 def set_transitive_names(gradle_plugin_version):
-    """Given the gradle-plugin version, sets the most adequate nomenclature to use in dependencies definition.
-	Args:
-		gradle_plugin_version: gradle-plugin version.
-	"""
+    """Sets the appropriate nomenclature for dependencies based on the Gradle plugin version.
+    Args:
+        gradle_plugin_version: The Gradle plugin version.
+    """
     x = DefaultSemanticVersion(str(gradle_plugin_version))
+    # Logic to set the transitive keywords based on the Gradle plugin version
     if x.major < 3:
         global TRANSITIVE
         TRANSITIVE = "compile"
@@ -59,43 +65,57 @@ def set_transitive_names(gradle_plugin_version):
         ANDROID_TEST_TRANSITIVE = "AndroidTestCompile"
         global DEBUG_TRANSITIVE
         DEBUG_TRANSITIVE = "debugCompile"
-    # TODO api vs implementation vs compilonly ... https://developer.android.com/studio/build/dependencies#dependency_configurations
+    # TODO: Decide on the usage of 'api', 'implementation', 'compileOnly', etc. based on Gradle documentation
 
 
 def is_library_gradle(bld_file):
-    """checks if bld_file is a build file from a library.
-	Returns:
-		bool: True if is a library, False otherwise.
-	"""
+    """Checks if the given build file is a build file from a library.
+    Returns:
+        bool: True if it's a library, False otherwise.
+    """
     return 'com.android.library' in str(cat(bld_file))
 
 
 class DummyBuilder(AbstractBuilder):
-    """Class that extends AbstractBuilder functionality in order to build Gradle projects using a dummy approach.
-	This class sets up gradle wrapper to try to build Android Projects.
-	Attributes:
-		gradle_plg_version(str): Gradle plugin version for proj.
-		build_tools_version(str): Gradle version for proj.
-		retry_on_fail(bool): if should retry building when an error occured.
-	"""
+    """
+    Class that extends the functionality of AbstractBuilder to build Gradle projects using a dummy approach.
+    This class sets up the Gradle wrapper to build Android Projects.
+
+    Attributes:
+        gradle_plg_version (str): The Gradle plugin version for the project.
+        build_tools_version (str): The Gradle version for the project.
+        retry_on_fail (bool): Whether to retry building when an error occurs.
+    """
 
     def __init__(self, proj, device, resources_dir, instrumenter):
+        """
+        Initializes a new instance of the DummyBuilder class.
+
+        Args:
+            proj: The project object.
+            device: The device object.
+            resources_dir: The directory containing resources.
+            instrumenter: The instrumenter object.
+        """
         super(DummyBuilder, self).__init__(proj, device, resources_dir, instrumenter)
         self.gradle_plg_version = proj.get_gradle_plugin()
         self.retry_on_fail = False
 
     def build_proj_and_apk(self, build_type=BUILD_TYPE.DEBUG, build_tests_apk=False, rebuild=False):
-        """builds project and generates apk of build type. It can optionally build the tests apk and/or rebuild
-		the current project in case it was already built.
-		Args:
-			build_type(BUILD_TYPE): type of build to perform.
-			build_tests_apk(bool): True if the tests' apk has to be generated, False otherwise.
-			rebuild(bool): True if the current build has to be cleaned and rebuilt, False otherwise.
+        """
+        Builds the project and generates the APK of the specified build type.
+        Optionally builds the tests APK and/or rebuilds the project if it was already built.
 
-		Returns:
-			bool: build results.
-		"""
-        res = self.build(rebuild=rebuild)  # might fail because of release only tasks
+        Args:
+            build_type (BUILD_TYPE): The type of build to perform.
+            build_tests_apk (bool): True if the tests' APK has to be generated, False otherwise.
+            rebuild (bool): True if the current build has to be cleaned and rebuilt, False otherwise.
+
+        Returns:
+            bool: Build results.
+        """
+        # Logic to perform the build based on the specified parameters
+        res = self.build(rebuild=rebuild)  # Build may fail due to release-only tasks
         if build_type == BUILD_TYPE.RELEASE:
             return res and self.build_apk(build_type=build_type) \
                    and self.proj.set_version(build_type) is None \
@@ -105,13 +125,16 @@ class DummyBuilder(AbstractBuilder):
                and (True if not build_tests_apk else self.build_tests_apk())
 
     def install_apks(self, build_type=BUILD_TYPE.DEBUG, install_apk_test=False):
-        """install apk of build_type and optionally de tests apk.
-		Args:
-			build_type(BUILD_TYPE): build type.
-			install_apk_test(bool): True if the tests' apk has to be installed, False otherwise.
-		Returns:
-			apps_list(list): list of installed apks.
-		"""
+        """
+        Installs the APK of the specified build type and optionally the tests' APK.
+
+        Args:
+            build_type (BUILD_TYPE): The build type.
+            install_apk_test (bool): True if the tests' APK has to be installed, False otherwise.
+
+        Returns:
+            apps_list (list): List of installed APKs.
+        """
         apps_list = []
         task_name = "install" + build_type.value
         val = self.__execute_gradlew_task(task_name)
@@ -142,9 +165,8 @@ class DummyBuilder(AbstractBuilder):
     def create_app_from_installed_apk(self, gradle_output, build_type):
         """create App object from installed apk on device.
 		Args:
-			gradle_output: build output.
+		    gradle_output: build output.
 			build_type: build type.
-
 		Returns:
 			app(App): created app.
 		"""
@@ -309,7 +331,7 @@ class DummyBuilder(AbstractBuilder):
 
     def __execute_gradlew_task(self, task):
         """execute gradle task with gradle wrapper.
-		Args:
+        Args:
 			task: task name.
 
 		Returns:

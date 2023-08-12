@@ -14,12 +14,25 @@ class MODULE_TYPE(Enum):
 
 
 class ProjectModule(object):
-    """Represents an Android Project Module (https://developer.android.com/studio/projects#ApplicationModules).
-        Attributes:
-            name(str): module name.
-            mod_dir(str): module directory.
-        """
+    """Represents an Android Project Module.
+
+    Attributes:
+        mod_name (str): Module name.
+        mod_dir (str): Module directory.
+        build_file (str): Path to the build.gradle file of the module.
+        module_type (MODULE_TYPE): Type of the module (LIBRARY or APP).
+        manifest (str): Path to the AndroidManifest.xml file of the module.
+        dependencies (set): Set of module dependencies.
+        gen_apks (dict): Generated APKs within the module.
+        gen_aars (dict): Generated AARs within the module.
+    """
     def __init__(self, name, mod_dir):
+        """Initializes a ProjectModule instance.
+
+        Args:
+            name (str): Module name.
+            mod_dir (str): Module directory.
+        """
         self.mod_name = name
         self.mod_dir = mod_dir
         self.build_file = self.__infer_build_file()
@@ -27,42 +40,39 @@ class ProjectModule(object):
         self.manifest = self.__infer_manifest()
         self.dependencies = set()
         self.__infer_dependencies()
-        # self.main_dir = None
-        # self.inst_test_dir = None
-        # self.test_dir = None
-        # self.beuild_dir = None
-        # self.libs_dir = None
         self.gen_apks = {}
         self.gen_aars = {}
 
     def __infer_build_file(self):
-        """returns build.gradle filepath of module.
+        """Returns the path to the build.gradle file of the module.
+
         Returns:
-            mod(str): filepath.
+            str: Filepath.
         """
         res = execute_shell_command("find \"%s\" -maxdepth 1 -type f -name \"build.gradle\"" % self.mod_dir)
         return res.output.strip() if res.return_code == 0 else None
 
     def __infer_manifest(self):
-        """Returns module's manifest file.
-        Looks for AndroidManifest.xml files in mod_dir.
+        """Returns the path to the AndroidManifest.xml file of the module.
+
         Returns:
-             filepath(str): filepath.
+            str: Filepath.
         """
         res = execute_shell_command("find \"%s\" -maxdepth 4 -type f -name \"AndroidManifest.xml\"" % self.mod_dir)
         return res.output.strip() if res.return_code == 0 else None
 
     def __infer_module_type(self):
-        """Tries to infer the module type (`MODULE_TYPE`).
+        """Tries to infer the module type (MODULE_TYPE).
+
         Returns:
-            mod_type(:obj:`MODULE_TYPE`): module type.
+            MODULE_TYPE: Module type.
         """
         is_app = cat(self.build_file) | grep('com.android.application') != ''
         return MODULE_TYPE.APP if is_app else MODULE_TYPE.LIBRARY
 
     def __infer_dependencies(self):
-        """Infers and add module dependencies to dependencies attribute."""
-        # TODO get dependencies type
+        """Infers and adds module dependencies to the dependencies attribute."""
+        # TODO: Get dependencies type
         dependencies = re.search(r'dependencies.*?\{(.|\n)*}', str(cat(self.build_file)))
         inside_dependencies = []
         if dependencies:
@@ -86,11 +96,13 @@ class ProjectModule(object):
         self.dependencies.add(dependency)
 
     def create_inner_folder(self, name="libs"):
-        """creates directory  inside module.
+        """Creates a directory inside the module.
+
         Args:
-            name: directory name.
+            name (str): Directory name.
+
         Returns:
-            path(str): directory's path.
+            str: Directory's path.
         """
         path = os.path.join(self.mod_dir, name)
         try:
