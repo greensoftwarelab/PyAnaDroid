@@ -7,8 +7,12 @@ It can be used to perform both white-box and black-box testing.
 To use this package, you need to have Python installed, and you can install it via `pip`. Additionally, there are some dependencies that you should be aware of.
 
 ## System Requirements
-- Python 3.6 or later
-- pip (Python package installer)
+- *Nix-based OS;
+- Python 3.6 or later;
+- pip (Python package installer);
+- Android SDK;
+- ~120 MB of disk space;
+
 
 ## Installation
 1. Open a terminal or command prompt.
