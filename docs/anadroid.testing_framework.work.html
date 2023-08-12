@@ -1,223 +1,159 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.testing_framework.work package &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.utils package" href="anadroid.utils.html" />
+    <link rel="prev" title="anadroid.testing_framework package" href="anadroid.testing_framework.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">anadroid.testing_framework.work package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.AbstractWorkLoad">anadroid.testing_framework.work.AbstractWorkLoad module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.AppCrawlerWorkUnit">anadroid.testing_framework.work.AppCrawlerWorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.DroidBotWorkUnit">anadroid.testing_framework.work.DroidBotWorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">anadroid.testing_framework.work.MonkeyRunnerWorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.MonkeyWorkUnit">anadroid.testing_framework.work.MonkeyWorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.RERANWorkUnit">anadroid.testing_framework.work.RERANWorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.WorkLoad">anadroid.testing_framework.work.WorkLoad module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work.WorkUnit">anadroid.testing_framework.work.WorkUnit module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.work">Module contents</a></li>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#examples">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="anadroid.html">anadroid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="anadroid.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4 current"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Anadroid">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.main">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</div>
-            
-          
+</li>
+</ul>
+
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>anadroid.testing_framework.work package</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">anadroid</a></li>
+          <li class="breadcrumb-item"><a href="anadroid.html">anadroid package</a></li>
+          <li class="breadcrumb-item"><a href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+      <li class="breadcrumb-item active">anadroid.testing_framework.work package</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/anadroid.testing_framework.work.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="anadroid-testing-framework-work-package">
-<h1>anadroid.testing_framework.work package<a class="headerlink" href="#anadroid-testing-framework-work-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.AbstractWorkLoad">
-<span id="anadroid-testing-framework-work-abstractworkload-module"></span><h2>anadroid.testing_framework.work.AbstractWorkLoad module<a class="headerlink" href="#module-anadroid.testing_framework.work.AbstractWorkLoad" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="anadroid-testing-framework-work-package">
+<h1>anadroid.testing_framework.work package<a class="headerlink" href="#anadroid-testing-framework-work-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.AbstractWorkLoad">
+<span id="anadroid-testing-framework-work-abstractworkload-module"></span><h2>anadroid.testing_framework.work.AbstractWorkLoad module<a class="headerlink" href="#module-anadroid.testing_framework.work.AbstractWorkLoad" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AbstractWorkLoad.</span></span><span class="sig-name descname"><span class="pre">AbstractWorkLoad</span></span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AbstractWorkLoad.</span></span><span class="sig-name descname"><span class="pre">AbstractWorkLoad</span></span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Defines a interface to store and consume work units representing tests to be performed over apps.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.add_unit">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wunit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.add_unit" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wunit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.add_unit" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a work unit to the workload.
 :param wunit: work unit.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.consume">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.consume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.consume" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.consume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.consume" title="Permalink to this definition"></a></dt>
 <dd><p>Consume work unit.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.flush">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.flush" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AbstractWorkLoad.html#AbstractWorkLoad.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.flush" title="Permalink to this definition"></a></dt>
 <dd><p>Flush work units and clean workload.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.AppCrawlerWorkUnit">
-<span id="anadroid-testing-framework-work-appcrawlerworkunit-module"></span><h2>anadroid.testing_framework.work.AppCrawlerWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.AppCrawlerWorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.AppCrawlerWorkUnit">
+<span id="anadroid-testing-framework-work-appcrawlerworkunit-module"></span><h2>anadroid.testing_framework.work.AppCrawlerWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.AppCrawlerWorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">AppCrawlerWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.WorkUnit.WorkUnit</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">AppCrawlerWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkUnit</span></code></a></p>
 <p>extends WorkUnit functionality to adapt it to App Crawler framework executions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -225,7 +161,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.export_results">
-<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.export_results" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#AppCrawlerWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.export_results" title="Permalink to this definition"></a></dt>
 <dd><p>export results from work unit.
 :param target_dir: directory where the results will be exported.</p>
 </dd></dl>
@@ -234,32 +170,32 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.convert_arg">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.convert_arg" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.convert_arg" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.AppCrawlerWorkUnit.detect_crawl_finish">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">detect_crawl_finish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#detect_crawl_finish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.detect_crawl_finish" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.AppCrawlerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">detect_crawl_finish</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">retry</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stop_call</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/AppCrawlerWorkUnit.html#detect_crawl_finish"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.AppCrawlerWorkUnit.detect_crawl_finish" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.DroidBotWorkUnit">
-<span id="anadroid-testing-framework-work-droidbotworkunit-module"></span><h2>anadroid.testing_framework.work.DroidBotWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.DroidBotWorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.DroidBotWorkUnit">
+<span id="anadroid-testing-framework-work-droidbotworkunit-module"></span><h2>anadroid.testing_framework.work.DroidBotWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.DroidBotWorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.DroidBotWorkUnit.</span></span><span class="sig-name descname"><span class="pre">DroidBotWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.WorkUnit.WorkUnit</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.DroidBotWorkUnit.</span></span><span class="sig-name descname"><span class="pre">DroidBotWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkUnit</span></code></a></p>
 <p>extends WorkUnit functionality to adapt it to droidbot framework executions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">extras</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -267,7 +203,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.export_results">
-<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.export_results" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#DroidBotWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.export_results" title="Permalink to this definition"></a></dt>
 <dd><p>export results from work unit.
 :param target_dir: directory where the results will be exported.</p>
 </dd></dl>
@@ -276,27 +212,27 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.DroidBotWorkUnit.convert_arg">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.DroidBotWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.convert_arg" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.DroidBotWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/DroidBotWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.DroidBotWorkUnit.convert_arg" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">
-<span id="anadroid-testing-framework-work-monkeyrunnerworkunit-module"></span><h2>anadroid.testing_framework.work.MonkeyRunnerWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">
+<span id="anadroid-testing-framework-work-monkeyrunnerworkunit-module"></span><h2>anadroid.testing_framework.work.MonkeyRunnerWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyRunnerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">MonkeyRunnerWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.WorkUnit.WorkUnit</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyRunnerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">MonkeyRunnerWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkUnit</span></code></a></p>
 <p>extends WorkUnit functionality to adapt it to monkeyrunner executions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#MonkeyRunnerWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -306,27 +242,27 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyRunnerWorkUnit.convert_arg">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyRunnerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.convert_arg" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyRunnerWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyRunnerWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.convert_arg" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.MonkeyWorkUnit">
-<span id="anadroid-testing-framework-work-monkeyworkunit-module"></span><h2>anadroid.testing_framework.work.MonkeyWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.MonkeyWorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.MonkeyWorkUnit">
+<span id="anadroid-testing-framework-work-monkeyworkunit-module"></span><h2>anadroid.testing_framework.work.MonkeyWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.MonkeyWorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyWorkUnit.</span></span><span class="sig-name descname"><span class="pre">MonkeyWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.WorkUnit.WorkUnit</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyWorkUnit.</span></span><span class="sig-name descname"><span class="pre">MonkeyWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkUnit</span></code></a></p>
 <p>extends WorkUnit functionality to adapt it to UI Exerciser Monkey executions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -334,7 +270,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.export_results">
-<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.export_results" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#MonkeyWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.export_results" title="Permalink to this definition"></a></dt>
 <dd><p>export results from work unit.
 :param target_dir: directory where the results will be exported.</p>
 </dd></dl>
@@ -343,27 +279,27 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.MonkeyWorkUnit.convert_arg">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.convert_arg" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.MonkeyWorkUnit.</span></span><span class="sig-name descname"><span class="pre">convert_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/MonkeyWorkUnit.html#convert_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.MonkeyWorkUnit.convert_arg" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.RERANWorkUnit">
-<span id="anadroid-testing-framework-work-reranworkunit-module"></span><h2>anadroid.testing_framework.work.RERANWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.RERANWorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.RERANWorkUnit">
+<span id="anadroid-testing-framework-work-reranworkunit-module"></span><h2>anadroid.testing_framework.work.RERANWorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.RERANWorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.RERANWorkUnit.</span></span><span class="sig-name descname"><span class="pre">RERANWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.WorkUnit.WorkUnit</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.RERANWorkUnit.</span></span><span class="sig-name descname"><span class="pre">RERANWorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="xref py py-class docutils literal notranslate"><span class="pre">WorkUnit</span></code></a></p>
 <p>extends WorkUnit functionality to adapt it to RERAN framework executions.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_test_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device_test_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -371,47 +307,47 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.export_results">
-<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.export_results" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/RERANWorkUnit.html#RERANWorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.export_results" title="Permalink to this definition"></a></dt>
 <dd><p>export results from work unit.
 :param target_dir: directory where the results will be exported.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.WorkLoad">
-<span id="anadroid-testing-framework-work-workload-module"></span><h2>anadroid.testing_framework.work.WorkLoad module<a class="headerlink" href="#module-anadroid.testing_framework.work.WorkLoad" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.WorkLoad">
+<span id="anadroid-testing-framework-work-workload-module"></span><h2>anadroid.testing_framework.work.WorkLoad module<a class="headerlink" href="#module-anadroid.testing_framework.work.WorkLoad" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkLoad.WorkLoad">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.WorkLoad.</span></span><span class="sig-name descname"><span class="pre">WorkLoad</span></span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad" title="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.WorkLoad.</span></span><span class="sig-name descname"><span class="pre">WorkLoad</span></span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad" title="anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractWorkLoad</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkLoad.WorkLoad.add_unit">
-<span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wunit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.add_unit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_unit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wunit</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.add_unit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.add_unit" title="Permalink to this definition"></a></dt>
 <dd><p>Adds a work unit to the workload.
 :param wunit: work unit.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkLoad.WorkLoad.consume">
-<span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.consume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.consume" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">consume</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.consume"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.consume" title="Permalink to this definition"></a></dt>
 <dd><p>Consume work unit.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkLoad.WorkLoad.flush">
-<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.flush" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkLoad.html#WorkLoad.flush"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkLoad.WorkLoad.flush" title="Permalink to this definition"></a></dt>
 <dd><p>Flush work units and clean workload.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work.WorkUnit">
-<span id="anadroid-testing-framework-work-workunit-module"></span><h2>anadroid.testing_framework.work.WorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.WorkUnit" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.work.WorkUnit">
+<span id="anadroid-testing-framework-work-workunit-module"></span><h2>anadroid.testing_framework.work.WorkUnit module<a class="headerlink" href="#module-anadroid.testing_framework.work.WorkUnit" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.WorkUnit.</span></span><span class="sig-name descname"><span class="pre">WorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.work.WorkUnit.</span></span><span class="sig-name descname"><span class="pre">WorkUnit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bin_cmd</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Provides a reference implementation to store information about a work unit.
 A work unit is a command or task to be performed in a context of a test or test suite to be performed by a testing
@@ -420,17 +356,17 @@ framework command.
 <blockquote>
 <div><p>command to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.cmd_args">
-<span class="sig-name descname"><span class="pre">cmd_args</span></span><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.cmd_args" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cmd_args</span></span><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.cmd_args" title="Permalink to this definition"></a></dt>
 <dd><p>set os keyed args to appended to command.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -438,10 +374,10 @@ framework command.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.has_timeout">
-<span class="sig-name descname"><span class="pre">has_timeout</span></span><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.has_timeout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_timeout</span></span><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.has_timeout" title="Permalink to this definition"></a></dt>
 <dd><p>True if the command has time limit to execute, False otherwise.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
@@ -449,7 +385,7 @@ framework command.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.add_timeout">
-<span class="sig-name descname"><span class="pre">add_timeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.add_timeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.add_timeout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_timeout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout_val</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.add_timeout"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.add_timeout" title="Permalink to this definition"></a></dt>
 <dd><p>adds a timeout to the work unit.
 :param timeout_val: timeout value in seconds.
 :type timeout_val: int</p>
@@ -457,13 +393,13 @@ framework command.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.append_prefix">
-<span class="sig-name descname"><span class="pre">append_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.append_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.append_prefix" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">append_prefix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.append_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.append_prefix" title="Permalink to this definition"></a></dt>
 <dd><p>adds prefix to command.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.build_command">
-<span class="sig-name descname"><span class="pre">build_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.build_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.build_command" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_command</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.build_command"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.build_command" title="Permalink to this definition"></a></dt>
 <dd><p>build command for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -471,14 +407,14 @@ framework command.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.config">
-<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.config" title="Permalink to this definition"></a></dt>
 <dd><p>configure command.
 :param id: run or app id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.execute">
-<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.execute" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg_name</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.execute"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.execute" title="Permalink to this definition"></a></dt>
 <dd><p>execute the current work unit for a given app identified by package name.
 :param pkg_name: package name.
 :type pkg_name: str</p>
@@ -486,61 +422,48 @@ framework command.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.work.WorkUnit.WorkUnit.export_results">
-<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.export_results" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">export_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/work/WorkUnit.html#WorkUnit.export_results"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.work.WorkUnit.WorkUnit.export_results" title="Permalink to this definition"></a></dt>
 <dd><p>export results from work unit.
 :param target_dir: directory where the results will be exported.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.work">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.testing_framework.work" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="module-anadroid.testing_framework.work">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.testing_framework.work" title="Permalink to this heading"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="anadroid.testing_framework.html" class="btn btn-neutral float-left" title="anadroid.testing_framework package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="anadroid.utils.html" class="btn btn-neutral float-right" title="anadroid.utils package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

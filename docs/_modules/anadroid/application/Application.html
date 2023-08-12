@@ -1,155 +1,77 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.application.Application &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.application.Application</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.application.Application</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.application.Application</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
@@ -158,19 +80,21 @@
 
 <span class="kn">from</span> <span class="nn">anadroid.Types</span> <span class="kn">import</span> <span class="n">TESTING_FRAMEWORK</span>
 <span class="kn">from</span> <span class="nn">anadroid.application.AbstractApplication</span> <span class="kn">import</span> <span class="n">AbstractApplication</span>
+<span class="kn">from</span> <span class="nn">anadroid.application.AndroidProject</span> <span class="kn">import</span> <span class="n">AndroidProject</span>
 <span class="kn">from</span> <span class="nn">anadroid.build.versionUpgrader</span> <span class="kn">import</span> <span class="n">DefaultSemanticVersion</span>
 <span class="kn">from</span> <span class="nn">anadroid.instrument.Types</span> <span class="kn">import</span> <span class="n">INSTRUMENTATION_TYPE</span>
 <span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">get_date_str</span><span class="p">,</span> <span class="n">logw</span><span class="p">,</span> <span class="n">logi</span>
 
 
 <div class="viewcode-block" id="get_prefix"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.get_prefix">[docs]</a><span class="k">def</span> <span class="nf">get_prefix</span><span class="p">(</span><span class="n">testing_framework</span><span class="p">,</span> <span class="n">inst_type</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;gets adequate prefix for folder, given the testing framework and instrumentation type</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Gets an adequate prefix for a folder, given the testing framework and instrumentation type.</span>
+
 <span class="sd">    Args:</span>
-<span class="sd">        testing_framework:</span>
-<span class="sd">        inst_type:</span>
+<span class="sd">        testing_framework (TESTING_FRAMEWORK): Testing framework enumeration.</span>
+<span class="sd">        inst_type (INSTRUMENTATION_TYPE): Instrumentation type enumeration.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        prefix(str): prefix.</span>
+<span class="sd">        prefix (str): Prefix for the folder.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">dirname</span> <span class="o">=</span> <span class="n">testing_framework</span><span class="o">.</span><span class="n">value</span>
     <span class="k">if</span> <span class="n">inst_type</span> <span class="o">==</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">METHOD</span><span class="p">:</span>
@@ -186,16 +110,28 @@
 
 
 <div class="viewcode-block" id="App"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App">[docs]</a><span class="k">class</span> <span class="nc">App</span><span class="p">(</span><span class="n">AbstractApplication</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Main class that abstracts an Android App.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main class that abstracts an Android App.</span>
+
 <span class="sd">    Attributes:</span>
-<span class="sd">        device(Device): device where the app is.</span>
-<span class="sd">        proj(AndroidProject): respective project.</span>
-<span class="sd">        package_name(str): package name.</span>
-<span class="sd">        local_res_dir(str): local results dir.</span>
-<span class="sd">        app_name: name of the app.</span>
-<span class="sd">        version: app version.</span>
+<span class="sd">        device (Device): Device where the app is installed.</span>
+<span class="sd">        proj (AndroidProject): Respective Android project.</span>
+<span class="sd">        package_name (str): Package name of the app.</span>
+<span class="sd">        local_res_dir (str): Local results directory.</span>
+<span class="sd">        app_name (str): Name of the app.</span>
+<span class="sd">        version (DefaultSemanticVersion): App version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">proj</span><span class="p">,</span> <span class="n">package_name</span><span class="p">,</span> <span class="n">apk_path</span><span class="p">,</span> <span class="n">local_res_dir</span><span class="p">,</span> <span class="n">app_name</span><span class="o">=</span><span class="s2">&quot;app&quot;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes an App instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            device (Device): Device where the app is installed.</span>
+<span class="sd">            proj (Project): Respective Android project.</span>
+<span class="sd">            package_name (str): Package name of the app.</span>
+<span class="sd">            apk_path (str): Path to the APK.</span>
+<span class="sd">            local_res_dir (str): Local results directory.</span>
+<span class="sd">            app_name (str): Name of the app.</span>
+<span class="sd">            version (DefaultSemanticVersion): App version.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">proj</span> <span class="o">=</span> <span class="n">proj</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">apk</span> <span class="o">=</span> <span class="n">apk_path</span>
@@ -205,9 +141,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">app_name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__init_res_dir</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">__init_res_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;initialize results dir and subdirectories.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the results directory and subdirectories.&quot;&quot;&quot;</span>
         <span class="n">all_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
         <span class="n">old_runs_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;oldRuns&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">):</span>
@@ -222,36 +159,53 @@
                     <span class="n">shutil</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">f</span><span class="o">.</span><span class="n">path</span><span class="p">,</span> <span class="n">old_runs_dir</span><span class="p">)</span>
                 <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
                     <span class="k">continue</span>
-        <span class="c1">#cp all methods</span>
+        <span class="c1"># Copy all methods</span>
         <span class="n">all_m</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;allMethods.json&quot;</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">all_m</span><span class="p">):</span>
             <span class="n">all_m_proj</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="s2">&quot;allMethods.json&quot;</span><span class="p">)</span>
-            <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">all_m_proj</span><span class="p">,</span> <span class="n">all_m</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">all_m_proj</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;copying </span><span class="si">{</span><span class="n">all_m_proj</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">all_m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">all_m_proj</span><span class="p">,</span> <span class="n">all_m</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">other_possible_all_m</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;oldRuns&quot;</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">,</span> <span class="s2">&quot;allMethods.json&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">other_possible_all_m</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;copying </span><span class="si">{</span><span class="n">other_possible_all_m</span><span class="si">}</span><span class="s2"> to </span><span class="si">{</span><span class="n">all_m</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="n">shutil</span><span class="o">.</span><span class="n">copyfile</span><span class="p">(</span><span class="n">other_possible_all_m</span><span class="p">,</span> <span class="n">all_m</span><span class="p">)</span>
 
 <div class="viewcode-block" id="App.init_local_test_"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.init_local_test_">[docs]</a>    <span class="k">def</span> <span class="nf">init_local_test_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">testing_framework</span><span class="p">,</span> <span class="n">inst_type</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;initialize directory for a current test being run with testing_framework, with app instrumented with inst_type</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a directory for a current test being run with the specified testing framework and instrumented with the specified instrumentation type.</span>
+
 <span class="sd">        Args:</span>
-<span class="sd">            testing_framework: testing framework.</span>
-<span class="sd">            inst_type: instrumentation type.</span>
+<span class="sd">            testing_framework (TESTING_FRAMEWORK): Testing framework enumeration.</span>
+<span class="sd">            inst_type (INSTRUMENTATION_TYPE): Instrumentation type enumeration.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">dirname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="n">get_prefix</span><span class="p">(</span><span class="n">testing_framework</span><span class="p">,</span> <span class="n">inst_type</span><span class="p">))</span>
         <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">dirname</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span> <span class="o">=</span> <span class="n">dirname</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span> <span class="o">=</span> <span class="n">dirname</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">save_proj_json</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">save_device_specs</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">,</span> <span class="s2">&quot;device.json&quot;</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">save_device_info</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">,</span> <span class="s2">&quot;deviceState.json&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="App.start"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.start">[docs]</a>    <span class="k">def</span> <span class="nf">start</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;starts application on device.</span>
-<span class="sd">        Starts app by calling monkey -p &lt;pgk_name&gt; 1.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Starts the application on the device.</span>
+
+<span class="sd">        Starts the app by calling monkey -p &lt;pkg_name&gt; 1.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="s2">&quot;monkey -p </span><span class="si">{pkg}</span><span class="s2"> 1&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="p">),</span> <span class="n">args</span><span class="o">=</span><span class="p">[],</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_fg</span> <span class="o">=</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="App.kill"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Kills the running app.</span>
+
+<span class="sd">        Not yet implemented.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_fg</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="App.stop"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;stops running app.</span>
-<span class="sd">        Stops app via activity manager (force-stop command).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Stops the running app.</span>
+
+<span class="sd">        Stops the app via the activity manager (force-stop command).</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">on_fg</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;am force-stop </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
@@ -259,10 +213,12 @@
             <span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error stopping app&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="App.performAction"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.performAction">[docs]</a>    <span class="k">def</span> <span class="nf">performAction</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">act</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Performs an action (Not yet implemented).&quot;&quot;&quot;</span>
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="App.set_immersive_mode"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.set_immersive_mode">[docs]</a>    <span class="k">def</span> <span class="nf">set_immersive_mode</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;sets immersive mode for this app if Android version &lt; 11.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets immersive mode for this app if the Android version &lt; 11.</span>
+
 <span class="sd">        This feature is only available for devices running Android 10 or lower.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">get_device_android_version</span><span class="p">()</span><span class="o">.</span><span class="n">major</span> <span class="o">&gt;=</span> <span class="mi">11</span><span class="p">:</span>
@@ -273,67 +229,76 @@
             <span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;error setting immersive mode&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="App.clean_cache"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.clean_cache">[docs]</a>    <span class="k">def</span> <span class="nf">clean_cache</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;clean app cache.</span>
-<span class="sd">        Cleans app cache on device using package manager.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Cleans the app cache.</span>
+
+<span class="sd">        Cleans the app cache on the device using the package manager.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pm clear </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="c1">#\</span></div>
-            <span class="c1">#.validate(Exception(&quot;error cleaning cache of package &quot; + self.package_name))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pm clear </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
 
     <span class="k">def</span> <span class="nf">__get_version</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;returns app version.</span>
-<span class="sd">        Obtains app version using dumpsys.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the app version.</span>
+
+<span class="sd">        Obtains the app version using dumpsys.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            object(DefaultSemanticVersion): app version.</span>
+<span class="sd">            version (DefaultSemanticVersion): App version.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_version</span> <span class="o">!=</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="s2">&quot;0.0&quot;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="p">,</span> <span class="n">AndroidProject</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_version</span> <span class="o">!=</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="s2">&quot;0.0&quot;</span><span class="p">):</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_version</span>
         <span class="n">res</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">execute_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;dumpsys package </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to determinate version of package&quot;</span><span class="p">)):</span>
+        <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;unable to determine version of package&quot;</span><span class="p">)):</span>
             <span class="n">version</span> <span class="o">=</span> <span class="n">echo</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">output</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;versionName&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">cut</span><span class="p">(</span><span class="s2">&quot;=&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
-            <span class="k">return</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">))</span></div>
+            <span class="k">return</span> <span class="n">DefaultSemanticVersion</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">version</span><span class="p">))</span>
+
+<div class="viewcode-block" id="App.get_app_json"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.get_app_json">[docs]</a>    <span class="k">def</span> <span class="nf">get_app_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a JSON representation of the app.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            dict: JSON representation of the app.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s1">&#39;app_id&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">app_id</span><span class="p">,</span>
+            <span class="s1">&#39;app_package&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">package_name</span><span class="p">,</span>
+            <span class="s1">&#39;app_version&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">version</span><span class="p">),</span>
+            <span class="s1">&#39;app_project&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">proj</span><span class="o">.</span><span class="n">proj_name</span><span class="p">,</span>
+            <span class="s1">&#39;app_language&#39;</span><span class="p">:</span> <span class="s1">&#39;Java&#39;</span>
+        <span class="p">}</span></div>
+
+<div class="viewcode-block" id="App.get_permissions_json"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.Application.App.get_permissions_json">[docs]</a>    <span class="k">def</span> <span class="nf">get_permissions_json</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the permissions JSON file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            str: Path to the permissions JSON file or None if it doesn&#39;t exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">file_to_look</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">,</span> <span class="s2">&quot;appPermissions.json&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">file_to_look</span><span class="p">)</span> <span class="k">else</span> <span class="n">file_to_look</span></div></div>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,155 +1,77 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.testing_framework.MonkeyRunnerFramework &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.testing_framework.MonkeyRunnerFramework</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.testing_framework.MonkeyRunnerFramework</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.testing_framework.MonkeyRunnerFramework</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -170,13 +92,14 @@
 
 
 <div class="viewcode-block" id="MonkeyRunnerFramework"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework">[docs]</a><span class="k">class</span> <span class="nc">MonkeyRunnerFramework</span><span class="p">(</span><span class="n">AbstractTestingFramework</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Implements AbstractTestingFramework interface to allow executing tests using monkeyrunner framework.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements AbstractTestingFramework interface to allow executing tests using monkeyrunner framework.</span>
 <span class="sd">    Attributes:</span>
 <span class="sd">        workload(WorkLoad): workload object containing the work units to be executed.</span>
 <span class="sd">        resources_dir(str): directory containing app crawler resources.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="p">,</span> <span class="n">default_workload</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">resources_dir</span><span class="o">=</span><span class="n">MONKEY_RUNNER_RESOURCES_DIR</span><span class="p">):</span>
-        <span class="nb">super</span><span class="p">(</span><span class="n">MonkeyRunnerFramework</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY_RUNNER</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="n">analyzer</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MonkeyRunnerFramework</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="nb">id</span><span class="o">=</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY_RUNNER</span><span class="p">,</span>
+                                                    <span class="n">profiler</span><span class="o">=</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="n">analyzer</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">workload</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span> <span class="o">=</span> <span class="n">resources_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__is_installed</span><span class="p">()</span>
@@ -185,7 +108,8 @@
 
     <span class="k">def</span> <span class="nf">__is_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;which </span><span class="si">{</span><span class="n">MONKEY_RUNNER_BIN_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Monkeyrunner not installed. There is probabably an error with your ANDROID SDK installation&quot;</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Monkeyrunner not installed.&quot;</span>
+                                      <span class="s2">&quot; There is probabably an error with your ANDROID SDK installation&quot;</span><span class="p">))</span>
 
 <div class="viewcode-block" id="MonkeyRunnerFramework.install"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.install">[docs]</a>    <span class="k">def</span> <span class="nf">install</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
        <span class="k">pass</span></div>
@@ -222,7 +146,7 @@
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="MonkeyRunnerFramework.test_app"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.test_app">[docs]</a>    <span class="k">def</span> <span class="nf">test_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test a given app on a given device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;test a given app on a given device.</span>
 <span class="sd">        Executes each work unit of workload on app running on device.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            device(Device): device.</span>
@@ -233,7 +157,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">exec_one_test</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">wk_unit</span><span class="p">,</span> <span class="n">n_retries</span><span class="o">=</span><span class="n">retries_per_test</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="MonkeyRunnerFramework.exec_one_test"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.exec_one_test">[docs]</a>    <span class="k">def</span> <span class="nf">exec_one_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span>  <span class="n">wk_unit</span><span class="p">,</span> <span class="n">n_retries</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;executes one test identified by test_id of an given app on a given device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;executes one test identified by test_id of an given app on a given device.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            test_id: test uuid.</span>
 <span class="sd">            device(Device): device.</span>
@@ -254,8 +178,8 @@
         <span class="n">app</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">stop_profiling</span><span class="p">()</span>
         <span class="n">device</span><span class="o">.</span><span class="n">clear_logcat</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GreendroidResultTrace</span><span class="si">{</span><span class="n">test_id</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">pull_results</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GreendroidResultTrace</span><span class="si">{</span><span class="n">test_id</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="n">test_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">pull_results</span><span class="p">(</span><span class="n">test_id</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">)</span>
         <span class="n">app</span><span class="o">.</span><span class="n">clean_cache</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">validate_test</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;log_filename&#39;</span><span class="p">:</span> <span class="n">log_file</span><span class="p">}):</span>
             <span class="n">logw</span><span class="p">(</span><span class="s2">&quot;Validation failed. Retrying&quot;</span><span class="p">)</span>
@@ -266,46 +190,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

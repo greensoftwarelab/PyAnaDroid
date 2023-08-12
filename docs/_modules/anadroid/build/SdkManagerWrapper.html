@@ -1,169 +1,91 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.build.SdkManagerWrapper &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.build.SdkManagerWrapper</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.build.SdkManagerWrapper</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.build.SdkManagerWrapper</h1><div class="highlight"><pre>
 <span></span><span class="kn">from</span> <span class="nn">anadroid.build.versionUpgrader</span> <span class="kn">import</span> <span class="n">DefaultSemanticVersion</span>
 <span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span>
 
 
 <div class="viewcode-block" id="SDKManager"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager">[docs]</a><span class="k">class</span> <span class="nc">SDKManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Abstract calls to sdkmanager binary.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Abstract calls to sdkmanager binary.</span>
 <span class="sd">    Provides methods to enumerate and install platform-tools or build-tools.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executable_name</span> <span class="o">=</span> <span class="s2">&quot;sdkmanager&quot;</span>
 
 <div class="viewcode-block" id="SDKManager.list"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.list">[docs]</a>    <span class="k">def</span> <span class="nf">list</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;lists all available and downloadable resources through sdkmanager.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;lists all available and downloadable resources through sdkmanager.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            str: list of resources.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -172,7 +94,7 @@
             <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">split</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="SDKManager.is_build_tools_installed"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.is_build_tools_installed">[docs]</a>    <span class="k">def</span> <span class="nf">is_build_tools_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_tools_version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks if a given build tools version is installed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a given build tools version is installed.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            build_tools_version: build tools version to check.</span>
 
@@ -190,7 +112,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="SDKManager.download_build_tools_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.download_build_tools_version">[docs]</a>    <span class="k">def</span> <span class="nf">download_build_tools_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;downloads a given build tools version.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;downloads a given build tools version.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            version: build tools version.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -199,7 +121,7 @@
             <span class="n">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while downloading build tools version: </span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="SDKManager.is_platform_tools_installed"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.is_platform_tools_installed">[docs]</a>    <span class="k">def</span> <span class="nf">is_platform_tools_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plat_tools_version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks if a given build platform-tools version is installed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a given build platform-tools version is installed.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            plat_tools_version: platform-tools version to check.</span>
 
@@ -217,7 +139,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="SDKManager.download_platform_tools_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.download_platform_tools_version">[docs]</a>    <span class="k">def</span> <span class="nf">download_platform_tools_version</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;downloads a given platform-tools version.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;downloads a given platform-tools version.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            version: platform-tools version.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -226,7 +148,7 @@
             <span class="n">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error while downloading platform tools version: </span><span class="si">{</span><span class="n">version</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">))</span></div>
 
 <div class="viewcode-block" id="SDKManager.get_list_of_available_build_tools"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.get_list_of_available_build_tools">[docs]</a>    <span class="k">def</span> <span class="nf">get_list_of_available_build_tools</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;lists the available build_tools.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;lists the available build_tools.</span>
 <span class="sd">        Returns:</span>
 <span class="sd">            version_list(:obj:`list` of :obj:`DefaultSemanticVersion`): list of versions.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -239,7 +161,7 @@
         <span class="k">return</span> <span class="n">version_list</span></div>
 
 <div class="viewcode-block" id="SDKManager.is_platforms_installed"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.is_platforms_installed">[docs]</a>    <span class="k">def</span> <span class="nf">is_platforms_installed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plat_version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Checks if a given build platforms version is installed.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Checks if a given build platforms version is installed.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            plat_version: platforms version to check.</span>
 
@@ -255,7 +177,7 @@
         <span class="k">return</span> <span class="kc">False</span></div>
 
 <div class="viewcode-block" id="SDKManager.download_platform"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.SdkManagerWrapper.SDKManager.download_platform">[docs]</a>    <span class="k">def</span> <span class="nf">download_platform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">plat_version</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;downloads a given platforms  version.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;downloads a given platforms  version.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            plat_version: platforms version.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -265,46 +187,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

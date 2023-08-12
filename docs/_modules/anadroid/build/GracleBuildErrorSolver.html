@@ -1,162 +1,84 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.build.GracleBuildErrorSolver &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.build.GracleBuildErrorSolver</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.build.GracleBuildErrorSolver</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.build.GracleBuildErrorSolver</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">shutil</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 
-<span class="kn">from</span> <span class="nn">manafa.utils.Logger</span> <span class="kn">import</span> <span class="n">log</span><span class="p">,</span> <span class="n">LogSeverity</span>
+
 <span class="kn">from</span> <span class="nn">termcolor</span> <span class="kn">import</span> <span class="n">colored</span>
 <span class="kn">from</span> <span class="nn">textops</span> <span class="kn">import</span> <span class="n">grep</span><span class="p">,</span> <span class="n">cat</span><span class="p">,</span> <span class="n">echo</span><span class="p">,</span> <span class="n">sed</span>
 <span class="kn">from</span> <span class="nn">distutils.dir_util</span> <span class="kn">import</span> <span class="n">copy_tree</span>
@@ -169,9 +91,8 @@
 <span class="n">GRADLE_WRAPPER_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">GRADLE_RES_DIR</span><span class="p">,</span> <span class="s2">&quot;wrapper&quot;</span><span class="p">,</span> <span class="s2">&quot;gradle&quot;</span><span class="p">)</span>
 
 
-
 <div class="viewcode-block" id="KNOWN_ERROR"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR">[docs]</a><span class="k">class</span> <span class="nc">KNOWN_ERROR</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Enumerates the list of known gradle build errors that possibly can be fixed the framework.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Enumerates the list of known gradle build errors that possibly can be fixed the framework.&quot;&quot;&quot;</span>
     <span class="n">GOOGLE_REPO_ERROR</span> <span class="o">=</span> <span class="s2">&quot;method google() for arguments&quot;</span>
     <span class="n">LIBS_ERROR</span> <span class="o">=</span> <span class="s2">&quot;No signature of method: java.util.ArrayList.call() is applicable for argument types&quot;</span>
     <span class="n">MIN_SDK_ERROR</span> <span class="o">=</span> <span class="s2">&quot;uses-sdk:minSdkVersion (.+) cannot be smaller than version (.+) declared in&quot;</span>
@@ -192,7 +113,7 @@
 
 
 <div class="viewcode-block" id="is_known_error"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.is_known_error">[docs]</a><span class="k">def</span> <span class="nf">is_known_error</span><span class="p">(</span><span class="n">output</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Given the build output, checks if a known error occurred.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Given the build output, checks if a known error occurred.</span>
 
 <span class="sd">    Returns:</span>
 <span class="sd">        object (obJ:`KNOW_ERROR`): the inferred error. If the error is not known, returns None.</span>
@@ -205,7 +126,7 @@
 
 
 <div class="viewcode-block" id="solve_known_error"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.solve_known_error">[docs]</a><span class="k">def</span> <span class="nf">solve_known_error</span><span class="p">(</span><span class="n">proj</span><span class="p">,</span> <span class="n">error</span><span class="p">,</span> <span class="n">error_msg</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Tries to fix known build error.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Tries to fix known build error.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        proj(obj:`AndroidProject`): project that raised the error.</span>
 <span class="sd">        error(obj:`KNOWN_ERROR`):</span>
@@ -278,7 +199,7 @@
         <span class="c1">#solve_known_error(proj, error=KNOWN_ERRORS.WRAPPER_MISMATCH_ERROR, **kwargs)</span>
 
     <span class="k">elif</span> <span class="n">error</span> <span class="o">==</span> <span class="n">KNOWN_ERROR</span><span class="o">.</span><span class="n">NDK_BAD_CONFIG</span><span class="p">:</span>
-        <span class="n">log</span><span class="p">(</span><span class="s2">&quot;BAD NDK configuration. please update ndk path in resources/config/local.properties&quot;</span><span class="p">,</span> <span class="n">log_sev</span><span class="o">=</span><span class="n">LogSeverity</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+        <span class="n">loge</span><span class="p">(</span><span class="s2">&quot;BAD NDK configuration. please update ndk path in resources/config/local.properties&quot;</span><span class="p">)</span>
         <span class="n">local_Prop_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RES_DIR</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">,</span> <span class="s2">&quot;local.properties&quot;</span><span class="p">)</span>
         <span class="n">shutil</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">local_Prop_file</span><span class="p">,</span> <span class="n">proj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">)</span>
     <span class="k">elif</span> <span class="n">error</span> <span class="o">==</span> <span class="n">KNOWN_ERROR</span><span class="o">.</span><span class="n">GOOGLE_REPO_ERROR</span><span class="p">:</span>
@@ -294,7 +215,7 @@
 
 
 <div class="viewcode-block" id="get_adequate_gradle_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.get_adequate_gradle_version">[docs]</a><span class="k">def</span> <span class="nf">get_adequate_gradle_version</span><span class="p">(</span><span class="n">plugin_version</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;given the gradle plugin version, returns an adequate gradle version to match the plugin version.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;given the gradle plugin version, returns an adequate gradle version to match the plugin version.</span>
 
 <span class="sd">    Based on https://developer.android.com/studio/releases/gradle-plugin#updating-gradle table.</span>
 <span class="sd">    Args:</span>
@@ -381,7 +302,7 @@
 
 
 <div class="viewcode-block" id="replace_build_tools_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.replace_build_tools_version">[docs]</a><span class="k">def</span> <span class="nf">replace_build_tools_version</span><span class="p">(</span><span class="n">bld_file</span><span class="p">,</span> <span class="n">old_bld_version</span><span class="p">,</span> <span class="n">new_bld_version</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;replace build tools version on bld_file gradle file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;replace build tools version on bld_file gradle file.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        bld_file: path of build file.</span>
 <span class="sd">        old_bld_version: old version.</span>
@@ -395,7 +316,7 @@
 
 
 <div class="viewcode-block" id="replace_gradle_plugin_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.replace_gradle_plugin_version">[docs]</a><span class="k">def</span> <span class="nf">replace_gradle_plugin_version</span><span class="p">(</span><span class="n">bld_file</span><span class="p">,</span> <span class="n">old_v</span><span class="p">,</span> <span class="n">new_v</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;replace gradle plugin version on bld_file gradle file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;replace gradle plugin version on bld_file gradle file.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        bld_file: path of build file.</span>
 <span class="sd">        old_v: old version.</span>
@@ -407,7 +328,7 @@
 
 
 <div class="viewcode-block" id="add_google_repo"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.add_google_repo">[docs]</a><span class="k">def</span> <span class="nf">add_google_repo</span><span class="p">(</span><span class="n">main_grdl</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds Google as repository to allprojects in main_grdl gradle file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds Google as repository to allprojects in main_grdl gradle file.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        main_grdl: path of build file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -418,7 +339,7 @@
 
 
 <div class="viewcode-block" id="add_google_repo_build_script"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.add_google_repo_build_script">[docs]</a><span class="k">def</span> <span class="nf">add_google_repo_build_script</span><span class="p">(</span><span class="n">main_grdl</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Adds Google as repository to buildscript block in main_grdl file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Adds Google as repository to buildscript block in main_grdl file.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        main_grdl: path of build file.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -429,73 +350,59 @@
 
 
 <div class="viewcode-block" id="update_gradle_wrapper_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.update_gradle_wrapper_version">[docs]</a><span class="k">def</span> <span class="nf">update_gradle_wrapper_version</span><span class="p">(</span><span class="n">gradle_wrap_prop_filepath</span><span class="p">,</span> <span class="n">new_v</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;updates gradle wrapper version in properties file.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;updates gradle wrapper version in properties file.</span>
 <span class="sd">    Args:</span>
 <span class="sd">        gradle_wrap_prop_filepath: properties file path.</span>
 <span class="sd">        new_v: new version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">fl_ctnt</span> <span class="o">=</span> <span class="n">file_content</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="n">gradle_wrap_prop_filepath</span><span class="p">))</span>
-    <span class="n">current_v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">echo</span><span class="p">(</span><span class="n">fl_ctnt</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;distributionUrl=.*&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;gradle-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">,</span>                                                                                 <span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">current_v</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">echo</span><span class="p">(</span><span class="n">fl_ctnt</span><span class="p">)</span>
+                    <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;distributionUrl=.*&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;gradle-&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.zip&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="n">file_content</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">current_v</span><span class="p">,</span>  <span class="n">new_v</span><span class="p">,</span> <span class="n">file_content</span><span class="p">)</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">gradle_wrap_prop_filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">u</span><span class="p">:</span>
         <span class="n">u</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">file_content</span><span class="p">)</span></div>
 
 
 <div class="viewcode-block" id="get_gradle_plugin_version"><a class="viewcode-back" href="../../../anadroid.build.html#anadroid.build.GracleBuildErrorSolver.get_gradle_plugin_version">[docs]</a><span class="k">def</span> <span class="nf">get_gradle_plugin_version</span><span class="p">(</span><span class="n">gradle_file</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;returns gradle plugin version.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;returns gradle plugin version.</span>
 <span class="sd">    gets value of com.android.tools.build contained in gradle_file.</span>
 
 <span class="sd">    Args:</span>
-<span class="sd">        gradle_file: build.gradle filepath.</span>
+<span class="sd">        gradle_fileU (str): build.gradle filepath.</span>
 
 <span class="sd">    Returns:</span>
-<span class="sd">        gradle_plugin_version(str): plugin version.</span>
+<span class="sd">        gradle_plugin_version (str): plugin version.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">gradle_plugin_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="n">gradle_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;com.android.tools.build&quot;</span><span class="p">)</span> <span class="o">|</span> <span class="n">sed</span><span class="p">(</span><span class="s2">&quot;classpath|com.android.tools.build:gradle:|</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+    <span class="n">gradle_plugin_version</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="n">gradle_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s2">&quot;com.android.tools.build&quot;</span><span class="p">)</span>
+                                <span class="o">|</span> <span class="n">sed</span><span class="p">(</span><span class="s2">&quot;classpath|com.android.tools.build:gradle:|</span><span class="se">\&quot;</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;&#39;&quot;</span><span class="p">,</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">gradle_plugin_version</span></div>
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,373 +1,339 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.build package &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.device package" href="anadroid.device.html" />
+    <link rel="prev" title="anadroid.application package" href="anadroid.application.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">anadroid.build package</a><ul>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-anadroid.build.AbstractBuilder">anadroid.build.AbstractBuilder module</a></li>
-<li><a class="reference internal" href="#module-anadroid.build.GracleBuildErrorSolver">anadroid.build.GracleBuildErrorSolver module</a></li>
-<li><a class="reference internal" href="#module-anadroid.build.GradleBuilder">anadroid.build.GradleBuilder module</a></li>
-<li><a class="reference internal" href="#module-anadroid.build.SdkManagerWrapper">anadroid.build.SdkManagerWrapper module</a></li>
-<li><a class="reference internal" href="#module-anadroid.build.versionUpgrader">anadroid.build.versionUpgrader module</a></li>
-<li><a class="reference internal" href="#module-anadroid.build">Module contents</a></li>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#examples">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="anadroid.html">anadroid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="anadroid.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.html">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Anadroid">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.main">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</div>
-            
-          
+</li>
+</ul>
+
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>anadroid.build package</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">anadroid</a></li>
+          <li class="breadcrumb-item"><a href="anadroid.html">anadroid package</a></li>
+      <li class="breadcrumb-item active">anadroid.build package</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/anadroid.build.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="anadroid-build-package">
-<h1>anadroid.build package<a class="headerlink" href="#anadroid-build-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-anadroid.build.AbstractBuilder">
-<span id="anadroid-build-abstractbuilder-module"></span><h2>anadroid.build.AbstractBuilder module<a class="headerlink" href="#module-anadroid.build.AbstractBuilder" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="anadroid-build-package">
+<h1>anadroid.build package<a class="headerlink" href="#anadroid-build-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-anadroid.build.AbstractBuilder">
+<span id="anadroid-build-abstractbuilder-module"></span><h2>anadroid.build.AbstractBuilder module<a class="headerlink" href="#module-anadroid.build.AbstractBuilder" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.build.AbstractBuilder.</span></span><span class="sig-name descname"><span class="pre">AbstractBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrumenter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
-<p>Defines the API being used to build apps using supported build systems.
-.. attribute:: android_home_dir</p>
-<blockquote>
-<div><p>path of local android home directory (value of $ANDROID_HOME).</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.build.AbstractBuilder.</span></span><span class="sig-name descname"><span class="pre">AbstractBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrumenter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
+<p>An abstract class that defines the API for building apps using supported build systems.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.android_home_dir">
+<span class="sig-name descname"><span class="pre">android_home_dir</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.android_home_dir" title="Permalink to this definition"></a></dt>
+<dd><p>The path of the local Android home directory (value of $ANDROID_HOME).</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
-</div></blockquote>
-<dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">proj(`obj</span></span></dt>
-<dd><p><cite>AndroidProject</cite>): project to build.</p>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">device(`obj</span></span></dt>
-<dd><p><cite>Device</cite>): targeted device.</p>
+<dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.proj">
+<span class="sig-name descname"><span class="pre">proj</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.proj" title="Permalink to this definition"></a></dt>
+<dd><p>The project to build.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>AndroidProject</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.device">
+<span class="sig-name descname"><span class="pre">device</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.device" title="Permalink to this definition"></a></dt>
+<dd><p>The targeted device.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>Device</cite></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.resources_dir">
-<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.resources_dir" title="Permalink to this definition">¶</a></dt>
-<dd><p>pyanadroid resources directory.</p>
+<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.resources_dir" title="Permalink to this definition"></a></dt>
+<dd><p>The pyanadroid resources directory.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">instrumenter(`obj</span></span></dt>
-<dd><p><cite>AbstracInstrumenter</cite>): instrumentation tool used.</p>
+<dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.instrumenter">
+<span class="sig-name descname"><span class="pre">instrumenter</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.instrumenter" title="Permalink to this definition"></a></dt>
+<dd><p>The instrumentation tool used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>AbstractInstrumenter</cite></p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.config">
-<span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.config" title="Permalink to this definition">¶</a></dt>
-<dd><p>build configurations.</p>
+<span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.config" title="Permalink to this definition"></a></dt>
+<dd><p>Build configurations.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.build">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract method for the complete build process of the app.
+Subclasses must provide an implementation for the full build process.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.build_apk">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">build_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build_apk" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build_apk" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract method for building the main APK of the app.
+Subclasses must provide an implementation for building the APK.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.build_tests_apk">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">build_tests_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build_tests_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build_tests_apk" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">build_tests_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.build_tests_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.build_tests_apk" title="Permalink to this definition"></a></dt>
+<dd><p>Abstract method for building the test APKs of the app.
+Subclasses must provide an implementation for building test APKs.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.AbstractBuilder.AbstractBuilder.get_config">
-<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.get_config" title="Permalink to this definition">¶</a></dt>
-<dd><p>gets config value identified by key. if no configuration was found, returns default value.
-:param key: configuration key.
-:param default: default value.</p>
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/AbstractBuilder.html#AbstractBuilder.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.AbstractBuilder.AbstractBuilder.get_config" title="Permalink to this definition"></a></dt>
+<dd><p>Gets a configuration value identified by the given key.
+If no configuration is found, returns the specified default value.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><p>value.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>key</strong> – The configuration key.</p></li>
+<li><p><strong>default</strong> – The default value to return if the key is not found.</p></li>
+</ul>
 </dd>
-<dt class="field-even">Return type</dt>
-<dd class="field-even"><p>value(str)</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The value of the configuration key, or the default value.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>value (str)</p>
 </dd>
 </dl>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.build.GracleBuildErrorSolver">
-<span id="anadroid-build-graclebuilderrorsolver-module"></span><h2>anadroid.build.GracleBuildErrorSolver module<a class="headerlink" href="#module-anadroid.build.GracleBuildErrorSolver" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.build.GracleBuildErrorSolver">
+<span id="anadroid-build-graclebuilderrorsolver-module"></span><h2>anadroid.build.GracleBuildErrorSolver module<a class="headerlink" href="#module-anadroid.build.GracleBuildErrorSolver" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">KNOWN_ERROR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#KNOWN_ERROR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">enum.Enum</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">KNOWN_ERROR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#KNOWN_ERROR"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Enum</span></code></p>
 <p>Enumerates the list of known gradle build errors that possibly can be fixed the framework.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_SDK_ERROR">
-<span class="sig-name descname"><span class="pre">BUILD_SDK_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'The</span> <span class="pre">SDK</span> <span class="pre">Build</span> <span class="pre">Tools</span> <span class="pre">revision</span> <span class="pre">\\((.+)\\)</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">low</span> <span class="pre">for</span> <span class="pre">project</span> <span class="pre">'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_SDK_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BUILD_SDK_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'The</span> <span class="pre">SDK</span> <span class="pre">Build</span> <span class="pre">Tools</span> <span class="pre">revision</span> <span class="pre">\\((.+)\\)</span> <span class="pre">is</span> <span class="pre">too</span> <span class="pre">low</span> <span class="pre">for</span> <span class="pre">project</span> <span class="pre">'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_SDK_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_TOOLS_CPU_ERROR">
-<span class="sig-name descname"><span class="pre">BUILD_TOOLS_CPU_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Bad</span> <span class="pre">CPU</span> <span class="pre">type</span> <span class="pre">in</span> <span class="pre">executable'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_TOOLS_CPU_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">BUILD_TOOLS_CPU_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Bad</span> <span class="pre">CPU</span> <span class="pre">type</span> <span class="pre">in</span> <span class="pre">executable'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.BUILD_TOOLS_CPU_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.GOOGLE_REPO_ERROR">
-<span class="sig-name descname"><span class="pre">GOOGLE_REPO_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'method</span> <span class="pre">google()</span> <span class="pre">for</span> <span class="pre">arguments'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.GOOGLE_REPO_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">GOOGLE_REPO_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'method</span> <span class="pre">google()</span> <span class="pre">for</span> <span class="pre">arguments'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.GOOGLE_REPO_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.LIBS_ERROR">
-<span class="sig-name descname"><span class="pre">LIBS_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'No</span> <span class="pre">signature</span> <span class="pre">of</span> <span class="pre">method:</span> <span class="pre">java.util.ArrayList.call()</span> <span class="pre">is</span> <span class="pre">applicable</span> <span class="pre">for</span> <span class="pre">argument</span> <span class="pre">types'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.LIBS_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">LIBS_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'No</span> <span class="pre">signature</span> <span class="pre">of</span> <span class="pre">method:</span> <span class="pre">java.util.ArrayList.call()</span> <span class="pre">is</span> <span class="pre">applicable</span> <span class="pre">for</span> <span class="pre">argument</span> <span class="pre">types'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.LIBS_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MAYBE_MISSING_GOOGLE_REPO">
-<span class="sig-name descname"><span class="pre">MAYBE_MISSING_GOOGLE_REPO</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Could</span> <span class="pre">not</span> <span class="pre">resolve</span> <span class="pre">all</span> <span class="pre">dependencies</span> <span class="pre">for</span> <span class="pre">configuration'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MAYBE_MISSING_GOOGLE_REPO" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MAYBE_MISSING_GOOGLE_REPO</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Could</span> <span class="pre">not</span> <span class="pre">resolve</span> <span class="pre">all</span> <span class="pre">dependencies</span> <span class="pre">for</span> <span class="pre">configuration'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MAYBE_MISSING_GOOGLE_REPO" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MIN_SDK_ERROR">
-<span class="sig-name descname"><span class="pre">MIN_SDK_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'uses-sdk:minSdkVersion</span> <span class="pre">(.+)</span> <span class="pre">cannot</span> <span class="pre">be</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">version</span> <span class="pre">(.+)</span> <span class="pre">declared</span> <span class="pre">in'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MIN_SDK_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">MIN_SDK_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'uses-sdk:minSdkVersion</span> <span class="pre">(.+)</span> <span class="pre">cannot</span> <span class="pre">be</span> <span class="pre">smaller</span> <span class="pre">than</span> <span class="pre">version</span> <span class="pre">(.+)</span> <span class="pre">declared</span> <span class="pre">in'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.MIN_SDK_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_BAD_CONFIG">
-<span class="sig-name descname"><span class="pre">NDK_BAD_CONFIG</span></span><em class="property"> <span class="pre">=</span> <span class="pre">&quot;did</span> <span class="pre">not</span> <span class="pre">contain</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">NDK</span> <span class="pre">and</span> <span class="pre">couldn't</span> <span class="pre">be</span> <span class="pre">used&quot;</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_BAD_CONFIG" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NDK_BAD_CONFIG</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;did</span> <span class="pre">not</span> <span class="pre">contain</span> <span class="pre">a</span> <span class="pre">valid</span> <span class="pre">NDK</span> <span class="pre">and</span> <span class="pre">couldn't</span> <span class="pre">be</span> <span class="pre">used&quot;</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_BAD_CONFIG" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_TOOLCHAIN_ERROR">
-<span class="sig-name descname"><span class="pre">NDK_TOOLCHAIN_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'NDK</span> <span class="pre">toolchains</span> <span class="pre">folder'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_TOOLCHAIN_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NDK_TOOLCHAIN_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'NDK</span> <span class="pre">toolchains</span> <span class="pre">folder'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NDK_TOOLCHAIN_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_BUILD_TOOLS">
-<span class="sig-name descname"><span class="pre">NO_BUILD_TOOLS</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'failed</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">Build</span> <span class="pre">Tools</span> <span class="pre">revision'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_BUILD_TOOLS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NO_BUILD_TOOLS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'failed</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">Build</span> <span class="pre">Tools</span> <span class="pre">revision'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_BUILD_TOOLS" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_GRADLEW_EXEC">
-<span class="sig-name descname"><span class="pre">NO_GRADLEW_EXEC</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'gradlew:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_GRADLEW_EXEC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NO_GRADLEW_EXEC</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'gradlew:</span> <span class="pre">No</span> <span class="pre">such</span> <span class="pre">file</span> <span class="pre">or</span> <span class="pre">directory'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_GRADLEW_EXEC" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_TARGET_PLATFORM">
-<span class="sig-name descname"><span class="pre">NO_TARGET_PLATFORM</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'failed</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">target</span> <span class="pre">with</span> <span class="pre">hash</span> <span class="pre">string'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_TARGET_PLATFORM" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NO_TARGET_PLATFORM</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'failed</span> <span class="pre">to</span> <span class="pre">find</span> <span class="pre">target</span> <span class="pre">with</span> <span class="pre">hash</span> <span class="pre">string'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_TARGET_PLATFORM" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_WRAPPER">
-<span class="sig-name descname"><span class="pre">NO_WRAPPER</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Could</span> <span class="pre">not</span> <span class="pre">find</span> <span class="pre">or</span> <span class="pre">load</span> <span class="pre">main</span> <span class="pre">class</span> <span class="pre">org.gradle.wrapper.GradleWrapperMain'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_WRAPPER" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">NO_WRAPPER</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Could</span> <span class="pre">not</span> <span class="pre">find</span> <span class="pre">or</span> <span class="pre">load</span> <span class="pre">main</span> <span class="pre">class</span> <span class="pre">org.gradle.wrapper.GradleWrapperMain'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.NO_WRAPPER" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.USER_HAS_TO_ACCEPT_INSTALL">
-<span class="sig-name descname"><span class="pre">USER_HAS_TO_ACCEPT_INSTALL</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'INSTALL_FAILED_USER_RESTRICTED'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.USER_HAS_TO_ACCEPT_INSTALL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">USER_HAS_TO_ACCEPT_INSTALL</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'INSTALL_FAILED_USER_RESTRICTED'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.USER_HAS_TO_ACCEPT_INSTALL" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_ERROR">
-<span class="sig-name descname"><span class="pre">WRAPPER_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'try</span> <span class="pre">editing</span> <span class="pre">the</span> <span class="pre">distributionUrl'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WRAPPER_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'try</span> <span class="pre">editing</span> <span class="pre">the</span> <span class="pre">distributionUrl'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_MISMATCH_ERROR">
-<span class="sig-name descname"><span class="pre">WRAPPER_MISMATCH_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Failed</span> <span class="pre">to</span> <span class="pre">notify</span> <span class="pre">project</span> <span class="pre">evaluation</span> <span class="pre">listener'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_MISMATCH_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WRAPPER_MISMATCH_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Failed</span> <span class="pre">to</span> <span class="pre">notify</span> <span class="pre">project</span> <span class="pre">evaluation</span> <span class="pre">listener'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_MISMATCH_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_PROP_ERROR">
-<span class="sig-name descname"><span class="pre">WRAPPER_PROP_ERROR</span></span><em class="property"> <span class="pre">=</span> <span class="pre">'Wrapper</span> <span class="pre">properties</span> <span class="pre">file'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_PROP_ERROR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">WRAPPER_PROP_ERROR</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'Wrapper</span> <span class="pre">properties</span> <span class="pre">file'</span></em><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.KNOWN_ERROR.WRAPPER_PROP_ERROR" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.add_google_repo">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">add_google_repo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_grdl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#add_google_repo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.add_google_repo" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">add_google_repo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_grdl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#add_google_repo"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.add_google_repo" title="Permalink to this definition"></a></dt>
 <dd><p>Adds Google as repository to allprojects in main_grdl gradle file.
 :param main_grdl: path of build file.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.add_google_repo_build_script">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">add_google_repo_build_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_grdl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#add_google_repo_build_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.add_google_repo_build_script" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">add_google_repo_build_script</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">main_grdl</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#add_google_repo_build_script"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.add_google_repo_build_script" title="Permalink to this definition"></a></dt>
 <dd><p>Adds Google as repository to buildscript block in main_grdl file.
 :param main_grdl: path of build file.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.get_adequate_gradle_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">get_adequate_gradle_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#get_adequate_gradle_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.get_adequate_gradle_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">get_adequate_gradle_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plugin_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#get_adequate_gradle_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.get_adequate_gradle_version" title="Permalink to this definition"></a></dt>
 <dd><p>given the gradle plugin version, returns an adequate gradle version to match the plugin version.</p>
 <p>Based on <a class="reference external" href="https://developer.android.com/studio/releases/gradle-plugin#updating-gradle">https://developer.android.com/studio/releases/gradle-plugin#updating-gradle</a> table.
 :param plugin_version: Gradle-plugin version.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>adequate gradle version.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>version</p>
 </dd>
 </dl>
@@ -375,31 +341,31 @@
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.get_gradle_plugin_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">get_gradle_plugin_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#get_gradle_plugin_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.get_gradle_plugin_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">get_gradle_plugin_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#get_gradle_plugin_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.get_gradle_plugin_version" title="Permalink to this definition"></a></dt>
 <dd><p>returns gradle plugin version.
 gets value of com.android.tools.build contained in gradle_file.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>gradle_file</strong> – build.gradle filepath.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>gradle_fileU</strong> (<em>str</em>) – build.gradle filepath.</p>
 </dd>
-<dt class="field-even">Returns</dt>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>plugin version.</p>
 </dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>gradle_plugin_version(str)</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>gradle_plugin_version (str)</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.is_known_error">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">is_known_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#is_known_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.is_known_error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">is_known_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#is_known_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.is_known_error" title="Permalink to this definition"></a></dt>
 <dd><p>Given the build output, checks if a known error occurred.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p><cite>KNOW_ERROR</cite>): the inferred error. If the error is not known, returns None.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>object (obJ</p>
 </dd>
 </dl>
@@ -407,7 +373,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.replace_build_tools_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">replace_build_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_bld_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_bld_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#replace_build_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.replace_build_tools_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">replace_build_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_bld_version</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_bld_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#replace_build_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.replace_build_tools_version" title="Permalink to this definition"></a></dt>
 <dd><p>replace build tools version on bld_file gradle file.
 :param bld_file: path of build file.
 :param old_bld_version: old version.
@@ -416,7 +382,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.replace_gradle_plugin_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">replace_gradle_plugin_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#replace_gradle_plugin_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.replace_gradle_plugin_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">replace_gradle_plugin_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">old_v</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#replace_gradle_plugin_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.replace_gradle_plugin_version" title="Permalink to this definition"></a></dt>
 <dd><p>replace gradle plugin version on bld_file gradle file.
 :param bld_file: path of build file.
 :param old_v: old version.
@@ -425,7 +391,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.solve_known_error">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">solve_known_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_msg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#solve_known_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.solve_known_error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">solve_known_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_msg</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#solve_known_error"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.solve_known_error" title="Permalink to this definition"></a></dt>
 <dd><p>Tries to fix known build error.
 :param proj(obj: <cite>AndroidProject</cite>): project that raised the error.
 :param error(obj: <cite>KNOWN_ERROR</cite>):
@@ -435,7 +401,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.update_gradle_wrapper_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">update_gradle_wrapper_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_wrap_prop_filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#update_gradle_wrapper_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.update_gradle_wrapper_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">update_gradle_wrapper_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_wrap_prop_filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#update_gradle_wrapper_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.update_gradle_wrapper_version" title="Permalink to this definition"></a></dt>
 <dd><p>updates gradle wrapper version in properties file.
 :param gradle_wrap_prop_filepath: properties file path.
 :param new_v: new version.</p>
@@ -443,32 +409,32 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GracleBuildErrorSolver.upgrade_version_from_version_list">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">upgrade_version_from_version_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upgradable_candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#upgrade_version_from_version_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.upgrade_version_from_version_list" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GracleBuildErrorSolver.</span></span><span class="sig-name descname"><span class="pre">upgrade_version_from_version_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upgradable_candidate</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">opt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'max'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GracleBuildErrorSolver.html#upgrade_version_from_version_list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GracleBuildErrorSolver.upgrade_version_from_version_list" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.build.GradleBuilder">
-<span id="anadroid-build-gradlebuilder-module"></span><h2>anadroid.build.GradleBuilder module<a class="headerlink" href="#module-anadroid.build.GradleBuilder" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.build.GradleBuilder">
+<span id="anadroid-build-gradlebuilder-module"></span><h2>anadroid.build.GradleBuilder module<a class="headerlink" href="#module-anadroid.build.GradleBuilder" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">GradleBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrumenter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.build.AbstractBuilder.AbstractBuilder" title="anadroid.build.AbstractBuilder.AbstractBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.build.AbstractBuilder.AbstractBuilder</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">GradleBuilder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">instrumenter</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.build.AbstractBuilder.AbstractBuilder" title="anadroid.build.AbstractBuilder.AbstractBuilder"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractBuilder</span></code></a></p>
 <p>Class that extends AbstractBuilder functionality in order to build Gradle projects.
 .. attribute:: build_flags</p>
 <blockquote>
 <div><p>build flags.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.change_history">
-<span class="sig-name descname"><span class="pre">change_history</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.change_history" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">change_history</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.change_history" title="Permalink to this definition"></a></dt>
 <dd><p>list of changes performed to project.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
 </dd>
 </dl>
@@ -476,10 +442,10 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.gradle_plg_version">
-<span class="sig-name descname"><span class="pre">gradle_plg_version</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.gradle_plg_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">gradle_plg_version</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.gradle_plg_version" title="Permalink to this definition"></a></dt>
 <dd><p>Gradle plugin version for proj.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -487,10 +453,10 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_tools_version">
-<span class="sig-name descname"><span class="pre">build_tools_version</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_tools_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_tools_version</span></span><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_tools_version" title="Permalink to this definition"></a></dt>
 <dd><p>Gradle version for proj.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -498,21 +464,21 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.adapt_target_sdk_upgrade">
-<span class="sig-name descname"><span class="pre">adapt_target_sdk_upgrade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.adapt_target_sdk_upgrade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.adapt_target_sdk_upgrade" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">adapt_target_sdk_upgrade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.adapt_target_sdk_upgrade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.adapt_target_sdk_upgrade" title="Permalink to this definition"></a></dt>
 <dd><p>Adapts target sdk upgrade to connected device if needed.
 :param gradle_file: gradle file.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build">
-<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rebuild</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rebuild</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build" title="Permalink to this definition"></a></dt>
 <dd><p>builds project if project is not build yet or rebuild is True.
 :param rebuild: True if the project has to be rebuilt.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if success, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -520,14 +486,14 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_apk">
-<span class="sig-name descname"><span class="pre">build_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.DEBUG:</span> <span class="pre">'Debug'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_apk" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BUILD_TYPE.DEBUG</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_apk" title="Permalink to this definition"></a></dt>
 <dd><p>Build apk of build_type.
 :param build_type: build type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if success, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -535,7 +501,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_local_properties_file">
-<span class="sig-name descname"><span class="pre">build_local_properties_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_local_properties_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_local_properties_file" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_local_properties_file</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_local_properties_file"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_local_properties_file" title="Permalink to this definition"></a></dt>
 <dd><p>builds local.properties file content.
 :returns: file content.
 :rtype: str</p>
@@ -543,7 +509,7 @@ gets value of com.android.tools.build contained in gradle_file.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_proj_and_apk">
-<span class="sig-name descname"><span class="pre">build_proj_and_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.DEBUG:</span> <span class="pre">'Debug'&gt;</span></em>, <em class="sig-param"><span class="pre">build_tests_apk=False</span></em>, <em class="sig-param"><span class="pre">rebuild=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_proj_and_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_proj_and_apk" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_proj_and_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BUILD_TYPE.DEBUG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_tests_apk</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rebuild</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_proj_and_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_proj_and_apk" title="Permalink to this definition"></a></dt>
 <dd><p>builds project and generates apk of build type. It can optionally build the tests apk and/or rebuild
 the current project in case it was already built.
 :param build_type: type of build to perform.
@@ -553,10 +519,10 @@ the current project in case it was already built.
 :param rebuild: True if the current build has to be cleaned and rebuilt, False otherwise.
 :type rebuild: bool</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>build results.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -564,7 +530,7 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_tests_apk">
-<span class="sig-name descname"><span class="pre">build_tests_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_tests_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_tests_apk" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_tests_apk</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_tests_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_tests_apk" title="Permalink to this definition"></a></dt>
 <dd><p>builds tests apk.
 :returns: True if success, False otherwise.
 :rtype: bool</p>
@@ -572,15 +538,15 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.build_with_gradlew">
-<span class="sig-name descname"><span class="pre">build_with_gradlew</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_with_gradlew"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_with_gradlew" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">build_with_gradlew</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip_lint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.build_with_gradlew"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.build_with_gradlew" title="Permalink to this definition"></a></dt>
 <dd><p>performs build task with gradle.
 :param tries: number max of tries to fix build errors.
 :param target_task: task to perform.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if success, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -588,15 +554,15 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.create_app_from_installed_apk">
-<span class="sig-name descname"><span class="pre">create_app_from_installed_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.create_app_from_installed_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.create_app_from_installed_apk" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">create_app_from_installed_apk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">build_type</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.create_app_from_installed_apk"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.create_app_from_installed_apk" title="Permalink to this definition"></a></dt>
 <dd><p>create App object from installed apk on device.
 :param gradle_output: build output.
 :param build_type: build type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>created app.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>app(<a class="reference internal" href="anadroid.application.html#anadroid.application.Application.App" title="anadroid.application.Application.App">App</a>)</p>
 </dd>
 </dl>
@@ -604,17 +570,17 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.install_apks">
-<span class="sig-name descname"><span class="pre">install_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.DEBUG:</span> <span class="pre">'Debug'&gt;</span></em>, <em class="sig-param"><span class="pre">install_apk_test=False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.install_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.install_apks" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BUILD_TYPE.DEBUG</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">install_apk_test</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.install_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.install_apks" title="Permalink to this definition"></a></dt>
 <dd><p>install apk of build_type and optionally de tests apk.
 :param build_type: build type.
 :type build_type: BUILD_TYPE
 :param install_apk_test: True if the tests’ apk has to be installed, False otherwise.
 :type install_apk_test: bool</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list of installed apks.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>apps_list(list)</p>
 </dd>
 </dl>
@@ -622,7 +588,7 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.needs_external_lib_dependency">
-<span class="sig-name descname"><span class="pre">needs_external_lib_dependency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_external_lib_dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_external_lib_dependency" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">needs_external_lib_dependency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_external_lib_dependency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_external_lib_dependency" title="Permalink to this definition"></a></dt>
 <dd><p>needs build dependencies from instrumenter.
 :returns: True if needs, False otherwise.
 :rtype: bool</p>
@@ -630,36 +596,43 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.needs_min_sdk_upgrade">
-<span class="sig-name descname"><span class="pre">needs_min_sdk_upgrade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_min_sdk_upgrade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_min_sdk_upgrade" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">needs_min_sdk_upgrade</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_min_sdk_upgrade"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_min_sdk_upgrade" title="Permalink to this definition"></a></dt>
 <dd><p>infers if module needs min sdk upgrade in order to the app be installed on the current device.
 :param gradle_file: gradle file.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.needs_rebuild">
-<span class="sig-name descname"><span class="pre">needs_rebuild</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_rebuild"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_rebuild" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">needs_rebuild</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.needs_rebuild"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.needs_rebuild" title="Permalink to this definition"></a></dt>
 <dd><p>checks if project needs rebuild.
 :returns: True if needs, False otherwise.
 :rtype: bool</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.regist_error_build">
+<span class="sig-name descname"><span class="pre">regist_error_build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.regist_error_build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.regist_error_build" title="Permalink to this definition"></a></dt>
+<dd><p>record successful build in file.
+:param task: build task name.</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.regist_successful_build">
-<span class="sig-name descname"><span class="pre">regist_successful_build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.regist_successful_build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.regist_successful_build" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">regist_successful_build</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.regist_successful_build"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.regist_successful_build" title="Permalink to this definition"></a></dt>
 <dd><p>record successful build in file.
 :param task: build task name.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.sign_apks">
-<span class="sig-name descname"><span class="pre">sign_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">build_type=&lt;BUILD_TYPE.DEBUG:</span> <span class="pre">'Debug'&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.sign_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.sign_apks" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sign_apks</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">BUILD_TYPE.DEBUG</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.sign_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.sign_apks" title="Permalink to this definition"></a></dt>
 <dd><p>Sign project apks of build_type.
 :param build_type: build type.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if success, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -667,13 +640,21 @@ the current project in case it was already built.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.uninstall_all_apks">
-<span class="sig-name descname"><span class="pre">uninstall_all_apks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.uninstall_all_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.uninstall_all_apks" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall_all_apks</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.uninstall_all_apks"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.uninstall_all_apks" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall all project apks.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.was_attempted_to_build_before">
+<span class="sig-name descname"><span class="pre">was_attempted_to_build_before</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.was_attempted_to_build_before"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.was_attempted_to_build_before" title="Permalink to this definition"></a></dt>
+<dd><p>checks if there was a build attempt before.
+:returns: True if yes, False otherwise.
+:rtype: bool</p>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.GradleBuilder.was_last_build_successful">
-<span class="sig-name descname"><span class="pre">was_last_build_successful</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.was_last_build_successful"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.was_last_build_successful" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">was_last_build_successful</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">task</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'build'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#GradleBuilder.was_last_build_successful"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.GradleBuilder.was_last_build_successful" title="Permalink to this definition"></a></dt>
 <dd><p>checks if last build attempt was successful.
 inspects BUILD_RESULTS_FILE file and checks build result.
 :returns: True if build was successful, False otherwise.
@@ -684,14 +665,14 @@ inspects BUILD_RESULTS_FILE file and checks build result.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.gen_dependency_string">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">gen_dependency_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dependency</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#gen_dependency_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.gen_dependency_string" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">gen_dependency_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dependency</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#gen_dependency_string"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.gen_dependency_string" title="Permalink to this definition"></a></dt>
 <dd><p>generates dependency format to be inserted in gradle files.
 :param dependency(obj: <cite>BuildDependency</cite>): dependency.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dependency format as string.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>dependency_string(str)</p>
 </dd>
 </dl>
@@ -699,7 +680,7 @@ inspects BUILD_RESULTS_FILE file and checks build result.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.is_library_gradle">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">is_library_gradle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#is_library_gradle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.is_library_gradle" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">is_library_gradle</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bld_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#is_library_gradle"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.is_library_gradle" title="Permalink to this definition"></a></dt>
 <dd><p>checks if bld_file is a build file from a library.
 :returns: True if is a library, False otherwise.
 :rtype: bool</p>
@@ -707,44 +688,44 @@ inspects BUILD_RESULTS_FILE file and checks build result.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.GradleBuilder.set_transitive_names">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">set_transitive_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_plugin_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#set_transitive_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.set_transitive_names" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.GradleBuilder.</span></span><span class="sig-name descname"><span class="pre">set_transitive_names</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">gradle_plugin_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/GradleBuilder.html#set_transitive_names"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.GradleBuilder.set_transitive_names" title="Permalink to this definition"></a></dt>
 <dd><p>Given the gradle-plugin version, sets the most adequate nomenclature to use in dependencies definition.
 :param gradle_plugin_version: gradle-plugin version.</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.build.SdkManagerWrapper">
-<span id="anadroid-build-sdkmanagerwrapper-module"></span><h2>anadroid.build.SdkManagerWrapper module<a class="headerlink" href="#module-anadroid.build.SdkManagerWrapper" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.build.SdkManagerWrapper">
+<span id="anadroid-build-sdkmanagerwrapper-module"></span><h2>anadroid.build.SdkManagerWrapper module<a class="headerlink" href="#module-anadroid.build.SdkManagerWrapper" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.build.SdkManagerWrapper.</span></span><span class="sig-name descname"><span class="pre">SDKManager</span></span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.build.SdkManagerWrapper.</span></span><span class="sig-name descname"><span class="pre">SDKManager</span></span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Abstract calls to sdkmanager binary.
 Provides methods to enumerate and install platform-tools or build-tools.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.download_build_tools_version">
-<span class="sig-name descname"><span class="pre">download_build_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_build_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_build_tools_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">download_build_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_build_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_build_tools_version" title="Permalink to this definition"></a></dt>
 <dd><p>downloads a given build tools version.
 :param version: build tools version.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.download_platform">
-<span class="sig-name descname"><span class="pre">download_platform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_platform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_platform" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">download_platform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_platform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_platform" title="Permalink to this definition"></a></dt>
 <dd><p>downloads a given platforms  version.
 :param plat_version: platforms version.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.download_platform_tools_version">
-<span class="sig-name descname"><span class="pre">download_platform_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_platform_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_platform_tools_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">download_platform_tools_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.download_platform_tools_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.download_platform_tools_version" title="Permalink to this definition"></a></dt>
 <dd><p>downloads a given platform-tools version.
 :param version: platform-tools version.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.get_list_of_available_build_tools">
-<span class="sig-name descname"><span class="pre">get_list_of_available_build_tools</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.get_list_of_available_build_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.get_list_of_available_build_tools" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_list_of_available_build_tools</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.get_list_of_available_build_tools"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.get_list_of_available_build_tools" title="Permalink to this definition"></a></dt>
 <dd><p>lists the available build_tools.
 :returns: list of versions.
 :rtype: version_list(<a class="reference internal" href="#anadroid.build.SdkManagerWrapper.SDKManager.list" title="anadroid.build.SdkManagerWrapper.SDKManager.list"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list</span></code></a> of <code class="xref py py-obj docutils literal notranslate"><span class="pre">DefaultSemanticVersion</span></code>)</p>
@@ -752,14 +733,14 @@ Provides methods to enumerate and install platform-tools or build-tools.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.is_build_tools_installed">
-<span class="sig-name descname"><span class="pre">is_build_tools_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_tools_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_build_tools_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_build_tools_installed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_build_tools_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">build_tools_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_build_tools_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_build_tools_installed" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if a given build tools version is installed.
 :param build_tools_version: build tools version to check.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if installed, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -767,14 +748,14 @@ Provides methods to enumerate and install platform-tools or build-tools.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.is_platform_tools_installed">
-<span class="sig-name descname"><span class="pre">is_platform_tools_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_tools_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_platform_tools_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_platform_tools_installed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_platform_tools_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_tools_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_platform_tools_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_platform_tools_installed" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if a given build platform-tools version is installed.
 :param plat_tools_version: platform-tools version to check.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if installed, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -782,14 +763,14 @@ Provides methods to enumerate and install platform-tools or build-tools.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.is_platforms_installed">
-<span class="sig-name descname"><span class="pre">is_platforms_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_platforms_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_platforms_installed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_platforms_installed</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plat_version</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.is_platforms_installed"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.is_platforms_installed" title="Permalink to this definition"></a></dt>
 <dd><p>Checks if a given build platforms version is installed.
 :param plat_version: platforms version to check.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>True if installed, False otherwise.</p>
 </dd>
-<dt class="field-even">Return type</dt>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
@@ -797,7 +778,7 @@ Provides methods to enumerate and install platform-tools or build-tools.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.build.SdkManagerWrapper.SDKManager.list">
-<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.list" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/SdkManagerWrapper.html#SDKManager.list"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.SdkManagerWrapper.SDKManager.list" title="Permalink to this definition"></a></dt>
 <dd><p>lists all available and downloadable resources through sdkmanager.
 :returns: list of resources.
 :rtype: str</p>
@@ -805,69 +786,56 @@ Provides methods to enumerate and install platform-tools or build-tools.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.build.versionUpgrader">
-<span id="anadroid-build-versionupgrader-module"></span><h2>anadroid.build.versionUpgrader module<a class="headerlink" href="#module-anadroid.build.versionUpgrader" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.build.versionUpgrader">
+<span id="anadroid-build-versionupgrader-module"></span><h2>anadroid.build.versionUpgrader module<a class="headerlink" href="#module-anadroid.build.versionUpgrader" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.build.versionUpgrader.DefaultSemanticVersion">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.build.versionUpgrader.</span></span><span class="sig-name descname"><span class="pre">DefaultSemanticVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_version_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/versionUpgrader.html#DefaultSemanticVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.versionUpgrader.DefaultSemanticVersion" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.build.versionUpgrader.</span></span><span class="sig-name descname"><span class="pre">DefaultSemanticVersion</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">full_version_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/versionUpgrader.html#DefaultSemanticVersion"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.versionUpgrader.DefaultSemanticVersion" title="Permalink to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class to represent and compare sw versions labeled according to semver format.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.build.versionUpgrader.can_be_semantic_version">
-<span class="sig-prename descclassname"><span class="pre">anadroid.build.versionUpgrader.</span></span><span class="sig-name descname"><span class="pre">can_be_semantic_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/versionUpgrader.html#can_be_semantic_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.versionUpgrader.can_be_semantic_version" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.build.versionUpgrader.</span></span><span class="sig-name descname"><span class="pre">can_be_semantic_version</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">candidate</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/build/versionUpgrader.html#can_be_semantic_version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.build.versionUpgrader.can_be_semantic_version" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.build">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.build" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="module-anadroid.build">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.build" title="Permalink to this heading"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="anadroid.application.html" class="btn btn-neutral float-left" title="anadroid.application package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="anadroid.device.html" class="btn btn-neutral float-right" title="anadroid.device package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

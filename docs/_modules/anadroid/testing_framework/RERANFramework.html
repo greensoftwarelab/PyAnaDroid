@@ -1,155 +1,77 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.testing_framework.RERANFramework &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.testing_framework.RERANFramework</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.testing_framework.RERANFramework</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.testing_framework.RERANFramework</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">time</span>
@@ -163,16 +85,16 @@
 
 <span class="n">RERAN_RESOURCES_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_resources_dir</span><span class="p">(),</span> <span class="s2">&quot;testingFrameworks&quot;</span><span class="p">,</span> <span class="s2">&quot;RERAN&quot;</span><span class="p">)</span>
 <span class="n">TRANSLATOR_JAR_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RERAN_RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;RERANTranslate.jar&quot;</span><span class="p">)</span>
-<span class="n">RERAN_CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;config.cfg&quot;</span>
+<span class="n">RERAN_CONFIG_FILE</span> <span class="o">=</span> <span class="s2">&quot;reran.cfg&quot;</span>
 <span class="n">REPLAY_EXECUTABLE_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RERAN_RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;build&quot;</span><span class="p">,</span> <span class="s2">&quot;replay&quot;</span><span class="p">)</span>
 <span class="n">REPLAY_EXECUTABLE_NAME</span> <span class="o">=</span> <span class="s2">&quot;replay&quot;</span>
 <span class="n">REPLAY_DEVICE_INSTALL_DIR</span> <span class="o">=</span> <span class="s2">&quot;/sdcard/RERAN&quot;</span>
-<span class="n">RECORDED_TESTS_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RERAN_RESOURCES_DIR</span><span class="p">,</span><span class="s2">&quot;tests&quot;</span><span class="p">)</span>
+<span class="n">RECORDED_TESTS_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">RERAN_RESOURCES_DIR</span><span class="p">,</span> <span class="s2">&quot;tests&quot;</span><span class="p">)</span>
 <span class="n">TESTS_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;translated_&quot;</span>
 
 
 <div class="viewcode-block" id="RERANFramework"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework">[docs]</a><span class="k">class</span> <span class="nc">RERANFramework</span><span class="p">(</span><span class="n">AbstractTestingFramework</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Implements AbstractTestingFramework interface to allow recording and executing tests using RERAN framework.</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements AbstractTestingFramework interface to allow recording and executing tests using RERAN framework.</span>
 <span class="sd">    Attributes:</span>
 <span class="sd">        workload(WorkLoad): workload object containing the work units to be executed.</span>
 <span class="sd">        resources_dir(str): directory containing app crawler resources.</span>
@@ -189,7 +111,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">install</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">__load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="n">cfg_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span><span class="p">,</span> <span class="n">RERAN_CONFIG_FILE</span><span class="p">)</span>
+        <span class="n">cfg_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span><span class="p">,</span> <span class="n">RERAN_CONFIG_FILE</span><span class="p">)</span> \
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">RERAN_CONFIG_FILE</span><span class="p">)</span> <span class="k">else</span> <span class="n">RERAN_CONFIG_FILE</span>
         <span class="n">cfg</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">):</span>
             <span class="n">ofile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">cfg_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
@@ -269,7 +192,7 @@
         <span class="k">pass</span></div>
 
 <div class="viewcode-block" id="RERANFramework.push_test"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework.push_test">[docs]</a>    <span class="k">def</span> <span class="nf">push_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_path</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;push test to device.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;push test to device.&quot;&quot;&quot;</span>
         <span class="n">test_basename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">test_path</span><span class="p">)</span>
         <span class="n">dev_install_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_config</span><span class="p">(</span><span class="s2">&quot;REPLAY_DEVICE_INSTALL_DIR&quot;</span><span class="p">)</span>
         <span class="n">test_remote_path</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">dev_install_dir</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">test_basename</span><span class="si">}</span><span class="s2">&quot;</span>
@@ -277,7 +200,7 @@
         <span class="k">return</span> <span class="n">test_remote_path</span></div>
 
 <div class="viewcode-block" id="RERANFramework.test_app"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework.test_app">[docs]</a>    <span class="k">def</span> <span class="nf">test_app</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;test a given app on a given device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;test a given app on a given device.</span>
 <span class="sd">        Executes each work unit of workload on app running on device.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            device(Device): device.</span>
@@ -288,7 +211,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">exec_one_test</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">wk_unit</span><span class="p">,</span> <span class="n">n_retries</span><span class="o">=</span><span class="n">retries_per_test</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RERANFramework.exec_one_test"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework.exec_one_test">[docs]</a>    <span class="k">def</span> <span class="nf">exec_one_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span>  <span class="n">wk_unit</span><span class="p">,</span> <span class="n">n_retries</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;executes one test identified by test_id of an given app on a given device.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;executes one test identified by test_id of an given app on a given device.</span>
 <span class="sd">        Args:</span>
 <span class="sd">            test_id: test uuid.</span>
 <span class="sd">            device(Device): device.</span>
@@ -309,8 +232,8 @@
         <span class="n">app</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">stop_profiling</span><span class="p">()</span>
         <span class="n">device</span><span class="o">.</span><span class="n">clear_logcat</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GreendroidResultTrace</span><span class="si">{</span><span class="n">test_id</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">pull_results</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;GreendroidResultTrace</span><span class="si">{</span><span class="n">test_id</span><span class="si">}</span><span class="s2">.csv&quot;</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="n">test_id</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="o">.</span><span class="n">pull_results</span><span class="p">(</span><span class="n">test_id</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">curr_local_dir</span><span class="p">)</span>
         <span class="n">app</span><span class="o">.</span><span class="n">clean_cache</span><span class="p">()</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">validate_test</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;log_filename&#39;</span><span class="p">:</span> <span class="n">log_file</span><span class="p">}):</span>
             <span class="n">logw</span><span class="p">(</span><span class="s2">&quot;Validation failed. Retrying&quot;</span><span class="p">)</span>
@@ -319,11 +242,11 @@
             <span class="n">logs</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Test </span><span class="si">{</span><span class="n">test_id</span><span class="si">}</span><span class="s2"> PASSED &quot;</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="RERANFramework.is_recordable"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework.is_recordable">[docs]</a>    <span class="k">def</span> <span class="nf">is_recordable</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;checks if framework can record tests.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;checks if framework can record tests.&quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="kc">True</span></div>
 
 <div class="viewcode-block" id="RERANFramework.record_test"><a class="viewcode-back" href="../../../anadroid.testing_framework.html#anadroid.testing_framework.RERANFramework.RERANFramework.record_test">[docs]</a>    <span class="k">def</span> <span class="nf">record_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">test_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">output_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;record test of a given app, identified by test_id.&quot;&quot;&quot;</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;record test of a given app, identified by test_id.&quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">test_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">test_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="si">}</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="n">app_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -337,46 +260,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

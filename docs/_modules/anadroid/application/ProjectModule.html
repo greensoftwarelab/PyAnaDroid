@@ -1,178 +1,113 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.application.ProjectModule &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="../../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/jquery.js"></script>
-        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
         <script src="../../../_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="../../../_static/js/theme.js"></script>
-
-    
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="../../../index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
 
-          
         </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"></div>
-            
-          
-        </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="../../../index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="../../../index.html" class="icon icon-home"></a> &raquo;</li>
-        
-          <li><a href="../../index.html">Module code</a> &raquo;</li>
-        
-      <li>anadroid.application.ProjectModule</li>
-    
-    
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.application.ProjectModule</li>
       <li class="wy-breadcrumbs-aside">
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+             
   <h1>Source code for anadroid.application.ProjectModule</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">from</span> <span class="nn">enum</span> <span class="kn">import</span> <span class="n">Enum</span>
 <span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">mkdir</span>
 
-<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">loge</span>
 <span class="kn">from</span> <span class="nn">textops</span> <span class="kn">import</span> <span class="n">cat</span><span class="p">,</span> <span class="n">grep</span><span class="p">,</span> <span class="n">cut</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
 
 <div class="viewcode-block" id="MODULE_TYPE"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.ProjectModule.MODULE_TYPE">[docs]</a><span class="k">class</span> <span class="nc">MODULE_TYPE</span><span class="p">(</span><span class="n">Enum</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Project Module types.&quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Project Module types.&quot;&quot;&quot;</span>
     <span class="n">LIBRARY</span> <span class="o">=</span> <span class="s2">&quot;Library&quot;</span>
     <span class="n">APP</span> <span class="o">=</span> <span class="s2">&quot;App&quot;</span></div>
 
 
 <div class="viewcode-block" id="ProjectModule"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.ProjectModule.ProjectModule">[docs]</a><span class="k">class</span> <span class="nc">ProjectModule</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Represents an Android Project Module (https://developer.android.com/studio/projects#ApplicationModules).</span>
-<span class="sd">        Attributes:</span>
-<span class="sd">            name(str): module name.</span>
-<span class="sd">            mod_dir(str): module directory.</span>
-<span class="sd">        &quot;&quot;&quot;</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Represents an Android Project Module.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        mod_name (str): Module name.</span>
+<span class="sd">        mod_dir (str): Module directory.</span>
+<span class="sd">        build_file (str): Path to the build.gradle file of the module.</span>
+<span class="sd">        module_type (MODULE_TYPE): Type of the module (LIBRARY or APP).</span>
+<span class="sd">        manifest (str): Path to the AndroidManifest.xml file of the module.</span>
+<span class="sd">        dependencies (set): Set of module dependencies.</span>
+<span class="sd">        gen_apks (dict): Generated APKs within the module.</span>
+<span class="sd">        gen_aars (dict): Generated AARs within the module.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">mod_dir</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes a ProjectModule instance.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            name (str): Module name.</span>
+<span class="sd">            mod_dir (str): Module directory.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mod_name</span> <span class="o">=</span> <span class="n">name</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">mod_dir</span> <span class="o">=</span> <span class="n">mod_dir</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">build_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_build_file</span><span class="p">()</span>
@@ -180,42 +115,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">manifest</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_manifest</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">dependencies</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">__infer_dependencies</span><span class="p">()</span>
-        <span class="c1"># self.main_dir = None</span>
-        <span class="c1"># self.inst_test_dir = None</span>
-        <span class="c1"># self.test_dir = None</span>
-        <span class="c1"># self.beuild_dir = None</span>
-        <span class="c1"># self.libs_dir = None</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gen_apks</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">gen_aars</span> <span class="o">=</span> <span class="p">{}</span>
 
     <span class="k">def</span> <span class="nf">__infer_build_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;returns build.gradle filepath of module.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the path to the build.gradle file of the module.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            mod(str): filepath.</span>
+<span class="sd">            str: Filepath.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> -maxdepth 1 -type f -name </span><span class="se">\&quot;</span><span class="s2">build.gradle</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mod_dir</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">return_code</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__infer_manifest</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Returns module&#39;s manifest file.</span>
-<span class="sd">        Looks for AndroidManifest.xml files in mod_dir.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Returns the path to the AndroidManifest.xml file of the module.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">             filepath(str): filepath.</span>
+<span class="sd">            str: Filepath.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="s2">&quot;find </span><span class="se">\&quot;</span><span class="si">%s</span><span class="se">\&quot;</span><span class="s2"> -maxdepth 4 -type f -name </span><span class="se">\&quot;</span><span class="s2">AndroidManifest.xml</span><span class="se">\&quot;</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">mod_dir</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">res</span><span class="o">.</span><span class="n">output</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">if</span> <span class="n">res</span><span class="o">.</span><span class="n">return_code</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span>
 
     <span class="k">def</span> <span class="nf">__infer_module_type</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Tries to infer the module type (`MODULE_TYPE`).</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Tries to infer the module type (MODULE_TYPE).</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            mod_type(:obj:`MODULE_TYPE`): module type.</span>
+<span class="sd">            MODULE_TYPE: Module type.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">is_app</span> <span class="o">=</span> <span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_file</span><span class="p">)</span> <span class="o">|</span> <span class="n">grep</span><span class="p">(</span><span class="s1">&#39;com.android.application&#39;</span><span class="p">)</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span>
         <span class="k">return</span> <span class="n">MODULE_TYPE</span><span class="o">.</span><span class="n">APP</span> <span class="k">if</span> <span class="n">is_app</span> <span class="k">else</span> <span class="n">MODULE_TYPE</span><span class="o">.</span><span class="n">LIBRARY</span>
 
     <span class="k">def</span> <span class="nf">__infer_dependencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Infers and add module dependencies to dependencies attribute.&quot;&quot;&quot;</span>
-        <span class="c1"># TODO get dependencies type</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Infers and adds module dependencies to the dependencies attribute.&quot;&quot;&quot;</span>
+        <span class="c1"># TODO: Get dependencies type</span>
         <span class="n">dependencies</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;dependencies.*?\{(.|\n)*}&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">cat</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build_file</span><span class="p">)))</span>
         <span class="n">inside_dependencies</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="n">dependencies</span><span class="p">:</span>
@@ -225,8 +157,11 @@
         <span class="k">for</span> <span class="n">dep_line</span> <span class="ow">in</span> <span class="n">inside_dependencies</span><span class="p">:</span>
             <span class="n">is_imp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">grep</span><span class="p">(</span><span class="n">dep_line</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;implementation&quot;</span><span class="p">))</span>
             <span class="k">if</span> <span class="n">is_imp</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
-                <span class="n">splits</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;(</span><span class="se">\&#39;</span><span class="s1">|</span><span class="se">\&quot;</span><span class="s1">)(.*)(</span><span class="se">\&#39;</span><span class="s1">|</span><span class="se">\&quot;</span><span class="s1">?)&#39;</span><span class="p">,</span> <span class="n">is_imp</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-                <span class="n">dependency</span> <span class="o">=</span> <span class="n">splits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">splits</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="s1">&#39;(</span><span class="se">\&#39;</span><span class="s1">|</span><span class="se">\&quot;</span><span class="s1">)(.*)(</span><span class="se">\&#39;</span><span class="s1">|</span><span class="se">\&quot;</span><span class="s1">?)&#39;</span><span class="p">,</span> <span class="n">is_imp</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">splits</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">dependency</span> <span class="o">=</span> <span class="n">splits</span><span class="o">.</span><span class="n">groups</span><span class="p">()[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">loge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;error detecting dependencies of module </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">mod_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">is_comp</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">grep</span><span class="p">(</span><span class="n">dep_line</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;compile&quot;</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">is_comp</span> <span class="o">!=</span> <span class="s2">&quot;&quot;</span><span class="p">:</span>
@@ -236,11 +171,13 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">dependencies</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">dependency</span><span class="p">)</span>
 
 <div class="viewcode-block" id="ProjectModule.create_inner_folder"><a class="viewcode-back" href="../../../anadroid.application.html#anadroid.application.ProjectModule.ProjectModule.create_inner_folder">[docs]</a>    <span class="k">def</span> <span class="nf">create_inner_folder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;libs&quot;</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;creates directory  inside module.</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Creates a directory inside the module.</span>
+
 <span class="sd">        Args:</span>
-<span class="sd">            name: directory name.</span>
+<span class="sd">            name (str): Directory name.</span>
+
 <span class="sd">        Returns:</span>
-<span class="sd">            path(str): directory&#39;s path.</span>
+<span class="sd">            str: Directory&#39;s path.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">mod_dir</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
         <span class="k">try</span><span class="p">:</span>
@@ -251,46 +188,30 @@
 </pre></div>
 
            </div>
-           
           </div>
           <footer>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

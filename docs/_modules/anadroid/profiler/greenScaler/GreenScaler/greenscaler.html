@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anadroid.profiler.greenScaler.GreenScaler.greenscaler &mdash; pyanadroid 0.3.5 documentation</title>
+      <link rel="stylesheet" href="../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../_static/jquery.js"></script>
+        <script src="../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../../" id="documentation_options" src="../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../_static/doctools.js"></script>
+        <script src="../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../index.html" class="icon icon-home">
+            pyanadroid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../modules.html">anadroid</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../index.html">pyanadroid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.profiler.greenScaler.GreenScaler.greenscaler</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for anadroid.profiler.greenScaler.GreenScaler.greenscaler</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Copyright 2016 Shaiful Chowdhury (shaiful@ualberta.ca)</span>
+
+<span class="sd">Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);</span>
+<span class="sd">you may not use this file except in compliance with the License.</span>
+<span class="sd">You may obtain a copy of the License at</span>
+
+<span class="sd">	http://www.apache.org/licenses/LICENSE-2.0</span>
+
+<span class="sd">Unless required by applicable law or agreed to in writing, software</span>
+<span class="sd">distributed under the License is distributed on an &quot;AS IS&quot; BASIS,</span>
+<span class="sd">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span>
+<span class="sd">See the License for the specific language governing permissions and</span>
+<span class="sd">limitations under the License.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">sys</span><span class="o">,</span> <span class="nn">argparse</span><span class="o">,</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">threading</span><span class="o">,</span> <span class="nn">subprocess</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.greenScaler.GreenScaler.libmutation</span> <span class="kn">import</span> <span class="n">utils</span><span class="p">,</span> <span class="n">greenscalerapplication</span><span class="p">,</span><span class="n">model</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">shutil</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+
+
+<div class="viewcode-block" id="cleaning"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.cleaning">[docs]</a><span class="k">def</span> <span class="nf">cleaning</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">apk</span><span class="p">):</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Uninstall app if already installed&quot;</span><span class="p">)</span>
+	<span class="n">utils</span><span class="o">.</span><span class="n">uninstall_app</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Install app&quot;</span><span class="p">)</span>
+	<span class="n">utils</span><span class="o">.</span><span class="n">install_app</span><span class="p">(</span><span class="n">apk</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="get_foreground_app"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.get_foreground_app">[docs]</a><span class="k">def</span> <span class="nf">get_foreground_app</span><span class="p">():</span>
+	<span class="n">output</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="s2">&quot;adb shell dumpsys activity recents | grep &#39;Recent #0&#39; | cut -d= -f2 | sed &#39;s| .*||&#39; | cut -d &#39;/&#39; -f1&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="c1">#p = subprocess.Popen(&quot;pwd&quot;, stdout=subprocess.PIPE)</span>
+	<span class="c1">#result = p.communicate()[0]</span>
+	<span class="k">return</span> <span class="n">output</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+<span class="c1"># </span>
+<div class="viewcode-block" id="cpu_measurement"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.cpu_measurement">[docs]</a><span class="k">def</span> <span class="nf">cpu_measurement</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">test_cmd</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>          
+		<span class="c1">#cleaning(package, apk_file)</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Start cpu profiling&quot;</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;sleeping&quot;</span><span class="p">)</span>
+		<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">cpu_before</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running application&quot;</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">test_cmd</span><span class="p">)</span>
+		<span class="n">duration</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_cmd</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">duration</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">duration</span><span class="o">+</span><span class="n">duration</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;total duration=&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">duration</span><span class="p">))</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">cpu_after</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Collect CPU measurements&quot;</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">pull_cpu</span><span class="p">(</span><span class="n">package</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">cpu</span><span class="o">.</span><span class="n">count_cpu</span><span class="p">(</span><span class="n">apk_file</span><span class="p">[:</span><span class="o">-</span><span class="mi">4</span><span class="p">])</span></div>
+		
+
+<div class="viewcode-block" id="syscall_trace"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.syscall_trace">[docs]</a><span class="k">def</span> <span class="nf">syscall_trace</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span>  <span class="n">test_cmd</span><span class="p">):</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>      
+		<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;running &quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">((</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span><span class="o">+</span><span class="s2">&quot;th round of strace&quot;</span><span class="p">)</span>
+			<span class="c1">#cleaning(package, apk_file)</span>
+			<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Start syscall tracing&quot;</span><span class="p">)</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">syscall</span><span class="o">.</span><span class="n">syscall_capture</span><span class="p">()</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;syscall tracing started&quot;</span><span class="p">)</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Running application&quot;</span><span class="p">)</span>
+			<span class="c1">#conv= &#39; &#39;.join([str(i) for i in test_cmd])</span>
+			<span class="n">duration</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_cmd</span><span class="p">)</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Stop Syscall tracing&quot;</span><span class="p">)</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">syscall</span><span class="o">.</span><span class="n">syscall_stop</span><span class="p">()</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Pull syscall traces&quot;</span><span class="p">)</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">syscall</span><span class="o">.</span><span class="n">pull_syscall</span><span class="p">()</span>
+			<span class="n">trap</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">syscall</span><span class="o">.</span><span class="n">count_syscall</span><span class="p">()</span>
+			<span class="k">if</span> <span class="n">trap</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span> <span class="c1">##### strace worked</span>
+				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Syscall worked&quot;</span><span class="p">)</span>
+				<span class="k">break</span>
+			<span class="k">else</span><span class="p">:</span>
+				<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Syscall did not work this time</span><span class="se">\n</span><span class="s2">Starting this round again&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="screen_capture"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.screen_capture">[docs]</a><span class="k">def</span> <span class="nf">screen_capture</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span><span class="n">test_cmd</span><span class="p">):</span>
+		<span class="c1">#cleaning(package, apk_file)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">capture_images</span><span class="p">()</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Running application&quot;</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">test_cmd</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">pull_images</span><span class="p">()</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">delete_images</span><span class="p">()</span>
+	
+		<span class="n">no_img</span><span class="o">=</span><span class="mi">0</span>
+		<span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots/&quot;</span><span class="p">):</span>
+			<span class="n">no_img</span><span class="o">=</span><span class="n">no_img</span><span class="o">+</span><span class="mi">1</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;total captured_images=&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">no_img</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">no_img</span><span class="o">&gt;=</span><span class="mi">1</span><span class="p">:</span>
+			<span class="n">app</span><span class="o">.</span><span class="n">color</span><span class="o">.</span><span class="n">calculate_rgb</span><span class="p">()</span>
+			<span class="c1">#utils.uninstall_app(package)</span>
+			<span class="k">return</span> <span class="mi">1</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Images were not captured properly&quot;</span><span class="p">)</span>
+			<span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;==================================================================&quot;</span><span class="p">)</span>
+			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;==================================================================&quot;</span><span class="p">)</span>
+			<span class="k">return</span> <span class="mi">0</span></div>
+
+
+
+
+<div class="viewcode-block" id="default_greenscaler"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.default_greenscaler">[docs]</a><span class="k">def</span> <span class="nf">default_greenscaler</span><span class="p">(</span><span class="n">n_runs</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+	<span class="n">n</span> <span class="o">=</span> <span class="n">n_runs</span>
+	<span class="k">for</span> <span class="n">apk_file</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">listdir</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">APKS_PATH</span><span class="p">)):</span>
+		<span class="c1">########### Find package name and main_activity from the apk</span>
+		<span class="k">try</span><span class="p">:</span>
+			<span class="n">st</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">check_output</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">AAPT_PATH</span><span class="o">+</span><span class="s2">&quot;aapt dump badging &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">APKS_PATH</span><span class="o">+</span><span class="n">apk_file</span><span class="p">))</span>
+			<span class="n">start</span><span class="o">=</span><span class="s2">&quot;package: name=</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+			<span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2"> versionCode=&quot;</span>
+			<span class="n">package</span><span class="o">=</span><span class="p">((</span><span class="n">st</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">start</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">end</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+			<span class="n">start</span><span class="o">=</span><span class="s2">&quot;launchable-activity: name=</span><span class="se">\&#39;</span><span class="s2">&quot;</span>
+			<span class="n">end</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\&#39;</span><span class="s2">  label=</span><span class="se">\&#39;</span><span class="s2">&quot;</span>  
+			<span class="n">main_activity</span><span class="o">=</span><span class="p">((</span><span class="n">st</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">start</span><span class="p">))[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">end</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+		
+				<span class="c1">#pid = utils.clean_up(package, utils.APKS_PATH+apk_file)</span>
+		<span class="k">except</span><span class="p">:</span>
+			<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Could not find Package name&quot;</span><span class="p">)</span>
+			<span class="k">continue</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;==========================================================&quot;</span><span class="p">)</span>
+		
+		<span class="c1">### initialize an app with zero resource usage</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">apk_file</span><span class="p">)</span>
+		<span class="n">app</span><span class="o">=</span><span class="n">greenscalerapplication</span><span class="o">.</span><span class="n">GreenScalerApplication</span><span class="p">(</span><span class="n">apk_file</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">runTestCommand</span><span class="o">=</span><span class="n">run_test</span><span class="p">)</span>
+		
+		<span class="c1">######## Capture all    </span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;capture cpu and others for &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="s2">&quot; times&quot;</span><span class="p">)</span>
+		<span class="n">cpu_measurement</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;capture system calls&quot;</span><span class="p">)</span>
+		<span class="n">syscall_trace</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Now run to capture screen shots&quot;</span><span class="p">)</span>
+		<span class="k">while</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="n">n_image</span><span class="o">=</span><span class="n">screen_capture</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">apk_file</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">)</span>
+			<span class="k">if</span> <span class="n">n_image</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+				<span class="k">break</span>
+
+		<span class="n">energy</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">estimate_energy</span><span class="p">(</span><span class="n">apk_file</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy =&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; Joules&quot;</span><span class="p">)</span></div>
+	
+	
+
+
+<div class="viewcode-block" id="exec_command"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.exec_command">[docs]</a><span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">command</span><span class="p">):</span>
+	<span class="c1">#subprocess.call(command)</span>
+	<span class="c1">#print(&quot;executing command -%s-&quot; % command)</span>
+	<span class="n">pipes</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="c1">#If you are using python 2.x, you need to include shell=True in the above line</span>
+	<span class="n">std_out</span><span class="p">,</span> <span class="n">std_err</span> <span class="o">=</span> <span class="n">pipes</span><span class="o">.</span><span class="n">communicate</span><span class="p">()</span>
+
+	<span class="k">if</span> <span class="n">pipes</span><span class="o">.</span><span class="n">returncode</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+	    <span class="c1"># an error happened!</span>
+	    <span class="n">err_msg</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">%s</span><span class="s2">. Code: </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">std_err</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">pipes</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
+	    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="n">err_msg</span><span class="p">)</span>
+
+	<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">std_err</span><span class="p">):</span>
+		<span class="nb">print</span><span class="p">(</span><span class="n">std_out</span><span class="p">)</span></div>
+	    <span class="c1"># return code is 0 (no error), but we may want to</span>
+    <span class="c1"># do something with the info on std_err</span>
+    <span class="c1"># i.e. logger.warning(std_err)</span>
+
+
+<div class="viewcode-block" id="exec_greenscaler"><a class="viewcode-back" href="../../../../../anadroid.profiler.greenScaler.GreenScaler.html#anadroid.profiler.greenScaler.GreenScaler.greenscaler.exec_greenscaler">[docs]</a><span class="k">def</span> <span class="nf">exec_greenscaler</span><span class="p">(</span><span class="n">package</span><span class="p">,</span><span class="n">test_cmd</span><span class="p">):</span>
+	<span class="n">n</span><span class="o">=</span><span class="mi">1</span>
+	<span class="n">app</span><span class="o">=</span><span class="n">greenscalerapplication</span><span class="o">.</span><span class="n">GreenScalerApplication</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">runTestCommand</span><span class="o">=</span><span class="n">exec_command</span><span class="p">)</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;executing test&quot;</span><span class="p">)</span>
+	<span class="n">cpu_measurement</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">test_cmd</span><span class="p">)</span>
+	<span class="n">foreground_app</span><span class="o">=</span><span class="n">get_foreground_app</span><span class="p">()</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="o">+</span><span class="n">foreground_app</span><span class="o">+</span><span class="s2">&quot;-&quot;</span><span class="p">)</span>
+	<span class="k">if</span> <span class="n">foreground_app</span> <span class="o">!=</span> <span class="n">package</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error detected. App crashed or stopped during execution&quot;</span><span class="p">)</span>
+		<span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+	<span class="n">app</span><span class="o">.</span><span class="n">stop_and_clean_app</span><span class="p">()</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;capture system calls&quot;</span><span class="p">)</span>
+	<span class="n">syscall_trace</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span><span class="n">test_cmd</span><span class="p">)</span>
+	<span class="n">foreground_app</span><span class="o">=</span><span class="n">get_foreground_app</span><span class="p">()</span>
+	<span class="k">if</span> <span class="n">foreground_app</span> <span class="o">!=</span> <span class="n">package</span><span class="p">:</span>
+		<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error detected. App crashed or stopped during execution&quot;</span><span class="p">)</span>
+		<span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> 
+	<span class="n">app</span><span class="o">.</span><span class="n">stop_and_clean_app</span><span class="p">()</span>
+	<span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;Now run to capture screen shots&quot;</span><span class="p">)</span>
+	<span class="n">n_tries</span><span class="o">=</span><span class="mi">5</span>
+	<span class="k">while</span> <span class="n">n_tries</span><span class="o">&gt;</span><span class="mi">0</span><span class="p">:</span>
+		<span class="n">n_tries</span><span class="o">=</span><span class="n">n_tries</span><span class="o">-</span><span class="mi">1</span>
+		<span class="n">app</span><span class="o">.</span><span class="n">stop_and_clean_app</span><span class="p">()</span>
+		<span class="n">n_image</span><span class="o">=</span><span class="n">screen_capture</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">package</span><span class="p">,</span> <span class="n">test_cmd</span><span class="p">)</span>
+		<span class="k">if</span> <span class="n">n_image</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+			<span class="k">break</span>
+
+	<span class="n">energy</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">estimate_energy</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+	<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Energy =&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">energy</span><span class="p">)</span><span class="o">+</span><span class="s2">&quot; Joules&quot;</span><span class="p">)</span>
+	<span class="n">app</span><span class="o">.</span><span class="n">stop_and_clean_app</span><span class="p">()</span>
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span></div>
+
+<span class="k">if</span> <span class="vm">__name__</span><span class="o">==</span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>					
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">2</span><span class="p">:</span>
+		<span class="n">package</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="n">exec_greenscaler</span><span class="p">(</span><span class="n">package</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">2</span><span class="p">:]))</span>      
+	<span class="k">else</span><span class="p">:</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;bad arg len. Usage: python greenscaler &lt;apk-path&gt; [cmd and args]&quot;</span><span class="p">)</span>
+		<span class="n">exit</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Rui Rua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

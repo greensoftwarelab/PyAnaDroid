@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anadroid.profiler.greenScaler.GreenScaler.libmutation.color &mdash; pyanadroid 0.3.5 documentation</title>
+      <link rel="stylesheet" href="../../../../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../../../../_static/jquery.js"></script>
+        <script src="../../../../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../../../../" id="documentation_options" src="../../../../../../_static/documentation_options.js"></script>
+        <script src="../../../../../../_static/doctools.js"></script>
+        <script src="../../../../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../../../../index.html" class="icon icon-home">
+            pyanadroid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../../../modules.html">anadroid</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../../../index.html">pyanadroid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../../../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.profiler.greenScaler.GreenScaler.libmutation.color</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for anadroid.profiler.greenScaler.GreenScaler.libmutation.color</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">time</span><span class="o">,</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">subprocess</span><span class="o">,</span> <span class="nn">threading</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">anadroid.profiler.greenScaler.GreenScaler.libmutation.utils</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="kn">import</span> <span class="n">listdir</span>
+<span class="kn">from</span> <span class="nn">PIL</span> <span class="kn">import</span> <span class="n">Image</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.profiler.greenScaler.GreenScaler.libmutation</span> <span class="kn">import</span> <span class="n">utils</span>
+
+
+<div class="viewcode-block" id="RGB"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB">[docs]</a><span class="k">class</span> <span class="nc">RGB</span><span class="p">:</span>
+	
+	<span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">=</span><span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">=</span><span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">=</span><span class="mi">0</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">=</span><span class="n">package</span>
+
+<div class="viewcode-block" id="RGB.makedir"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.makedir">[docs]</a>	<span class="k">def</span> <span class="nf">makedir</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;adb&quot;</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="s2">&quot;rm -rf&quot;</span><span class="p">,</span> <span class="s2">&quot;/sdcard/screen_shots&quot;</span><span class="p">])</span>	
+		<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;adb&quot;</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="s2">&quot;mkdir&quot;</span><span class="p">,</span> <span class="s2">&quot;/sdcard/screen_shots&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="RGB.run_screencap"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.run_screencap">[docs]</a>	<span class="k">def</span> <span class="nf">run_screencap</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;adb shell sh /sdcard/screen_capture.sh &quot;</span><span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="RGB.pull_images"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.pull_images">[docs]</a>	<span class="k">def</span> <span class="nf">pull_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">):</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;rm -rf &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">)</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mkdir &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">)</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s2">&quot;adb pull /sdcard/screen_shots/ &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots&quot;</span><span class="p">):</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mkdir &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots&quot;</span><span class="p">)</span>
+			<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mv &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/* &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots/&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="RGB.delete_images"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.delete_images">[docs]</a>	<span class="k">def</span> <span class="nf">delete_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">([</span><span class="s2">&quot;adb&quot;</span><span class="p">,</span> <span class="s2">&quot;shell&quot;</span><span class="p">,</span> <span class="s2">&quot;rm&quot;</span><span class="p">,</span> <span class="s2">&quot;-rf&quot;</span><span class="p">,</span> <span class="s2">&quot;/sdcard/screen_shots&quot;</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="RGB.capture_images"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.capture_images">[docs]</a>	<span class="k">def</span> <span class="nf">capture_images</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">t1</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">run_screencap</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">makedir</span><span class="p">()</span>
+		<span class="nb">print</span><span class="p">(</span> <span class="s2">&quot;screencap started&quot;</span><span class="p">)</span>
+		<span class="n">t1</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+		<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>	</div>
+
+			
+
+<div class="viewcode-block" id="RGB.calculate_rgb"><a class="viewcode-back" href="../../../../../../anadroid.profiler.greenScaler.GreenScaler.libmutation.html#anadroid.profiler.greenScaler.GreenScaler.libmutation.color.RGB.calculate_rgb">[docs]</a>	<span class="k">def</span> <span class="nf">calculate_rgb</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;=================================</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;Now calculating RGB</span><span class="se">\n</span><span class="s2">This may take time based on test duration</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;=================================</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+		<span class="n">tot_R</span><span class="o">=</span><span class="mi">0</span>
+		<span class="n">tot_G</span><span class="o">=</span><span class="mi">0</span>
+		<span class="n">tot_B</span><span class="o">=</span><span class="mi">0</span>	
+		<span class="n">no_image</span><span class="o">=</span><span class="mi">0</span>	
+		<span class="k">for</span> <span class="n">image</span> <span class="ow">in</span> <span class="n">listdir</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots/&quot;</span><span class="p">):</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;image&quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">image</span><span class="p">))</span>
+			<span class="n">R</span><span class="o">=</span><span class="mi">0</span>
+			<span class="n">G</span><span class="o">=</span><span class="mi">0</span>
+			<span class="n">B</span><span class="o">=</span><span class="mi">0</span>
+
+			<span class="k">try</span><span class="p">:</span> <span class="c1">### to ignore incompletely downloaded image</span>
+				<span class="n">im</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="o">+</span><span class="s2">&quot;/screen_shots/&quot;</span><span class="o">+</span><span class="n">image</span><span class="p">)</span>
+				
+				<span class="n">pixels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">im</span><span class="o">.</span><span class="n">getdata</span><span class="p">())</span>
+				<span class="n">count</span><span class="o">=</span><span class="mi">0</span>
+				<span class="k">for</span> <span class="n">pix</span> <span class="ow">in</span> <span class="n">pixels</span><span class="p">:</span>
+					<span class="n">r</span><span class="o">=</span><span class="n">pix</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+					<span class="n">g</span><span class="o">=</span><span class="n">pix</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+					<span class="n">b</span><span class="o">=</span><span class="n">pix</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+					<span class="n">R</span><span class="o">=</span><span class="n">R</span><span class="o">+</span><span class="n">r</span>
+					<span class="n">G</span><span class="o">=</span><span class="n">G</span><span class="o">+</span><span class="n">g</span>
+					<span class="n">B</span><span class="o">=</span><span class="n">B</span><span class="o">+</span><span class="n">b</span>
+					<span class="n">count</span><span class="o">=</span><span class="n">count</span><span class="o">+</span><span class="mi">1</span>
+				<span class="n">no_image</span><span class="o">=</span><span class="n">no_image</span><span class="o">+</span><span class="mi">1</span>	
+			
+			<span class="k">except</span><span class="p">:</span>
+				<span class="k">continue</span>
+
+			<span class="n">tot_R</span><span class="o">=</span><span class="n">tot_R</span><span class="o">+</span><span class="p">(</span><span class="n">R</span><span class="o">/</span><span class="n">count</span><span class="p">)</span>	
+			
+			<span class="n">tot_G</span><span class="o">=</span><span class="n">tot_G</span><span class="o">+</span><span class="p">(</span><span class="n">G</span><span class="o">/</span><span class="n">count</span><span class="p">)</span>
+			<span class="n">tot_B</span><span class="o">=</span><span class="n">tot_B</span><span class="o">+</span><span class="p">(</span><span class="n">B</span><span class="o">/</span><span class="n">count</span><span class="p">)</span>
+
+		<span class="k">if</span> <span class="n">no_image</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+			<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;empty screenshots&quot;</span><span class="p">)</span>
+			<span class="n">no_image</span><span class="o">=</span><span class="mi">1</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">r</span><span class="o">=</span><span class="n">tot_R</span><span class="o">/</span><span class="n">no_image</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">g</span><span class="o">=</span><span class="n">tot_G</span><span class="o">/</span><span class="n">no_image</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">b</span><span class="o">=</span><span class="n">tot_B</span><span class="o">/</span><span class="n">no_image</span>
+		<span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;rm -rf &quot;</span><span class="o">+</span><span class="n">utils</span><span class="o">.</span><span class="n">IMAGE_PATH</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">package</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Rui Rua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

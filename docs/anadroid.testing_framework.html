@@ -1,220 +1,228 @@
-
-
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8" />
-  
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>anadroid.testing_framework package &mdash; pyanadroid 0.3.5 documentation</title>
-  
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-
-  
-  
-
-  
-  
-
-  
-
-  
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
-        <script src="_static/underscore.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
         <script src="_static/doctools.js"></script>
-    
-    <script type="text/javascript" src="_static/js/theme.js"></script>
-
-    
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="anadroid.testing_framework.work package" href="anadroid.testing_framework.work.html" />
+    <link rel="prev" title="anadroid.test.dummy package" href="anadroid.test.dummy.html" /> 
 </head>
 
-<body class="wy-body-for-nav">
-
-   
+<body class="wy-body-for-nav"> 
   <div class="wy-grid-for-nav">
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
           
-            <a href="index.html" class="icon icon-home"> pyanadroid
           
-
-          
+          <a href="index.html" class="icon icon-home">
+            pyanadroid
           </a>
-
-          
-            
-            
-          
-
-          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
     <input type="hidden" name="check_keywords" value="yes" />
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-
-          
-        </div>
-
-        
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <!-- Local TOC -->
-              <div class="local-toc"><ul>
-<li><a class="reference internal" href="#">anadroid.testing_framework package</a><ul>
-<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
-<li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.AbstractTestingFramework">anadroid.testing_framework.AbstractTestingFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.AppCrawlerFramework">anadroid.testing_framework.AppCrawlerFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.DroidBotFramework">anadroid.testing_framework.DroidBotFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.JUnitBasedFramework">anadroid.testing_framework.JUnitBasedFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.MonkeyFramework">anadroid.testing_framework.MonkeyFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.MonkeyRunnerFramework">anadroid.testing_framework.MonkeyRunnerFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework.RERANFramework">anadroid.testing_framework.RERANFramework module</a></li>
-<li><a class="reference internal" href="#module-anadroid.testing_framework">Module contents</a></li>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="README.html#examples">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">anadroid</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="anadroid.html">anadroid package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="anadroid.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="anadroid.application.html">anadroid.application package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.build.html">anadroid.build package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.device.html">anadroid.device package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.instrument.html">anadroid.instrument package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.profiler.html">anadroid.profiler package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.resources.html">anadroid.resources package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.results_analysis.html">anadroid.results_analysis package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.test.html">anadroid.test package</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">anadroid.testing_framework package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.utils.html">anadroid.utils package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.view.html">anadroid.view package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Anadroid">anadroid.Anadroid module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Config">anadroid.Config module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.Types">anadroid.Types module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid.main">anadroid.main module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.html#module-anadroid">Module contents</a></li>
 </ul>
 </li>
 </ul>
-</div>
-            
-          
+</li>
+</ul>
+
         </div>
-        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">pyanadroid</a>
-        
       </nav>
 
-
       <div class="wy-nav-content">
-        
         <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
+          <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-    
-      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
-      <li>anadroid.testing_framework package</li>
-    
-    
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">anadroid</a></li>
+          <li class="breadcrumb-item"><a href="anadroid.html">anadroid package</a></li>
+      <li class="breadcrumb-item active">anadroid.testing_framework package</li>
       <li class="wy-breadcrumbs-aside">
-        
-          
             <a href="_sources/anadroid.testing_framework.rst.txt" rel="nofollow"> View page source</a>
-          
-        
       </li>
-    
   </ul>
-
-  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
-  <div class="section" id="anadroid-testing-framework-package">
-<h1>anadroid.testing_framework package<a class="headerlink" href="#anadroid-testing-framework-package" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="subpackages">
-<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+             
+  <section id="anadroid-testing-framework-package">
+<h1>anadroid.testing_framework package<a class="headerlink" href="#anadroid-testing-framework-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="anadroid.testing_framework.work.html">anadroid.testing_framework.work package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#submodules">Submodules</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AbstractWorkLoad">anadroid.testing_framework.work.AbstractWorkLoad module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AppCrawlerWorkUnit">anadroid.testing_framework.work.AppCrawlerWorkUnit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.DroidBotWorkUnit">anadroid.testing_framework.work.DroidBotWorkUnit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">anadroid.testing_framework.work.MonkeyRunnerWorkUnit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyWorkUnit">anadroid.testing_framework.work.MonkeyWorkUnit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.RERANWorkUnit">anadroid.testing_framework.work.RERANWorkUnit module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkLoad">anadroid.testing_framework.work.WorkLoad module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkUnit">anadroid.testing_framework.work.WorkUnit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AbstractWorkLoad">anadroid.testing_framework.work.AbstractWorkLoad module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad"><code class="docutils literal notranslate"><span class="pre">AbstractWorkLoad</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.add_unit"><code class="docutils literal notranslate"><span class="pre">AbstractWorkLoad.add_unit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.consume"><code class="docutils literal notranslate"><span class="pre">AbstractWorkLoad.consume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AbstractWorkLoad.AbstractWorkLoad.flush"><code class="docutils literal notranslate"><span class="pre">AbstractWorkLoad.flush()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.AppCrawlerWorkUnit">anadroid.testing_framework.work.AppCrawlerWorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit"><code class="docutils literal notranslate"><span class="pre">AppCrawlerWorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.config"><code class="docutils literal notranslate"><span class="pre">AppCrawlerWorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">AppCrawlerWorkUnit.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.AppCrawlerWorkUnit.export_results"><code class="docutils literal notranslate"><span class="pre">AppCrawlerWorkUnit.export_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.convert_arg"><code class="docutils literal notranslate"><span class="pre">convert_arg()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.AppCrawlerWorkUnit.detect_crawl_finish"><code class="docutils literal notranslate"><span class="pre">detect_crawl_finish()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.DroidBotWorkUnit">anadroid.testing_framework.work.DroidBotWorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit"><code class="docutils literal notranslate"><span class="pre">DroidBotWorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.config"><code class="docutils literal notranslate"><span class="pre">DroidBotWorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">DroidBotWorkUnit.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.DroidBotWorkUnit.DroidBotWorkUnit.export_results"><code class="docutils literal notranslate"><span class="pre">DroidBotWorkUnit.export_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.DroidBotWorkUnit.convert_arg"><code class="docutils literal notranslate"><span class="pre">convert_arg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyRunnerWorkUnit">anadroid.testing_framework.work.MonkeyRunnerWorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit"><code class="docutils literal notranslate"><span class="pre">MonkeyRunnerWorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.config"><code class="docutils literal notranslate"><span class="pre">MonkeyRunnerWorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.MonkeyRunnerWorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">MonkeyRunnerWorkUnit.execute()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyRunnerWorkUnit.convert_arg"><code class="docutils literal notranslate"><span class="pre">convert_arg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.MonkeyWorkUnit">anadroid.testing_framework.work.MonkeyWorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit"><code class="docutils literal notranslate"><span class="pre">MonkeyWorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.config"><code class="docutils literal notranslate"><span class="pre">MonkeyWorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">MonkeyWorkUnit.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyWorkUnit.MonkeyWorkUnit.export_results"><code class="docutils literal notranslate"><span class="pre">MonkeyWorkUnit.export_results()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.MonkeyWorkUnit.convert_arg"><code class="docutils literal notranslate"><span class="pre">convert_arg()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.RERANWorkUnit">anadroid.testing_framework.work.RERANWorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit"><code class="docutils literal notranslate"><span class="pre">RERANWorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.config"><code class="docutils literal notranslate"><span class="pre">RERANWorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">RERANWorkUnit.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.RERANWorkUnit.RERANWorkUnit.export_results"><code class="docutils literal notranslate"><span class="pre">RERANWorkUnit.export_results()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkLoad">anadroid.testing_framework.work.WorkLoad module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad"><code class="docutils literal notranslate"><span class="pre">WorkLoad</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad.add_unit"><code class="docutils literal notranslate"><span class="pre">WorkLoad.add_unit()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad.consume"><code class="docutils literal notranslate"><span class="pre">WorkLoad.consume()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad.flush"><code class="docutils literal notranslate"><span class="pre">WorkLoad.flush()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work.WorkUnit">anadroid.testing_framework.work.WorkUnit module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit"><code class="docutils literal notranslate"><span class="pre">WorkUnit</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.cmd_args"><code class="docutils literal notranslate"><span class="pre">WorkUnit.cmd_args</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.has_timeout"><code class="docutils literal notranslate"><span class="pre">WorkUnit.has_timeout</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.add_timeout"><code class="docutils literal notranslate"><span class="pre">WorkUnit.add_timeout()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.append_prefix"><code class="docutils literal notranslate"><span class="pre">WorkUnit.append_prefix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.build_command"><code class="docutils literal notranslate"><span class="pre">WorkUnit.build_command()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.config"><code class="docutils literal notranslate"><span class="pre">WorkUnit.config()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.execute"><code class="docutils literal notranslate"><span class="pre">WorkUnit.execute()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkUnit.WorkUnit.export_results"><code class="docutils literal notranslate"><span class="pre">WorkUnit.export_results()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="anadroid.testing_framework.work.html#module-anadroid.testing_framework.work">Module contents</a></li>
 </ul>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="submodules">
-<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-anadroid.testing_framework.AbstractTestingFramework">
-<span id="anadroid-testing-framework-abstracttestingframework-module"></span><h2>anadroid.testing_framework.AbstractTestingFramework module<a class="headerlink" href="#module-anadroid.testing_framework.AbstractTestingFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-anadroid.testing_framework.AbstractTestingFramework">
+<span id="anadroid-testing-framework-abstracttestingframework-module"></span><h2>anadroid.testing_framework.AbstractTestingFramework module<a class="headerlink" href="#module-anadroid.testing_framework.AbstractTestingFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.</span></span><span class="sig-name descname"><span class="pre">AbstractTestingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">abc.ABC</span></code></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.</span></span><span class="sig-name descname"><span class="pre">AbstractTestingFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_test_res</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'anadroid_results/custom_test_results'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ABC</span></code></p>
 <p>Defines a basic interface to be implemented by classes that provide integration of Android testing
 frameworks.
 .. attribute:: profiler</p>
 <blockquote>
 <div><p>profiler.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Profiler</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.id">
-<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.id" title="Permalink to this definition"></a></dt>
 <dd><p>testing framework uuid.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -222,10 +230,10 @@ frameworks.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.analyzer">
-<span class="sig-name descname"><span class="pre">analyzer</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.analyzer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">analyzer</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.analyzer" title="Permalink to this definition"></a></dt>
 <dd><p>Analyzer to be used.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="anadroid.results_analysis.html#anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer" title="anadroid.results_analysis.AbstractAnalyzer.AbstractAnalyzer">AbstractAnalyzer</a></p>
 </dd>
 </dl>
@@ -233,10 +241,10 @@ frameworks.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.config">
-<span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">config</span></span><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.config" title="Permalink to this definition"></a></dt>
 <dd><p>set of testing frameowrk configurations.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
 </dd>
 </dl>
@@ -244,7 +252,7 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.execute_test">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">w_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param w_unit: work unit containing information of the test to be executed.
 :type w_unit: object
@@ -253,21 +261,26 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.get_config">
-<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.get_config" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_config</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.get_config"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.get_config" title="Permalink to this definition"></a></dt>
 <dd><p>get value of test configuration.
 :param key: config name/key.
 :param default: default value to be returned in the case of missing configuration.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.get_default_test_dir">
+<span class="sig-name descname"><span class="pre">get_default_test_dir</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.get_default_test_dir"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.get_default_test_dir" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init_default_workload">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>initialize workload to be done by tests of the testing framework.
 :param pkg: package of app under test.
 :param args_file: file containing test arguments, where each line contains arguments for 1 test.
@@ -276,59 +289,59 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.install">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.install" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.is_recordable">
-<span class="sig-name descname"><span class="pre">is_recordable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.is_recordable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.is_recordable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_recordable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.is_recordable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.is_recordable" title="Permalink to this definition"></a></dt>
 <dd><p>checks if framework can record tests to be replayed.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.record_test">
-<span class="sig-name descname"><span class="pre">record_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.record_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.record_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">record_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.record_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.record_test" title="Permalink to this definition"></a></dt>
 <dd><p>record test to be replayed later.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.test_app">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.uninstall">
-<em class="property"><span class="pre">abstract</span> </em><span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">abstract</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AbstractTestingFramework.html#AbstractTestingFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.AppCrawlerFramework">
-<span id="anadroid-testing-framework-appcrawlerframework-module"></span><h2>anadroid.testing_framework.AppCrawlerFramework module<a class="headerlink" href="#module-anadroid.testing_framework.AppCrawlerFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.AppCrawlerFramework">
+<span id="anadroid-testing-framework-appcrawlerframework-module"></span><h2>anadroid.testing_framework.AppCrawlerFramework module<a class="headerlink" href="#module-anadroid.testing_framework.AppCrawlerFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.AppCrawlerFramework.</span></span><span class="sig-name descname"><span class="pre">AppCrawlerFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/app-crawler'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.AppCrawlerFramework.</span></span><span class="sig-name descname"><span class="pre">AppCrawlerFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/app-crawler'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow executing tests using App Crawler.
 .. attribute:: executable_prefix</p>
 <blockquote>
 <div><p>prefix for test command. It is basically a call to java execute the framework’s jar.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.workload">
-<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.workload" title="Permalink to this definition"></a></dt>
 <dd><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="anadroid.testing_framework.work.WorkLoad.WorkLoad">WorkLoad</a></p>
 </dd>
 </dl>
@@ -336,10 +349,10 @@ frameworks.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.res_dir">
-<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.res_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.res_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -347,7 +360,7 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -362,7 +375,7 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param package: app package.
 :type package: str
@@ -373,13 +386,13 @@ frameworks.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>Initializes the workload with AppCrawlerWorkUnits.
 Initializes workload attribute with many AppCrawlerWorkUnits, configured with configurations
 coming from config file.
@@ -390,13 +403,13 @@ coming from config file.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -407,35 +420,35 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/AppCrawlerFramework.html#AppCrawlerFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.AppCrawlerFramework.AppCrawlerFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.DroidBotFramework">
-<span id="anadroid-testing-framework-droidbotframework-module"></span><h2>anadroid.testing_framework.DroidBotFramework module<a class="headerlink" href="#module-anadroid.testing_framework.DroidBotFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.DroidBotFramework">
+<span id="anadroid-testing-framework-droidbotframework-module"></span><h2>anadroid.testing_framework.DroidBotFramework module<a class="headerlink" href="#module-anadroid.testing_framework.DroidBotFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">DroidBotFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/droidbot'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">DroidBotFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/droidbot'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow executing tests using DroidBot.
 .. attribute:: executable_prefix</p>
 <blockquote>
 <div><p>prefix for test command. It is basically a call to the executable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.workload">
-<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.workload" title="Permalink to this definition"></a></dt>
 <dd><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="anadroid.testing_framework.work.WorkLoad.WorkLoad">WorkLoad</a></p>
 </dd>
 </dl>
@@ -443,10 +456,10 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.res_dir">
-<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.res_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.res_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -454,7 +467,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -469,7 +482,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">apk_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param package: app package.
 :type package: str
@@ -480,13 +493,13 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>Initializes the workload with AppCrawlerWorkUnits.
 Initializes workload attribute with many AppCrawlerWorkUnits, configured with configurations
 coming from config file.
@@ -497,13 +510,13 @@ coming from config file.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -514,7 +527,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.DroidBotFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#DroidBotFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.DroidBotFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
@@ -522,38 +535,38 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.get_exec_prefix">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">get_exec_prefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#get_exec_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.get_exec_prefix" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">get_exec_prefix</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#get_exec_prefix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.get_exec_prefix" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="anadroid.testing_framework.DroidBotFramework.get_machine_arch">
-<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">get_machine_arch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#get_machine_arch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.get_machine_arch" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.DroidBotFramework.</span></span><span class="sig-name descname"><span class="pre">get_machine_arch</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/DroidBotFramework.html#get_machine_arch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.DroidBotFramework.get_machine_arch" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.JUnitBasedFramework">
-<span id="anadroid-testing-framework-junitbasedframework-module"></span><h2>anadroid.testing_framework.JUnitBasedFramework module<a class="headerlink" href="#module-anadroid.testing_framework.JUnitBasedFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.JUnitBasedFramework">
+<span id="anadroid-testing-framework-junitbasedframework-module"></span><h2>anadroid.testing_framework.JUnitBasedFramework module<a class="headerlink" href="#module-anadroid.testing_framework.JUnitBasedFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.JUnitBasedFramework.</span></span><span class="sig-name descname"><span class="pre">JUnitBasedFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFramework/junit'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.JUnitBasedFramework.</span></span><span class="sig-name descname"><span class="pre">JUnitBasedFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFramework/junit'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow executing tests using JUnit based testing frameworks.
 The tests executed are barely configurable. This class lists instrumentations on device and runs one by one.
 .. attribute:: executable_prefix</p>
 <blockquote>
 <div><p>prefix for test command. It is basically a call to the executable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.workload">
-<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.workload" title="Permalink to this definition"></a></dt>
 <dd><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="anadroid.testing_framework.work.WorkLoad.WorkLoad">WorkLoad</a></p>
 </dd>
 </dl>
@@ -561,10 +574,10 @@ The tests executed are barely configurable. This class lists instrumentations on
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.res_dir">
-<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.res_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.res_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -572,7 +585,7 @@ The tests executed are barely configurable. This class lists instrumentations on
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -587,7 +600,7 @@ The tests executed are barely configurable. This class lists instrumentations on
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param w_unit: work unit containing information of the test to be executed.
 :type w_unit: object
@@ -596,13 +609,13 @@ The tests executed are barely configurable. This class lists instrumentations on
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>initialize workload to be done by tests of the testing framework.
 :param pkg: package of app under test.
 :param args_file: file containing test arguments, where each line contains arguments for 1 test.
@@ -611,13 +624,13 @@ The tests executed are barely configurable. This class lists instrumentations on
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -628,35 +641,35 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/JUnitBasedFramework.html#JUnitBasedFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.JUnitBasedFramework.JUnitBasedFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.MonkeyFramework">
-<span id="anadroid-testing-framework-monkeyframework-module"></span><h2>anadroid.testing_framework.MonkeyFramework module<a class="headerlink" href="#module-anadroid.testing_framework.MonkeyFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.MonkeyFramework">
+<span id="anadroid-testing-framework-monkeyframework-module"></span><h2>anadroid.testing_framework.MonkeyFramework module<a class="headerlink" href="#module-anadroid.testing_framework.MonkeyFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.MonkeyFramework.</span></span><span class="sig-name descname"><span class="pre">MonkeyFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.MonkeyFramework.</span></span><span class="sig-name descname"><span class="pre">MonkeyFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resdir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow executing tests using Monkey testing framework.
 .. attribute:: executable_prefix</p>
 <blockquote>
 <div><p>prefix for test command. It is basically a call to the executable.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.workload">
-<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">workload</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.workload" title="Permalink to this definition"></a></dt>
 <dd><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p><a class="reference internal" href="anadroid.testing_framework.work.html#anadroid.testing_framework.work.WorkLoad.WorkLoad" title="anadroid.testing_framework.work.WorkLoad.WorkLoad">WorkLoad</a></p>
 </dd>
 </dl>
@@ -664,10 +677,10 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.res_dir">
-<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.res_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">res_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.res_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -675,7 +688,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -690,7 +703,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param w_unit: work unit containing information of the test to be executed.
 :type w_unit: object
@@ -699,13 +712,13 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'monkey_seeds.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'monkey_seeds.txt'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>initialize workload to be done by tests of the testing framework.
 :param pkg: package of app under test.
 :param args_file: file containing test arguments, where each line contains arguments for 1 test.
@@ -714,13 +727,13 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -731,35 +744,35 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyFramework.MonkeyFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyFramework.html#MonkeyFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyFramework.MonkeyFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.MonkeyRunnerFramework">
-<span id="anadroid-testing-framework-monkeyrunnerframework-module"></span><h2>anadroid.testing_framework.MonkeyRunnerFramework module<a class="headerlink" href="#module-anadroid.testing_framework.MonkeyRunnerFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.MonkeyRunnerFramework">
+<span id="anadroid-testing-framework-monkeyrunnerframework-module"></span><h2>anadroid.testing_framework.MonkeyRunnerFramework module<a class="headerlink" href="#module-anadroid.testing_framework.MonkeyRunnerFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.MonkeyRunnerFramework.</span></span><span class="sig-name descname"><span class="pre">MonkeyRunnerFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.MonkeyRunnerFramework.</span></span><span class="sig-name descname"><span class="pre">MonkeyRunnerFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">default_workload</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow executing tests using monkeyrunner framework.
 .. attribute:: workload</p>
 <blockquote>
 <div><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>WorkLoad</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.resources_dir">
-<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.resources_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.resources_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -767,7 +780,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -782,7 +795,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param w_unit: work unit containing information of the test to be executed.
 :type w_unit: object
@@ -791,13 +804,13 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner/tests'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner/tests'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>initialize workload to be done by tests of the testing framework.
 :param pkg: package of app under test.
 :param args_file: file containing test arguments, where each line contains arguments for 1 test.
@@ -806,18 +819,18 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.load_tests_of_app">
-<span class="sig-name descname"><span class="pre">load_tests_of_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeyrunner_tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner/tests'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.load_tests_of_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.load_tests_of_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_tests_of_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">monkeyrunner_tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/monkey-runner/tests'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.load_tests_of_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.load_tests_of_app" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -828,35 +841,35 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/MonkeyRunnerFramework.html#MonkeyRunnerFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.MonkeyRunnerFramework.MonkeyRunnerFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework.RERANFramework">
-<span id="anadroid-testing-framework-reranframework-module"></span><h2>anadroid.testing_framework.RERANFramework module<a class="headerlink" href="#module-anadroid.testing_framework.RERANFramework" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-anadroid.testing_framework.RERANFramework">
+<span id="anadroid-testing-framework-reranframework-module"></span><h2>anadroid.testing_framework.RERANFramework module<a class="headerlink" href="#module-anadroid.testing_framework.RERANFramework" title="Permalink to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.RERANFramework.</span></span><span class="sig-name descname"><span class="pre">RERANFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/RERAN'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">anadroid.testing_framework.RERANFramework.</span></span><span class="sig-name descname"><span class="pre">RERANFramework</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">profiler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">analyzer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resources_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'/Users/ruirua/repos/pyAnaDroid/anadroid/resources/testingFrameworks/RERAN'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework" title="anadroid.testing_framework.AbstractTestingFramework.AbstractTestingFramework"><code class="xref py py-class docutils literal notranslate"><span class="pre">AbstractTestingFramework</span></code></a></p>
 <p>Implements AbstractTestingFramework interface to allow recording and executing tests using RERAN framework.
 .. attribute:: workload</p>
 <blockquote>
 <div><p>workload object containing the work units to be executed.</p>
 <dl class="field-list simple">
-<dt class="field-odd">type</dt>
+<dt class="field-odd">type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>WorkLoad</p>
 </dd>
 </dl>
 </div></blockquote>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.resources_dir">
-<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.resources_dir" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">resources_dir</span></span><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.resources_dir" title="Permalink to this definition"></a></dt>
 <dd><p>directory containing app crawler resources.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Type</dt>
+<dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
 </dl>
@@ -864,7 +877,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.exec_one_test">
-<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.exec_one_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">exec_one_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wk_unit</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_retries</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.exec_one_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.exec_one_test" title="Permalink to this definition"></a></dt>
 <dd><p>executes one test identified by test_id of an given app on a given device.
 :param test_id: test uuid.
 :param device: device.
@@ -879,7 +892,7 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.execute_test">
-<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.execute_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">execute_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.execute_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.execute_test" title="Permalink to this definition"></a></dt>
 <dd><p>execute a test described by a work unit w_unit.
 :param w_unit: work unit containing information of the test to be executed.
 :type w_unit: object
@@ -888,13 +901,13 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.init">
-<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.init" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.init" title="Permalink to this definition"></a></dt>
 <dd><p>initialize framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.init_default_workload">
-<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.init_default_workload" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">init_default_workload</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pkg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seeds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.init_default_workload"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.init_default_workload" title="Permalink to this definition"></a></dt>
 <dd><p>initialize workload to be done by tests of the testing framework.
 :param pkg: package of app under test.
 :param args_file: file containing test arguments, where each line contains arguments for 1 test.
@@ -903,36 +916,36 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.install">
-<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.install" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">install</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.install"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.install" title="Permalink to this definition"></a></dt>
 <dd><p>install framework.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.is_recordable">
-<span class="sig-name descname"><span class="pre">is_recordable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.is_recordable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.is_recordable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_recordable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.is_recordable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.is_recordable" title="Permalink to this definition"></a></dt>
 <dd><p>checks if framework can record tests.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.load_tests_of_app">
-<span class="sig-name descname"><span class="pre">load_tests_of_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reran_tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.load_tests_of_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.load_tests_of_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">load_tests_of_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">package_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reran_tests_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.load_tests_of_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.load_tests_of_app" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.push_test">
-<span class="sig-name descname"><span class="pre">push_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.push_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.push_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">push_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">test_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.push_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.push_test" title="Permalink to this definition"></a></dt>
 <dd><p>push test to device.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.record_test">
-<span class="sig-name descname"><span class="pre">record_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.record_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.record_test" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">record_test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.record_test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.record_test" title="Permalink to this definition"></a></dt>
 <dd><p>record test of a given app, identified by test_id.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.test_app">
-<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.test_app" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">test_app</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">device</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.test_app"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.test_app" title="Permalink to this definition"></a></dt>
 <dd><p>test a given app on a given device.
 Executes each work unit of workload on app running on device.
 :param device: device.
@@ -943,60 +956,47 @@ Executes each work unit of workload on app running on device.
 
 <dl class="py method">
 <dt class="sig sig-object py" id="anadroid.testing_framework.RERANFramework.RERANFramework.uninstall">
-<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.uninstall" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">uninstall</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/anadroid/testing_framework/RERANFramework.html#RERANFramework.uninstall"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#anadroid.testing_framework.RERANFramework.RERANFramework.uninstall" title="Permalink to this definition"></a></dt>
 <dd><p>uninstall framework.</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-anadroid.testing_framework">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.testing_framework" title="Permalink to this headline">¶</a></h2>
-</div>
-</div>
+</section>
+<section id="module-anadroid.testing_framework">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-anadroid.testing_framework" title="Permalink to this heading"></a></h2>
+</section>
+</section>
 
 
            </div>
-           
           </div>
-          <footer>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="anadroid.test.dummy.html" class="btn btn-neutral float-left" title="anadroid.test.dummy package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="anadroid.testing_framework.work.html" class="btn btn-neutral float-right" title="anadroid.testing_framework.work package" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>
-        &#169; Copyright 2021, Rui Rua.
-
-    </p>
+    <p>&#169; Copyright 2021, Rui Rua.</p>
   </div>
-    
-    
-    
-    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
 
 </footer>
         </div>
       </div>
-
     </section>
-
   </div>
-  
-
-  <script type="text/javascript">
+  <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script>
-
-  
-  
-    
-   
+  </script> 
 
 </body>
 </html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anadroid.results_analysis.OldAnaDroidAnalyzer &mdash; pyanadroid 0.3.5 documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            pyanadroid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">anadroid</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">pyanadroid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.results_analysis.OldAnaDroidAnalyzer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for anadroid.results_analysis.OldAnaDroidAnalyzer</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.AbstractAnalyzer</span> <span class="kn">import</span> <span class="n">AbstractAnalyzer</span>
+<span class="c1">#from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer</span>
+<span class="c1">#from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer</span>
+<span class="c1">#from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.ApkAPIAnalyzer</span> <span class="kn">import</span> <span class="n">ApkAPIAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.SCCAnalyzer</span> <span class="kn">import</span> <span class="n">SCCAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">execute_shell_command</span><span class="p">,</span> <span class="n">get_resources_dir</span>
+<span class="kn">from</span> <span class="nn">shutil</span> <span class="kn">import</span> <span class="n">copy</span><span class="p">,</span> <span class="n">copyfile</span>
+
+<span class="n">DEFAULT_JAR_PATH</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">get_resources_dir</span><span class="p">(),</span> <span class="s2">&quot;jars&quot;</span><span class="p">,</span> <span class="s2">&quot;AnaDroidAnalyzer.jar&quot;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer">[docs]</a><span class="k">class</span> <span class="nc">OldAnaDroidAnalyzer</span><span class="p">(</span><span class="n">AbstractAnalyzer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Implements AbstractAnalyzer interface to allow analyze profiled results with Trepn  profiler.</span>
+<span class="sd">    Calculate statistics about the produced results to analyze, validate and characterize executions.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">,</span> <span class="n">jarpath</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">remote_url</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">OldAnaDroidAnalyzer</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">bin_cmd</span> <span class="o">=</span> <span class="s2">&quot;java -jar &quot;</span> <span class="o">+</span> <span class="p">(</span><span class="n">DEFAULT_JAR_PATH</span> <span class="k">if</span> <span class="n">jarpath</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">jarpath</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">remote_url</span> <span class="o">=</span> <span class="s2">&quot;NONE&quot;</span> <span class="k">if</span> <span class="n">remote_url</span> <span class="ow">is</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">remote_url</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inner_analyzers</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1">#[ApkAPIAnalyzer(profiler)]</span>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.setup"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.setup">[docs]</a>    <span class="k">def</span> <span class="nf">setup</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.show_results"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.show_results">[docs]</a>    <span class="k">def</span> <span class="nf">show_results</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_list</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.inner_analyze"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.inner_analyze">[docs]</a>    <span class="k">def</span> <span class="nf">inner_analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">output_log_file</span><span class="o">=</span><span class="s2">&quot;AnaDroidAnalyzer.out&quot;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">instr_proj</span> <span class="o">=</span> <span class="n">app</span><span class="o">.</span><span class="n">proj</span>
+        <span class="n">test_orient</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instr_type&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">analyzer</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_analyzers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">SCCAnalyzer</span><span class="p">):</span>
+                <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">instr_proj</span><span class="o">.</span><span class="n">proj_dir</span><span class="p">,</span> <span class="n">test_orient</span><span class="p">,</span> <span class="n">output_log_file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;scc.json&quot;</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">ApkAPIAnalyzer</span><span class="p">):</span>
+                <span class="n">filename</span> <span class="o">=</span> <span class="n">analyzer</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">apk</span><span class="p">,</span> <span class="n">app</span><span class="o">.</span><span class="n">package_name</span><span class="p">)</span>
+                <span class="n">target_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span> <span class="s2">&quot;all&quot;</span><span class="p">)</span>
+                <span class="n">copyfile</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">target_dir</span><span class="p">,</span>  <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)))</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.analyze"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.analyze">[docs]</a>    <span class="k">def</span> <span class="nf">analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">test_framework</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;testing_framework&quot;</span><span class="p">)</span>
+        <span class="n">test_orient</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;instr_type&quot;</span><span class="p">)</span>
+        <span class="n">output_log_file</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;output_log_file&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="s1">&#39;output_log_file&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span> <span class="k">else</span> <span class="s2">&quot;oldanadroid_output.log&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">inner_analyze</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="si">{bin_prefix}</span><span class="s2"> -</span><span class="si">{test_orient}</span><span class="s2"> </span><span class="se">\&quot;</span><span class="si">{input_dir}</span><span class="se">\&quot;</span><span class="s2"> -</span><span class="si">{test_framework}</span><span class="s2"> </span><span class="si">{remote_repo_url}</span><span class="s2"> &gt; </span><span class="si">{output_log_file}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="n">bin_prefix</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">bin_cmd</span><span class="p">,</span>
+            <span class="n">test_orient</span><span class="o">=</span><span class="n">test_orient</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">input_dir</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">local_res</span><span class="p">,</span>
+            <span class="n">test_framework</span><span class="o">=</span><span class="n">test_framework</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="p">,</span>
+            <span class="n">remote_repo_url</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">remote_url</span><span class="p">,</span>
+            <span class="n">output_log_file</span><span class="o">=</span><span class="n">output_log_file</span>
+        <span class="p">)</span>
+        <span class="c1"># java -jar $GD_ANALYZER $trace &quot;$projLocalDir/&quot; $monkey $GREENSOURCE_URL 2&gt;&amp;1 | tee &quot;$temp_folder/analyzerResult.out&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">execute_shell_command</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">validate</span><span class="p">(</span><span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Analyzer error&quot;</span><span class="p">))</span></div>
+        <span class="c1">#print(res)</span>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.get_val_for_filter"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.get_val_for_filter">[docs]</a>    <span class="k">def</span> <span class="nf">get_val_for_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_name</span><span class="p">,</span> <span class="n">add_data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">get_val_for_filter</span><span class="p">(</span><span class="n">filter_name</span><span class="p">,</span> <span class="n">add_data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.analyze_tests"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.analyze_tests">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_tests</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analyze</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.analyze_test"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.analyze_test">[docs]</a>    <span class="k">def</span> <span class="nf">analyze_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">test_id</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.validate_test"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.validate_test">[docs]</a>    <span class="k">def</span> <span class="nf">validate_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">app</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+        <span class="k">for</span> <span class="n">inn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_analyzers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">inn</span><span class="o">.</span><span class="n">validate_test</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">arg1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.validate_filters"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.validate_filters">[docs]</a>    <span class="k">def</span> <span class="nf">validate_filters</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">inn</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner_analyzers</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">inn</span><span class="o">.</span><span class="n">validate_filters</span><span class="p">():</span>
+                <span class="k">return</span> <span class="kc">False</span>
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+<div class="viewcode-block" id="OldAnaDroidAnalyzer.clean"><a class="viewcode-back" href="../../../anadroid.results_analysis.html#anadroid.results_analysis.OldAnaDroidAnalyzer.OldAnaDroidAnalyzer.clean">[docs]</a>    <span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">pass</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Rui Rua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

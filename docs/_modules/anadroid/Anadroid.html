@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>anadroid.Anadroid &mdash; pyanadroid 0.3.5 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            pyanadroid
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html">AnaDroid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#workflow">Workflow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#installation">Installation:</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../README.html#examples">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">anadroid</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">pyanadroid</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">anadroid.Anadroid</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for anadroid.Anadroid</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">argparse</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">anadroid.Config</span> <span class="kn">import</span> <span class="n">SUPPORTED_PROFILERS</span><span class="p">,</span> <span class="n">SUPPORTED_TESTING_FRAMEWORKS</span><span class="p">,</span> <span class="n">SUPPORTED_ANALYZERS</span><span class="p">,</span> \
+    <span class="n">SUPPORTED_INSTRUMENTERS</span><span class="p">,</span> \
+    <span class="n">SUPPORTED_INSTRUMENTATION_TYPES</span><span class="p">,</span> <span class="n">SUPPORTED_SUITES</span><span class="p">,</span> <span class="n">SUPPORTED_BUILDING_SYSTEMS</span>
+<span class="kn">from</span> <span class="nn">anadroid.Types</span> <span class="kn">import</span> <span class="n">PROFILER</span><span class="p">,</span> <span class="n">INSTRUMENTER</span><span class="p">,</span> <span class="n">TESTING_FRAMEWORK</span><span class="p">,</span> <span class="n">ANALYZER</span><span class="p">,</span> <span class="n">BUILD_SYSTEM</span>
+<span class="kn">from</span> <span class="nn">anadroid.application.AndroidProject</span> <span class="kn">import</span> <span class="n">AndroidProject</span><span class="p">,</span> <span class="n">BUILD_TYPE</span><span class="p">,</span> <span class="n">is_android_project</span><span class="p">,</span> <span class="n">Project</span>
+<span class="kn">from</span> <span class="nn">anadroid.application.Application</span> <span class="kn">import</span> <span class="n">App</span>
+<span class="kn">from</span> <span class="nn">anadroid.build.GradleBuilder</span> <span class="kn">import</span> <span class="n">GradleBuilder</span>
+<span class="kn">from</span> <span class="nn">anadroid.device.Device</span> <span class="kn">import</span> <span class="n">get_first_connected_device</span>
+<span class="kn">from</span> <span class="nn">anadroid.instrument.JInstInstrumenter</span> <span class="kn">import</span> <span class="n">JInstInstrumenter</span>
+<span class="kn">from</span> <span class="nn">anadroid.instrument.NoneInstrumenter</span> <span class="kn">import</span> <span class="n">NoneInstrumenter</span>
+<span class="kn">from</span> <span class="nn">anadroid.instrument.Types</span> <span class="kn">import</span> <span class="n">INSTRUMENTATION_TYPE</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.GreenScalerProfiler</span> <span class="kn">import</span> <span class="n">GreenScalerProfiler</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.ManafaProfiler</span> <span class="kn">import</span> <span class="n">ManafaProfiler</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.NoneProfiler</span> <span class="kn">import</span> <span class="n">NoneProfiler</span>
+<span class="kn">from</span> <span class="nn">anadroid.profiler.TrepnProfiler</span> <span class="kn">import</span> <span class="n">TrepnProfiler</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.ApkAPIAnalyzer</span> <span class="kn">import</span> <span class="n">ApkAPIAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.ComposedAnalyzer</span> <span class="kn">import</span> <span class="n">ComposedAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.LogAnalyzer</span> <span class="kn">import</span> <span class="n">LogAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.ManafaAnalyzer</span> <span class="kn">import</span> <span class="n">ManafaAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.ManafaMethodCoverageAnalyzer</span> <span class="kn">import</span> <span class="n">ManafaMethodCoverageAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.OldAnaDroidAnalyzer</span> <span class="kn">import</span> <span class="n">OldAnaDroidAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.results_analysis.SCCAnalyzer</span> <span class="kn">import</span> <span class="n">SCCAnalyzer</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.AppCrawlerFramework</span> <span class="kn">import</span> <span class="n">AppCrawlerFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.CustomCommandFramework</span> <span class="kn">import</span> <span class="n">CustomCommandFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.DroidBotFramework</span> <span class="kn">import</span> <span class="n">DroidBotFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.JUnitBasedFramework</span> <span class="kn">import</span> <span class="n">JUnitBasedFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.MonkeyFramework</span> <span class="kn">import</span> <span class="n">MonkeyFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.MonkeyRunnerFramework</span> <span class="kn">import</span> <span class="n">MonkeyRunnerFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.testing_framework.RERANFramework</span> <span class="kn">import</span> <span class="n">RERANFramework</span>
+<span class="kn">from</span> <span class="nn">anadroid.utils.Utils</span> <span class="kn">import</span> <span class="n">mega_find</span><span class="p">,</span> <span class="n">extract_pkg_name_from_apk</span><span class="p">,</span> <span class="n">get_results_dir</span><span class="p">,</span> <span class="n">logw</span><span class="p">,</span> <span class="n">logi</span><span class="p">,</span> <span class="n">loge</span><span class="p">,</span> \
+    <span class="n">get_resources_dir</span><span class="p">,</span> <span class="n">get_log_dir</span>
+
+
+
+<div class="viewcode-block" id="AnaDroid"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid">[docs]</a><span class="k">class</span> <span class="nc">AnaDroid</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Provides a configurable pipeline to benchmark and analyze Android Projects and Applications.</span>
+<span class="sd">    This class provides a set of verifications and workflow that allows to automatically perform tasks involved in</span>
+<span class="sd">    mobile software analysis. Any class can extend this class to customize its workflow and perform customized benchmarks.</span>
+<span class="sd">    Attributes:</span>
+<span class="sd">        device(Device): device to be used.</span>
+<span class="sd">        app_projects_ut(list): Android Projects to process.</span>
+<span class="sd">        tests_dir(str): directory containing app tests (only used with RERAN).</span>
+<span class="sd">        rebuild_apps(bool): optionally rebuild apps from Android Projects already built.</span>
+<span class="sd">        reinstrument(bool): optionally reinstrument Android Projects previously instrumented.</span>
+<span class="sd">        apps(list): list of apps to exercise.</span>
+<span class="sd">        apks(list): list of apks to exercise.</span>
+<span class="sd">        results_dir(str): directory where results will be stored.</span>
+<span class="sd">        instrumentation_type(INSTRUMENTATION_TYPE): instrumentation type.</span>
+<span class="sd">        profiler(AbstractProfiler): profiler to be used.</span>
+<span class="sd">        analyzer(AbstractAnalyzer): analyzer to parse and generate results from framework executions.</span>
+<span class="sd">        testing_framework(AbstractTestingFramework): testing framework to be used.</span>
+<span class="sd">        instrumenter(AbstractInstrumenter): instrumentation tool to be used.</span>
+<span class="sd">        builder(AbstractBuilder): building system to build apps.</span>
+<span class="sd">        resources_dir(str): directory with framework resources.</span>
+<span class="sd">        build_type(BUILD_TYPE): type of build to produce in the Android Projects.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="n">get_results_dir</span><span class="p">(),</span> <span class="n">profiler</span><span class="o">=</span><span class="n">PROFILER</span><span class="o">.</span><span class="n">MANAFA</span><span class="p">,</span>
+                 <span class="n">testing_framework</span><span class="o">=</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">,</span> <span class="n">device</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">instrumenter</span><span class="o">=</span><span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">JINST</span><span class="p">,</span>
+                 <span class="n">analyzer</span><span class="o">=</span><span class="n">ANALYZER</span><span class="o">.</span><span class="n">OLD_ANADROID_ANALYZER</span><span class="p">,</span> <span class="n">instrumentation_type</span><span class="o">=</span><span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">,</span>
+                 <span class="n">build_system</span><span class="o">=</span><span class="n">BUILD_SYSTEM</span><span class="o">.</span><span class="n">GRADLE</span><span class="p">,</span> <span class="n">build_type</span><span class="o">=</span><span class="n">BUILD_TYPE</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">,</span> <span class="n">tests_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rebuild_apps</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                 <span class="n">reinstrument</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">recover_from_last_run</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">test_cmd</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">load_projects</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="n">device</span> <span class="k">if</span> <span class="n">device</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_first_connected_device</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tests_dir</span> <span class="o">=</span> <span class="n">tests_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">should_rebuild_apps</span> <span class="o">=</span> <span class="n">rebuild_apps</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">reinstrument</span> <span class="o">=</span> <span class="n">reinstrument</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apps</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># apps created from package names passed by argument</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apks</span> <span class="o">=</span> <span class="p">[]</span> <span class="c1"># apk paths passed by argument</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">recover_from_last_run</span> <span class="o">=</span> <span class="n">recover_from_last_run</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">arg1</span><span class="p">,</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__setup_from_argparse</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">realpath</span><span class="p">(</span><span class="n">arg1</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_projects</span><span class="p">()</span> <span class="k">if</span> <span class="n">load_projects</span> <span class="k">else</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_dir</span> <span class="o">=</span> <span class="n">results_dir</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">test_cmd</span> <span class="o">=</span> <span class="n">test_cmd</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_instrumentation_type</span><span class="p">(</span><span class="n">instrumentation_type</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_profiler</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_analyzer</span><span class="p">(</span><span class="n">analyzer</span><span class="p">,</span> <span class="n">profiler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_testing_framework</span><span class="p">(</span><span class="n">testing_framework</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">__validate_suite</span><span class="p">(</span><span class="n">profiler</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">instrumenter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_instrumenter</span><span class="p">(</span><span class="n">instrumenter</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__infer_build_system</span><span class="p">(</span><span class="n">build_system</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span> <span class="o">=</span> <span class="n">get_resources_dir</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">build_type</span> <span class="o">=</span> <span class="n">build_type</span>
+
+    <span class="k">def</span> <span class="nf">__setup_from_argparse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">args</span><span class="p">:</span> <span class="n">argparse</span><span class="o">.</span><span class="n">Namespace</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;get configs from argparse object if provided in app constructor.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            args: argparse object containing user preferences.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">application_packages</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">buildonly</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;incompatible option -bi. APKs are already built&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apks</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__create_apps_from_apk_names</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">application_packages</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">package_names</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">buildonly</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;incompatible option -bi. trying to process already built and installed apps&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">__create_apps_from_package_names</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">package_names</span><span class="p">)</span>
+        <span class="n">logw</span><span class="p">(</span><span class="s2">&quot;ignoring instrumentation phase&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__create_apps_from_package_names</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">package_names</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;creates App objects from a list of package names.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            package_names(list): list of package names.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">apps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pkg</span> <span class="ow">in</span> <span class="n">package_names</span><span class="p">:</span>
+            <span class="n">da_proj</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">pkg</span><span class="p">)</span>
+            <span class="n">da_proj</span><span class="o">.</span><span class="n">init_results_dir</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">App</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">da_proj</span><span class="p">,</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">apk_path</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">local_res_dir</span><span class="o">=</span><span class="n">da_proj</span><span class="o">.</span><span class="n">results_dir</span><span class="p">))</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">__create_apps_from_apk_names</span><span class="p">(</span><span class="n">apk_list</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">apk_list</span>
+<span class="w">        </span><span class="sd">&#39;&#39;&#39;for apk in apk_list:</span>
+<span class="sd">            if not os.path.exists(apk):</span>
+<span class="sd">                #raise FileNotFoundError()</span>
+<span class="sd">            pkg = extract_pkg_name_from_apk(apk)</span>
+<span class="sd">            da_proj = Project(pkg, pkg)</span>
+<span class="sd">            da_proj.init_results_dir(pkg)</span>
+<span class="sd">            self.apks.append( App(self.device, da_proj, pkg,apk_path=apk, local_res=da_proj.results_dir) )&#39;&#39;&#39;</span>
+
+    <span class="k">def</span> <span class="nf">__infer_profiler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;infers profiler from profiler enum.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            profiler(PROFILER): profiler enum selected by user.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            concrete_profiler(AbstractProfiler): inferred profiler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">profiler</span> <span class="ow">in</span> <span class="n">SUPPORTED_PROFILERS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">PROFILER</span><span class="o">.</span><span class="n">TREPN</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">TrepnProfiler</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">PROFILER</span><span class="o">.</span><span class="n">MANAFA</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">ManafaProfiler</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span>
+                                      <span class="n">hunter</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span> <span class="o">==</span> <span class="n">INSTRUMENTATION_TYPE</span><span class="o">.</span><span class="n">ANNOTATION</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">PROFILER</span><span class="o">.</span><span class="n">GREENSCALER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">GreenScalerProfiler</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">PROFILER</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">NoneProfiler</span><span class="p">(</span><span class="n">profiler</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">)</span>
+                <span class="c1"># return None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported profiler&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__infer_testing_framework</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tf</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;infers testing framework from TESTING_FRAMEWORK enum.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            tf(TESTING_FRAMEWORK): TESTING_FRAMEWORK enum selected by user.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            concrete_testing_framework(AbstractTestingFramework): inferred framework.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tf</span> <span class="ow">in</span> <span class="n">SUPPORTED_TESTING_FRAMEWORKS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">MonkeyFramework</span><span class="p">(</span><span class="n">default_workload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">RERAN</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">RERANFramework</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">APP_CRAWLER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">AppCrawlerFramework</span><span class="p">(</span><span class="n">default_workload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">MONKEY_RUNNER</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">MonkeyRunnerFramework</span><span class="p">(</span><span class="n">default_workload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">JUNIT</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JUnitBasedFramework</span><span class="p">(</span><span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">DROIDBOT</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">DroidBotFramework</span><span class="p">(</span><span class="n">default_workload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">tf</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">CUSTOM</span><span class="p">:</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">test_cmd</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unable to execute CustomCommandFramework without providing a command as input&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">CustomCommandFramework</span><span class="p">(</span><span class="n">default_workload</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">profiler</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzer</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="p">,</span>
+                                              <span class="n">command</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">test_cmd</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported Testing framework&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__infer_instrumenter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inst</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;infers instrumentation tool from INSTRUMENTER enum.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            inst(INSTRUMENTER): INSTRUMENTER enum selected by user.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            concrete_instrumenter(AbstractTestingFramework): inferred instrumenter.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">inst</span> <span class="ow">in</span> <span class="n">SUPPORTED_INSTRUMENTERS</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">inst</span> <span class="o">==</span> <span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">JINST</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">JInstInstrumenter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">inst</span> <span class="o">==</span> <span class="n">INSTRUMENTER</span><span class="o">.</span><span class="n">NONE</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">NoneInstrumenter</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">None</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported instrumenter&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__infer_analyzer</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ana</span><span class="p">,</span> <span class="n">profiler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;infers analyzer tool from ANALYZER and PROFILER enums.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            ana(ANALYZER): ANALYZER enum selected by user.</span>
+<span class="sd">            profiler(PROFILER): PROFILER enum selected by user.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            AbstractAnalyzer: inferred analyzer.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">analyzers</span> <span class="o">=</span> <span class="p">[</span><span class="n">ApkAPIAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">)]</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">profiler</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">NoneProfiler</span><span class="p">):</span>
+            <span class="n">analyzers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">LogAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps</span><span class="p">)</span> <span class="o">+</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">analyzers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">SCCAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">))</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">ana</span> <span class="ow">in</span> <span class="n">SUPPORTED_ANALYZERS</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported Analyzer </span><span class="si">{</span><span class="n">ana</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">profiler</span><span class="o">.</span><span class="n">TREPN</span><span class="p">:</span>
+            <span class="n">analyzers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">OldAnaDroidAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">))</span>
+        <span class="k">elif</span> <span class="n">profiler</span> <span class="o">==</span> <span class="n">profiler</span><span class="o">.</span><span class="n">MANAFA</span> <span class="ow">and</span> <span class="n">ana</span> <span class="o">==</span> <span class="n">ANALYZER</span><span class="o">.</span><span class="n">MANAFA_ANALYZER</span><span class="p">:</span>
+            <span class="n">analyzers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ManafaAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">))</span>
+            <span class="n">analyzers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ManafaMethodCoverageAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">ComposedAnalyzer</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">profiler</span><span class="p">,</span> <span class="n">analyzers</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__infer_build_system</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">build_system</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">build_system</span> <span class="ow">in</span> <span class="n">SUPPORTED_BUILDING_SYSTEMS</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">build_system</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported Analyzer&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">__infer_instrumentation_type</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">test_orientation</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;validates instrumentation type.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            INSTRUMENTATION_TYPE: instrumentation type.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">test_orientation</span> <span class="ow">in</span> <span class="n">SUPPORTED_INSTRUMENTATION_TYPES</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">test_orientation</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Unsupported instrumentation&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AnaDroid.init_builder"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.init_builder">[docs]</a>    <span class="k">def</span> <span class="nf">init_builder</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instr_proj</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">builder</span> <span class="o">==</span> <span class="n">BUILD_SYSTEM</span><span class="o">.</span><span class="n">GRADLE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">GradleBuilder</span><span class="p">(</span><span class="n">instr_proj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">resources_dir</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumenter</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span></div>
+
+<div class="viewcode-block" id="AnaDroid.default_workflow"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.default_workflow">[docs]</a>    <span class="k">def</span> <span class="nf">default_workflow</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;performs the basic workflow involved in processing apps straight from the source code.</span>
+<span class="sd">        For each app, project or apk provided to pynadroid, performs the required steps to transform such inputs</span>
+<span class="sd">        in software ready to be used and tested on the connected device, using the selected testing framework.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">app_proj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span><span class="p">:</span>
+            <span class="n">instr_proj</span><span class="p">,</span> <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_app_project</span><span class="p">(</span><span class="n">app_proj</span><span class="p">,</span> <span class="n">build_apks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">builder</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">installed_apps_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">install_apks</span><span class="p">(</span><span class="n">instr_proj</span><span class="p">,</span> <span class="n">build_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_type</span><span class="p">,</span>
+                                                           <span class="n">install_test_apks</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">needs_tests_apk</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">do_work</span><span class="p">(</span><span class="n">installed_apps_list</span><span class="p">)</span>
+            <span class="n">builder</span><span class="o">.</span><span class="n">uninstall_all_apks</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">show_results</span><span class="p">(</span><span class="n">installed_apps_list</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">apk</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">apks</span><span class="p">:</span>
+            <span class="n">logi</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;installing apk </span><span class="si">{</span><span class="n">apk</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">install_apk</span><span class="p">(</span><span class="n">apk</span><span class="p">)</span>
+            <span class="n">new_pkgs</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">get_new_installed_pkgs</span><span class="p">()</span>
+            <span class="n">pkg</span> <span class="o">=</span> <span class="n">new_pkgs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">new_pkgs</span><span class="p">)</span> <span class="k">else</span> <span class="n">extract_pkg_name_from_apk</span><span class="p">(</span><span class="n">apk</span><span class="p">)</span>
+            <span class="n">logi</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;pkg name </span><span class="si">{</span><span class="n">pkg</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">da_proj</span> <span class="o">=</span> <span class="n">Project</span><span class="p">(</span><span class="n">pkg</span><span class="p">,</span> <span class="n">pkg</span><span class="p">)</span>
+            <span class="n">da_proj</span><span class="o">.</span><span class="n">init_results_dir</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">do_work</span><span class="p">([</span><span class="n">App</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">da_proj</span><span class="p">,</span> <span class="n">pkg</span><span class="p">,</span> <span class="n">apk_path</span><span class="o">=</span><span class="n">apk</span><span class="p">,</span> <span class="n">local_res_dir</span><span class="o">=</span><span class="n">da_proj</span><span class="o">.</span><span class="n">results_dir</span><span class="p">)])</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">uninstall_pkg</span><span class="p">(</span><span class="n">pkg</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">do_work</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnaDroid.do_work"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.do_work">[docs]</a>    <span class="k">def</span> <span class="nf">do_work</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">apps</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Executes the testing framework for each app in apps.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">app</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">apps</span><span class="p">):</span>
+            <span class="n">logi</span><span class="p">(</span><span class="s2">&quot;testing app package &quot;</span> <span class="o">+</span> <span class="n">app</span><span class="o">.</span><span class="n">package_name</span><span class="p">)</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">init_local_test_</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">id</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">unlock_screen</span><span class="p">()</span>
+                <span class="n">app</span><span class="o">.</span><span class="n">set_immersive_mode</span><span class="p">()</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">init_default_workload</span><span class="p">(</span><span class="n">pkg</span><span class="o">=</span><span class="n">app</span><span class="o">.</span><span class="n">package_name</span><span class="p">,</span> <span class="n">tests_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">tests_dir</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">test_app</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">uninstall_pkg</span><span class="p">(</span><span class="n">app</span><span class="o">.</span><span class="n">package_name</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_tests</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;instr_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span><span class="p">,</span>
+                                                    <span class="s1">&#39;testing_framework&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="p">,</span>
+                                                    <span class="p">})</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="n">loge</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="AnaDroid.exec_command"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.exec_command">[docs]</a>    <span class="k">def</span> <span class="nf">exec_command</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">init_default_workload</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">test_app</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="p">,</span> <span class="n">app</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_tests</span><span class="p">(</span><span class="n">results_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">get_default_test_dir</span><span class="p">(),</span> <span class="o">**</span><span class="p">{</span>
+                                                <span class="s1">&#39;testing_framework&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="p">,</span>
+                                                <span class="p">})</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">loge</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span></div>
+
+
+    <span class="k">def</span> <span class="nf">__validate_suite</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">profiler</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;checks if the selected profiler can be combined with the selected instrumentation tyoe.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            profiler(PROFILER): profiler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span> <span class="ow">in</span> <span class="n">SUPPORTED_SUITES</span><span class="p">[</span><span class="n">profiler</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> based-instrumentation not supported with </span><span class="si">{</span><span class="n">profiler</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="AnaDroid.just_build_apps"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.just_build_apps">[docs]</a>    <span class="k">def</span> <span class="nf">just_build_apps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;builds apps from app_projects_ut.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">app_proj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">build_app_project</span><span class="p">(</span><span class="n">app_proj</span><span class="p">,</span> <span class="n">build_apks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnaDroid.build_app_project"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.build_app_project">[docs]</a>    <span class="k">def</span> <span class="nf">build_app_project</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_project</span><span class="p">,</span> <span class="n">build_apks</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">app_project</span><span class="p">)</span>
+        <span class="n">logi</span><span class="p">(</span><span class="s2">&quot;Processing app &quot;</span> <span class="o">+</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; in &quot;</span> <span class="o">+</span> <span class="n">app_project</span><span class="p">)</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="n">instr_proj</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">builder</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">original_proj</span> <span class="o">=</span> <span class="n">AndroidProject</span><span class="p">(</span><span class="n">projname</span><span class="o">=</span><span class="n">app_name</span><span class="p">,</span> <span class="n">projdir</span><span class="o">=</span><span class="n">app_project</span><span class="p">,</span> <span class="n">clean_instrumentations</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">reinstrument</span><span class="p">)</span>
+            <span class="n">instrumented_proj_dir</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumenter</span><span class="o">.</span><span class="n">instrument</span><span class="p">(</span><span class="n">original_proj</span><span class="p">,</span> <span class="n">instr_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span><span class="p">)</span>
+            <span class="n">instr_proj</span> <span class="o">=</span> <span class="n">AndroidProject</span><span class="p">(</span><span class="n">projname</span><span class="o">=</span><span class="n">app_name</span><span class="p">,</span> <span class="n">projdir</span><span class="o">=</span><span class="n">instrumented_proj_dir</span><span class="p">,</span> <span class="n">results_dir</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">results_dir</span><span class="p">)</span>
+            <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">init_builder</span><span class="p">(</span><span class="n">instr_proj</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">build_apks</span><span class="p">:</span>
+               <span class="n">res</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build_proj_and_apk</span><span class="p">(</span><span class="n">build_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_type</span><span class="p">,</span>
+                                                <span class="n">build_tests_apk</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">id</span> <span class="o">==</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">JUNIT</span><span class="p">,</span>
+                                                <span class="n">rebuild</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">should_rebuild_apps</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">res</span> <span class="o">=</span> <span class="n">builder</span><span class="o">.</span><span class="n">build</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="n">loge</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">res</span><span class="p">:</span>
+            <span class="n">loge</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to build </span><span class="si">{</span><span class="n">app_name</span><span class="si">}</span><span class="s2">. Skipping app&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">instr_proj</span><span class="p">,</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="n">instr_proj</span><span class="p">,</span> <span class="n">builder</span></div>
+
+<div class="viewcode-block" id="AnaDroid.just_analyze"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.just_analyze">[docs]</a>    <span class="k">def</span> <span class="nf">just_analyze</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;analyze apps obtained from app_projects_ut.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">app_proj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span><span class="p">:</span>
+            <span class="n">app_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">app_proj</span><span class="p">)</span>
+            <span class="n">logi</span><span class="p">(</span><span class="s2">&quot;Processing app &quot;</span> <span class="o">+</span> <span class="n">app_name</span> <span class="o">+</span> <span class="s2">&quot; in &quot;</span> <span class="o">+</span> <span class="n">app_proj</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">app_proj</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">app_projects_ut</span><span class="p">:</span>
+                <span class="n">instr_proj</span><span class="p">,</span> <span class="n">builder</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_app_project</span><span class="p">(</span><span class="n">app_proj</span><span class="p">,</span> <span class="n">build_apks</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                <span class="n">installed_apps_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">device</span><span class="o">.</span><span class="n">install_apks</span><span class="p">(</span><span class="n">instr_proj</span><span class="p">,</span> <span class="n">build_type</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">build_type</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">app</span> <span class="ow">in</span> <span class="n">installed_apps_list</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">analyzer</span><span class="o">.</span><span class="n">analyze_tests</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s1">&#39;instr_type&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">instrumentation_type</span><span class="p">})</span></div>
+
+            <span class="c1"># builder = self.init_builder(instr_proj)</span>
+            <span class="c1"># builder.build_proj_and_apk(build_type=self.build_type,build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)</span>
+            <span class="c1"># self.analyzer.analyze(app, **{&#39;instr_type&#39;: self.instrumentation_type, &#39;testing_framework&#39;: self.testing_framework})</span>
+
+    <span class="k">def</span> <span class="nf">__get_project_root_dir</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dir_path</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;infers Android project root directory.&quot;&quot;&quot;</span>
+        <span class="n">has_gradle_right_next</span> <span class="o">=</span> <span class="n">mega_find</span><span class="p">(</span><span class="n">dir_path</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s2">&quot;build.gradle&quot;</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">has_gradle_right_next</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">top_gradle_file</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">has_gradle_right_next</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">top_gradle_file</span><span class="p">)</span> <span class="k">if</span> <span class="n">top_gradle_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="AnaDroid.load_projects"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.load_projects">[docs]</a>    <span class="k">def</span> <span class="nf">load_projects</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;loads Android Projects from a directory containing one or more projects.&quot;&quot;&quot;</span>
+        <span class="n">return_projs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">is_android_project</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="p">):</span>
+            <span class="n">potential_projects</span> <span class="o">=</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">potential_projects</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+                <span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="p">)))</span>
+        <span class="k">for</span> <span class="n">maybe_proj</span> <span class="ow">in</span> <span class="n">potential_projects</span><span class="p">:</span>
+            <span class="n">path_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="p">,</span> <span class="n">maybe_proj</span><span class="p">)</span>
+            <span class="n">proj_fldr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_project_root_dir</span><span class="p">(</span><span class="n">path_dir</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">proj_fldr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">return_projs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proj_fldr</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">children_dirs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_dir</span><span class="p">,</span> <span class="n">x</span><span class="p">)),</span> <span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">path_dir</span><span class="p">)))</span>
+                <span class="k">for</span> <span class="n">child</span> <span class="ow">in</span> <span class="n">children_dirs</span><span class="p">:</span>
+                    <span class="n">child_path_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path_dir</span><span class="p">,</span> <span class="n">child</span><span class="p">)</span>
+                    <span class="n">proj_fldr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">__get_project_root_dir</span><span class="p">(</span><span class="n">child_path_dir</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">proj_fldr</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                        <span class="n">return_projs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proj_fldr</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">recover_from_last_run</span><span class="p">:</span>
+            <span class="n">projs_to_exclude</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_projs_from_last_run</span><span class="p">()</span>
+            <span class="n">return_projs</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">return_projs</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">projs_to_exclude</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">return_projs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">logw</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;All projects executed in the last run or no projects found in </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">apps_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">return_projs</span></div>
+
+<div class="viewcode-block" id="AnaDroid.get_projs_from_last_run"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.get_projs_from_last_run">[docs]</a>    <span class="k">def</span> <span class="nf">get_projs_from_last_run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">processed_projs_last_run</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">file_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;Processing app &quot;</span>
+        <span class="n">last_run_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_last_run_file</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">last_run_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">last_run_file</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+            <span class="n">file_lines</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">file_lines</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">regex</span><span class="p">,</span> <span class="n">line</span><span class="p">):</span>
+                <span class="n">proj_dir</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;in &quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+                <span class="n">processed_projs_last_run</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">proj_dir</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">processed_projs_last_run</span></div>
+
+<div class="viewcode-block" id="AnaDroid.get_last_run_file"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.get_last_run_file">[docs]</a>    <span class="k">def</span> <span class="nf">get_last_run_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">run_regex</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\d+-\d+-\d+-\d+-\d+.*.log&quot;</span>
+        <span class="n">log_dir</span> <span class="o">=</span> <span class="n">get_log_dir</span><span class="p">()</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">log_dir</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">prev_logs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">run_regex</span><span class="p">,</span> <span class="n">t</span><span class="p">),</span> <span class="n">mega_find</span><span class="p">(</span><span class="n">log_dir</span><span class="p">,</span> <span class="n">pattern</span><span class="o">=</span><span class="s1">&#39;*.log&#39;</span><span class="p">,</span> <span class="n">type_file</span><span class="o">=</span><span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="n">maxdepth</span><span class="o">=</span><span class="mi">1</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">prev_logs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+        <span class="n">sorted_list</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">prev_logs</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getmtime</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">sorted_list</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="AnaDroid.record_test"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.record_test">[docs]</a>    <span class="k">def</span> <span class="nf">record_test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tests_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;records tests that can be replayed later.</span>
+<span class="sd">        Args:</span>
+<span class="sd">            tests_dir: directory to store tests.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">is_recordable</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">record_test</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="n">tests_dir</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unable to record test with </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">id</span><span class="o">.</span><span class="n">value</span><span class="si">}</span><span class="s2"> framework&quot;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="AnaDroid.needs_tests_apk"><a class="viewcode-back" href="../../anadroid.html#anadroid.Anadroid.AnaDroid.needs_tests_apk">[docs]</a>    <span class="k">def</span> <span class="nf">needs_tests_apk</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;checks if the selected testing framework requires a tests apk.</span>
+<span class="sd">        Returns:</span>
+<span class="sd">            bool: True if os a JUnit-based testing framework, False otherwise.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">testing_framework</span><span class="o">.</span><span class="n">id</span> <span class="ow">in</span> <span class="p">[</span><span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">JUNIT</span><span class="p">,</span>
+                                             <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">ESPRESSO</span><span class="p">,</span> <span class="n">TESTING_FRAMEWORK</span><span class="o">.</span><span class="n">ROBOTIUM</span><span class="p">]</span></div></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Rui Rua.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
