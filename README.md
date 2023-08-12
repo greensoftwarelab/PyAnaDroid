@@ -4,7 +4,8 @@
 [![PyPI version](https://badge.fury.io/py/anadroid.svg)](https://badge.fury.io/py/anadroid)
 [![PyPI license](https://img.shields.io/pypi/l/ansicolortags.svg)](https://pypi.python.org/pypi/anadroid)
 [![PyPI status](https://img.shields.io/pypi/status/ansicolortags.svg)](https://pypi.python.org/pypi/anadroid)
-[![DOI](https://zenodo.org/badge/459944500.svg)](https://zenodo.org/badge/latestdoi/459944500)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.8242001.svg)](https://doi.org/10.5281/zenodo.8242001)
+
 
 
 
