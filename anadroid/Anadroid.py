@@ -66,7 +66,7 @@ class AnaDroid(object):
         self.device = device if device is not None else get_first_connected_device()
         self.app_projects_ut = []
         self.tests_dir = tests_dir
-        self.rebuild_apps = rebuild_apps
+        self.should_rebuild_apps = rebuild_apps
         self.reinstrument = reinstrument
         self.apps = [] # apps created from package names passed by argument
         self.apks = [] # apk paths passed by argument
@@ -321,7 +321,9 @@ class AnaDroid(object):
             instr_proj = AndroidProject(projname=app_name, projdir=instrumented_proj_dir, results_dir=self.results_dir)
             builder = self.init_builder(instr_proj)
             if build_apks:
-               res = builder.build_proj_and_apk(build_type=self.build_type, build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT)
+               res = builder.build_proj_and_apk(build_type=self.build_type,
+                                                build_tests_apk=self.testing_framework.id == TESTING_FRAMEWORK.JUNIT,
+                                                rebuild=self.should_rebuild_apps)
             else:
                 res = builder.build()
         except Exception:
