@@ -35,6 +35,14 @@ def process_general_config(args_obj):
         set_general_config('tests', 'tests_per_app', n_times)
 
 
+def count_positional_args(func):
+    sig = inspect.signature(func)
+    positional_args = [param for param in sig.parameters.values()
+                       if param.default == inspect.Parameter.empty
+                       and param.kind == inspect.Parameter.POSITIONAL_OR_KEYWORD]
+    return len(positional_args)
+
+
 def exec_device_cmd(anad, cmd: str):
     device_methods = list(filter(lambda x: not '__' in x, dir(anad.device)))
     has_arg = len(cmd.split(" ")) > 1
@@ -51,9 +59,10 @@ def exec_device_cmd(anad, cmd: str):
         action_m = getattr(anad.device, action)
     except:
         raise Exception(f"Unable to find {action} action")
-    hasnt_enough_arg = callable(action_m) and (action_m.__code__.co_argcount - 1) > len(cmd.split(" ")[1:])
+    min_action_args = count_positional_args(action_m)
+    hasnt_enough_arg = callable(action_m) and min_action_args > len(cmd.split(" ")[1:])
     if hasnt_enough_arg:
-        raise Exception(f"Not enough args for {action} action")
+        raise Exception(f"Not enough args for {action} action. Expecting {min_action_args} args")
     res = action_m if not callable(action_m) else (action_m(*cmd.split(" ")[1:]) if has_arg else action_m())
     print(res)
     return res
