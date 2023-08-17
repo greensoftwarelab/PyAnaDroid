@@ -10,6 +10,7 @@ class BUILD_SYSTEM(Enum):
     MAVEN = "Maven"
     UNKNOWN = "Unknown"
 
+
 class TESTING_FRAMEWORK(Enum):
     """Enumerates supported testing frameworks"""
     MONKEY = "Monkey"
@@ -22,6 +23,7 @@ class TESTING_FRAMEWORK(Enum):
     DROIDBOT = "Droidbot"
     CUSTOM = "Custom"
     OTHER = "Other"
+    NONE = "None"
 
 
 class PROFILER(Enum):

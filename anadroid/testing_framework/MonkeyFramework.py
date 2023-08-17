@@ -31,31 +31,28 @@ class MonkeyFramework(AbstractTestingFramework):
 
     def init_default_workload(self, pkg, seeds_file=DEFAULT_SEEDS_FILE, tests_dir=None):
         self.workload = WorkLoad()
-        wl_filename = os.path.join(self.res_dir, seeds_file)
         config = self.__load_config_file()
-        ofile = open(wl_filename, "r")
-        i=0
+        ofile = open(os.path.join(self.res_dir, seeds_file), "r")
         max_tests_per_app = self.get_config("tests_per_app", 100000000)
-        for seed in ofile:
+        for i, seed in enumerate(ofile):
             if i >= max_tests_per_app:
                 break
             wk = MonkeyWorkUnit(self.executable_prefix)
             wk.config(seed=seed.strip(), **config)
             self.workload.add_unit(wk)
-            i = i+1
         ofile.close()
 
-    def execute_test(self, package, wunit=None, timeout=None, *args, **kwargs):
-        if wunit is None:
-            wunit = self.workload.consume()
+    def execute_test(self, package, w_unit=None, timeout=None, *args, **kwargs):
+        if w_unit is None:
+            w_unit = self.workload.consume()
         if timeout or self.get_config("test_timeout", None):
             timeout_val = timeout if timeout is not None else self.get_config("test_timeout", None)
-            wunit.add_timeout(timeout_val)
+            w_unit.add_timeout(timeout_val)
         if self.profiler.profiler == PROFILER.GREENSCALER:
-            cmd = wunit.build_command(package, *args, **kwargs)
+            cmd = w_unit.build_command(package, *args, **kwargs)
             self.profiler.exec_greenscaler(package, cmd)
         else:
-            wunit.execute(package, *args, **kwargs)
+            w_unit.execute(package, *args, **kwargs)
         if 'log_filename' in kwargs:
             execute_shell_command(f"adb logcat -d > {kwargs['log_filename']}").validate(Exception("Unable to extract device log"))
 

@@ -83,6 +83,11 @@ def set_device_conn(conn_type, device_id=None):
         raise Exception("Unknown device connection type (not USB or WIFI)")
 
 
+def has_connected_device():
+    result = execute_shell_command('adb devices -l  | grep \"product\"')  # #| cut -f1 -d\ ')
+    return result.output.strip() != ''
+
+
 def get_first_connected_device(conn_type=ADB_CONN.USB.value):
     """Retrieves the first connected device that it founds using adb.
     Retrieves the first device of the list retrieved by adb devices -l command.

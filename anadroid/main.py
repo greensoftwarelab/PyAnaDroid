@@ -1,18 +1,21 @@
 import argparse
+import inspect
+
 from anadroid.Anadroid import AnaDroid
 from anadroid.Config import set_general_config
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
-from anadroid.device.Device import set_device_conn
+from anadroid.device.Device import set_device_conn, Device, has_connected_device
 from anadroid.device.MockedDevice import MockedDevice
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
 
 def init_PyAnaDroid_from_args(args):
+    needs_dynamic_execution = not (args.buildonly or args.justanalyze or args.device)
     return AnaDroid(arg1=args.diretory if (len(args.package_names) + len(args.application_packages) == 0) else args,
-                    testing_framework=TESTING_FRAMEWORK(args.testingframework),
-                    device=MockedDevice() if args.buildonly or args.justanalyze else None,
-                    profiler=PROFILER(args.profiler),
+                    testing_framework=TESTING_FRAMEWORK(args.testingframework if needs_dynamic_execution else "None"),
+                    device=MockedDevice() if not needs_dynamic_execution and not has_connected_device() else None,
+                    profiler=PROFILER(args.profiler if needs_dynamic_execution else PROFILER.NONE),
                     build_type=BUILD_TYPE(args.buildtype),
                     instrumenter=INSTRUMENTER(args.instrumenter),
                     instrumentation_type=INSTRUMENTATION_TYPE(args.instrumentationtype),
@@ -32,6 +35,34 @@ def process_general_config(args_obj):
         set_general_config('tests', 'tests_per_app', n_times)
 
 
+def exec_device_cmd(anad, cmd: str):
+    device_methods = list(filter(lambda x: not '__' in x, dir(anad.device)))
+    has_arg = len(cmd.split(" ")) > 1
+    #print(*cmd.split(" "))
+    action = cmd.split(" ")[0]
+    if action.strip() == 'list':
+        action_explanation = list(map(lambda x:
+                                      f'-> {x}: ' + getattr(anad.device, x).__doc__.replace("\n", " ")
+                                      if getattr(anad.device, x).__doc__ is not None else f'-> {x}', device_methods))
+        res = "List of available actions:\n" + "\n".join(action_explanation)
+        print(res)
+        return res
+    try:
+        action_m = getattr(anad.device, action)
+    except:
+        raise Exception(f"Unable to find {action} action")
+    hasnt_enough_arg = callable(action_m) and (action_m.__code__.co_argcount - 1) > len(cmd.split(" ")[1:])
+    if hasnt_enough_arg:
+        raise Exception(f"Not enough args for {action} action")
+    res = action_m if not callable(action_m) else (action_m(*cmd.split(" ")[1:]) if has_arg else action_m())
+    print(res)
+    return res
+
+
+def get_device_cmd_help_text():
+    return """device <Action> perform device commands"""
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--testingframework", default=TESTING_FRAMEWORK.MONKEY.value, type=str,
@@ -47,6 +78,8 @@ def main():
     parser.add_argument("-a", "--analyzer", default=ANALYZER.MANAFA_ANALYZER.value, type=str, help="results analyzer",
                         choices=[e.value for e in INSTRUMENTATION_TYPE])
     parser.add_argument("-d", "--diretory", default="demoProjects", type=str, help="app(s)' folder")
+    parser.add_argument("-dev", "--device", default=None, type=str,
+                        help="device <Action>. performs device class commands")
     parser.add_argument("-bo", "--buildonly", help="just build apps", action='store_true')
     parser.add_argument("-record", "--record", help="record test", action='store_true', default=False)
     parser.add_argument("-run", "--run_only", help="run only", action='store_true')
@@ -69,7 +102,9 @@ def main():
         set_device_conn(args.setconnection, device_id=args.device_serial)
         exit(0)
     anadroid = init_PyAnaDroid_from_args(args)
-    if args.buildonly:
+    if args.device:
+        exec_device_cmd(anadroid, args.device)
+    elif args.buildonly:
         anadroid.just_build_apps()
     elif args.justanalyze:
         anadroid.just_analyze()

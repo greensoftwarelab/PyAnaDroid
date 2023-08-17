@@ -160,3 +160,13 @@ class AbstractDevice(ABC):
         res = self.execute_command("getprop ro.build.version.release", shell=True)
         if res.validate(Exception("Unable do get android device version")):
             return DefaultSemanticVersion(res.output.strip())
+
+    def get_battery_level(self):
+        """returns device battery level [1-100].
+        Parses the output of dumpsys battery cmd.
+        Returns:
+            battery_level(int):  battery level.
+        """
+        res = self.execute_command("dumpsys battery | grep level", shell=True)
+        res.validate()
+        return int(res.output.split(":")[1].strip())
