@@ -12,7 +12,7 @@
 PyAnaDroid is a tool capable of automating the process of analyzing and benchmarking Android applications' energy consumption, using state-of-the-art energy analysis tools. PyAnaDroid can be configured to use different energy profilers and test frameworks in its execution pipeline, being able to perform automatic instrumentation and building of application source code. It can be used to perform both white-box and black-box testing.
 
 
-![Anadroid Workflow](pyanadroid_arch.png)
+![Anadroid Workflow](default_wkflow.png)
 
 
 ## Documentation
