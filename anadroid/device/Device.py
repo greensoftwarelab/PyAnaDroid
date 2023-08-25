@@ -23,9 +23,9 @@ CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, DEVICE_STATE_IDLE_FILENAME) if\
 
 
 def background_installer(serial_nr):
-    time.sleep(2)
-    if has_to_click_to_install(serial_nr):
-        click_to_install(serial_nr)
+    time.sleep(1)
+    #if has_to_click_to_install(serial_nr):
+    click_to_install(serial_nr)
 
 
 def has_to_click_to_install(serial_nr):
@@ -42,6 +42,13 @@ def has_to_click_to_install(serial_nr):
 
 def click_to_install(serial_nr):
     vc = ViewClient(*ViewClient.connectToDeviceOrExit(serialno=serial_nr))
+    try:
+        vc.findViewByIdOrRaise('com.google.securitycenter:id/name')
+    except:
+        try:
+            vc.findViewByIdOrRaise('com.miui.securitycenter:id/name')
+        except:
+            return
     res = vc.findViewByIdOrRaise('android:id/button2')
     res.touch()
 
@@ -93,7 +100,6 @@ def get_first_connected_device(conn_type=ADB_CONN.USB.value):
     Retrieves the first device of the list retrieved by adb devices -l command.
     Args:
         conn_type:
-
     Returns:
         Device: first device found.
     """
