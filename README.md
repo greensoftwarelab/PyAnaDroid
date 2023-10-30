@@ -1,4 +1,4 @@
-# AnaDroid
+# PyAnaDroid
 [![Build Status](https://travis-ci.com/RRua/pyAnaDroid.svg?branch=main)](https://travis-ci.com/RRua/pyAnaDroid)
 [![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
 [![PyPI version](https://badge.fury.io/py/anadroid.svg)](https://badge.fury.io/py/anadroid)
@@ -9,10 +9,10 @@
 
 
 
-Anadroid is a tool capable of automating the process of analyzing and benchmarking Android applications' energy consumption, using state-of-the-art energy analysis tools. Anadroid can be configured to use different energy profilers and test frameworks in its execution pipeline, being able to perform automatic instrumentation and building of application source code. It can be used to perform both white-box and black-box testing.
+PyAnaDroid is a tool capable of automating the process of analyzing and benchmarking Android applications' energy consumption, using state-of-the-art energy analysis tools. PyAnaDroid can be configured to use different energy profilers and test frameworks in its execution pipeline, being able to perform automatic instrumentation and building of application source code. It can be used to perform both white-box and black-box testing.
 
 
-![Anadroid Workflow](pyanadroid_arch.png)
+![Anadroid Workflow](default_wkflow.png)
 
 
 ## Documentation
@@ -49,9 +49,9 @@ https://www.youtube.com/watch?v=7AV3nrh4Qc8
 
 # Workflow
 
-By default, Anadroid is configured to perform white-box testing of applications, instrumenting its code (Java and/or Kotlin), in order to collect tracing of the methods invoked during application execution and estimate the energy consumed by these. After the instrumentation phase, a project is created in the original directory, which is a copy of it, with the code and build scripts already instrumented. Then, the source code and apk are built from the sources of the instrumented project (both debug and release builds are supported), and the application is installed on the device. After installation, the energy profiler is enabled and the application tests are executed. At the end of the process, the monitoring process is stopped and its results collected, and the application is uninstalled.
+By default, PyAnaDroid is configured to perform white-box testing of applications, instrumenting its code (Java and/or Kotlin), in order to collect tracing of the methods invoked during application execution and estimate the energy consumed by these. After the instrumentation phase, a project is created in the original directory, which is a copy of it, with the code and build scripts already instrumented. Then, the source code and apk are built from the sources of the instrumented project (both debug and release builds are supported), and the application is installed on the device. After installation, the energy profiler is enabled and the application tests are executed. At the end of the process, the monitoring process is stopped and its results collected, and the application is uninstalled.
 
-![Anadroid Workflow](pyanadroid_arch.png)
+![PyAnaDroid Workflow](pyanadroid_arch.png)
 
 # Installation:
 
@@ -125,7 +125,7 @@ optional arguments:
 
 ### Execute a simple Monkey test over an application
 
-By default, Anadroid uses Manafa profiler to estimate energy consumption. The Monkey test (or any other test with other supported testing framework) and its parameters can be configured by modifying the .cfg present in the resources/testingFrameworks/<framework> directory. The results are stored in the results/<app_id>/<app_version> directory
+By default, PyAnaDroid uses Manafa profiler to estimate energy consumption. The Monkey test (or any other test with other supported testing framework) and its parameters can be configured by modifying the .cfg present in the resources/testingFrameworks/<framework> directory. The results are stored in the results/<app_id>/<app_version> directory
 
 ```
 from anadroid.Anadroid import AnaDroid
