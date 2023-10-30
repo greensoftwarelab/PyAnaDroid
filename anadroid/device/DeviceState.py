@@ -24,7 +24,8 @@ KNOWN_STATE_KEYS = {
     'gps',
     "nfc_state",
     "mobile_data_state",
-    'speakers_state'
+    'speakers_state',
+    'battery_level'
 }
 
 PERMISSIONS_TO_STATE = {
@@ -390,6 +391,9 @@ class DeviceState(object):
             return res.output.strip()
         return ""
 
+    def get_battery_level(self):
+        return self.device.get_battery_level()
+
     def get_state(self, key):
         """given a component uid/key, returns the current state of such component.
         Args:
@@ -422,6 +426,8 @@ class DeviceState(object):
             return self.get_mobile_data_state()
         elif key == 'speakers_state':
             return self.get_speakers_state()
+        elif key == 'battery_level':
+            return self.get_battery_level()
         # elif key == 'hotspot_state':
         #    self.set_hotspot_state(val)
         else:
@@ -479,5 +485,6 @@ class DeviceState(object):
             "used_cpu": self.get_used_cpu_averages(),
             "used_mem_pss": self.get_used_ram_pss(),
             "used_mem_kernel": self.get_used_ram_kernel(),
-            "nr_procceses": self.get_nr_processes_running()
+            "nr_procceses": self.get_nr_processes_running(),
+            "battery_level": self.get_battery_level()
         }
