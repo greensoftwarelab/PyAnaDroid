@@ -6,6 +6,7 @@ from anadroid.Config import set_general_config
 from anadroid.Types import TESTING_FRAMEWORK, PROFILER, ANALYZER, INSTRUMENTER
 from anadroid.application.AndroidProject import BUILD_TYPE
 from anadroid.device.Device import set_device_conn, Device, has_connected_device
+from anadroid.device.DeviceState import DeviceState
 from anadroid.device.MockedDevice import MockedDevice
 from anadroid.instrument.Types import INSTRUMENTATION_TYPE
 
@@ -59,12 +60,20 @@ def exec_device_cmd(anad, cmd: str):
         action_m = getattr(anad.device, action)
     except:
         raise Exception(f"Unable to find {action} action")
+    if not callable(action_m):
+        if isinstance(action_m, DeviceState):
+            if has_arg:
+                action_m = getattr(anad.device.device_state, cmd.split(" ")[1].strip())
+                return str(action_m)
+            else:
+                print("please provide a valid action for device state")
+        else:
+            return str(action_m)
     min_action_args = count_positional_args(action_m)
     hasnt_enough_arg = callable(action_m) and min_action_args > len(cmd.split(" ")[1:])
     if hasnt_enough_arg:
         raise Exception(f"Not enough args for {action} action. Expecting {min_action_args} args")
     res = action_m if not callable(action_m) else (action_m(*cmd.split(" ")[1:]) if has_arg else action_m())
-    print(res)
     return res
 
 
@@ -112,7 +121,8 @@ def main():
         exit(0)
     anadroid = init_PyAnaDroid_from_args(args)
     if args.device:
-        exec_device_cmd(anadroid, args.device)
+        res = exec_device_cmd(anadroid, args.device)
+        print(res)
     elif args.buildonly:
         anadroid.just_build_apps()
     elif args.justanalyze:

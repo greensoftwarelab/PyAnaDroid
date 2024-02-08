@@ -22,10 +22,10 @@ CONFIG_IDLE_FILE = os.path.join(CONFIG_DIR, DEVICE_STATE_IDLE_FILENAME) if\
     not os.path.exists(DEVICE_STATE_IDLE_FILENAME) else DEVICE_STATE_IDLE_FILENAME
 
 
-def background_installer(serial_nr):
+def background_installer(serial_nr, is_miui=False):
     time.sleep(1)
     #if has_to_click_to_install(serial_nr):
-    click_to_install(serial_nr)
+    click_to_install(serial_nr, is_miui=is_miui)
 
 
 def has_to_click_to_install(serial_nr):
@@ -40,13 +40,15 @@ def has_to_click_to_install(serial_nr):
     return True
 
 
-def click_to_install(serial_nr):
+def click_to_install(serial_nr, is_miui=False):
+    install_dialog_view_id = 'com.google.securitycenter:id/name' \
+        if not is_miui else 'com.miui.securitycenter:id/name'
     vc = ViewClient(*ViewClient.connectToDeviceOrExit(serialno=serial_nr))
     try:
-        vc.findViewByIdOrRaise('com.google.securitycenter:id/name')
+        vc.findViewByIdOrRaise(install_dialog_view_id)
     except:
         try:
-            vc.findViewByIdOrRaise('com.miui.securitycenter:id/name')
+            vc.findViewByIdOrRaise(install_dialog_view_id)
         except:
             return
     res = vc.findViewByIdOrRaise('android:id/button2')
@@ -200,7 +202,7 @@ class Device(AbstractDevice):
             unlocked = self.is_screen_unlocked()
             if not unlocked:
                 self.unlock_screen()
-            thread1 = threading.Thread(target=background_installer, args=[self.serial_nr])
+            thread1 = threading.Thread(target=background_installer, args=[self.serial_nr, self.is_miui()])
             thread1.start()
         logi("installing main APK(s)")
         res = super().execute_command("install -r %s" % apk_path, args=[], shell=False)
@@ -448,3 +450,8 @@ class Device(AbstractDevice):
             os.mkdir(os.path.dirname(filepath))
         with open(filepath, 'w') as jj:
             json.dump(device_stt, jj, indent=1)
+
+    def is_miui(self):
+        if len(self.props) == 0:
+            self.__init_props()
+        return any([x for x in self.props.keys() if "miui" in x.lower()])
