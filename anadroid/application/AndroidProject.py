@@ -43,6 +43,8 @@ def is_android_project(dirpath):
     Returns:
         bool: True if file is in the directory, False otherwise.
     """
+    if not os.path.isdir(dirpath):
+        return False
     return "settings.gradle" in [f for f in listdir(dirpath)]
 
 

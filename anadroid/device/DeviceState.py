@@ -61,20 +61,20 @@ class DeviceState(object):
         speakers_state(int): speakers_state state.
         flashlight(int): flashlight state.
     """
-    def __init__(self, device):
+    def __init__(self, device, lazy_load=False):
         self.device = device
-        self.screen_locked = self.get_screen_lock_state()
-        self.screen_brightness = self.get_screen_brightness()
-        self.screen_always_on = self.get_screen_always_on()
-        self.screen_auto_rotate = self.get_screen_auto_rotate()
-        self.screen_orientation = self.get_screen_orientation()
-        self.bluetooth = self.get_bluetooth_state()
-        self.wifi = self.get_wifi_state()
+        self.screen_locked = self.get_screen_lock_state() if not lazy_load else 0
+        self.screen_brightness = self.get_screen_brightness() if not lazy_load else 0
+        self.screen_always_on = self.get_screen_always_on() if not lazy_load else 0
+        self.screen_auto_rotate = self.get_screen_auto_rotate() if not lazy_load else 0
+        self.screen_orientation = self.get_screen_orientation() if not lazy_load else 0
+        self.bluetooth = self.get_bluetooth_state() if not lazy_load else 0
+        self.wifi = self.get_wifi_state() if not lazy_load else 0
         # self.hotspot_state = self.get_hotspot_state()
-        self.gps = self.get_gps_state()
-        self.nfc_state = self.get_nfc_state()
-        self.mobile_data_state = self.get_mobile_data_state()
-        self.speakers_state = self.get_speakers_state()
+        self.gps = self.get_gps_state() if not lazy_load else 0
+        self.nfc_state = self.get_nfc_state() if not lazy_load else 0
+        self.mobile_data_state = self.get_mobile_data_state() if not lazy_load else 0
+        self.speakers_state = self.get_speakers_state() if not lazy_load else 0
         self.flashlight = 0
 
     def get_screen_lock_state(self):

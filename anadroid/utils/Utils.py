@@ -205,8 +205,10 @@ def logw(message, to_file=True):
     log(message, log_sev=LogSeverity.WARNING, to_file=to_file)
 
 
-def loge(message, to_file=True):
+def loge(message, to_file=True, exit_on_error=False, error_code=3):
     log(message, log_sev=LogSeverity.ERROR, to_file=to_file)
+    if exit_on_error:
+        exit(error_code)
 
 
 def logf(message, to_file=True):

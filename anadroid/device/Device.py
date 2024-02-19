@@ -28,13 +28,15 @@ def background_installer(serial_nr, is_miui=False):
     click_to_install(serial_nr, is_miui=is_miui)
 
 
-def has_to_click_to_install(serial_nr):
+def has_to_click_to_install(serial_nr, is_miui=False):
+    install_dialog_view_id = 'com.google.securitycenter:id/name' \
+        if not is_miui else 'com.miui.securitycenter:id/name'
     vc = ViewClient(*ViewClient.connectToDeviceOrExit(serialno=serial_nr))
     try:
-        vc.findViewByIdOrRaise('com.google.securitycenter:id/name')
+        vc.findViewByIdOrRaise(install_dialog_view_id)
     except:
         try:
-            vc.findViewByIdOrRaise('com.miui.securitycenter:id/name')
+            vc.findViewByIdOrRaise(install_dialog_view_id)
         except:
             return False
     return True
@@ -97,7 +99,7 @@ def has_connected_device():
     return result.output.strip() != ''
 
 
-def get_first_connected_device(conn_type=ADB_CONN.USB.value):
+def get_first_connected_device(conn_type=ADB_CONN.USB.value, lazy_load=False):
     """Retrieves the first connected device that it founds using adb.
     Retrieves the first device of the list retrieved by adb devices -l command.
     Args:
@@ -112,7 +114,7 @@ def get_first_connected_device(conn_type=ADB_CONN.USB.value):
     if device_serial == "":
         raise DeviceNotFoundError(f"No devices/emulators connected.")
 
-    return Device(device_serial, conn_type=conn_type)
+    return Device(device_serial, conn_type=conn_type, lazy_load=lazy_load)
 
 
 class DeviceNotFoundError(Exception):
@@ -121,18 +123,20 @@ class DeviceNotFoundError(Exception):
 
 class Device(AbstractDevice):
     """Class that extends AbstractDevice to handle interaction with devices connected via ADB."""
-    def __init__(self,  serial_nr, conn_type=ADB_CONN.USB):
+    def __init__(self,  serial_nr, conn_type=ADB_CONN.USB, lazy_load=False):
         super(Device, self).__init__(serial_nr)
         self.conn_type = conn_type
         self.props = {}
         self.state = None
         self.installed_packages = set()
-        self.__init_installed_packages()
-        self.__init_props()
-        self.device_state = DeviceState(self)
-        self.device_state_test = self.load_device_state(CONFIG_TEST_FILE)
-        self.device_state_idle = self.load_device_state(CONFIG_IDLE_FILE)
+        self.device_state = DeviceState(self, lazy_load=lazy_load)
+        if not lazy_load:
+            self.__init_installed_packages()
+            self.__init_props()
+            self.device_state_test = self.load_device_state(CONFIG_TEST_FILE)
+            self.device_state_idle = self.load_device_state(CONFIG_IDLE_FILE)
         self.installed_apks = []
+        #print(f"Device {serial_nr} initialized in {time.time() - ts} seconds")
 
     def get_device_props(self):
         """returns props dict containing device properties that were obtained using getprop command.

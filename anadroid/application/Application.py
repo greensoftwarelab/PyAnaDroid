@@ -197,3 +197,7 @@ class App(AbstractApplication):
         """
         file_to_look = os.path.join(self.curr_local_dir, "appPermissions.json")
         return None if not os.path.exists(file_to_look) else file_to_look
+
+    def perform_action(self, act):
+        pass
+

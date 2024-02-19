@@ -1,6 +1,7 @@
 import argparse
 import os
 import re
+import time
 import traceback
 from anadroid.Config import SUPPORTED_PROFILERS, SUPPORTED_TESTING_FRAMEWORKS, SUPPORTED_ANALYZERS, \
     SUPPORTED_INSTRUMENTERS, \
@@ -62,8 +63,9 @@ class AnaDroid(object):
                  testing_framework=TESTING_FRAMEWORK.MONKEY, device=None, instrumenter=INSTRUMENTER.JINST,
                  analyzer=ANALYZER.OLD_ANADROID_ANALYZER, instrumentation_type=INSTRUMENTATION_TYPE.ANNOTATION,
                  build_system=BUILD_SYSTEM.GRADLE, build_type=BUILD_TYPE.DEBUG, tests_dir=None, rebuild_apps=False,
-                 reinstrument=False, recover_from_last_run=False, test_cmd=None, load_projects=True):
-        self.device = device if device is not None else get_first_connected_device()
+                 reinstrument=False, recover_from_last_run=False, test_cmd=None, load_projects=True, lazy_load=False):
+        ts = time.time()
+        self.device = device if device is not None else get_first_connected_device(lazy_load=lazy_load)
         self.app_projects_ut = []
         self.tests_dir = tests_dir
         self.should_rebuild_apps = rebuild_apps
@@ -87,6 +89,7 @@ class AnaDroid(object):
         self.builder = self.__infer_build_system(build_system)
         self.resources_dir = get_resources_dir()
         self.build_type = build_type
+        #print(f"Time to initialize AnaDroid: {time.time() - ts} seconds")
 
     def __setup_from_argparse(self, args: argparse.Namespace):
         """get configs from argparse object if provided in app constructor.
@@ -243,6 +246,8 @@ class AnaDroid(object):
         For each app, project or apk provided to pynadroid, performs the required steps to transform such inputs
         in software ready to be used and tested on the connected device, using the selected testing framework.
         """
+        logi(f"Processing {len(self.app_projects_ut)} project(s)") if len(self.app_projects_ut) > 0 else logi(
+            f"No Android Projects found in {self.apps_dir}")
         for app_proj in self.app_projects_ut:
             instr_proj, builder = self.build_app_project(app_proj, build_apks=True)
             if builder is None:
@@ -362,9 +367,12 @@ class AnaDroid(object):
         return_projs = []
         if is_android_project(self.apps_dir):
             potential_projects = [self.apps_dir]
-        else:
+        elif os.path.isdir(self.apps_dir):
             potential_projects = list(
                 filter(lambda x: os.path.isdir(os.path.join(self.apps_dir, x)), os.listdir(self.apps_dir)))
+        else:
+            potential_projects = []
+            logw(f"Invalid directory {self.apps_dir}")
         for maybe_proj in potential_projects:
             path_dir = os.path.join(self.apps_dir, maybe_proj)
             proj_fldr = self.__get_project_root_dir(path_dir)
