@@ -11,12 +11,15 @@ CONFIG_FILE = os.path.join(RESOURCES_CONFIG_DIR, GENERAL_CONFIG_FILE_NAME) \
     if not os.path.exists(GENERAL_CONFIG_FILE_NAME) else GENERAL_CONFIG_FILE_NAME
 
 
-def get_general_config(cfg_type, cfg_file=CONFIG_FILE):
+def get_general_config(cfg_type, cfg_file=CONFIG_FILE, default_value={}):
+    if not os.path.exists(cfg_file):
+        loge(f"config file {cfg_file} not found")
+        return default_value
     with open(cfg_file, 'r') as jj:
         cfg = json.load(jj)
     if cfg_type not in cfg:
         loge(f"invalid config type {cfg_type}")
-        return {}
+        return default_value
     return cfg[cfg_type] #[key] if key in cfg[cfg_type] else None
 
 

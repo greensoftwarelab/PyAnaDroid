@@ -5,6 +5,7 @@ import time
 from manafa.emanafa import EManafa
 from manafa.hunter_emanafa import HunterEManafa
 
+from anadroid.Config import get_general_config
 from anadroid.profiler.AbstractProfiler import AbstractProfiler
 from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 
@@ -12,6 +13,8 @@ from anadroid.utils.Utils import execute_shell_command, get_resources_dir
 RESOURCES_DIR = os.path.join(get_resources_dir(), "profilers", "Manafa")
 HUNTER_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "to_instrument_file.txt")
 HUNTER_NOT_INSTRUMENT_FILE = os.path.join(RESOURCES_DIR, "not_instrument_file.txt")
+CONFIG_FILE = os.path.join(RESOURCES_DIR, "config.json")
+POWER_PROFILE_FILE = get_general_config('default_power_profile', cfg_file=CONFIG_FILE, default_value=None)
 TEST_INDEX_FILENAME = "tests_index.json"
 
 
@@ -21,7 +24,7 @@ class ManafaProfiler(AbstractProfiler):
     Attributes:
         manafa(EManafa): EManafa profiler.
     """
-    def __init__(self, profiler, device, power_profile=None, timezone=None, hunter=True):
+    def __init__(self, profiler, device, power_profile=POWER_PROFILE_FILE, timezone=None, hunter=True):
         super(ManafaProfiler, self).__init__(profiler, device, pkg_name=None)
         self.manafa = EManafa(power_profile, timezone) if not hunter else \
             HunterEManafa(
