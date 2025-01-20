@@ -37,7 +37,7 @@ class JInstInstrumenter(AbstractInstrumenter):
         pass
 
     def __update_dependencies_and_plugins(self, instr_type=INSTRUMENTATION_TYPE.TEST):
-        """lods necessary dependencies according to the type of instrumentation to be performed.
+        """loads necessary dependencies according to the type of instrumentation to be performed.
         Args:
             instr_type(INSTRUMENTATION_TYPE): instrumentation type.
         """
@@ -48,11 +48,11 @@ class JInstInstrumenter(AbstractInstrumenter):
             #self.build_dependencies.append(BuildDependency("io.github.raphael28:hunter-debug-library", version="1.0.1"))
             self.build_dependencies.append(BuildDependency("io.github.greensoftwarelab:hunter-emanafa-library", version="1.0.1"))
             self.classpath_dependencies.append(
-                BuildDependency("io.github.raphael28:hunter-debug-plugin", dep_type=DependencyType.CLASSPATH,
-                                version="1.0.1"))
-            self.classpath_dependencies.append(
-                BuildDependency("io.github.raphael28:hunter-transform", dep_type=DependencyType.CLASSPATH,
-                                version="0.9.8"))
+                BuildDependency("io.github.greensoftwarelab:hunter-debug-plugin", dep_type=DependencyType.CLASSPATH,
+                                version="1.0.2"))
+            #self.classpath_dependencies.append(
+            #    BuildDependency("io.github.greensoftwarelab:hunter-transform", dep_type=DependencyType.CLASSPATH,
+            #                    version="0.9.9"))
             self.build_plugins.append("hunter-debug")
 
     def instrument(self, android_project, mirror_dirname="_TRANSFORMED_", test_approach=TESTING_APPROACH.WHITEBOX, test_frame=TESTING_FRAMEWORK.MONKEY,
