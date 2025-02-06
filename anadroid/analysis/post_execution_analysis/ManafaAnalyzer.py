@@ -1,13 +1,13 @@
 from manafa.hunter_emanafa import HunterEManafa
 import os
 
-from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
+from anadroid.analysis.ExecutionResultsAnalyzer import ExecutionResultsAnalyzer
 from manafa.utils.Logger import log
 
 from anadroid.utils.Utils import loge
 
 
-class ManafaAnalyzer(AbstractAnalyzer):
+class ManafaAnalyzer(ExecutionResultsAnalyzer):
     """Implements AbstractAnalyzer interface to allow analyze profiled results with EManafa profiler.
     Calculate statistics about the produced results to analyze, validate and characterize executions.
     """
@@ -82,3 +82,6 @@ class ManafaAnalyzer(AbstractAnalyzer):
         if val is None:
             loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")
         return val
+
+    def analyze_app(self, app, **kwargs):
+        pass

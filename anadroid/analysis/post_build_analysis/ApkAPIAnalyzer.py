@@ -4,7 +4,7 @@ from shutil import copyfile
 
 from androguard.core.analysis.analysis import MethodAnalysis
 
-from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
+from anadroid.analysis.ExecutionResultsAnalyzer import ExecutionResultsAnalyzer
 from androguard.misc import AnalyzeAPK
 import re
 import json
@@ -181,7 +181,7 @@ def eval(path, pack):
     return filename
 
 
-class ApkAPIAnalyzer(AbstractAnalyzer):
+class ApkAPIAnalyzer(ExecutionResultsAnalyzer):
     """Defines a basic interface collect metrics of each method defined in an Android Project using Androguard.
     """
     def __init__(self, profiler):
@@ -205,9 +205,9 @@ class ApkAPIAnalyzer(AbstractAnalyzer):
     def setup(self, **kwargs):
         pass
 
-    def analyze(self, apk_path, apk_name):
+    def analyze_app(self, app, **kwargs):
         print("analyzing apk")
-        return eval(apk_path, apk_name)
+        return eval(app.apk, app.package_name)
 
     def clean(self):
         pass

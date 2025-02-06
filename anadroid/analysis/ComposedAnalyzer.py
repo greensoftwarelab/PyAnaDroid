@@ -1,14 +1,13 @@
-from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
-import os
+from anadroid.analysis.ExecutionResultsAnalyzer import ExecutionResultsAnalyzer
 
 
-class ComposedAnalyzer(AbstractAnalyzer):
+class ComposedAnalyzer(ExecutionResultsAnalyzer):
     """Provides a way to abstract the usage of a set of AbstractAnalyzers through a single api call."""
     def __init__(self, profiler, inner_analyzers=()):
         super(ComposedAnalyzer, self).__init__(profiler)
         self.inner_analyzers = []
         for inn in inner_analyzers:
-            if isinstance(inn, AbstractAnalyzer):
+            if isinstance(inn, ExecutionResultsAnalyzer):
                 self.inner_analyzers.append(inn)
 
     def setup(self, **kwargs):
@@ -46,3 +45,7 @@ class ComposedAnalyzer(AbstractAnalyzer):
 
     def get_val_for_filter(self, filter_name, add_data=None):
         return super().get_val_for_filter(filter_name, add_data)
+
+    def analyze_app(self, app, **kwargs):
+        for inn in self.inner_analyzers:
+            inn.analyze_app(app, **kwargs)

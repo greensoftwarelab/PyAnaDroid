@@ -1,18 +1,18 @@
 import os
 
-from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
+from anadroid.analysis.ExecutionResultsAnalyzer import ExecutionResultsAnalyzer
 #from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
 #from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
 #from src.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
-from anadroid.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
-from anadroid.results_analysis.SCCAnalyzer import SCCAnalyzer
+from anadroid.analysis.results_analysis.ApkAPIAnalyzer import ApkAPIAnalyzer
+from anadroid.analysis.results_analysis.SCCAnalyzer import SCCAnalyzer
 from anadroid.utils.Utils import execute_shell_command, get_resources_dir
-from shutil import copy, copyfile
+from shutil import copyfile
 
 DEFAULT_JAR_PATH = os.path.join(get_resources_dir(), "jars", "AnaDroidAnalyzer.jar")
 
 
-class OldAnaDroidAnalyzer(AbstractAnalyzer):
+class OldAnaDroidAnalyzer(ExecutionResultsAnalyzer):
     """Implements AbstractAnalyzer interface to allow analyze profiled results with Trepn  profiler.
     Calculate statistics about the produced results to analyze, validate and characterize executions.
     """
@@ -33,13 +33,13 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
         test_orient = kwargs.get("instr_type")
         for analyzer in self.inner_analyzers:
             if isinstance(analyzer, SCCAnalyzer):
-                analyzer.analyze(instr_proj.proj_dir, test_orient, output_log_file=os.path.join(app.local_res, "scc.json"))
+                analyzer.analyze_app(app, kwargs={'output_log_file':os.path.join(app.local_res, "scc.json")})
             elif isinstance(analyzer, ApkAPIAnalyzer):
-                filename = analyzer.analyze(app.apk, app.package_name)
+                filename = analyzer.analyze_app(app)
                 target_dir = os.path.join(app.local_res, "all")
                 copyfile(filename, os.path.join(target_dir,  os.path.basename(filename)))
 
-    def analyze(self, app, **kwargs):
+    def analyze_app(self, app, **kwargs):
         test_framework = kwargs.get("testing_framework")
         test_orient = kwargs.get("instr_type")
         output_log_file = kwargs.get("output_log_file") if 'output_log_file' in kwargs else "oldanadroid_output.log"
@@ -62,7 +62,7 @@ class OldAnaDroidAnalyzer(AbstractAnalyzer):
         return super().get_val_for_filter(filter_name, add_data)
 
     def analyze_tests(self, app=None, results_dir=None, **kwargs):
-        self.analyze(app, **kwargs)
+        self.analyze_app(app, **kwargs)
 
     def analyze_test(self, app, test_id, **kwargs):
         pass

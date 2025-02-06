@@ -1,5 +1,5 @@
 import json
-from anadroid.results_analysis.filters.Filter import Filter, is_valid_filter
+from anadroid.analysis.results_analysis.filters.Filter import Filter, is_valid_filter
 
 
 class Filters(object):

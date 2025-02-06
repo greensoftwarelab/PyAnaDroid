@@ -1,14 +1,13 @@
 import os
-import re
 
 from logcatparser.logCatParser import LogCatParser
 
-from anadroid.results_analysis.AbstractAnalyzer import AbstractAnalyzer
-from anadroid.utils.Utils import execute_shell_command, loge
+from anadroid.analysis.ExecutionResultsAnalyzer import ExecutionResultsAnalyzer
+from anadroid.utils.Utils import loge
 from manafa.utils.Logger import log
 
 
-class LogAnalyzer(AbstractAnalyzer):
+class LogAnalyzer(ExecutionResultsAnalyzer):
     """Implements AbstractAnalyzer interface to allow analyze Android logs produced during profiling sessions using
     logcatparser.
     Calculate statistics about the produced logs to analyze and characterize test executions.
@@ -76,3 +75,6 @@ class LogAnalyzer(AbstractAnalyzer):
         if val is None:
             loge(f"unsupported value ({val}) for {filter_name} ({self.__class__})")
         return val
+
+    def analyze_app(self, app, **kwargs):
+        pass
