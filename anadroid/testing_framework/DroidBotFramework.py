@@ -96,6 +96,8 @@ class DroidBotFramework(AbstractTestingFramework):
         pass
 
     def __load_config_file(self, cfg_filename=None):
+        if cfg_filename is None:
+            cfg_filename = DEFAULT_CONFIG_FILE
         cfg_file = os.path.join(self.res_dir, cfg_filename) if not os.path.exists(cfg_filename) else cfg_filename
         cfg = {}
         if os.path.exists(cfg_file):

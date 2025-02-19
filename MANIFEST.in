@@ -1,2 +1,3 @@
 graft anadroid/resources
+prune anadroid/resources/bin/pmd-bin-7.9.0
 include requirements.txt
